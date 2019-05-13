@@ -28,6 +28,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 	public static final String KEY_EXPAND_CURRENT_DAY = "expand_current_day";
 	public static final String KEY_SELECT_CURRENT_DAY = "select_current_day";
 	public static final String KEY_SHOW_ERROR = "show_error";
+	public static final String KEY_OPEN_ON_START = "open_on_start";
 
 	private int bells, lesson, break_;
 
@@ -39,6 +40,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 		
 		tb = view.findViewById(R.id.toolbar);
 		tb.setTitle(R.string.settings);
+	
 	}
 
 	@Override

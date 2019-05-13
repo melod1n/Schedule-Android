@@ -19,7 +19,20 @@ public class ShortcutActivity extends AppCompatActivity {
 		
 		Intent i = getIntent();
 		int fragment = i.getIntExtra("fragment", -1);
-		Fragment f = fragment == 0 ? new DayTabFragment() : fragment == 1 ? new NotesFragment() : new TimetableFragment();
+		Fragment f = null;
+		
+		switch(fragment) {
+			case 0:
+				f = new TimetableFragment();
+				break;
+			default:
+			case 1:
+				f = new DayTabFragment();
+				break;
+			case 2:
+				f = new NotesFragment();
+				break;
+		}
 		
 		getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, f).commit();
 		EventBus.getDefault().register(this);

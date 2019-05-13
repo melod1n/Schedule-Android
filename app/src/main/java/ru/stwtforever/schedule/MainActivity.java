@@ -73,13 +73,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		int f = -1;
 
 		switch (sh_type) {
-			case "schedule":
+			case "timetable":
 				f = 0;
 				break;
-			case "notes":
+			case "schedule":
 				f = 1;
 				break;
-			case "timetable":
+			case "notes":
 				f = 2;
 				break;
 		}
@@ -92,17 +92,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		if (Utils.isFirstLaunch()) {
 			startSetupActivity();
 		} else {
-			Intent i = getIntent();
+			Intent intent = getIntent();
 
-			if (i.hasExtra("from_settings")) {
+			if (intent.hasExtra("from_settings")) {
 				selected_id = R.id.settings;
 				selected_fragment = sf;
 				replaceFragment(sf);
 				navView.setSelectedItemId(selected_id);
 			} else {
-				selected_id = R.id.schedule;
-				selected_fragment = df;
-				replaceFragment(df);
+				int i = Integer.parseInt(AppGlobal.preferences.getString(SettingsFragment.KEY_OPEN_ON_START, "1"));
+				switch(i) {
+					default:
+					case 0:
+						selected_id = R.id.timetable;
+						selected_fragment = tf;
+						break;
+					case 1:
+						selected_id = R.id.schedule;
+						selected_fragment = df;
+						break;
+					case 2:
+						selected_id = R.id.notes;
+						selected_fragment = nf;
+						break;
+				}
+				
+				replaceFragment(selected_fragment);
 				navView.setSelectedItemId(selected_id);
 			}
 
@@ -177,6 +192,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		Icon icon = Icon.createWithResource(this, R.drawable.shortcut_schedule);
 		Icon icon3 = Icon.createWithResource(this, R.drawable.shortcut_bells);
 
+		ShortcutInfo timetable = new ShortcutInfo.Builder(this, "timetable")
+			.setShortLabel(getString(R.string.timetable))
+			.setIcon(icon3)
+			.setIntent(new Intent(this, MainActivity.class).setAction(Intent.ACTION_DEFAULT).putExtra("shortcut_type", "timetable"))
+			.build();
+		
 		ShortcutInfo schedule = new ShortcutInfo.Builder(this, "schedule")
 			.setShortLabel(getString(R.string.schedule))
 			.setIcon(icon)
@@ -189,17 +210,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 			.setIntent(new Intent(this, MainActivity.class).setAction(Intent.ACTION_DEFAULT).putExtra("shortcut_type", "notes"))
 			.build();
 
-		ShortcutInfo timetable = new ShortcutInfo.Builder(this, "timetable")
-			.setShortLabel(getString(R.string.timetable))
-			.setIcon(icon3)
-			.setIntent(new Intent(this, MainActivity.class).setAction(Intent.ACTION_DEFAULT).putExtra("shortcut_type", "timetable"))
-			.build();
-
 		ArrayList<ShortcutInfo> shortcuts = new ArrayList<>(2);
+		shortcuts.add(timetable);
 		shortcuts.add(schedule);
 		shortcuts.add(notes);
-		shortcuts.add(timetable);
-
+		
 		shortcutManager.setDynamicShortcuts(shortcuts);
 	}
 

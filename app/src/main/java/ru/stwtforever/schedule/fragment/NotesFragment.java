@@ -35,13 +35,22 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
     private NoteAdapter adapter;
 
 	private Toolbar tb;
-
+	
+	private boolean twoCollumns;
+	
 	@Override
 	public void onDestroy() {
 		EventBus.getDefault().unregister(this);
 		super.onDestroy();
 	}
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		twoCollumns = AppGlobal.preferences.getBoolean("two_collumns", true);
+	}
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_notes, container, false);
@@ -109,6 +118,7 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 		tb.setOnMenuItemClickListener(this);
 
         manager = new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL);
+		manager.setSpanCount(twoCollumns ? 1 : 2);
 		list.setHasFixedSize(true);
 
 		list.setLayoutManager(manager);
@@ -117,7 +127,7 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 
 		MenuItem item = tb.getMenu().add(R.string.set_one_collumn);
 		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		item.setIcon(R.drawable.grid);
+		item.setIcon(twoCollumns ? R.drawable.grid_large : R.drawable.grid);
 		item.getIcon().setTint(ThemeManager.isLight() ? Color.BLACK : Color.WHITE);
 
 		ViewUtil.applyToolbarStyles(tb);
@@ -223,20 +233,21 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 		}
 
 		getActivity().startActivity(new Intent(getContext(), NoteActivity.class).putExtras(i));
-		//getActivity().overridePendingTransition(R.anim.slide_up, R.anim.slide_down);
 	}
 
 	@Override
 	public boolean onMenuItemClick(MenuItem item) {
 		if (manager == null) return false;
-		boolean setOne = manager.getSpanCount() == 2;
-
-		item.setIcon(setOne ? R.drawable.grid_large : R.drawable.grid);
-		item.setTitle(setOne ? R.string.set_two_collumns : R.string.set_one_collumn);
+		
+		twoCollumns = manager.getSpanCount() == 2;
+		AppGlobal.preferences.edit().putBoolean("two_collumns", twoCollumns).apply();
+		
+		item.setIcon(twoCollumns ? R.drawable.grid_large : R.drawable.grid);
+		item.setTitle(twoCollumns ? R.string.set_two_collumns : R.string.set_one_collumn);
 
 		item.getIcon().setTint(ThemeManager.isLight() ? Color.BLACK : Color.WHITE);
 
-		manager.setSpanCount(setOne ? 1 : 2);
+		manager.setSpanCount(twoCollumns ? 1 : 2);
 		ith.attachToRecyclerView(null);
 		initDragDrop();
 		

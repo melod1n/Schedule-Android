@@ -21,6 +21,7 @@ import ru.stwtforever.schedule.view.*;
 import android.support.v7.widget.Toolbar;
 import ru.stwtforever.schedule.util.ViewUtil;
 import android.support.v4.content.*;
+import ru.stwtforever.schedule.common.*;
 
 public class NoteActivity extends AppCompatActivity {
 
@@ -32,14 +33,15 @@ public class NoteActivity extends AppCompatActivity {
 	private EditText title, text;
 	private Toolbar tb;
 
-	private static final int DEFAULT_COLOR = Color.WHITE;
+	private static final int DEFAULT_COLOR = ThemeManager.isDark() ? Color.BLACK : Color.WHITE;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setTheme(ThemeManager.getCurrentTheme());
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_notes_dialog);
 		initViews();
-
+		
 		tb.setTitle("");
 		
 		setSupportActionBar(tb);
@@ -59,33 +61,23 @@ public class NoteActivity extends AppCompatActivity {
 
 		color = add ? DEFAULT_COLOR : item.getColor();
 
-		final HorizontalColorPicker picker = findViewById(R.id.picker);
-
+		HorizontalColorPicker picker = findViewById(R.id.picker);
+		
 		ArrayList<Integer> colors = new ArrayList<>();
-		colors.add(Color.WHITE);
-		colors.add(ContextCompat.getColor(this, R.color.dark_primary));
-		colors.add(0xffF86140);
-		colors.add(0xffFBBC04);
-		colors.add(0xffFFF475);
-		colors.add(0xffCCFF90);
-		colors.add(0xffA7FFEB);
-		colors.add(0xffCBF0F8);
-		colors.add(0xffAECBFA);
-		colors.add(0xffD7AEFB);
-		colors.add(0xffFDCFE8);
-		colors.add(0xffE6C9A8);
-		colors.add(0xffE8EAED);
+		String[] arr = getResources().getStringArray(R.array.notes_colors);
+		
+		for (String s : arr)
+			colors.add(Color.parseColor(s));
 
 		picker.setColors(colors);
-		picker.setSelectedColor(add ? Color.WHITE : color);
-		picker.scrollToPosition(picker.getSelectedPosition());
+		picker.setSelectedColor(color);
 		setColor(color);
 
 		picker.setOnChoosedColorListener(new HorizontalColorPicker.OnChoosedColorListener() {
 
 				@Override
 				public void onChoosedColor(int position, int color) {
-					setColor(picker.getSelectedColor());
+					setColor(color);
 				}
 			});
 			
@@ -107,7 +99,7 @@ public class NoteActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
-			finish();
+			onBackPressed();
 		}
 		return super.onOptionsItemSelected(item);
 	}

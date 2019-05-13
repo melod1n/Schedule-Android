@@ -83,7 +83,7 @@ public class ThemeManager {
 		return main;
 	}
 	
-	public static int getTheme() {
+	public static int getCurrentTheme() {
 		return theme;
 	}
 	

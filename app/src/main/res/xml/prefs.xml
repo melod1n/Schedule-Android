@@ -20,6 +20,13 @@
 		android:title="Select current day"
 		android:summary="Selecting current day on schedule screen" />
 	
+	<ListPreference
+		android:key="open_on_start"
+		android:title="Open on start"
+		android:entries="@array/nav_items"
+		android:defaultValue="1"
+		android:entryValues="@array/nav_items_entries" />
+	
 	<PreferenceCategory android:title="@string/data" />
 	
 	<PreferenceScreen

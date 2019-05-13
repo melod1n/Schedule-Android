@@ -8,7 +8,7 @@
 	<color name="tab_selected">#000000</color>
 	
 	<color name="dark_primary">#262626</color>
-	<color name="dark_primary_dark">#131212</color>
+	<color name="dark_primary_dark">#121212</color>
 	<color name="dark_background">#181818</color>
 	<color name="dark_tab_text">#B4B4B4</color>
 	<color name="dark_tab_selected">#ffffff</color>

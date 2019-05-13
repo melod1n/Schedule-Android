@@ -3,10 +3,6 @@
 	<!-- buttons -->
 	<string name="next">Далее</string>
 	<string name="exit">Выход</string>
-
-	<!-- activities titles -->
-	<string name="settings">Настройки</string>
-	<string name="create_bells_title">Создание звонков</string>
 	
 	<!-- alert titles -->
 	<string name="warning">Внимание!</string>
@@ -36,23 +32,16 @@
     <string name="cab">Кабинет</string>
 	<string name="subject">Предмет</string>
     <string name="homework">Домашнее задание</string>
-
-	<!-- people item -->
-	<string name="name">Имя</string>
-    <string name="number">Номер</string>
-    <string name="important">Важный</string>
-	<string name="dial_number_confirmation">Набрать этот номер?</string>
-
+	
 	<!-- timetable item -->
 	<string name="start">Начало</string>
     <string name="end">Конец</string>
 	<string name="confirm_recreate_bells">Вы действительно хотите переформировать список звонков?</string>
 	<string name="delete_all">Удалить все</string>
+	<string name="recreate_all_bells">Переформировать все звонки</string>
 	<string name="recreate_bells">Переформировать звонки</string>
 	<string name="lesson">Урок</string>
 	<string name="break_">Перерыв</string>
-	<string name="t_start_in">Начало в %s</string>
-	<string name="t_end_in">Конец в %s</string>
 	
 	<!-- alert buttons -->
     <string name="add">Добавить</string>
@@ -67,6 +56,7 @@
     <string name="timetable">Звонки</string>
 	<string name="people">Люди</string>
 	<string name="schedule">Расписание</string>
+	<string name="settings">Настройки</string>
 
 	<!-- setup screen strings -->
     <string name="input_setup_data_below">Пожалуйста, введите необходимые данные ниже:</string>
@@ -100,10 +90,8 @@
 	<string name="input_ls_br_length">Ввести продолжительность урока и перерыва</string>
 	
 	<!-- other -->
-	
+	<string name="empty">Пусто</string>
 	<string name="data">Данные</string>
-	<string name="friends">Друзья</string>
-    <string name="teachers">Учителя</string>
 	
 	<string name="setup_bells">Вы хотите настроить расписание звонков?</string>
 	<string name="tester">Тестировщик</string>

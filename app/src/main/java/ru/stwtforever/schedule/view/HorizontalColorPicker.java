@@ -1,6 +1,7 @@
 package ru.stwtforever.schedule.view;
 
 import android.content.*;
+import android.graphics.*;
 import android.graphics.drawable.*;
 import android.support.annotation.*;
 import android.support.v7.widget.*;
@@ -77,8 +78,10 @@ public class HorizontalColorPicker extends RecyclerView {
 				@Override
 				public void onItemClick(View v, int position) {
 					getAdapter().setSelectedPosition(position);
+				
+					
 					if (listener != null)
-						listener.onChoosedColor(position, getAdapter().getItem(position).getColor());
+						listener.onChoosedColor(position, getAdapter().getSelectedColor());
 				}
 		});
 	}
@@ -97,10 +100,6 @@ public class HorizontalColorPicker extends RecyclerView {
 	
 	public int getSelectedColor() {
 		return getAdapter().getSelectedColor();
-	}
-	
-	public int getSelectedPosition() {
-		return getAdapter().getSelectedPosition();
 	}
 
 	@Override
@@ -140,6 +139,10 @@ public class HorizontalColorPicker extends RecyclerView {
 		}
 	}
 	
+	public int getSelectedPosition() {
+		return selectedPosition;
+	}
+	
 	class Adapter extends RecyclerAdapter<HorizontalColorPicker.Item, Adapter.ViewHolder> {
 
 		public Adapter(Context context, ArrayList<HorizontalColorPicker.Item> items) {
@@ -162,28 +165,29 @@ public class HorizontalColorPicker extends RecyclerView {
 			return getItem(selectedPosition).getColor();
 		}
 
-		public int getSelectedPosition() {
-			return selectedPosition;
-		}
-
 		public void setSelectedColor(int color) {
 			for (int i = 0; i < getValues().size(); i++) {
 				HorizontalColorPicker.Item item = getValues().get(i);
 				item.setSelected(item.getColor() == color);
 				notifyItemChanged(i, item);
+				if (item.isSelected())
+					selectedPosition = i;
 			}
+			
+			smoothScrollToPosition(selectedPosition);
 		}
 
 		public void setSelectedPosition(int position) {
-			if (position > getValues().size() - 1) return;
-
-			selectedPosition = position;
-			
 			for (int i = 0; i < getValues().size(); i++) {
 				HorizontalColorPicker.Item item = getValues().get(i);
 				item.setSelected(i == position);
 				notifyItemChanged(i, item);
+				
+				if (item.isSelected())
+					selectedPosition = position;
 			}
+			
+			smoothScrollToPosition(selectedPosition);
 		}
 
 		class ViewHolder extends RecyclerView.ViewHolder {
@@ -203,9 +207,11 @@ public class HorizontalColorPicker extends RecyclerView {
 
 				circle.setImageDrawable(new ColorDrawable(item.getColor()));
 				circle.setBorderWidth(2);
-				circle.setBorderColor(Utils.isDark(item.getColor()) ? Utils.manipulateColor(item.getColor(), 2): ColorUtil.darkenColor(item.getColor()));
 				
-				selected.getDrawable().setTint(circle.getBorderColor());
+				int borderColor = item.getColor() == Color.BLACK ? item.isSelected() ? Color.WHITE : ColorUtil.lightenColor(item.getColor()) : item.getColor() == Color.WHITE ? item.isSelected() ? Color.BLACK : ColorUtil.darkenColor(item.getColor()) : Utils.isDark(item.getColor()) ? Utils.manipulateColor(item.getColor(), 2) : ColorUtil.darkenColor(item.getColor());
+				
+				circle.setBorderColor(borderColor);
+				selected.getDrawable().setTint(borderColor);
 				
 				selected.setVisibility(item.isSelected() ? View.VISIBLE : View.INVISIBLE);
 			}

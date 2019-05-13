@@ -11,11 +11,9 @@
 		android:name=".common.AppGlobal"
 		android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-		android:resizeableActivity="false">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-			android:theme="@style/AppTheme.Light"
 			android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
@@ -28,30 +26,17 @@
 		<activity 
 			android:configChanges="keyboardHidden|orientation|screenSize"
 			android:name=".NoteActivity"
-			android:windowSoftInputMode="stateVisible|adjustResize"
-			android:theme="@style/AppTheme.Light" />
+			android:windowSoftInputMode="stateVisible|adjustResize" />
+		
+		<activity
+			android:name=".AboutActivity" />
+		
+		<activity
+			android:name=".ShortcutActivity" />
 		
 		<activity
 			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:name=".CreateBellsActivity" 
-			android:label="@string/create_bells_title" />
-		
-		<activity 
-			android:name=".SettingsActivity"
-			android:label="@string/settings" />
-		
-		<activity
-			android:name=".AboutActivity"
-			android:theme="@style/AppTheme.About.Light" />
-		
-		<activity
-			android:name=".ShortcutActivity"
-			android:theme="@style/AppTheme.Light" />
-		
-		<activity
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:name=".SetupActivity"
-			android:theme="@style/AppTheme.Light" />
+			android:name=".SetupActivity" />
     </application>
 
 </manifest>

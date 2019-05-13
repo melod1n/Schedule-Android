@@ -75,7 +75,7 @@ public class ViewUtil {
 		int light_nb = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
 
 		if (withTheme) {
-			a.setTheme(ThemeManager.getTheme());
+			a.setTheme(ThemeManager.getCurrentTheme());
 		}
 
 		if (!Utils.isLight(sb_color)) {
