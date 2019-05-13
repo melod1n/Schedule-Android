@@ -2,104 +2,81 @@
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/item_main"
-	android:layout_width="match_parent"
+	android:background="?selectableItemBackground"
 	android:layout_height="wrap_content"
-	android:gravity="center_vertical"
-	android:orientation="vertical">
+	android:paddingEnd="10dp"
+	android:paddingStart="10dp"
+	android:paddingBottom="4dp"
+	android:paddingTop="4dp"
+	android:orientation="horizontal"
+	android:layout_width="match_parent">
 
 	<LinearLayout
-		android:background="?selectableItemBackground"
-		android:layout_height="wrap_content"
-		android:paddingEnd="10dp"
-		android:paddingStart="10dp"
-		android:paddingBottom="4dp"
-		android:paddingTop="4dp"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
 		android:orientation="vertical"
-		android:layout_width="match_parent">
+		android:paddingEnd="6dp"
+		android:paddingStart="6dp"
+		android:layout_marginEnd="6dp"
+		android:gravity="center">
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal">
-
-			<TextView
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"
-				android:layout_weight="1.0"
-				android:text="@string/subject"
-				android:textSize="10sp"/>
-
-			<TextView
-				android:layout_width="60dp"
-				android:layout_height="wrap_content"
-				android:layout_marginRight="10dp"
-				android:text="@string/cab"
-				android:textSize="10sp"
-				android:id="@+id/cab_title"/>
-
-		</LinearLayout>
-
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:weightSum="1.0">
-
-			<TextView
-				android:id="@+id/name"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="10dp"
-				android:layout_weight="1.0"
-				android:maxLines="1"
-				android:textSize="14sp"
-				android:textStyle="bold"
-				tools:text="Jopa"/>
-
-			<TextView
-				android:id="@+id/cab"
-				android:layout_width="60dp"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"
-				android:layout_weight="0"
-				android:textSize="14sp"
-				android:textStyle="italic"
-				tools:text="Jopa"/>
-
-		</LinearLayout>
+		<TextView
+			android:layout_width="25dp"
+			android:layout_height="25dp"
+			android:id="@+id/num"
+			android:maxLength="2"
+			android:gravity="center"
+			android:singleLine="true"/>
 
 	</LinearLayout>
 
 	<LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/tools">
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:gravity="center_horizontal"
+		android:layout_weight="1.0">
 
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:padding="10dp"
-			android:id="@+id/homework"
-			android:visibility="visible"
-			android:layout_weight="1.0"
-			android:layout_marginStart="10dp"/>
+			android:text="@string/subject"
+			android:textSize="10sp"
+			android:gravity="center_vertical"/>
 
-		<ImageButton
-			android:layout_width="25dp"
-			android:background="?selectableItemBackgroundBorderless"
-			android:layout_height="match_parent"
-			android:src="@drawable/ic_pencil_outline"
-			android:padding="10dp"
-			android:tint="?tabSelectedTextColor"
-			android:layout_gravity="top"
-			android:id="@+id/edit"
-			android:layout_marginEnd="10dp"
-			android:layout_marginStart="4dp"/>
+		<TextView
+			android:id="@+id/name"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="14sp"
+			android:textStyle="bold"
+			tools:text="Jopa"
+			android:gravity="center_vertical"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_marginStart="10dp">
+
+		<TextView
+			android:layout_width="60dp"
+			android:layout_height="wrap_content"
+			android:text="@string/cab"
+			android:textSize="10sp"
+			android:id="@+id/cab_title"
+			android:gravity="center_vertical"/>
+
+		<TextView
+			android:id="@+id/cab"
+			android:layout_width="60dp"
+			android:layout_height="wrap_content"
+			android:textSize="14sp"
+			android:textStyle="italic"
+			tools:text="Jopa"
+			android:gravity="center_vertical"/>
 
 	</LinearLayout>
 

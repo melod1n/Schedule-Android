@@ -37,7 +37,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	" [" + NAME + "] TEXT, " +
 	" [" + CAB + "] TEXT, " +
 	" [" + HOMEWORK + "] TEXT, " + 
-	" [" + DAY + "] INTEGER" + 
+	" [" + DAY + "] INTEGER, " + 
+	" [" + COLOR + "] INTEGER" +
 	");";
 	
 	private final static String SQL_CREATE_TABLE_BELLS = "CREATE TABLE " + TABLE_BELLS +
@@ -54,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	//DB INFO
 	private static final String DB_NAME = "schedule.db";
-	private static final int DB_VERSION = 20;
+	private static final int DB_VERSION = 21;
 	
 	private static DatabaseHelper instance;
 	

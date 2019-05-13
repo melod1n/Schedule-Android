@@ -162,7 +162,7 @@ public class CacheStorage {
         database.endTransaction();
     }
 	
-	public static void update(String table, ArrayList<? extends Object> values, String where, Object args) {
+	public static void update(String table, ArrayList values, String where, Object args) {
 		database.beginTransaction();
 		
 		ContentValues cv = new ContentValues();
@@ -199,11 +199,12 @@ public class CacheStorage {
 	private static SubjectItem parseSubject(Cursor c) {
 		SubjectItem s = new SubjectItem();
 		
-		s.id = getInt(c, ID);
-		s.cab = getString(c, CAB);
-		s.day = getInt(c, DAY);
-		s.homework = getString(c, HOMEWORK);
-		s.name = getString(c, NAME);
+		s.setId(getInt(c, ID));
+		s.setCab(getString(c, CAB));
+		s.setDay(getInt(c, DAY));
+		s.setColor(getInt(c, COLOR));
+		s.setHomework(getString(c, HOMEWORK));
+		s.setName(getString(c, NAME));
 		
 		return s;
 	}
@@ -237,10 +238,11 @@ public class CacheStorage {
 	}
 	
 	private static void putValues(ContentValues cv, SubjectItem item) {
-		cv.put(DAY, item.day);
-		cv.put(CAB, item.cab);
-		cv.put(NAME, item.name);
-		cv.put(HOMEWORK, item.homework);
+		cv.put(DAY, item.getDay());
+		cv.put(CAB, item.getCab());
+		cv.put(NAME, item.getName());
+		cv.put(COLOR, item.getColor());
+		cv.put(HOMEWORK, item.getHomework());
 	}
 	
 	private static void putValues(ContentValues cv, BellItem item) {

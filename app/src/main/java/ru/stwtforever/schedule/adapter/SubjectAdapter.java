@@ -14,6 +14,8 @@ import ru.stwtforever.schedule.db.*;
 import ru.stwtforever.schedule.fragment.*;
 import ru.stwtforever.schedule.common.*;
 import android.graphics.*;
+import android.graphics.drawable.*;
+import ru.stwtforever.schedule.util.*;
 
 public class SubjectAdapter extends RecyclerAdapter<SubjectItem, SubjectAdapter.ViewHolder> {
 	
@@ -45,67 +47,43 @@ public class SubjectAdapter extends RecyclerAdapter<SubjectItem, SubjectAdapter.
     }
 
     @Override
-    public void onBindViewHolder(SubjectAdapter.ViewHolder vh, int i) {
-		super.onBindViewHolder(vh, i);
-        vh.bind(i);
+    public void onBindViewHolder(SubjectAdapter.ViewHolder holder, int position) {
+		if (position > 99) return;
+		super.onBindViewHolder(holder, position);
+        holder.bind(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-		private TextView name, cab, homework, cab_title;
-		private ImageButton edit;
-		private LinearLayout tools;
-
+		private TextView name, cab, cab_title, num;
+		
         ViewHolder(View v) {
             super(v);
-
-			homework = v.findViewById(R.id.homework);
             name = v.findViewById(R.id.name);
             cab = v.findViewById(R.id.cab);
 			cab_title = v.findViewById(R.id.cab_title);
+			num = v.findViewById(R.id.num);
 			
-			tools = v.findViewById(R.id.tools);
-			edit = v.findViewById(R.id.edit);
+			GradientDrawable background = new GradientDrawable();
+			background.setCornerRadius(200);
+			background.setColor(ThemeManager.getAccent());
+			
+			num.setBackground(background);
         }
 
 		public void bind(final int position) {
-			final SubjectItem item = getItem(position);
-			initViews(position, false);
-			
-			itemView.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						tools.setVisibility(item.isExpanded() ? View.GONE : View.VISIBLE);
-						item.setExpanded(!item.isExpanded());
-						initViews(position, true);
-					}
-			});
-		}
-		
-		private void initViews(final int position, boolean from_anim) {
 			SubjectItem item = getItem(position);
-
-			String num = (position + 1) + ". ";
-
-			name.setText(num + item.getName());
+			
+			num.getBackground().setTint(item.getColor() == 0 ? ThemeManager.getAccent() : item.getColor());
+			
+			num.setTextColor(Utils.isLight(item.getColor()) ? Color.BLACK : Color.WHITE);
+			
+			name.setText(item.getName());
 			cab.setText(item.getCab());
+			
+			num.setText(String.valueOf(position + 1));
 
 			cab_title.setVisibility(TextUtils.isEmpty(item.getCab()) ? View.INVISIBLE : View.VISIBLE);
-
-			homework.setText(TextUtils.isEmpty(item.getHomework()) ? getString(R.string.empty) : item.getHomework());
-
-			if (!from_anim)
-				tools.setVisibility(item.isExpanded() ? View.VISIBLE : View.GONE);
-
-			edit.getDrawable().setTint(ThemeManager.isLight() ? Color.BLACK : Color.WHITE);
-			edit.setOnClickListener(new View.OnClickListener() {
-
-					@Override
-					public void onClick(View v) {
-						((DayFragment) fragment).showDialog(position);
-					}
-				});
 		}
     }
 }

@@ -43,9 +43,7 @@ public class DayFragment extends Fragment implements RecyclerAdapter.OnItemClick
 
     @Override
     public void onItemClick(View v, int position) {
-		SubjectItem item = adapter.getItem(position);
-		item.setExpanded(!item.isExpanded());
-		adapter.notifyItemChanged(position);
+		showDialog(position);
     }
 
     @Override

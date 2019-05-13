@@ -48,7 +48,7 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		twoCollumns = AppGlobal.preferences.getBoolean("two_collumns", true);
+		twoCollumns = AppGlobal.preferences.getBoolean("two_collumns", false);
 	}
 	
     @Override

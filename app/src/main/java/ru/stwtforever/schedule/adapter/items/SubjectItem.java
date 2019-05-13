@@ -1,14 +1,15 @@
 package ru.stwtforever.schedule.adapter.items;
+import android.support.annotation.*;
 import org.json.*;
-import ru.stwtforever.schedule.common.*;
 
 public class SubjectItem extends Item {
 	
-    public int id;
-    public String name;
-    public String cab;
-    public String homework;
-	public int day;
+    private int id;
+    private String name;
+    private String cab;
+    private String homework;
+	private int day;
+	private @ColorInt int color = -1;
     
 	public SubjectItem() {}
 	
@@ -27,6 +28,14 @@ public class SubjectItem extends Item {
         this.id = id;
 		this.day = day;
     }
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
+	public @ColorInt int getColor() {
+		return color;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -67,5 +76,7 @@ public class SubjectItem extends Item {
 	public int getDay() {
 		return day;
 	}
+	
+	
 }
 

@@ -57,6 +57,7 @@ public class AppGlobal extends Application {
 				SubjectItem item = subjects.get(i);
 				String s = "{\n" +
 					"     \"id\": " + item.getId() + ",\n" +
+					"     \"color\": " + item.getColor() + ",\n" +
 					"     \"name\": \"" + item.getName() + "\",\n" +
 					"     \"cab\": \"" + item.getCab() + "\",\n" +
 					"     \"homework\": \"" + item.getHomework() + "\",\n" +

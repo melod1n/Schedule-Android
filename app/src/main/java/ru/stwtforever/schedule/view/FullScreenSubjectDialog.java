@@ -10,15 +10,15 @@ import android.support.v7.widget.*;
 import android.text.*;
 import android.view.*;
 import android.widget.*;
+import java.util.*;
 import ru.stwtforever.schedule.*;
 import ru.stwtforever.schedule.adapter.items.*;
 import ru.stwtforever.schedule.common.*;
-import ru.stwtforever.schedule.db.*;
+import ru.stwtforever.schedule.util.*;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
-import ru.stwtforever.schedule.util.*;
 
 public class FullScreenSubjectDialog extends DialogFragment {
 
@@ -28,6 +28,7 @@ public class FullScreenSubjectDialog extends DialogFragment {
 	private EditText name, cab, homework;
 
 	private boolean edit;
+	private int color;
 
 	private SubjectItem item;
 
@@ -78,9 +79,29 @@ public class FullScreenSubjectDialog extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 		initViews(view);
 
-		name.setFocusableInTouchMode(true);
-		cab.setFocusableInTouchMode(true);
+		HorizontalColorPicker picker = view.findViewById(R.id.picker);
 
+		ArrayList<Integer> colors = new ArrayList<>();
+		String[] arr = getResources().getStringArray(R.array.notes_colors);
+
+		for (String s : arr)
+			colors.add(Color.parseColor(s));
+
+		picker.setColors(colors);
+		
+		if (edit) {
+			picker.setSelectedColor(item.getColor());
+			this.color = picker.getSelectedColor();
+		}
+		
+		picker.setOnChoosedColorListener(new HorizontalColorPicker.OnChoosedColorListener() {
+
+				@Override
+				public void onChoosedColor(int position, int color) {
+					FullScreenSubjectDialog.this.color = color;
+				}
+			});
+		
 		name.addTextChangedListener(new TextWatcher() {
 
 				@Override
@@ -116,46 +137,20 @@ public class FullScreenSubjectDialog extends DialogFragment {
 			cab.setText(item.getCab());
 			homework.setText(item.getHomework());
 			name.setSelection(name.getText().length());
-			
-			MenuItem delete = toolbar.getMenu().add(R.string.delete);
-			delete.setIcon(ContextCompat.getDrawable(getContext(), R.drawable.trash_can_outline));
-			delete.getIcon().setTint(color);
-			delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		}
 		
-		ViewUtil.showKeyboard(name);
-
-		MenuItem done = toolbar.getMenu().add(R.string.done);
-		done.setIcon(ContextCompat.getDrawable(getContext(), R.drawable.md_done));
-		done.getIcon().setTint(color);
-		done.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
+		MenuItem delete = toolbar.getMenu().add(R.string.delete);
+		delete.setIcon(ContextCompat.getDrawable(getContext(), R.drawable.trash_can_outline));
+		delete.getIcon().setTint(color);
+		delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
 
 				@Override
 				public boolean onMenuItemClick(MenuItem i) {
 					if (i.getTitle().toString().equals(getString(R.string.delete))) {
 						showConfirmDeleteDialog();
-					} else if (i.getTitle().toString().equals(getString(R.string.done))) {
-						String name_ = name.getText().toString().trim();
-						String cab_ = cab.getText().toString().trim();
-						String hw_ = homework.getText().toString().trim();
-
-						if (!edit)
-							item = new SubjectItem();
-
-						item.setName(name_);
-						item.setCab(cab_);
-						item.setHomework(hw_);
-
-						if (name.getText().toString().trim().isEmpty()) return false;
-						
-						if (listener != null)
-							listener.onDone(item);
-
-						dismiss();
 					}
-					
 					return true;
 				}
 			});
@@ -177,7 +172,7 @@ public class FullScreenSubjectDialog extends DialogFragment {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					if (listener != null)
+					if (listener != null && edit)
 						listener.onDone(null);
 
 					dismiss();
@@ -186,6 +181,34 @@ public class FullScreenSubjectDialog extends DialogFragment {
 
 		adb.create().show();
     }
+
+	@Override
+	public void onDismiss(DialogInterface dialog) {
+		String name_ = name.getText().toString().trim();
+		String cab_ = cab.getText().toString().trim();
+		String hw_ = homework.getText().toString().trim();
+
+		if (name_.isEmpty()) {
+			super.onDismiss(dialog);
+			return;
+		}
+		
+		if (!edit)
+			item = new SubjectItem();
+			
+		if (color == 0)
+			color = ThemeManager.getAccent();
+		
+		item.setName(name_);
+		item.setCab(cab_);
+		item.setHomework(hw_);
+		item.setColor(color);
+
+		if (listener != null)
+			listener.onDone(item);
+			
+		super.onDismiss(dialog);
+	}
 
 	public interface OnDoneListener {
 		void onDone(SubjectItem item);
