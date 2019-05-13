@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- untranslatable -->
+    <string name="app_name" translatable="false">Schedule</string>
+    <string name="sync" translatable="false">Schedule Sync</string>
+    <string name="github" translatable="false">GitHub</string>
+    <string name="todo" translatable="false">TODO</string>
+    <string name="id" translatable="false">Id</string>
+	<string name="schedule_sync" translatable="false">Schedule Sync</string>
+   
+	<!-- buttons -->
+	<string name="next">Next</string>
+	<string name="exit">Exit</string>
+	<string name="done">Done</string>
+	
+	<!-- activities titles -->
+	<string name="settings">Settings</string>
+	<string name="create_bells_title">Create bells</string>
+	
+	<!-- alert titles -->
+	<string name="input_valid_data">Input valid data!</string>
+	<string name="input_data">Input data</string>
+	<string name="warning">Warning!</string>
+	<string name="error">Error!</string>
+	<string name="lessons_start">Lesson\'s start</string>
+	
+	<!-- alert messages -->
+	<string name="confirm_delete_text">Do you really want delete this?</string>
+    <string name="loading">Loading&#8230;</string>
+	<string name="create_bells_auto_confirm">Create timetable automatically?</string>
+	
+	<!-- timepicker -->
+	<string name="tp_hour">hour</string>
+	<string name="tp_minute">minute</string>
+	
+	<!-- days of week -->
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="name">Name</string>
+	
+	<!-- schedule item -->
+    <string name="cab">Cab</string>
+	<string name="subject">Subject</string>
+    <string name="homework">Homework</string>
+	
+	<!-- people item -->
+    <string name="number">Number</string>
+    <string name="important">Important</string>
+    <string name="friends">Friends</string>
+    <string name="teachers">Teachers</string>
+	<string name="dial_number_confirmation">Dial this number?</string>
+	
+	<!-- timetable item -->
+	<string name="start">Start</string>
+    <string name="end">End</string>
+	<string name="confirm_recreate_bells">Do you really want to recreate bells?</string>
+	<string name="delete_all">Delete all</string>
+	<string name="recreate_bells">Recreate bells</string>
+	<string name="recreate_all_bells">Recreate all bells</string>
+	<string name="lesson">Lesson</string>
+	<string name="break_">Break</string>
+	<string name="bell" translatable="false"><b>%1$s</b> - <b>%2$s</b></string>
+	
+	<!-- alert buttons -->
+    <string name="add">Add</string>
+    <string name="edit">Edit</string>
+	<string name="delete">Delete</string>
+	<string name="no">No</string>
+	<string name="yes">Yes</string>
+	<string name="show">Show</string>
+	<string name="copy">Copy</string>
+	
+	<!-- nav items -->
+    <string name="timetable">Timetable</string>
+	<string name="people">People</string>
+	<string name="schedule">Schedule</string>
+	
+	<!-- setup screen strings -->
+    <string name="input_setup_data_below">Please enter the necessary data below:</string>
+	<string name="start_lessons_time">Start time</string>
+    <string name="set_lessons_start_time_message">Set time when your lessons start\'s</string>
+	<string name="input_data_msg">Input all data!</string>
+	
+	<!-- permissions -->
+    <string name="permissions_required">Permissions required</string>
+    <string name="schedule_uses_perm_text">Schedule uses your external storage for operations with <b>database</b></string>
+	
+	<!-- about -->
+    <string name="danil_nikolaev">Danil Nikolaev</string>
+    <string name="creator_programmer_dn">Developer</string>
+	<string name="handler_programmer">\@handlerug</string>
+	<string name="api_help_hp">Help</string>
+    <string name="source">Source Code</string>
+	<string name="version_about" formatted="false">Version %s Build %d</string>
+	<string name="application">Application</string>
+	<string name="about">About</string>
+	
+	<!-- OTA -->
+	<string name="no_updates">No updates</string>
+	
+	<!-- Crash manager -->
+	<string name="cause_error">Application crashed</string>
+	<string name="error_log">Log with error was saved</string>
+	
+	<!-- settings -->
+	<string name="set_lessons_time">Set lessons time</string>
+	<string name="input_ls_br_length">Input lesson and break length</string>
+	
+	<!-- other -->
+	<string name="empty">Empty</string>
+	<string name="data">Data</string>
+	
+	<string name="setup_bells">Do you want to setup bells?</string>
+	
+	<string name="tester">Tester</string>
+	<string name="creative_designer">Creative Designer</string>
+	<string name="sub_name">Subject name</string>
+	<string name="notes">Notes</string>
+	<string name="set_one_collumn">Set one column</string>
+	<string name="set_two_collumns">Set two columns</string>
+	
+	<string name="interface_title">Interface</string>
+	<string name="dark_theme">Dark theme</string>
+	
+	<string name="auto">Auto</string>
+	<string name="manual">Manual</string>
+	<string name="lesson_setup">Lesson</string>
+	<string name="hello">Hello!</string>
+	<string name="necessary_data">Necessary data</string>
+	<string name="classes_start_time">Classes start time</string>
+	<string name="timetable_list">Timetable</string>
+	<string name="permissions">Permissions</string>
+	<string name="done_msg">Done!</string>
+	
+	<string name="setup_1">Let\'s do the initial setup of the application</string>
+	<string name="setup_2">Please enter the duration of your lesson and break (min.)</string>
+	<string name="setup_3">Please enter a start time of your classes</string>
+	<string name="setup_4">Do you want to setup timetable?</string>
+	<string name="setup_5">For the full functioning of the application, it needs permissions</string>
+	<string name="setup_6">Initial setup is complete. Thank you for installing our application.\nGood luck ;)</string>
+	
+	<string name="title">Title</string>
+	<string name="text">Text</string>
+	
+	<string name="bells_count">Bells count</string>
+	<string name="theme">Theme</string>
+	
+	<string name="confirm_recreate_bells_on_day">Do you really want to recreate bells on %s?</string>
+</resources>

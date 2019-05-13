@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/item_main"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:gravity="center_vertical"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:background="?selectableItemBackground"
+		android:layout_height="wrap_content"
+		android:paddingEnd="10dp"
+		android:paddingStart="10dp"
+		android:paddingBottom="4dp"
+		android:paddingTop="4dp"
+		android:orientation="vertical"
+		android:layout_width="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_weight="1.0"
+				android:text="@string/subject"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="60dp"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="10dp"
+				android:text="@string/cab"
+				android:textSize="10sp"
+				android:id="@+id/cab_title"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:weightSum="1.0">
+
+			<TextView
+				android:id="@+id/name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_weight="1.0"
+				android:maxLines="1"
+				android:textSize="14sp"
+				android:textStyle="bold"
+				tools:text="Jopa"/>
+
+			<TextView
+				android:id="@+id/cab"
+				android:layout_width="60dp"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_weight="0"
+				android:textSize="14sp"
+				android:textStyle="italic"
+				tools:text="Jopa"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/tools">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="10dp"
+			android:id="@+id/homework"
+			android:visibility="visible"
+			android:layout_weight="1.0"
+			android:layout_marginStart="10dp"/>
+
+		<ImageButton
+			android:layout_width="25dp"
+			android:background="?selectableItemBackgroundBorderless"
+			android:layout_height="match_parent"
+			android:src="@drawable/ic_pencil_outline"
+			android:padding="10dp"
+			android:tint="?tabSelectedTextColor"
+			android:layout_gravity="top"
+			android:id="@+id/edit"
+			android:layout_marginEnd="10dp"
+			android:layout_marginStart="4dp"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+

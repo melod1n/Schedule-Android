@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.stwtforever.schedule" >
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+		
+    <application
+		android:allowBackup="true"
+		android:name=".common.AppGlobal"
+		android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+		android:resizeableActivity="false">
+        <activity
+            android:name=".MainActivity"
+			android:theme="@style/AppTheme.Light"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		
+		<activity 
+			android:configChanges="keyboardHidden|orientation|screenSize"
+			android:name=".NoteActivity"
+			android:windowSoftInputMode="stateVisible|adjustResize"
+			android:theme="@style/AppTheme.Light" />
+		
+		<activity
+			android:configChanges="keyboardHidden|orientation|screenSize"
+			android:name=".CreateBellsActivity" 
+			android:label="@string/create_bells_title" />
+		
+		<activity 
+			android:name=".SettingsActivity"
+			android:label="@string/settings" />
+		
+		<activity
+			android:name=".AboutActivity"
+			android:theme="@style/AppTheme.About.Light" />
+		
+		<activity
+			android:name=".ShortcutActivity"
+			android:theme="@style/AppTheme.Light" />
+		
+		<activity
+			android:configChanges="keyboardHidden|orientation|screenSize"
+			android:name=".SetupActivity"
+			android:theme="@style/AppTheme.Light" />
+    </application>
+
+</manifest>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<android.support.v7.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="?actionBarSize"
+		android:paddingEnd="16dp"
+		android:paddingStart="6dp"
+		app:contentInsetStartWithNavigation="0dp"
+		app:navigationIcon="@drawable/ic_close"/>
+
+	<LinearLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:orientation="vertical"
+		android:layout_marginTop="16dp"
+		android:paddingStart="10dp"
+		android:paddingEnd="10dp">
+
+		<EditText
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="36sp"
+			android:gravity="center_vertical"
+			android:background="@android:color/transparent"
+			android:paddingStart="10dp"
+			android:paddingEnd="10dp"
+			android:maxLines="3"
+			android:id="@+id/subject_name"
+			android:hint="@string/subject"
+			android:ems="10"/>
+
+		<EditText
+			android:layout_width="match_parent"
+			android:background="@android:color/transparent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="10dp"
+			android:hint="@string/cab"
+			android:paddingEnd="10dp"
+			android:paddingStart="10dp"
+			android:paddingTop="20dp"
+			android:paddingBottom="20dp"
+			android:id="@+id/subject_cab"
+			android:textSize="24sp"
+			android:singleLine="true"/>
+
+		<EditText
+			android:background="@android:color/transparent"
+			android:layout_width="match_parent"
+			android:inputType="textMultiLine"
+			android:layout_height="match_parent"
+			android:layout_marginTop="10dp"
+			android:id="@+id/subject_homework"
+			android:gravity="top"
+			android:padding="10dp"
+			android:hint="@string/homework"/>
+
+	</LinearLayout>
+
+</LinearLayout>
+
