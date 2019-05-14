@@ -88,7 +88,7 @@ public class AboutAdapter extends RecyclerAdapter<AboutItem, AboutAdapter.ViewHo
 				});
 			
 			if (item.isExpanded()) {
-				boolean dark = Utils.isDark(item.getSelectedColor());
+				boolean dark = ColorUtil.isDark(item.getSelectedColor());
 				
 				card.setCardBackgroundColor(item.getSelectedColor());
 				
@@ -101,7 +101,7 @@ public class AboutAdapter extends RecyclerAdapter<AboutItem, AboutAdapter.ViewHo
 				name.setTextColor(dark ? Color.WHITE : Color.DKGRAY);
 				job.setTextColor(dark ? Color.LTGRAY : Color.GRAY);
 			} else {
-				boolean dark = Utils.isDark(cardColor);
+				boolean dark = ColorUtil.isDark(cardColor);
 				
 				if (item.icon == null) {
 					icon.setImageDrawable(null);

@@ -76,7 +76,7 @@ public class SubjectAdapter extends RecyclerAdapter<SubjectItem, SubjectAdapter.
 			
 			num.getBackground().setTint(item.getColor() == 0 ? ThemeManager.getAccent() : item.getColor());
 			
-			num.setTextColor(Utils.isLight(item.getColor()) ? Color.BLACK : Color.WHITE);
+			num.setTextColor(ColorUtil.isLight(item.getColor()) ? Color.BLACK : Color.WHITE);
 			
 			name.setText(item.getName());
 			cab.setText(item.getCab());

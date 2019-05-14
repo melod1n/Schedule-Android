@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 	}
 
 	private void checkFirstLaunch() {
-		if (Utils.isFirstLaunch()) {
+		if (Util.isFirstLaunch()) {
 			startSetupActivity();
 		} else {
 			Intent intent = getIntent();
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 								@Override
 								public void onClick(DialogInterface p1, int p2) {
-									Utils.copyText(trace);
+									Util.copyText(trace);
 								}
 							});
 						adb.create().show();
@@ -275,6 +275,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         return true;
     }
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 487 && resultCode == RESULT_OK) {
+			nf.onActivityResult(requestCode, resultCode, data);
+		}
+	}
 
 	@Override
 	protected void onDestroy() {

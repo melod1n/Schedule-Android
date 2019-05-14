@@ -208,7 +208,7 @@ public class HorizontalColorPicker extends RecyclerView {
 				circle.setImageDrawable(new ColorDrawable(item.getColor()));
 				circle.setBorderWidth(2);
 				
-				int borderColor = item.getColor() == Color.BLACK ? item.isSelected() ? Color.WHITE : ColorUtil.lightenColor(item.getColor()) : item.getColor() == Color.WHITE ? item.isSelected() ? Color.BLACK : ColorUtil.darkenColor(item.getColor()) : Utils.isDark(item.getColor()) ? Utils.manipulateColor(item.getColor(), 2) : ColorUtil.darkenColor(item.getColor());
+				int borderColor = item.getColor() == Color.BLACK ? item.isSelected() ? Color.WHITE : ColorUtil.lightenColor(item.getColor()) : item.getColor() == Color.WHITE ? item.isSelected() ? Color.BLACK : ColorUtil.darkenColor(item.getColor()) : ColorUtil.isDark(item.getColor()) ? ColorUtil.lightenColor(item.getColor()) : ColorUtil.darkenColor(item.getColor());
 				
 				circle.setBorderColor(borderColor);
 				selected.getDrawable().setTint(borderColor);

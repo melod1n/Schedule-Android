@@ -47,7 +47,7 @@ public class DayTabFragment extends Fragment {
         tabs.setupWithViewPager(pager);
 		
 		if (AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SELECT_CURRENT_DAY, true))
-			pager.setCurrentItem(Utils.getNumOfCurrentDay());
+			pager.setCurrentItem(Util.getNumOfCurrentDay());
     }
 	
     private void initViews(View root) {

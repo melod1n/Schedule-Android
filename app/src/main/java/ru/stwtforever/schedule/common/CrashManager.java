@@ -36,7 +36,7 @@ public class CrashManager {
 
         trace += "\nLog below: \n\n";
         trace += Log.getStackTraceString(ex);
-        Utils.copyText(trace);
+        Util.copyText(trace);
 
         String path = Environment.getExternalStorageDirectory() + "/Schedule/crash_logs";
 

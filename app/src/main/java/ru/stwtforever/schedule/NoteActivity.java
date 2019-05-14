@@ -125,14 +125,21 @@ public class NoteActivity extends AppCompatActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		MenuItem delete = menu.getItem(0);
 		
-		delete.getIcon().setTint(Utils.isDark(color) ? Color.WHITE : Color.BLACK);
+		delete.getIcon().setTint(ColorUtil.isDark(color) ? Color.WHITE : Color.BLACK);
 		return super.onPrepareOptionsMenu(menu);
 	}
-
+/*
 	@Override
 	protected void onDestroy() {
 		postData();
 		super.onDestroy();
+	}
+*/
+	@Override
+	public void onBackPressed() {
+		postData();
+		finish();
+		//super.onBackPressed();
 	}
 
 	private void showConfirmDeleteDialog() {
@@ -152,7 +159,7 @@ public class NoteActivity extends AppCompatActivity {
 					delete = true;
 					
 					CacheStorage.delete(DatabaseHelper.TABLE_NOTES, "id=" + item.getId());
-					finish();
+					onBackPressed();
 				}
 			}).create().show();
 	}
@@ -163,13 +170,21 @@ public class NoteActivity extends AppCompatActivity {
 		int newColor = color;
 
 		if (!delete && TextUtils.isEmpty(newTitle) && TextUtils.isEmpty(newText)) return;
-		EventBus.getDefault().postSticky(delete ? new Object[] {"delete_note", item.getId()} : new Object[] {add ? "add_note" : "edit_note", newTitle, newText, newColor, add ? -1 : position});
+		
+		Intent intent = new Intent();
+		intent.putExtra("action", add ? "add" : delete ? "delete" : "edit" );
+		intent.putExtra("title", newTitle);
+		intent.putExtra("text", newText);
+		intent.putExtra("color", newColor);
+		intent.putExtra("id", item == null ? -1 : item.getId());
+		intent.putExtra("position", position);
+		setResult(RESULT_OK, intent);
 	}
 
 	private void setColor(int color) {
 		this.color = color;
 
-		int textColor = Utils.isDark(color) ? Color.WHITE : Color.BLACK;
+		int textColor = ColorUtil.isDark(color) ? Color.WHITE : Color.BLACK;
 		
 		title.setTextColor(textColor);
 		text.setTextColor(textColor);

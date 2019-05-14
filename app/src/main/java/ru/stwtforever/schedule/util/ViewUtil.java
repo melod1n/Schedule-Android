@@ -35,7 +35,7 @@ public class ViewUtil {
 		int light_sb = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
 		int light_nb = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
 		
-		boolean light = Utils.isLight(color);
+		boolean light = ColorUtil.isLight(color);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
 			w.getDecorView().setSystemUiVisibility(light ? light_sb : 0);
@@ -78,7 +78,7 @@ public class ViewUtil {
 			a.setTheme(ThemeManager.getCurrentTheme());
 		}
 
-		if (!Utils.isLight(sb_color)) {
+		if (!ColorUtil.isLight(sb_color)) {
 			w.getDecorView().setSystemUiVisibility(0);
 			w.setStatusBarColor(sb_color);
 			w.setNavigationBarColor(sb_color);
@@ -107,7 +107,7 @@ public class ViewUtil {
 	}
 	
 	public static void applyToolbarStyles(Toolbar tb) {
-		tb.setTitleTextColor(Utils.isLight(ThemeManager.getPrimary()) ? Color.BLACK : Color.WHITE);
+		tb.setTitleTextColor(ColorUtil.isLight(ThemeManager.getPrimary()) ? Color.BLACK : Color.WHITE);
 		
 		if (tb.getNavigationIcon() != null) {
 			tb.getNavigationIcon().setTint(ThemeManager.isLight() ? Color.BLACK : Color.WHITE);

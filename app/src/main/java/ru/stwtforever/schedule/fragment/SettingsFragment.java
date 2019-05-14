@@ -78,8 +78,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 	}
 
 	@Override
-	public boolean onPreferenceChange(Preference pref, Object newValue) {
-		switch (pref.getKey()) {
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
+		switch (preference.getKey()) {
 			
 		}
 		return true;
@@ -88,7 +88,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 	private void switchTheme(boolean newValue) {
 		ThemeManager.switchTheme(newValue);
 
-		Utils.restart(getActivity(), new Intent().putExtra("from_settings", true), true);
+		Util.restart(getActivity(), new Intent().putExtra("from_settings", true), true);
 	}
 
 	private void showStartLessonsDialog() {

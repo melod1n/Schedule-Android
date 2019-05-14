@@ -92,6 +92,9 @@ public class FullScreenSubjectDialog extends DialogFragment {
 		if (edit) {
 			picker.setSelectedColor(item.getColor());
 			this.color = picker.getSelectedColor();
+		} else {
+			picker.setSelectedColor(Color.BLACK);
+			this.color = Color.BLACK;
 		}
 		
 		picker.setOnChoosedColorListener(new HorizontalColorPicker.OnChoosedColorListener() {

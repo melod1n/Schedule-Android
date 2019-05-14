@@ -6,7 +6,6 @@ import android.support.design.widget.*;
 import android.text.*;
 import android.view.*;
 import android.widget.*;
-import okhttp3.internal.*;
 import ru.stwtforever.schedule.*;
 import ru.stwtforever.schedule.util.*;
 import android.support.v7.widget.AppCompatButton;
@@ -175,8 +174,8 @@ public class TimePickerDialog extends BottomSheetDialog {
     }
 
     public void setHintTime(int hours, int minutes) {
-        this.hours.setHint(Utils.leadingZero(hours));
-        this.minutes.setHint(Utils.leadingZero(minutes));
+        this.hours.setHint(Util.leadingZero(hours));
+        this.minutes.setHint(Util.leadingZero(minutes));
     }
 
     public void setHintNum(int num) {
@@ -187,8 +186,8 @@ public class TimePickerDialog extends BottomSheetDialog {
         this.HOURS = hours;
         this.MINUTES = minutes;
         this.NUM = -1;
-        this.hours.setText(Utils.leadingZero(hours));
-        this.minutes.setText(Utils.leadingZero(minutes));
+        this.hours.setText(Util.leadingZero(hours));
+        this.minutes.setText(Util.leadingZero(minutes));
         this.hours.setSelection(this.hours.getText().length());
         this.hours.requestFocus();
     }

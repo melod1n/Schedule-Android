@@ -19,7 +19,6 @@ import ru.stwtforever.schedule.util.*;
 import ru.stwtforever.schedule.view.*;
 
 import ru.stwtforever.schedule.util.ViewUtil;
-import ru.stwtforever.schedule.view.TimePicker;
 import org.greenrobot.eventbus.*;
 
 public class SetupActivity extends AppCompatActivity {
@@ -38,7 +37,7 @@ public class SetupActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (!Utils.isFirstLaunch()) {
+		if (!Util.isFirstLaunch()) {
 			startMainActivity();
 		}
 
@@ -56,7 +55,7 @@ public class SetupActivity extends AppCompatActivity {
 
 		init();
 	}
-	
+
 	private void init() {
 		switch (stage) {
 			case 0:
@@ -99,10 +98,10 @@ public class SetupActivity extends AppCompatActivity {
 
 	private void initFirst() {
 		initView();
-		
+
 		fab.show();
 		fab.setEnabled(true);
-		
+
 		setFabClick();
 
 		final HorizontalColorPicker picker = v.findViewById(R.id.picker);
@@ -121,7 +120,7 @@ public class SetupActivity extends AppCompatActivity {
 
 	private void initSecond() {
 		initView();
-		
+
 		fab.show();
 		fab.setEnabled(true);
 
@@ -137,7 +136,7 @@ public class SetupActivity extends AppCompatActivity {
 				@Override
 				public void onClick(View p1) {
 					TimePickerDialog subject = new TimePickerDialog(SetupActivity.this);
-					
+
 					if (l != -1) {
 						subject.setHintNum(l);
 						subject.setNum(l);
@@ -189,7 +188,7 @@ public class SetupActivity extends AppCompatActivity {
 
 		fab.show();
 		fab.setEnabled(true);
-		
+
 		Button input = v.findViewById(R.id.input);
 
 		if (h == -1 || m == -1)
@@ -208,7 +207,7 @@ public class SetupActivity extends AppCompatActivity {
 						dialog.setHintTime(h, m);
 					} else 
 						dialog.setHintTime(0, 0);
-					
+
 					dialog.setOnChoosedTimeListener(new TimePickerDialog.OnChoosedTimeListener() {
 
 							@Override
@@ -232,7 +231,7 @@ public class SetupActivity extends AppCompatActivity {
 
 	private void initFourth() {
 		initView();
-		
+
 		fab.show();
 		fab.setEnabled(true);
 
@@ -257,7 +256,7 @@ public class SetupActivity extends AppCompatActivity {
 
 	private void initFiveth() {
 		initView();
-		
+
 		fab.show();
 		fab.setEnabled(true);
 
@@ -277,7 +276,7 @@ public class SetupActivity extends AppCompatActivity {
 
 				@Override
 				public void onClick(View p1) {
-					Utils.setFirstLaunch(false);
+					Util.setFirstLaunch(false);
 					finish();
 					startActivity(new Intent(SetupActivity.this, MainActivity.class));
 				}
@@ -314,7 +313,7 @@ public class SetupActivity extends AppCompatActivity {
 
 	private void switchTheme(boolean dark) {
 		ThemeManager.switchTheme(dark);
-		Utils.restart(this, true);
+		Util.restart(this, true);
 	}
 
 	@Override
@@ -326,7 +325,7 @@ public class SetupActivity extends AppCompatActivity {
 	}
 
 	private void startMainActivity() {
-		Utils.setFirstLaunch(false);
+		Util.setFirstLaunch(false);
 		startActivity(new Intent(this, MainActivity.class));
 		finish();
 	}
@@ -341,7 +340,7 @@ public class SetupActivity extends AppCompatActivity {
 			Manifest.permission.WRITE_EXTERNAL_STORAGE,
 			//Manifest.permission.READ_CONTACTS
 		};
-		PermissionHelper.requestPermissions(perms, Requests.REQUEST_GET_SETUP_PERMISSIONS);
+		PermissionHelper.requestPermissions(perms, 1);
 	}
 
 	private void showNumBell(final boolean manual) {
@@ -395,7 +394,7 @@ public class SetupActivity extends AppCompatActivity {
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-		if (requestCode == Requests.REQUEST_GET_SETUP_PERMISSIONS) {
+		if (requestCode == 1) {
 			stage++;
 			init();
 		}

@@ -112,6 +112,6 @@ public class AppGlobal extends Application {
 
 		if (!path.exists()) path.mkdirs();
 
-		Utils.createFile(path, "data.json", json);
+		Util.createFile(path, "data.json", json);
 	}
 }

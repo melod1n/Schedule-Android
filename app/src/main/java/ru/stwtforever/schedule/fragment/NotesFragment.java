@@ -21,6 +21,7 @@ import ru.stwtforever.schedule.util.*;
 
 import android.support.v7.widget.Toolbar;
 import ru.stwtforever.schedule.util.ViewUtil;
+import android.text.*;
 
 public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemClickListener, Toolbar.OnMenuItemClickListener {
 
@@ -37,12 +38,6 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 	private Toolbar tb;
 	
 	private boolean twoCollumns;
-	
-	@Override
-	public void onDestroy() {
-		EventBus.getDefault().unregister(this);
-		super.onDestroy();
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,60 +50,6 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_notes, container, false);
     }
-
-	@Subscribe (threadMode = ThreadMode.MAIN)
-	public void onReceive(Object[] data) {
-		String key = (String) data[0];
-		
-		switch (key) {
-			case "delete_note":
-				for (int i = 0; i < adapter.getItemCount(); i++) {
-					NoteItem item = adapter.getItem(i);
-
-					if (item.getId() == (int) data[1]) {
-						adapter.remove(i);
-						adapter.notifyDataSetChanged();
-
-						checkCount();
-						break;
-					}
-				}
-				break;
-			case "add_note":
-				String title = (String) data[1];
-				String text = (String) data[2];
-				int color = data[3];
-				
-				NoteItem item = new NoteItem();
-				item.setColor(color);
-				item.setTitle(title);
-				item.setText(text);
-
-				adapter.getValues().add(item);
-				adapter.notifyDataSetChanged();
-
-				checkCount();
-
-				CacheStorage.insert(DatabaseHelper.TABLE_NOTES, item);
-				break;
-			case "edit_note":
-				String newTitle = (String) data[1];
-				String newText = (String) data[2];
-				int newColor = data[3];
-				int position = data[4];
-				
-				NoteItem note = adapter.getItem(position);
-
-				note.setColor(newColor);
-				note.setTitle(newTitle.trim());
-				note.setText(newText.trim());
-
-				adapter.notifyDataSetChanged();
-
-				CacheStorage.update(DatabaseHelper.TABLE_NOTES, note, "id=?", note.getId());
-				break;
-		}
-	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -149,7 +90,6 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 			});
 
 		getNotes();
-		EventBus.getDefault().register(this);
 	}
 
 	private void initDragDrop() {
@@ -232,7 +172,7 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 			i.putExtra("item", adapter.getItem(position));
 		}
 
-		getActivity().startActivity(new Intent(getContext(), NoteActivity.class).putExtras(i));
+		getActivity().startActivityForResult(new Intent(getContext(), NoteActivity.class).putExtras(i), 487);
 	}
 
 	@Override
@@ -253,7 +193,60 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 		
 		return true;
 	}
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String key = data.getStringExtra("action");
+		if (TextUtils.isEmpty(key)) return;
+		switch (key) {
+			case "delete":
+				for (int i = 0; i < adapter.getItemCount(); i++) {
+					NoteItem item = adapter.getItem(i);
 
+					if (item.getId() == data.getIntExtra("id", 0)) {
+						adapter.remove(i);
+						adapter.notifyDataSetChanged();
+
+						checkCount();
+						break;
+					}
+				}
+				break;
+			case "add":
+				String title = data.getStringExtra("title");
+				String text = data.getStringExtra("text");
+				int color = data.getIntExtra("color", 0);
+
+				NoteItem item = new NoteItem();
+				item.setColor(color);
+				item.setTitle(title);
+				item.setText(text);
+
+				adapter.getValues().add(item);
+				adapter.notifyDataSetChanged();
+
+				checkCount();
+
+				CacheStorage.insert(DatabaseHelper.TABLE_NOTES, item);
+				break;
+			case "edit":
+				String newTitle = data.getStringExtra("title");
+				String newText = data.getStringExtra("text");
+				int newColor = data.getIntExtra("color", 0);
+				int position = data.getIntExtra("position", 0);
+
+				NoteItem note = adapter.getItem(position);
+
+				note.setColor(newColor);
+				note.setTitle(newTitle.trim());
+				note.setText(newText.trim());
+
+				adapter.notifyDataSetChanged();
+
+				CacheStorage.update(DatabaseHelper.TABLE_NOTES, note, "id=?", note.getId());
+				break;
+		}
+	}
+	
 	private void createAdapter(ArrayList<NoteItem> values) {
 		if (adapter == null) {
 			adapter = new NoteAdapter(getActivity(), values);

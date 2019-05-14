@@ -67,7 +67,7 @@ public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolde
 			
 			card.setCardBackgroundColor(item.getColor());
 			
-			int textColor = Utils.isDark(item.getColor()) ? Color.WHITE : Color.BLACK;
+			int textColor = ColorUtil.isDark(item.getColor()) ? Color.WHITE : Color.BLACK;
 
 			title.setTextColor(textColor);
 			text.setTextColor(textColor);

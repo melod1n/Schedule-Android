@@ -121,7 +121,7 @@ public class TimetableFragment extends Fragment implements Toolbar.OnMenuItemCli
 
 	private void expandCurrentDay() {
 		if (!AppGlobal.preferences.getBoolean(SettingsFragment.KEY_EXPAND_CURRENT_DAY, true)) return;
-		int currentDay = Utils.getNumOfCurrentDay();
+		int currentDay = Util.getNumOfCurrentDay();
 
 		for (int i = 0; i < 6; i++)
 			if (i != currentDay)
@@ -315,7 +315,7 @@ public class TimetableFragment extends Fragment implements Toolbar.OnMenuItemCli
 	private void showConfirmRecreateDialog(final int day) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
 		adb.setTitle(R.string.warning);
-		adb.setMessage(getString(R.string.confirm_recreate_bells_on_day, Utils.getStringDay(day)));
+		adb.setMessage(getString(R.string.confirm_recreate_bells_on_day, Util.getStringDay(day)));
 		adb.setNegativeButton(R.string.no, null);
 		adb.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 

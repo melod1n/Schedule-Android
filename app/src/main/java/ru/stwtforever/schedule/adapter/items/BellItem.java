@@ -34,38 +34,38 @@ public class BellItem {
 
     public String getStartHours() {
 		if (start == -1) return null;
-        return Utils.leadingZero((int) Math.floor(getStart() / 60));
+        return Util.leadingZero((int) Math.floor(getStart() / 60));
     }
 
     public String getEndHours() {
 		if (end == -1) return null;
-        return Utils.leadingZero((int) Math.floor(getEnd() / 60));
+        return Util.leadingZero((int) Math.floor(getEnd() / 60));
     }
 
     public String getStartMinutes() {
 		if (start == -1) return null;
         int hours_start = (int) Math.floor(getStart() / 60);
-        return Utils.leadingZero(((int) Math.floor(getStart() - hours_start * 60)));
+        return Util.leadingZero(((int) Math.floor(getStart() - hours_start * 60)));
     }
 
     public String getEndMinutes() {
 		if (end == -1) return null;
         int hours_end = (int) Math.floor(getEnd() / 60);
-        return Utils.leadingZero(((int) Math.floor(getEnd() - hours_end * 60)));
+        return Util.leadingZero(((int) Math.floor(getEnd() - hours_end * 60)));
     }
 
     public String getStartFull() {
         int hours_start = (int) Math.floor(getStart() / 60);
         int minutes_start = (int) Math.floor(getStart() - hours_start * 60);
 
-        return Utils.leadingZero(hours_start) + ":" + Utils.leadingZero(minutes_start);
+        return Util.leadingZero(hours_start) + ":" + Util.leadingZero(minutes_start);
     }
 
     public String getEndFull() {
         int hours_end = (int) Math.floor(getEnd() / 60);
         int minutes_end = (int) Math.floor(getEnd() - hours_end * 60);
 
-        return Utils.leadingZero(hours_end) + ":" + Utils.leadingZero(minutes_end);
+        return Util.leadingZero(hours_end) + ":" + Util.leadingZero(minutes_end);
     }
 	
 	public void setDay(int day) {

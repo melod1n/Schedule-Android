@@ -78,7 +78,7 @@ public class TimetableAdapter extends BaseExpandableListAdapter {
 		}
 		
 		TextView text = convertView.findViewById(R.id.title);
-		text.setText(Utils.getStringDay(groupPosition));
+		text.setText(Util.getStringDay(groupPosition));
 		
 		if (click != null)
 			convertView.setOnClickListener(new View.OnClickListener() {
