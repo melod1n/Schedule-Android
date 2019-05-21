@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
 
 public class JSONParser {
 
@@ -15,7 +16,7 @@ public class JSONParser {
         JSONObject result = null;
         try {
             connection = (HttpURLConnection) new java.net.URL(url).openConnection();
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
             builder = new StringBuilder();
 
             String line;

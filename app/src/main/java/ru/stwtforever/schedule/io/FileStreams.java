@@ -1,8 +1,20 @@
 package ru.stwtforever.schedule.io;
-import android.os.*;
-import java.io.*;
-import java.math.*;
-import ru.stwtforever.schedule.util.*;
+
+import android.os.Build;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.math.BigInteger;
+
+import ru.stwtforever.schedule.util.ArrayUtil;
 
 public class FileStreams {
     public static final char lineSeparatorChar = lineSeparator().charAt(0);
@@ -17,7 +29,6 @@ public class FileStreams {
 
     public static final BigInteger ONE_ZB = BigInteger.valueOf(ONE_EB).multiply(BigInteger.valueOf(1024L));
     public static final BigInteger ONE_YB = ONE_ZB.multiply(BigInteger.valueOf(1024L));
-    ;
 
     // only static methods
     private FileStreams() {
@@ -87,8 +98,8 @@ public class FileStreams {
      */
     public static void append(CharSequence from, File to) throws IOException {
         EasyStreams.write(from instanceof String
-						  ? ((String) from)
-						  : from.toString(), new FileWriter(to, true));
+                ? ((String) from)
+                : from.toString(), new FileWriter(to, true));
     }
 
     /**

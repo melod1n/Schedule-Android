@@ -1,6 +1,6 @@
 package ru.stwtforever.schedule.io;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
 
 public class BytesOutputStream extends ByteArrayOutputStream {
     /**

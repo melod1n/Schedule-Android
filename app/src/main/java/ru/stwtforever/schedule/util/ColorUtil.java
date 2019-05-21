@@ -1,8 +1,13 @@
 package ru.stwtforever.schedule.util;
 
-import android.graphics.*;
-import android.support.annotation.*;
-import java.util.regex.*;
+import android.graphics.Color;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+
+import java.util.regex.Pattern;
 
 
 /**
@@ -380,26 +385,26 @@ public class ColorUtil {
     private static int constrain(int amount, int low, int high) {
         return amount < low ? low : (amount > high ? high : amount);
     }
-	
-	public static boolean isLight(@ColorInt int color) {
-		return calculateLuminance(color) >= 0.5;
-	}
 
-	public static boolean isDark(@ColorInt int color) {
-		return calculateLuminance(color) < 0.5;
-	}
+    public static boolean isLight(@ColorInt int color) {
+        return calculateLuminance(color) >= 0.5;
+    }
 
-	public static boolean isValidHexColor(String color) {
-		return Pattern.matches("^#?([a-f0-9]{6}|[a-f0-9]{3})$", color);
-	}
-	
-	@ColorInt
-	public static int getRandomColor() {
-		int red = (int) (Math.random() * 256);
-		int green = (int) (Math.random() * 256);
-		int blue = (int) (Math.random() * 256);
+    public static boolean isDark(@ColorInt int color) {
+        return calculateLuminance(color) < 0.5;
+    }
 
-		return Color.rgb(red, green, blue);
-	}
+    public static boolean isValidHexColor(String color) {
+        return Pattern.matches("^#?([a-f0-9]{6}|[a-f0-9]{3})$", color);
+    }
+
+    @ColorInt
+    public static int getRandomColor() {
+        int red = (int) (Math.random() * 256);
+        int green = (int) (Math.random() * 256);
+        int blue = (int) (Math.random() * 256);
+
+        return Color.rgb(red, green, blue);
+    }
 
 }

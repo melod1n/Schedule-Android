@@ -1,25 +1,26 @@
 package ru.stwtforever.schedule.adapter;
 
-import android.content.*;
-import android.graphics.drawable.*;
-import android.support.annotation.*;
-import android.support.v7.widget.*;
-import android.view.*;
-import java.util.*;
-import android.support.v4.app.*;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.ColorInt;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
-extends RecyclerView.Adapter<VH> {
-    private ArrayList<T> values;
-    private ArrayList<T> cleanValues;
-
+        extends RecyclerView.Adapter<VH> {
     protected Context context;
     protected LayoutInflater inflater;
-	
-	protected Fragment fragment;
-	
-	protected OnItemClickListener click;
-	protected OnItemLongClickListener long_click;
+    protected Fragment fragment;
+    protected OnItemClickListener click;
+    protected OnItemLongClickListener long_click;
+    private ArrayList<T> values;
+    private ArrayList<T> cleanValues;
 
     public RecyclerAdapter(Context context, ArrayList<T> values) {
         this.context = context;
@@ -27,13 +28,13 @@ extends RecyclerView.Adapter<VH> {
 
         this.inflater = LayoutInflater.from(context);
     }
-	
-	public RecyclerAdapter(Fragment f, ArrayList<T> values) {
-		this.fragment = f;
-		this.context = fragment.getActivity();
-		this.values = values;
-		this.inflater = LayoutInflater.from(context);
-	}
+
+    public RecyclerAdapter(Fragment f, ArrayList<T> values) {
+        this.fragment = f;
+        this.context = fragment.getActivity();
+        this.values = values;
+        this.inflater = LayoutInflater.from(context);
+    }
 
     protected @ColorInt
     int getColor(int resId) {
@@ -49,40 +50,40 @@ extends RecyclerView.Adapter<VH> {
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-		updateListeners(holder.itemView, position);
-	}
-	
-	protected void updateListeners(View v, int i) {
-		if (click != null) {
-			initClick(v, i);
-		}
+        updateListeners(holder.itemView, position);
+    }
 
-		if (long_click != null) {
-			initLongClick(v, i);
-		}
-	}
+    protected void updateListeners(View v, int i) {
+        if (click != null) {
+            initClick(v, i);
+        }
+
+        if (long_click != null) {
+            initLongClick(v, i);
+        }
+    }
 
     @Override
     public int getItemCount() {
-		if (values == null) return -1;
+        if (values == null) return -1;
         return values.size();
     }
 
     public T getItem(int position) {
-		if (values == null) return null;
+        if (values == null) return null;
         return values.get(position);
     }
-	
-	public void remove(int i) {
-		getValues().remove(i);
-	}
-	
-	public void changeItems(ArrayList<T> items) {
-		this.values = items;
-	}
+
+    public void remove(int i) {
+        getValues().remove(i);
+    }
+
+    public void changeItems(ArrayList<T> items) {
+        this.values = items;
+    }
 
     public void filter(String query) {
-		if (values == null) return;
+        if (values == null) return;
         String lowerQuery = query.toLowerCase();
 
         if (cleanValues == null) {
@@ -118,41 +119,41 @@ extends RecyclerView.Adapter<VH> {
     public Drawable getDrawable(int res) {
         return context.getDrawable(res);
     }
-	
-	private void initClick(final View v, final int i) {
+
+    private void initClick(final View v, final int i) {
         v.setOnClickListener(new View.OnClickListener() {
 
-				@Override
-				public void onClick(View p1) {
-					click.onItemClick(v, i);
-				}
-			});
+            @Override
+            public void onClick(View p1) {
+                click.onItemClick(v, i);
+            }
+        });
     }
-	
-	private void initLongClick(final View v, final int position) {
-		v.setOnLongClickListener(new View.OnLongClickListener() {
 
-				@Override
-				public boolean onLongClick(View p1) {
-					long_click.onItemLongClick(v, position);
-					return click != null;
-				}
-			});
-	}
+    private void initLongClick(final View v, final int position) {
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View p1) {
+                long_click.onItemLongClick(v, position);
+                return click != null;
+            }
+        });
+    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.click = listener;
     }
-	
-	public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-		this.long_click = listener;
-	}
+
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.long_click = listener;
+    }
 
     public interface OnItemClickListener {
         void onItemClick(View v, int position);
     }
-	
-	public interface OnItemLongClickListener {
-		void onItemLongClick(View v, int position);
-	}
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(View v, int position);
+    }
 }

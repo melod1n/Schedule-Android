@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
-	
-	<PreferenceCategory android:title="@string/interface_title" />
-	
-	<SwitchPreference
-		android:key="dark_theme"
-		android:title="@string/dark_theme" />
-	
-	<CheckBoxPreference
-		android:key="expand_current_day"
-		android:defaultValue="true"
-		android:title="Expand current day"
-		android:summary="Expands current day after loading data on bells screen" />
-	
-	<CheckBoxPreference
-		android:key="select_current_day"
-		android:defaultValue="true"
-		android:title="Select current day"
-		android:summary="Selecting current day on schedule screen" />
-	
-	<ListPreference
-		android:key="open_on_start"
-		android:title="Open on start"
-		android:entries="@array/nav_items"
-		android:defaultValue="1"
-		android:entryValues="@array/nav_items_entries" />
-	
-	<PreferenceCategory android:title="@string/data" />
-	
-	<PreferenceScreen
-		android:title="@string/set_lessons_time"
-		android:key="lessons_start" />
-	
-	<PreferenceScreen
-		android:title="@string/input_ls_br_length"
-		android:key="lesson_break_length" />
-	
-	<PreferenceScreen
-		android:title="@string/bells_count"
-		android:key="bells_count" />
-	
-	<PreferenceCategory android:title="@string/application" />
-		
-	<CheckBoxPreference 
-		android:key="show_error"
-		android:title="Show error"
-		android:summary="Shows alert with error\'s description after app crash" 
-		android:defaultValue="false" />
-		
-	<PreferenceScreen
-		android:key="about"
-		android:title="@string/about" />
-	
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/interface_title" />
+
+    <SwitchPreference
+        android:key="dark_theme"
+        android:title="@string/dark_theme" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="expand_current_day"
+        android:summary="@string/expand_current_day_summary"
+        android:title="@string/expand_current_day_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="select_current_day"
+        android:summary="@string/select_current_day_summary"
+        android:title="@string/select_current_day_title" />
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/nav_items"
+        android:entryValues="@array/nav_items_entries"
+        android:key="open_on_start"
+        android:title="@string/open_on_start_title" />
+
+    <PreferenceCategory android:title="@string/data" />
+
+    <PreferenceScreen
+        android:key="lessons_start"
+        android:title="@string/set_lessons_time" />
+
+    <PreferenceScreen
+        android:key="lesson_break_length"
+        android:title="@string/input_ls_br_length" />
+
+    <PreferenceScreen
+        android:key="bells_count"
+        android:title="@string/bells_count" />
+
+    <PreferenceCategory android:title="@string/application" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="show_error"
+        android:summary="@string/show_error_summary"
+        android:title="@string/show_error_title" />
+
+    <PreferenceScreen
+        android:key="about"
+        android:title="@string/about" />
+
 </PreferenceScreen>

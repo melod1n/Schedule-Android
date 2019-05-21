@@ -5,22 +5,13 @@
 	<color name="accent">#2785D3</color>
 	<color name="background">#ffffff</color>
 	<color name="tab_text">#515151</color>
-	<color name="tab_selected">#000000</color>
-	
-	<color name="dark_primary">#262626</color>
+
+    <color name="dark_primary">#262626</color>
 	<color name="dark_primary_dark">#121212</color>
 	<color name="dark_background">#181818</color>
 	<color name="dark_tab_text">#B4B4B4</color>
 	<color name="dark_tab_selected">#ffffff</color>
-	
-	<color name="gray">#cccccc</color>
-	<color name="lightgray">#dddddd</color>
-    <color name="login_primary">#017fff</color>
-    <color name="login_primary_dark">#017fff</color>
-    <color name="login_accent">#FFFFFF</color>
-    <color name="login_bg">#017fff</color>
-    <color name="btn_choose">#67AEF5</color>
-	
+
     <color name="about_bg">#f2f2f2</color>
 	<color name="about_primary">@color/about_bg</color>
     <color name="about_primary_dark">#d9d9d9</color>
@@ -30,9 +21,7 @@
 	<color name="about_dark_primary_dark">#2D2D2D</color>
 	
     <color name="about_accent">#FFBE05</color>
-	
-    <color name="red_delete">#d50000</color>
-	
-	<color name="vk">#5181B8</color>
+
+    <color name="vk">#5181B8</color>
 	
 </resources>

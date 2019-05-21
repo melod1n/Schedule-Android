@@ -104,20 +104,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/abc_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="20dp"
-            android:paddingStart="30dp"
-            android:paddingTop="12dp"
-            android:paddingEnd="30dp"
-            android:paddingBottom="12dp"
-            android:text="Apply"
-			android:textColor="@android:color/white"
-            android:backgroundTint="?colorAccent"
-            android:tint="@android:color/white" />
+            android:paddingStart="60dp"
+            android:paddingTop="14dp"
+            android:paddingEnd="60dp"
+            android:paddingBottom="14dp"
+            android:text="@string/apply"
+            android:textColor="@android:color/white"
+            app:backgroundTint="?colorAccent"
+            app:cornerRadius="26dp"
+            app:icon="@drawable/md_done"
+            app:iconTint="@android:color/white" />
 
     </FrameLayout>
 

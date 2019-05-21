@@ -2,34 +2,18 @@
 <resources>
 	<!-- untranslatable -->
     <string name="app_name" translatable="false">Schedule</string>
-    <string name="sync" translatable="false">Schedule Sync</string>
-    <string name="github" translatable="false">GitHub</string>
-    <string name="todo" translatable="false">TODO</string>
-    <string name="id" translatable="false">Id</string>
-	<string name="schedule_sync" translatable="false">Schedule Sync</string>
-   
-	<!-- buttons -->
-	<string name="next">Next</string>
-	<string name="exit">Exit</string>
-	<string name="done">Done</string>
-	
-	<!-- alert titles -->
-	<string name="input_valid_data">Input valid data!</string>
-	<string name="input_data">Input data</string>
-	<string name="warning">Warning!</string>
-	<string name="error">Error!</string>
-	<string name="lessons_start">Lesson\'s start</string>
-	
-	<!-- alert messages -->
+
+    <!-- buttons -->
+
+    <!-- alert titles -->
+    <string name="warning">Warning!</string>
+
+    <!-- alert messages -->
 	<string name="confirm_delete_text">Do you really want delete this?</string>
-    <string name="loading">Loading&#8230;</string>
-	<string name="create_bells_auto_confirm">Create timetable automatically?</string>
-	
-	<!-- timepicker -->
-	<string name="tp_hour">hour</string>
-	<string name="tp_minute">minute</string>
-	
-	<!-- days of week -->
+
+    <!-- timepicker -->
+
+    <!-- days of week -->
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
@@ -37,23 +21,17 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
-    <string name="name">Name</string>
-	
-	<!-- schedule item -->
+
+    <!-- schedule item -->
     <string name="cab">Cab</string>
 	<string name="subject">Subject</string>
     <string name="homework">Homework</string>
 	
 	<!-- timetable item -->
-	<string name="start">Start</string>
-    <string name="end">End</string>
-	<string name="confirm_recreate_bells">Do you really want to recreate bells?</string>
-	<string name="delete_all">Delete all</string>
-	<string name="recreate_bells">Recreate bells</string>
+    <string name="confirm_recreate_bells">Do you really want to recreate bells?</string>
+    <string name="recreate_bells">Recreate bells</string>
 	<string name="recreate_all_bells">Recreate all bells</string>
-	<string name="lesson">Lesson</string>
-	<string name="break_">Break</string>
-	<string name="bell" translatable="false"><b>%1$s</b> - <b>%2$s</b></string>
+    <string name="bell" translatable="false"><b>%1$s</b> - <b>%2$s</b></string>
 	
 	<!-- alert buttons -->
     <string name="add">Add</string>
@@ -66,34 +44,24 @@
 	
 	<!-- nav items -->
     <string name="timetable">Timetable</string>
-	<string name="people">People</string>
-	<string name="schedule">Schedule</string>
+    <string name="schedule">Schedule</string>
 	<string name="settings">Settings</string>
 	
 	<!-- setup screen strings -->
-    <string name="input_setup_data_below">Please enter the necessary data below:</string>
-	<string name="start_lessons_time">Start time</string>
-    <string name="set_lessons_start_time_message">Set time when your lessons start\'s</string>
-	<string name="input_data_msg">Input all data!</string>
-	
-	<!-- permissions -->
-    <string name="permissions_required">Permissions required</string>
-    <string name="schedule_uses_perm_text">Schedule uses your external storage for operations with <b>database</b></string>
-	
-	<!-- about -->
+
+    <!-- permissions -->
+
+    <!-- about -->
     <string name="danil_nikolaev">Danil Nikolaev</string>
     <string name="creator_programmer_dn">Developer</string>
-	<string name="handler_programmer">\@handlerug</string>
-	<string name="api_help_hp">Help</string>
-    <string name="source">Source Code</string>
-	<string name="version_about" formatted="false">Version %s Build %d</string>
+    <string name="api_help_hp">Help</string>
+    <string name="version_about" formatted="false">Version %s Build %d</string>
 	<string name="application">Application</string>
 	<string name="about">About</string>
 	
 	<!-- OTA -->
-	<string name="no_updates">No updates</string>
-	
-	<!-- Crash manager -->
+
+    <!-- Crash manager -->
 	<string name="cause_error">Application crashed</string>
 	<string name="error_log">Log with error was saved</string>
 	
@@ -104,23 +72,18 @@
 	<!-- other -->
 	<string name="empty">Empty</string>
 	<string name="data">Data</string>
-	
-	<string name="setup_bells">Do you want to setup bells?</string>
-	
-	<string name="tester">Tester</string>
-	<string name="creative_designer">Creative Designer</string>
-	<string name="sub_name">Subject name</string>
-	<string name="notes">Notes</string>
-	<string name="set_one_collumn">Set one column</string>
-	<string name="set_two_collumns">Set two columns</string>
+
+    <string name="creative_designer">Creative Designer</string>
+    <string name="notes">Notes</string>
+	<string name="set_one_column">Set one column</string>
+	<string name="set_two_columns">Set two columns</string>
 	
 	<string name="interface_title">Interface</string>
 	<string name="dark_theme">Dark theme</string>
 	
 	<string name="auto">Auto</string>
 	<string name="manual">Manual</string>
-	<string name="lesson_setup">Lesson</string>
-	<string name="hello">Hello!</string>
+    <string name="hello">Hello!</string>
 	<string name="necessary_data">Necessary data</string>
 	<string name="classes_start_time">Classes start time</string>
 	<string name="timetable_list">Timetable</string>
@@ -138,7 +101,14 @@
 	<string name="text">Text</string>
 	
 	<string name="bells_count">Bells count</string>
-	<string name="theme">Theme</string>
-	
-	<string name="confirm_recreate_bells_on_day">Do you really want to recreate bells on %s?</string>
+
+    <string name="confirm_recreate_bells_on_day">Do you really want to recreate bells on %s?</string>
+    <string name="apply">Apply</string>
+    <string name="expand_current_day_title">Expand current day</string>
+	<string name="expand_current_day_summary">Expands current day after loading data on bells screen</string>
+	<string name="select_current_day_title">Select current day</string>
+	<string name="select_current_day_summary">Selecting current day on schedule screen</string>
+	<string name="show_error_summary">Shows alert with error\'s description after app crash</string>
+	<string name="show_error_title">Show error</string>
+	<string name="open_on_start_title">Open on start</string>
 </resources>

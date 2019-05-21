@@ -1,93 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" />
+
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="dialogCornerRadius">12dp</item>
+        <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
+        <item name="colorPrimary">@color/dark_primary</item>
+        <item name="colorPrimaryDark">@color/dark_primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/dark_background</item>
+        <item name="tabTextColor">@color/dark_tab_text</item>
+        <item name="tabSelectedTextColor">@color/dark_tab_selected</item>
+        <item name="tabIndicatorColor">?tabSelectedTextColor</item>
+    </style>
+
+    <style name="AppTheme.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="dialogCornerRadius">12dp</item>
+        <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
-		<item name="android:windowBackground">@color/background</item>
-		<item name="tbTheme">@style/AppTheme.Toolbar.Light</item>
-		<item name="tbPopup">@style/ThemeOverlay.AppCompat.Light</item>
-		<item name="tabTextColor">@color/tab_text</item>
-		<item name="tabSelectedTextColor">?colorAccent</item>
-		<item name="tabIndicatorColor">?tabSelectedTextColor</item>
-        <item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="tabTextColor">@color/tab_text</item>
+        <item name="tabSelectedTextColor">?colorAccent</item>
+        <item name="tabIndicatorColor">?tabSelectedTextColor</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.About.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="dialogCornerRadius">12dp</item>
+        <item name="colorPrimary">@color/about_primary</item>
+        <item name="colorPrimaryDark">@color/about_primary_dark</item>
+        <item name="colorAccent">@color/about_accent</item>
+        <item name="android:windowBackground">@color/about_bg</item>
+    </style>
+
+    <style name="AppTheme.About.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="dialogCornerRadius">12dp</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/about_dark_primary</item>
+        <item name="colorPrimaryDark">@color/about_dark_primary_dark</item>
+        <item name="colorAccent">@color/about_accent</item>
+        <item name="android:windowBackground">@color/about_dark_bg</item>
     </style>
 
-	<style name="AppTheme.Dark" parent="Theme.AppCompat">
-		<item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
-		<item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-		<item name="colorPrimary">@color/dark_primary</item>
-        <item name="colorPrimaryDark">@color/dark_primary_dark</item>
+    <style name="BottomSheet.Light" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="dialogCornerRadius">12dp</item>
         <item name="colorAccent">@color/accent</item>
-		<item name="android:windowBackground">@color/dark_background</item>
-		<item name="tbTheme">@style/AppTheme.Toolbar.Dark</item>
-		<item name="tbPopup">@style/ThemeOverlay.AppCompat.Dark</item>
-		<item name="tabTextColor">@color/dark_tab_text</item>
-		<item name="tabSelectedTextColor">@color/dark_tab_selected</item>
-		<item name="tabIndicatorColor">?tabSelectedTextColor</item>
-	</style>
-	
-	<style name="AppTheme.Light" parent="Theme.AppCompat.Light">
-		<item name="preferenceTheme">@style/AppTheme.PreferenceThemeOverlay</item>
-		<item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-		<item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
+    </style>
+
+    <style name="BottomSheet.Dark" parent="Theme.Design.BottomSheetDialog">
+        <item name="dialogCornerRadius">12dp</item>
         <item name="colorAccent">@color/accent</item>
-		<item name="android:windowBackground">@color/background</item>
-		<item name="tbTheme">@style/AppTheme.Toolbar.Light</item>
-		<item name="tbPopup">@style/ThemeOverlay.AppCompat.Light</item>
-		<item name="tabTextColor">@color/tab_text</item>
-		<item name="tabSelectedTextColor">?colorAccent</item>
-		<item name="tabIndicatorColor">?tabSelectedTextColor</item>
-	</style>
-	
-	<style name="AppTheme.Toolbar.Dark" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-		
-	</style>
-	
-	<style name="AppTheme.Toolbar.Light" parent="ThemeOverlay.AppCompat.ActionBar">
-		
-	</style>
-	
-	<style name="AppTheme.About.Light" parent="Theme.AppCompat.Light">
-		<item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-		<item name="colorPrimary">@color/about_primary</item>
-		<item name="colorPrimaryDark">@color/about_primary_dark</item>
-		<item name="colorAccent">@color/about_accent</item>
-		<item name="android:windowBackground">@color/about_bg</item>
-	</style>
-	
-	<style name="AppTheme.About.Dark" parent="Theme.AppCompat">
-		<item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-		<item name="colorPrimary">@color/about_dark_primary</item>
-		<item name="colorPrimaryDark">@color/about_dark_primary_dark</item>
-		<item name="colorAccent">@color/about_accent</item>
-		<item name="android:windowBackground">@color/about_dark_bg</item>
-	</style>
-	
-	<style name="BottomSheet.Light" parent="Theme.Design.Light.BottomSheetDialog">
-		<item name="colorAccent">@color/accent</item>
-	</style>
-	
-	<style name="BottomSheet.Dark" parent="Theme.Design.BottomSheetDialog">
-		<item name="colorAccent">@color/accent</item>
-	</style>
-	
-	<style name="AppTheme.PreferenceThemeOverlay" parent="PreferenceThemeOverlay.v14.Material">
-		<item name="android:layout">@layout/fragment_settings</item>
-	</style>
-	
-	<style name="AppTheme.FullScreenDialog.Light" parent="Theme.AppCompat.Light.Dialog">
+    </style>
+
+    <style name="AppTheme.PreferenceThemeOverlay" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="dialogCornerRadius">12dp</item>
+        <item name="android:layout">@layout/fragment_settings</item>
+    </style>
+
+    <style name="AppTheme.FullScreenDialog.Light" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="dialogCornerRadius">12dp</item>
         <item name="colorPrimaryDark">#B9B9B9</item>
         <item name="colorAccent">@color/accent</item>
         <item name="colorPrimary">@color/primary_dark</item>
@@ -95,8 +69,9 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="actionMenuTextColor">@color/accent</item>
     </style>
-	
-	<style name="AppTheme.FullScreenDialog.Dark" parent="Theme.AppCompat.Dialog">
+
+    <style name="AppTheme.FullScreenDialog.Dark" parent="Theme.MaterialComponents.Dialog">
+        <item name="dialogCornerRadius">12dp</item>
         <item name="colorPrimaryDark">@color/dark_primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="colorPrimary">@color/dark_primary</item>
@@ -109,5 +84,5 @@
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
-	
+
 </resources>

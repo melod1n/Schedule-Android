@@ -1,16 +1,32 @@
 package ru.stwtforever.schedule.db;
 
 
-import android.content.*;
-import android.database.*;
-import android.text.*;
-import java.util.*;
-import ru.stwtforever.schedule.adapter.items.*;
-import static ru.stwtforever.schedule.common.AppGlobal.*;
-import static ru.stwtforever.schedule.db.DatabaseHelper.*;
+import android.content.ContentValues;
+import android.database.Cursor;
+
+import java.util.ArrayList;
+
+import ru.stwtforever.schedule.adapter.items.BellItem;
+import ru.stwtforever.schedule.adapter.items.NoteItem;
+import ru.stwtforever.schedule.adapter.items.SubjectItem;
+
+import static ru.stwtforever.schedule.common.AppGlobal.database;
+import static ru.stwtforever.schedule.db.DatabaseHelper.CAB;
+import static ru.stwtforever.schedule.db.DatabaseHelper.COLOR;
+import static ru.stwtforever.schedule.db.DatabaseHelper.DAY;
+import static ru.stwtforever.schedule.db.DatabaseHelper.END;
+import static ru.stwtforever.schedule.db.DatabaseHelper.HOMEWORK;
+import static ru.stwtforever.schedule.db.DatabaseHelper.ID;
+import static ru.stwtforever.schedule.db.DatabaseHelper.NAME;
+import static ru.stwtforever.schedule.db.DatabaseHelper.START;
+import static ru.stwtforever.schedule.db.DatabaseHelper.TABLE_BELLS;
+import static ru.stwtforever.schedule.db.DatabaseHelper.TABLE_NOTES;
+import static ru.stwtforever.schedule.db.DatabaseHelper.TABLE_SUBJECTS;
+import static ru.stwtforever.schedule.db.DatabaseHelper.TEXT;
+import static ru.stwtforever.schedule.db.DatabaseHelper.TITLE;
 
 public class CacheStorage {
-	
+
     public static void checkOpen() {
         if (!database.isOpen()) {
             database = DatabaseHelper.get().getWritableDatabase();
@@ -63,79 +79,79 @@ public class CacheStorage {
         return cursor.getBlob(cursor.getColumnIndex(columnName));
     }
 
-	public static ArrayList<SubjectItem> getSubjects(int day) {
-		Cursor c = selectCursor(TABLE_SUBJECTS, DAY, day);
-		
-		ArrayList<SubjectItem> subs = new ArrayList<>(c.getCount());
-		while (c.moveToNext()) {
-			subs.add(parseSubject(c));
-		}
-		
-		c.close();
-		return subs;
-	}
-	
-	public static ArrayList<SubjectItem> getSubjects() {
-		Cursor c = selectCursor(TABLE_SUBJECTS);
+    public static ArrayList<SubjectItem> getSubjects(int day) {
+        Cursor c = selectCursor(TABLE_SUBJECTS, DAY, day);
 
-		ArrayList<SubjectItem> subs = new ArrayList<>(c.getCount());
-		while (c.moveToNext()) {
-			subs.add(parseSubject(c));
-		}
+        ArrayList<SubjectItem> subs = new ArrayList<>(c.getCount());
+        while (c.moveToNext()) {
+            subs.add(parseSubject(c));
+        }
 
-		c.close();
-		return subs;
-	}
-	
-	public static ArrayList<NoteItem> getNotes() {
-		Cursor c = selectCursor(TABLE_NOTES);
+        c.close();
+        return subs;
+    }
 
-		ArrayList<NoteItem> notes = new ArrayList<>(c.getCount());
-		while (c.moveToNext()) {
-			notes.add(parseNote(c));
-		}
+    public static ArrayList<SubjectItem> getSubjects() {
+        Cursor c = selectCursor(TABLE_SUBJECTS);
 
-		c.close();
-		return notes;
-	}
-	
-	public static ArrayList<BellItem> getBells() {
-		Cursor c = selectCursor(TABLE_BELLS);
-		
-		ArrayList<BellItem> items = new ArrayList<>(c.getCount());
-		while (c.moveToNext()) {
-			items.add(parseBell(c));
-		}
-		
-		c.close();
-		return items;
-	}
-	
-	public static ArrayList<BellItem> getBells(int day) {
-		Cursor c = selectCursor(TABLE_BELLS, DAY, day);
+        ArrayList<SubjectItem> subs = new ArrayList<>(c.getCount());
+        while (c.moveToNext()) {
+            subs.add(parseSubject(c));
+        }
 
-		ArrayList<BellItem> items = new ArrayList<>(c.getCount());
-		while (c.moveToNext()) {
-			items.add(parseBell(c));
-		}
+        c.close();
+        return subs;
+    }
 
-		c.close();
-		return items;
-	}
-	
-	public static void insert(String table, Object item) {
-		ArrayList<Object> array = new ArrayList<>();
-		array.add(item);
-		
-		insert(table, array);
-	}
-	
-	public static void update(String table, Object item, String where, Object args) {
-		ArrayList<Object> array = new ArrayList<>();
-		array.add(item);
-		
-		update(table, array, where, args);
-	}
+    public static ArrayList<NoteItem> getNotes() {
+        Cursor c = selectCursor(TABLE_NOTES);
+
+        ArrayList<NoteItem> notes = new ArrayList<>(c.getCount());
+        while (c.moveToNext()) {
+            notes.add(parseNote(c));
+        }
+
+        c.close();
+        return notes;
+    }
+
+    public static ArrayList<BellItem> getBells() {
+        Cursor c = selectCursor(TABLE_BELLS);
+
+        ArrayList<BellItem> items = new ArrayList<>(c.getCount());
+        while (c.moveToNext()) {
+            items.add(parseBell(c));
+        }
+
+        c.close();
+        return items;
+    }
+
+    public static ArrayList<BellItem> getBells(int day) {
+        Cursor c = selectCursor(TABLE_BELLS, DAY, day);
+
+        ArrayList<BellItem> items = new ArrayList<>(c.getCount());
+        while (c.moveToNext()) {
+            items.add(parseBell(c));
+        }
+
+        c.close();
+        return items;
+    }
+
+    public static void insert(String table, Object item) {
+        ArrayList<Object> array = new ArrayList<>();
+        array.add(item);
+
+        insert(table, array);
+    }
+
+    public static void update(String table, Object item, String where, Object args) {
+        ArrayList<Object> array = new ArrayList<>();
+        array.add(item);
+
+        update(table, array, where, args);
+    }
 
     public static void insert(String table, ArrayList values) {
         database.beginTransaction();
@@ -144,14 +160,14 @@ public class CacheStorage {
         for (Object item : values) {
             switch (table) {
                 case TABLE_NOTES:
-					putValues(cv, (NoteItem) item);
-					break;
-				case TABLE_SUBJECTS:
-					putValues(cv, (SubjectItem) item);
-					break;
-				case TABLE_BELLS:
-					putValues(cv, (BellItem) item);
-					break;
+                    putValues(cv, (NoteItem) item);
+                    break;
+                case TABLE_SUBJECTS:
+                    putValues(cv, (SubjectItem) item);
+                    break;
+                case TABLE_BELLS:
+                    putValues(cv, (BellItem) item);
+                    break;
             }
 
             database.insert(table, null, cv);
@@ -161,32 +177,32 @@ public class CacheStorage {
         database.setTransactionSuccessful();
         database.endTransaction();
     }
-	
-	public static void update(String table, ArrayList values, String where, Object args) {
-		database.beginTransaction();
-		
-		ContentValues cv = new ContentValues();
+
+    public static void update(String table, ArrayList values, String where, Object args) {
+        database.beginTransaction();
+
+        ContentValues cv = new ContentValues();
         for (int i = 0; i < values.size(); i++) {
             Object item = values.get(i);
             switch (table) {
                 case TABLE_NOTES:
-					putValues(cv, (NoteItem) item);
-					break;
-				case TABLE_SUBJECTS:
-					putValues(cv, (SubjectItem) item);
-					break;
-				case TABLE_BELLS:
-					putValues(cv, (BellItem) item);
-					break;
+                    putValues(cv, (NoteItem) item);
+                    break;
+                case TABLE_SUBJECTS:
+                    putValues(cv, (SubjectItem) item);
+                    break;
+                case TABLE_BELLS:
+                    putValues(cv, (BellItem) item);
+                    break;
             }
 
-            database.update(table, cv, where, new String[] {String.valueOf(args)});
+            database.update(table, cv, where, new String[]{String.valueOf(args)});
             cv.clear();
         }
-		
-		database.setTransactionSuccessful();
-		database.endTransaction();
-	}
+
+        database.setTransactionSuccessful();
+        database.endTransaction();
+    }
 
     public static void delete(String table, String where) {
         database.delete(table, where, null);
@@ -195,59 +211,59 @@ public class CacheStorage {
     public static void delete(String table) {
         database.delete(table, null, null);
     }
-	
-	private static SubjectItem parseSubject(Cursor c) {
-		SubjectItem s = new SubjectItem();
-		
-		s.setId(getInt(c, ID));
-		s.setCab(getString(c, CAB));
-		s.setDay(getInt(c, DAY));
-		s.setColor(getInt(c, COLOR));
-		s.setHomework(getString(c, HOMEWORK));
-		s.setName(getString(c, NAME));
-		
-		return s;
-	}
-	
-	private static NoteItem parseNote(Cursor c) {
-		NoteItem item = new NoteItem();
-		
-		item.id = getInt(c, ID);
-		item.color = getInt(c, COLOR);
-		item.title = getString(c, TITLE);
-		item.text = getString(c, TEXT);
-		
-		return item;
-	}
-	
-	private static BellItem parseBell(Cursor c) {
-		BellItem i = new BellItem();
-		
-		i.id = getInt(c, ID);
-		i.start = getInt(c, START);
-		i.end = getInt(c, END);
-		i.day = getInt(c, DAY);
-		
-		return i;
-	}
-	
-	private static void putValues(ContentValues cv, NoteItem item) {
-		cv.put(TITLE, item.title);
-		cv.put(COLOR, item.color);
-		cv.put(TEXT, item.text);
-	}
-	
-	private static void putValues(ContentValues cv, SubjectItem item) {
-		cv.put(DAY, item.getDay());
-		cv.put(CAB, item.getCab());
-		cv.put(NAME, item.getName());
-		cv.put(COLOR, item.getColor());
-		cv.put(HOMEWORK, item.getHomework());
-	}
-	
-	private static void putValues(ContentValues cv, BellItem item) {
-		cv.put(START, item.start);
-		cv.put(END, item.end);
-		cv.put(DAY, item.day);
-	}
+
+    private static SubjectItem parseSubject(Cursor c) {
+        SubjectItem s = new SubjectItem();
+
+        s.setId(getInt(c, ID));
+        s.setCab(getString(c, CAB));
+        s.setDay(getInt(c, DAY));
+        s.setColor(getInt(c, COLOR));
+        s.setHomework(getString(c, HOMEWORK));
+        s.setName(getString(c, NAME));
+
+        return s;
+    }
+
+    private static NoteItem parseNote(Cursor c) {
+        NoteItem item = new NoteItem();
+
+        item.id = getInt(c, ID);
+        item.color = getInt(c, COLOR);
+        item.title = getString(c, TITLE);
+        item.text = getString(c, TEXT);
+
+        return item;
+    }
+
+    private static BellItem parseBell(Cursor c) {
+        BellItem i = new BellItem();
+
+        i.id = getInt(c, ID);
+        i.start = getInt(c, START);
+        i.end = getInt(c, END);
+        i.day = getInt(c, DAY);
+
+        return i;
+    }
+
+    private static void putValues(ContentValues cv, NoteItem item) {
+        cv.put(TITLE, item.title);
+        cv.put(COLOR, item.color);
+        cv.put(TEXT, item.text);
+    }
+
+    private static void putValues(ContentValues cv, SubjectItem item) {
+        cv.put(DAY, item.getDay());
+        cv.put(CAB, item.getCab());
+        cv.put(NAME, item.getName());
+        cv.put(COLOR, item.getColor());
+        cv.put(HOMEWORK, item.getHomework());
+    }
+
+    private static void putValues(ContentValues cv, BellItem item) {
+        cv.put(START, item.start);
+        cv.put(END, item.end);
+        cv.put(DAY, item.day);
+    }
 }

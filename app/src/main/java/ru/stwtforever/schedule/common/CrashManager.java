@@ -1,10 +1,14 @@
 package ru.stwtforever.schedule.common;
 
-import android.os.*;
-import android.util.*;
-import java.io.*;
-import ru.stwtforever.schedule.io.*;
-import ru.stwtforever.schedule.util.*;
+import android.os.Build;
+import android.os.Environment;
+import android.util.Log;
+
+import java.io.File;
+import java.io.IOException;
+
+import ru.stwtforever.schedule.io.FileStreams;
+import ru.stwtforever.schedule.util.Util;
 
 public class CrashManager {
 

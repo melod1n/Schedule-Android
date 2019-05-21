@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ru.stwtforever.schedule" >
+	xmlns:tools="http://schemas.android.com/tools"
+	package="ru.stwtforever.schedule" >
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,7 +12,8 @@
 		android:name=".common.AppGlobal"
 		android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.Light"
+		tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
 			android:windowSoftInputMode="adjustResize"
@@ -23,12 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		
-		<activity 
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:name=".NoteActivity"
-			android:windowSoftInputMode="stateVisible|adjustResize" />
-		
+
 		<activity
 			android:name=".AboutActivity" />
 		

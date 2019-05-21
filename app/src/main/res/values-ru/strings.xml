@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- buttons -->
-	<string name="next">Далее</string>
-	<string name="exit">Выход</string>
-	
-	<!-- alert titles -->
+
+    <!-- alert titles -->
 	<string name="warning">Внимание!</string>
-	<string name="error">Ошибка!</string>
-	<string name="lessons_start">Начало занятий</string>
 
-	<!-- alert messages -->
-	<string name="input_data">Введите данные</string>
-	<string name="confirm_delete_text">Вы действительно хотите удалить это?</string>
-    <string name="loading">Загрузка&#8230;</string>
-	<string name="create_bells_auto_confirm">Создать расписание звонков автоматически?</string>
+    <!-- alert messages -->
+    <string name="confirm_delete_text">Вы действительно хотите удалить это?</string>
 
-	<!-- timepicker -->
-	<string name="tp_hour">часы</string>
-	<string name="tp_minute">минуты</string>
+    <!-- timepicker -->
 
-	<!-- days of week -->
+    <!-- days of week -->
     <string name="monday">Понедельник</string>
     <string name="tuesday">Вторник</string>
     <string name="wednesday">Среда</string>
@@ -34,16 +25,11 @@
     <string name="homework">Домашнее задание</string>
 	
 	<!-- timetable item -->
-	<string name="start">Начало</string>
-    <string name="end">Конец</string>
-	<string name="confirm_recreate_bells">Вы действительно хотите переформировать список звонков?</string>
-	<string name="delete_all">Удалить все</string>
-	<string name="recreate_all_bells">Переформировать все звонки</string>
+    <string name="confirm_recreate_bells">Вы действительно хотите переформировать список звонков?</string>
+    <string name="recreate_all_bells">Переформировать все звонки</string>
 	<string name="recreate_bells">Переформировать звонки</string>
-	<string name="lesson">Урок</string>
-	<string name="break_">Перерыв</string>
-	
-	<!-- alert buttons -->
+
+    <!-- alert buttons -->
     <string name="add">Добавить</string>
     <string name="edit">Изменить</string>
 	<string name="delete">Удалить</string>
@@ -54,34 +40,24 @@
 
 	<!-- nav items -->
     <string name="timetable">Звонки</string>
-	<string name="people">Люди</string>
-	<string name="schedule">Расписание</string>
+    <string name="schedule">Расписание</string>
 	<string name="settings">Настройки</string>
 
 	<!-- setup screen strings -->
-    <string name="input_setup_data_below">Пожалуйста, введите необходимые данные ниже:</string>
-	<string name="start_lessons_time">Начало занятий</string>
-    <string name="set_lessons_start_time_message">Введите время, когда у Вас начинаются занятия</string>
-	<string name="input_data_msg">Введите все данные!</string>
 
-	<!-- permissions -->
-    <string name="permissions_required">Необходимы разрешения</string>
-    <string name="schedule_uses_perm_text">Schedule будет использовать ваше внутреннее хранилище для взаимодействия со своей <b>базой данных</b></string>
+    <!-- permissions -->
 
-	<!-- about -->
+    <!-- about -->
     <string name="danil_nikolaev">Данил Николаев</string>
     <string name="creator_programmer_dn">Разработчик</string>
-	<string name="handler_programmer">\@handlerug</string>
-	<string name="api_help_hp">Помощь</string>
-    <string name="source">Исходный код</string>
-	<string name="version_about" formatted="false">Версия %s Сборка %d</string>
+    <string name="api_help_hp">Помощь</string>
+    <string name="version_about" formatted="false">Версия %s Сборка %d</string>
 	<string name="application">Приложение</string>
 	<string name="about">О приложении</string>
 
 	<!-- OTA -->
-	<string name="no_updates">Обновлений нет</string>
 
-	<!-- Crash manager -->
+    <!-- Crash manager -->
 	<string name="cause_error">В приложении произошла ошибка</string>
 	<string name="error_log">Лог с ошибкой сохранен</string>
 
@@ -92,22 +68,18 @@
 	<!-- other -->
 	<string name="empty">Пусто</string>
 	<string name="data">Данные</string>
-	
-	<string name="setup_bells">Вы хотите настроить расписание звонков?</string>
-	<string name="tester">Тестировщик</string>
-	<string name="creative_designer">Креативный дизайнер</string>
-	<string name="sub_name">Название предмета</string>
-	<string name="notes">Заметки</string>
-	<string name="set_one_collumn">Сделать одну колонку</string>
-	<string name="set_two_collumns">Сделать две колонки</string>
+
+    <string name="creative_designer">Креативный дизайнер</string>
+    <string name="notes">Заметки</string>
+	<string name="set_one_column">Сделать одну колонку</string>
+	<string name="set_two_columns">Сделать две колонки</string>
 	
 	<string name="interface_title">Интерфейс</string>
 	<string name="dark_theme">Тёмная тема</string>
 	
 	<string name="auto">Автоматически</string>
 	<string name="manual">Вручную</string>
-	<string name="lesson_setup">Занятие</string>
-	<string name="hello">Здравствуйте!</string>
+    <string name="hello">Здравствуйте!</string>
 	<string name="necessary_data">Необходимые данные</string>
 	<string name="classes_start_time">Время начала занятий</string>
 	<string name="timetable_list">Расписание звонков</string>
@@ -125,5 +97,13 @@
 	<string name="text">Текст</string>
 	
 	<string name="bells_count">Количество звонков</string>
-	<string name="theme">Тема</string>
+    <string name="apply">Применить</string>
+	<string name="confirm_recreate_bells_on_day">Вы действительно хотите переформировать звонки в %s?</string>
+	<string name="expand_current_day_summary">Разворачивает текущий день после загрузки данных на экране звонков</string>
+	<string name="expand_current_day_title">Разворачивать текущий день</string>
+	<string name="select_current_day_summary">Выделяется текущий день на экране расписания</string>
+	<string name="select_current_day_title">Выделять текущий день</string>
+	<string name="show_error_summary">Показывается диалоговое окно с ошибкой после краша приложения</string>
+	<string name="show_error_title">Показывать ошибку</string>
+    <string name="open_on_start_title">Открывать при входе</string>
 </resources>
