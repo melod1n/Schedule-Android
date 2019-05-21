@@ -19,6 +19,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         navView.setOnNavigationItemReselectedListener(this);
         navView.setOnNavigationItemSelectedListener(this);
+
+        AppCenter.start(getApplication(), "70c5472c-d7b2-4977-bdba-565adc092566", Analytics.class, Crashes.class);
     }
 
     private void checkExtrasData() {

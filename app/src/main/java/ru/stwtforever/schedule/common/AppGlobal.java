@@ -8,10 +8,6 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 
-import com.microsoft.appcenter.AppCenter;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -126,7 +122,5 @@ public class AppGlobal extends Application {
         TimeHelper.init();
         ThemeManager.init();
         Engine.checkDatabaseUpdates();
-
-        AppCenter.start(this, "70c5472c-d7b2-4977-bdba-565adc092566", Analytics.class, Crashes.class);
     }
 }

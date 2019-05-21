@@ -7,8 +7,8 @@ android {
         applicationId "ru.stwtforever.schedule"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 58
-        versionName "0.6.6"
+        versionCode 59
+        versionName "0.6.7"
     }
     buildTypes {
         release {
@@ -35,4 +35,5 @@ dependencies {
     def appCenterSdkVersion = '2.0.0'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
+    implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
 }
