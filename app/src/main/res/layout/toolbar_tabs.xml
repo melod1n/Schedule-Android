@@ -1,20 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
+    android:id="@+id/tabs"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-	
-	<include layout="@layout/toolbar" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-		android:background="?colorPrimary"
-        app:tabIndicatorColor="?tabIndicatorColor"
-        app:tabIndicatorHeight="2dp"
-		app:tabTextColor="?tabTextColor"
-		app:tabSelectedTextColor="?tabSelectedTextColor"
-		app:tabGravity="center" />
-    
-</LinearLayout>
+    android:background="?colorPrimary"
+    app:tabGravity="center"
+    app:tabIndicatorColor="?tabIndicatorColor"
+    app:tabIndicatorHeight="2dp"
+    app:tabSelectedTextColor="?tabSelectedTextColor"
+    app:tabTextColor="?tabTextColor" />

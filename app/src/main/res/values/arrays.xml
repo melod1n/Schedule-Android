@@ -9,38 +9,16 @@
         <item>@string/saturday</item>
         <item>@string/sunday</item>
     </string-array>
-	
-	<string-array name="nav_items">
-		<item>@string/timetable</item>
-		<item>@string/schedule</item>
-		<item>@string/notes</item>
-	</string-array>
-	
-	<string-array name="nav_items_entries">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-	</string-array>
-	
-	<string-array name="notes_colors">
-		<item>#000000</item>
-		<item>#373737</item>
-		<item>#018574</item>
-		<item>#E12D22</item>
-		<item>#E75480</item>
-		<item>#8408D7</item>
-		<item>#1565c0</item>
-		<item>#FBBC04</item>
-		<item>#FFF475</item>
-		<item>#CCFF90</item>
-		<item>#00FF7F</item>
-		<item>#A7FFEB</item>
-		<item>#CBF0F8</item>
-		<item>#AECBFA</item>
-		<item>#D7AEFB</item>
-		<item>#FDCFE8</item>
-		<item>#E6C9A8</item>
-		<item>#E8EAED</item>
-		<item>#FFFFFF</item>
-	</string-array>
+
+    <string-array name="nav_items">
+        <item>@string/timetable</item>
+        <item>@string/schedule</item>
+        <item>@string/notes</item>
+    </string-array>
+
+    <string-array name="nav_items_entries">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
 </resources>

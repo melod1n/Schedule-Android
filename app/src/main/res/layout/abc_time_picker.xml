@@ -6,17 +6,32 @@
     android:orientation="vertical"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
+    <TextView
+        android:id="@+id/abc_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp"
+        tools:text="Some title" />
+
+    <Space
+        android:id="@+id/abc_space"
+        android:layout_width="match_parent"
+        android:layout_height="32dp" />
+
     <LinearLayout
         android:id="@+id/abc_num_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/abc_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,19 +44,9 @@
             android:singleLine="true"
             android:textColor="?colorAccent"
             android:textColorHint="?colorAccent"
-            android:textSize="60sp"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-20dp"
-            android:alpha="0.5"
-            android:clickable="false"
-            android:focusable="false"
-            android:text="mins"
-            android:textColor="?colorAccent"
-            android:textSize="29sp" />
+            android:textSize="32sp"
+            tools:ignore="HardcodedText"
+            tools:text="40" />
 
     </LinearLayout>
 
@@ -49,13 +54,11 @@
         android:id="@+id/abc_time_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/abc_hours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +72,7 @@
             android:singleLine="true"
             android:textColor="?colorAccent"
             android:textColorHint="?colorAccent"
-            android:textSize="60sp"
+            android:textSize="32sp"
             tools:ignore="HardcodedText"
             tools:text="12" />
 
@@ -77,10 +80,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
-            android:textSize="60sp"
+            android:textSize="32sp"
             tools:ignore="HardcodedText" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/abc_minutes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,7 +97,7 @@
             android:singleLine="true"
             android:textColor="?colorAccent"
             android:textColorHint="?colorAccent"
-            android:textSize="60sp"
+            android:textSize="32sp"
             tools:ignore="HardcodedText"
             tools:text="05" />
 
@@ -104,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/abc_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,12 +117,8 @@
             android:paddingTop="14dp"
             android:paddingEnd="60dp"
             android:paddingBottom="14dp"
-            android:text="@string/apply"
-            android:textColor="@android:color/white"
-            app:backgroundTint="?colorAccent"
-            app:cornerRadius="26dp"
-            app:icon="@drawable/md_done"
-            app:iconTint="@android:color/white" />
+            android:src="@drawable/ic_done"
+            android:tint="?android:textColorPrimaryInverse" />
 
     </FrameLayout>
 

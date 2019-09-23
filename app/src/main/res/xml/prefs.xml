@@ -1,55 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/interface_title" />
+    <androidx.preference.PreferenceCategory android:title="@string/interface_title" />
 
-    <SwitchPreference
+    <androidx.preference.SwitchPreference
         android:key="dark_theme"
         android:title="@string/dark_theme" />
 
-    <CheckBoxPreference
+    <androidx.preference.SwitchPreference
+        android:key="auto_dark_theme"
+        android:summary="@string/auto_dark_theme_summary"
+        android:title="@string/auto_dark_theme_title" />
+
+    <androidx.preference.CheckBoxPreference
         android:defaultValue="true"
         android:key="expand_current_day"
         android:summary="@string/expand_current_day_summary"
-        android:title="@string/expand_current_day_title" />
+        android:title="@string/expand_current_day_title"
+        app:isPreferenceVisible="false" />
 
-    <CheckBoxPreference
+    <androidx.preference.CheckBoxPreference
         android:defaultValue="true"
         android:key="select_current_day"
         android:summary="@string/select_current_day_summary"
         android:title="@string/select_current_day_title" />
 
-    <ListPreference
+    <androidx.preference.ListPreference
         android:defaultValue="1"
         android:entries="@array/nav_items"
         android:entryValues="@array/nav_items_entries"
         android:key="open_on_start"
         android:title="@string/open_on_start_title" />
 
-    <PreferenceCategory android:title="@string/data" />
+    <androidx.preference.PreferenceCategory android:title="@string/data" />
 
-    <PreferenceScreen
+    <androidx.preference.PreferenceScreen
         android:key="lessons_start"
         android:title="@string/set_lessons_time" />
 
-    <PreferenceScreen
+    <androidx.preference.PreferenceScreen
         android:key="lesson_break_length"
         android:title="@string/input_ls_br_length" />
 
-    <PreferenceScreen
+    <androidx.preference.PreferenceScreen
         android:key="bells_count"
         android:title="@string/bells_count" />
 
-    <PreferenceCategory android:title="@string/application" />
+    <PreferenceScreen
+        android:key="setup_bells"
+        android:title="Setup bells" />
 
-    <CheckBoxPreference
-        android:defaultValue="false"
+    <androidx.preference.PreferenceCategory android:title="@string/application" />
+
+    <androidx.preference.CheckBoxPreference
+        android:defaultValue="true"
         android:key="show_error"
         android:summary="@string/show_error_summary"
         android:title="@string/show_error_title" />
 
     <PreferenceScreen
+        android:key="setup_app"
+        android:title="Setup application" />
+
+    <androidx.preference.PreferenceScreen
         android:key="about"
         android:title="@string/about" />
 
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>

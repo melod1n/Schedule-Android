@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?colorSurface"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -23,7 +24,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/subject_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,12 +36,14 @@
             android:maxLines="3"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:textSize="36sp">
+            android:textColor="?android:textColorPrimary"
+            android:textColorHint="?android:textColorSecondary"
+            android:textSize="28sp">
 
             <requestFocus />
-        </EditText>
+        </androidx.appcompat.widget.AppCompatEditText>
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/subject_cab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,9 +56,11 @@
             android:paddingEnd="10dp"
             android:paddingBottom="20dp"
             android:singleLine="true"
-            android:textSize="24sp" />
+            android:textColor="?android:textColorPrimary"
+            android:textColorHint="?android:textColorSecondary"
+            android:textSize="18sp" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/subject_homework"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -66,11 +71,13 @@
             android:gravity="top"
             android:hint="@string/homework"
             android:inputType="textMultiLine"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:textColor="?android:textColorPrimary"
+            android:textColorHint="?android:textColorSecondary" />
 
     </LinearLayout>
 
-    <ru.stwtforever.schedule.view.HorizontalColorPicker
+    <ru.melod1n.schedule.view.HorizontalColorPicker
         android:id="@+id/picker"
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -3,6 +3,6 @@
     <translate
         android:duration="@android:integer/config_shortAnimTime"
         android:fromYDelta="0%p"
-        android:interpolator="@android:anim/accelerate_interpolator"
+        android:interpolator="@android:anim/linear_interpolator"
         android:toYDelta="100%p" />
 </set>

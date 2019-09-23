@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:id="@+id/no_items_container"
-	android:orientation="vertical"
-	android:gravity="center">
-
-	<ImageView
-		android:src="@drawable/sad_smile_no_items"
-		android:layout_width="85dp"
-		android:layout_height="85dp"/>
-
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/empty"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_marginTop="10dp"/>
-
-</LinearLayout>
-
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/no_items_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:drawableTop="@drawable/ic_no_items"
+    android:drawableTint="?android:textColorSecondary"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:text="@string/no_items_title"
+    android:textColor="?android:textColorSecondary"
+    android:textSize="18sp" />

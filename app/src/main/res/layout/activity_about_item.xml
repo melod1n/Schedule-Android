@@ -1,64 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:orientation="vertical"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:gravity="center">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
 
-	<androidx.cardview.widget.CardView
-		android:id="@+id/card"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:cardBackgroundColor="#ffffff"
-		app:cardCornerRadius="12dp"
-		app:cardElevation="1dp"
-		android:layout_marginStart="10dp"
-		android:layout_marginEnd="10dp"
-		android:layout_marginTop="4dp"
-		android:layout_marginBottom="4dp">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="4dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="3dp">
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="70dp"
-			android:orientation="horizontal"
-			android:padding="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-			<de.hdodenhof.circleimageview.CircleImageView
-				android:id="@+id/icon"
-				android:layout_width="60dp"
-				android:layout_height="60dp"
-				android:layout_gravity="center"
-				android:padding="2.5dp"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                tools:src="@mipmap/ic_launcher" />
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_marginLeft="6dp"
-				android:layout_marginStart="6dp"
-				android:gravity="center_vertical"
-				android:orientation="vertical"
-				android:padding="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="4dp">
 
-				<TextView
-					android:id="@+id/name"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:textColor="#212121"
-					android:textSize="16sp"/>
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp"
+                    tools:text="Some Name" />
 
-				<TextView
-					android:id="@+id/job"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/job"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="?android:textColorSecondary"
+                    android:textSize="12sp"
+                    tools:text="Some Job" />
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
 

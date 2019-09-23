@@ -53,6 +53,7 @@
 
     <!-- about -->
     <string name="danil_nikolaev">Danil Nikolaev</string>
+	<string name="sergey_dilong">Sergey Dilong</string>
     <string name="creator_programmer_dn">Developer</string>
     <string name="api_help_hp">Help</string>
     <string name="version_about" formatted="false">Version %s Build %d</string>
@@ -66,11 +67,11 @@
 	<string name="error_log">Log with error was saved</string>
 	
 	<!-- settings -->
-	<string name="set_lessons_time">Set lessons time</string>
-	<string name="input_ls_br_length">Input lesson and break length</string>
+	<string name="set_lessons_time">Lessons starting time</string>
+	<string name="input_ls_br_length">Lesson and break length</string>
 	
 	<!-- other -->
-	<string name="empty">Empty</string>
+	<string name="no_items_title">There\'s nothing here</string>
 	<string name="data">Data</string>
 
     <string name="creative_designer">Creative Designer</string>
@@ -111,4 +112,11 @@
 	<string name="show_error_summary">Shows alert with error\'s description after app crash</string>
 	<string name="show_error_title">Show error</string>
 	<string name="open_on_start_title">Open on start</string>
+    <string name="auto_dark_theme_title">Auto dark theme</string>
+	<string name="auto_dark_theme_summary">Restart needed</string>
+    <string name="save">Save</string>
+	<string name="bell_text" translatable="false">%s - %s</string>
+	<string name="input">Input</string>
+	<string name="lesson_length_title">Длительность урока (мин.)</string>
+	<string name="break_length">Длительность перерыва (мин.)</string>
 </resources>

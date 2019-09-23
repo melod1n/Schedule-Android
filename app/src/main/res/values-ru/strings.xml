@@ -62,11 +62,11 @@
 	<string name="error_log">Лог с ошибкой сохранен</string>
 
 	<!-- settings -->
-	<string name="set_lessons_time">Ввести время начала занятий</string>
-	<string name="input_ls_br_length">Ввести продолжительность урока и перерыва</string>
+	<string name="set_lessons_time">Время начала занятий</string>
+	<string name="input_ls_br_length">Продолжительность урока и перерыва</string>
 	
 	<!-- other -->
-	<string name="empty">Пусто</string>
+	<string name="no_items_title">Здесь ничего нет</string>
 	<string name="data">Данные</string>
 
     <string name="creative_designer">Креативный дизайнер</string>
@@ -90,14 +90,14 @@
 	<string name="setup_2">Пожалуйста, введите продолжительность вашего занятия и перерыва (мин.)</string>
 	<string name="setup_3">Пожалуйста, введите время начала ваших занятий</string>
 	<string name="setup_4">Вы хотите составить расписание звонков?</string>
-	<string name="setup_5">Для полного функционирования приложения ему нужны разрешения</string>
+	<string name="setup_5">Для полного функционирования приложения необходимы разрешения</string>
 	<string name="setup_6">Первоначальная настройка завершена. Спасибо, что установили наше приложение.\nУдачи ;)</string>
 	
 	<string name="title">Заголовок</string>
 	<string name="text">Текст</string>
 	
 	<string name="bells_count">Количество звонков</string>
-    <string name="apply">Применить</string>
+    <string name="apply">ОК</string>
 	<string name="confirm_recreate_bells_on_day">Вы действительно хотите переформировать звонки в %s?</string>
 	<string name="expand_current_day_summary">Разворачивает текущий день после загрузки данных на экране звонков</string>
 	<string name="expand_current_day_title">Разворачивать текущий день</string>
@@ -106,4 +106,9 @@
 	<string name="show_error_summary">Показывается диалоговое окно с ошибкой после краша приложения</string>
 	<string name="show_error_title">Показывать ошибку</string>
     <string name="open_on_start_title">Открывать при входе</string>
+    <string name="auto_dark_theme_summary">Необходим перезапуск</string>
+	<string name="auto_dark_theme_title">Автоматическая темная тема</string>
+	<string name="sergey_dilong">Сергей Дилонг</string>
+    <string name="bell_text">%s - %s</string>
+	<string name="save">Сохранить</string>
 </resources>

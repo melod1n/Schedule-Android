@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
-        applicationId "ru.stwtforever.schedule"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 61
-        versionName "0.6.9"
+        applicationId 'ru.melod1n.schedule'
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 3
+        versionName '0.8'
     }
     buildTypes {
         release {
@@ -16,14 +16,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-	
-	implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
-    implementation 'androidx.preference:preference:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    implementation 'androidx.preference:preference:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.0.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -32,8 +35,6 @@ dependencies {
 
     implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.0.1'
 
-    def appCenterSdkVersion = '2.0.0'
-    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
-    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
-    implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
+    implementation 'com.jakewharton:butterknife:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
 }

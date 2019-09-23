@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-	<include
-		layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
 
-	<FrameLayout
-		android:layout_height="wrap_content"
-		android:layout_marginTop="?actionBarSize"
-		android:layout_width="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?actionBarSize">
 
-		<include
-			layout="@layout/list_recycler"/>
+        <include layout="@layout/list_recycler" />
 
-		<View
-			android:layout_height="6dp"
-			android:layout_width="match_parent"
-			android:background="@drawable/shadow_vertical_top"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@drawable/shadow_vertical_top" />
 
-	</FrameLayout>
+    </FrameLayout>
 
-	<include layout="@layout/no_items" />
+    <include layout="@layout/no_items" />
 
-	<com.google.android.material.floatingactionbutton.FloatingActionButton
-		android:id="@+id/fab_add"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom|end"
-		android:layout_margin="16dp"
-		android:src="@drawable/ic_plus"
-		app:borderWidth="0dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        android:tint="?android:textColorPrimaryInverse"
+        app:borderWidth="0dp" />
 
 </FrameLayout>
 

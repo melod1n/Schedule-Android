@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="primary">#ffffff</color>
-	<color name="primary_dark">@color/primary</color>
-	<color name="accent">#2785D3</color>
-	<color name="background">#ffffff</color>
-	<color name="tab_text">#515151</color>
+    <color name="surface">#ffffff</color>
+    <color name="primary">#ffffff</color>
+    <color name="primary_dark">#f8f8f8</color>
+    <color name="accent">#00695C</color>
+    <color name="background">#ffffff</color>
+    <color name="tab_text">#515151</color>
+    <color name="subject_title">#646464</color>
+    <color name="cab_title">#8F8F8F</color>
 
-    <color name="dark_primary">#262626</color>
-	<color name="dark_primary_dark">#121212</color>
-	<color name="dark_background">#181818</color>
-	<color name="dark_tab_text">#B4B4B4</color>
-	<color name="dark_tab_selected">#ffffff</color>
+    <color name="dark_surface">#121212</color>
+    <color name="dark_primary">#161616</color>
+    <color name="dark_primary_dark">#000000</color>
+    <color name="dark_accent">#4DB6AC</color>
+    <color name="dark_background">#000000</color>
+    <color name="dark_tab_text">#B4B4B4</color>
+    <color name="dark_subject_title">#A7A7A7</color>
+    <color name="dark_cab_title">#888888</color>
 
-    <color name="about_bg">#f2f2f2</color>
-	<color name="about_primary">@color/about_bg</color>
-    <color name="about_primary_dark">#d9d9d9</color>
-	
-	<color name="about_dark_bg">#464646</color>
-	<color name="about_dark_primary">@color/about_dark_bg</color>
-	<color name="about_dark_primary_dark">#2D2D2D</color>
-	
-    <color name="about_accent">#FFBE05</color>
-
-    <color name="vk">#5181B8</color>
-	
 </resources>
