@@ -1,7 +1,6 @@
 package ru.melod1n.schedule.adapter;
 
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.Engine;
+import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.fragment.ScheduleFragment;
@@ -78,6 +78,8 @@ public class ScheduleAdapter extends RecyclerAdapter<LessonItem, ScheduleAdapter
 //        @BindView(R.id.lessonTeacher)
 //        TextView lessonTeacher;
 
+        int[] colors = !ThemeManager.isDark() ? ThemeManager.COLOR_PALETTE_DARK : ThemeManager.COLOR_PALETTE_LIGHT;
+
         ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
@@ -95,12 +97,10 @@ public class ScheduleAdapter extends RecyclerAdapter<LessonItem, ScheduleAdapter
             LocationItem location = item.getClassRoom();
             lessonClassroom.setText(String.format("%s, %s", location.getTitle(), location.getBuilding()));
 
-            Random rnd = new Random();
-            int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+            int color = colors[item.getColor()];
 
             lessonLine.setBackgroundColor(color);
             lessonType.setTextColor(color);
-
 
 //            TeacherItem teacher = item.getTeacher();
 //            lessonTeacher.setText(teacher.getTitle());

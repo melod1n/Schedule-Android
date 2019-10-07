@@ -23,12 +23,13 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.adapter.ScheduleAdapter;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
+import ru.melod1n.schedule.adapter.ScheduleAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
@@ -271,6 +272,8 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
             subject.setTitle("Предмет #" + i);
 
             item.setSubject(subject);
+
+            item.setColor(new Random().nextInt(16));
 
             lessons.add(item);
             i++;

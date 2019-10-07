@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,14 +64,20 @@ public class AgendaFragment extends Fragment {
         noItems.setText(R.string.no_agenda);
 
         toolbar.setTitle(R.string.nav_agenda);
-        toolbar.inflateMenu(R.menu.activity_main);
-        toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
+//        toolbar.inflateMenu(R.menu.activity_main);
+//        toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
 
         list.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         refresh.setProgressBackgroundColorSchemeColor(ThemeManager.getBackground());
         refresh.setColorSchemeColors(ThemeManager.getMain());
         refresh.setOnRefreshListener(this::getHomework);
+
+        DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();
+
+        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar, view);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         getHomework();
     }

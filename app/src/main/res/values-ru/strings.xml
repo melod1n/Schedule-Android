@@ -128,4 +128,5 @@
 	<string name="no_lessons">Нет занятий</string>
 	<string name="no_notes">Нет заметок</string>
 	<string name="no_updates">Нет обновлений</string>
+    <string name="ic_nav_search">Поиск</string>
 </resources>

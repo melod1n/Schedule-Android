@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -77,11 +79,11 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
         noItems.setText(R.string.no_notes);
 
         toolbar.setTitle(R.string.nav_notes);
-        toolbar.inflateMenu(R.menu.activity_main);
+        //toolbar.inflateMenu(R.menu.activity_main);
         toolbar.getMenu().add("");
         toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
 
-        toolbar.getMenu().getItem(1).setTitle(twoColumns ? R.string.set_two_columns : R.string.set_one_column);
+        toolbar.getMenu().getItem(0).setTitle(twoColumns ? R.string.set_two_columns : R.string.set_one_column);
 
         manager = new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL);
         manager.setSpanCount(twoColumns ? 1 : 2);
@@ -96,6 +98,12 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
         refresh.setOnRefreshListener(this::getNotes);
 
         add.setOnClickListener(v -> showDialog());
+
+        DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();
+
+        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar, view);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         getNotes();
     }

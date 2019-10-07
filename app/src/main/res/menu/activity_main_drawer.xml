@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_quick_edit"
+            android:title="@string/drawer_quick_edit" />
+
+        <item
+            android:id="@+id/drawer_groups_list"
+            android:title="@string/drawer_groups_list" />
+
+        <item
+            android:id="@+id/drawer_providers"
+            android:title="@string/drawer_providers" />
+
+<!--        <item-->
+<!--            android:id="@+id/nav_search"-->
+<!--            android:icon="@drawable/ic_search"-->
+<!--            android:title="@string/ic_nav_search" />-->
+
+    </group>
+
+    <group android:id="@+id/one">
+        <item
+            android:id="@+id/drawer_settings"
+            android:title="@string/settings" />
+
+        <item
+            android:id="@+id/drawer_about"
+            android:title="@string/drawer_about" />
+    </group>
+
+</menu>

@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -43,19 +45,26 @@ public class MainScheduleFragment extends Fragment {
 
         toolbar.setTitle(R.string.nav_schedule);
 
-        toolbar.inflateMenu(R.menu.activity_main);
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.settings) {
-                if (getActivity() == null) return false;
-
-                ((MainActivity) getActivity()).replaceFragment(new SettingsFragment());
-                return true;
-            }
-
-            return false;
-        });
+//        toolbar.inflateMenu(R.menu.activity_main);
+//        toolbar.setOnMenuItemClickListener(item -> {
+//            if (item.getItemId() == R.id.settings) {
+//                if (getActivity() == null) return false;
+//
+//                ((MainActivity) getActivity()).replaceFragment(new SettingsFragment());
+//                return true;
+//            }
+//
+//            return false;
+//        });
 
         tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+        DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();
+
+        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar, view);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
 
         createPagerAdapter();
     }

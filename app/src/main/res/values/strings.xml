@@ -137,4 +137,9 @@
 	<string name="no_updates">No updates</string>
 	<string name="no_lessons">No lessons</string>
 	<string name="no_agenda">No agenda</string>
+    <string name="ic_nav_search">Search</string>
+    <string name="drawer_about">About</string>
+	<string name="drawer_providers">Providers</string>
+	<string name="drawer_groups_list">Groups list</string>
+	<string name="drawer_quick_edit">Quick edit</string>
 </resources>

@@ -78,17 +78,17 @@ public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolde
 
             int textColor = ColorUtil.isDark(colors[item.getPosition()]) ? Color.WHITE : Color.BLACK;
 
-            title.setTextColor(textColor);
-            text.setTextColor(textColor);
+            this.title.setTextColor(textColor);
+            this.text.setTextColor(textColor);
 
-            String title_ = item.getTitle().length() > 35 ? item.getTitle().substring(0, 35) + "..." : item.getTitle();
-            title.setText(title_);
+            String title = item.getTitle().length() > 35 ? item.getTitle().substring(0, 35) + "..." : item.getTitle();
+            this.title.setText(title);
 
-            String text_ = item.getText().length() > 120 ? item.getText().substring(0, 120) + "..." : item.getText();
-            text.setText(text_);
+            String text = item.getText().length() > 120 ? item.getText().substring(0, 120) + "..." : item.getText();
+            this.text.setText(text);
 
-            text.setVisibility(text_.trim().isEmpty() ? View.GONE : View.VISIBLE);
-            title.setVisibility(title_.trim().isEmpty() ? View.GONE : View.VISIBLE);
+            this.text.setVisibility(text.trim().isEmpty() ? View.GONE : View.VISIBLE);
+            this.title.setVisibility(title.trim().isEmpty() ? View.GONE : View.VISIBLE);
         }
     }
 }

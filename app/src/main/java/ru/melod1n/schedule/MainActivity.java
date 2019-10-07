@@ -8,16 +8,22 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +45,17 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.navigationView)
     BottomNavigationView navView;
 
+    @BindView(R.id.navigationDrawer)
+    NavigationView navDrawer;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+
     private MainScheduleFragment subjectsFragment = new MainScheduleFragment();
     private NotesFragment notesFragment = new NotesFragment();
     private AgendaFragment homeworkFragment = new AgendaFragment();
     private UpdatesFragment updatesFragment = new UpdatesFragment();
+    private SettingsFragment settingsFragment = new SettingsFragment();
 
     private int selected_id;
     private Fragment selected_fragment;
@@ -60,7 +73,24 @@ public class MainActivity extends AppCompatActivity {
 
         checkCrash();
 
+        if (!ThemeManager.isDark())
+            getWindow().setStatusBarColor(Color.argb(155, 255, 255, 255));
+
+        navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
         navView.setOnNavigationItemSelectedListener(this::onItemSelected);
+    }
+
+    public DrawerLayout getDrawerLayout() {
+        return drawerLayout;
+    }
+
+    public ActionBarDrawerToggle initToggle(Toolbar toolbar, View contentView) {
+        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+            }
+        };
     }
 
     private void checkFirstLaunch(Bundle savedInstanceState) {
@@ -90,8 +120,6 @@ public class MainActivity extends AppCompatActivity {
             setupShortcuts();
         }
     }
-
-    ;
 
     private void checkCrash() {
         if (AppGlobal.preferences.getBoolean("isCrashed", false)) {
@@ -182,8 +210,24 @@ public class MainActivity extends AppCompatActivity {
         selected_fragment = getFragmentById(item.getItemId());
         selected_id = item.getItemId();
 
-        if (getVisibleFragment() != selected_fragment)
+        if (getVisibleFragment() != selected_fragment) {
+
             replaceFragment(selected_fragment);
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean onDrawerItemSelected(@NonNull MenuItem item) {
+        selected_fragment = getFragmentById(item.getItemId());
+        selected_id = item.getItemId();
+
+        if (getVisibleFragment() != selected_fragment) {
+            replaceFragment(selected_fragment);
+
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
 
         return true;
     }
@@ -211,6 +255,8 @@ public class MainActivity extends AppCompatActivity {
                 return homeworkFragment;
             case R.id.nav_updates:
                 return updatesFragment;
+            case R.id.drawer_settings:
+                return settingsFragment;
             default:
                 return null;
         }
@@ -221,8 +267,13 @@ public class MainActivity extends AppCompatActivity {
         Fragment visibleFragment = getVisibleFragment();
         if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(SettingsFragment.class.getSimpleName())) {
             replaceFragment(getFragmentById(navView.getSelectedItemId()));
-        } else
-            super.onBackPressed();
+        } else {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 
     @Override
