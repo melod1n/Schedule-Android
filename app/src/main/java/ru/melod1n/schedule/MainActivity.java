@@ -89,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
+
+                float slideX = drawerView.getWidth() * slideOffset;
+                contentView.setTranslationX(slideX);
+
+                float offset = 1 - slideOffset;
+                if (offset < 0.85) offset = (float) 0.85;
+
+                contentView.setScaleX(offset);
+                contentView.setScaleY(offset);
             }
         };
     }
