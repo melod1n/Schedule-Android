@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="6dp"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/lessonStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                tools:text="10:30" />
+
+            <TextView
+                android:id="@+id/lessonEndTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"
+                tools:text="11:50" />
+
+        </FrameLayout>
+
+        <View
+            android:id="@+id/lessonLine"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="?colorAccent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lessonType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text="Научно-исследовательский семинар"
+            android:textAllCaps="true"
+            android:textColor="?colorAccent"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/lessonName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Научно-исследовательский семинар 'Разработка облачных и мобильных приложенимй на платформе Apple iOS' (анг)" />
+
+
+        <TextView
+            android:id="@+id/lessonClassroom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="12sp"
+            tools:text="Ауд. 432, Кочновский пр-д, д. 3" />
+
+        <TextView
+            android:id="@+id/lessonTeacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:textColor="?android:textColorSecondary"
+            android:visibility="gone"
+            tools:text="Проф. Александров Дмитрий Владимирович" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

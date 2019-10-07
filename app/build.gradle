@@ -7,7 +7,7 @@ android {
         applicationId 'ru.melod1n.schedule'
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 3
+        versionCode 62
         versionName '0.8'
     }
     buildTypes {

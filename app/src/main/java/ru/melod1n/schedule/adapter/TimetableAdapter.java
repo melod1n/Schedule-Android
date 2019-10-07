@@ -13,8 +13,8 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import java.util.ArrayList;
 
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.adapter.items.BellItem;
-import ru.melod1n.schedule.adapter.items.TimetableItem;
+import ru.melod1n.schedule.items.BellItem;
+import ru.melod1n.schedule.items.TimetableItem;
 import ru.melod1n.schedule.fragment.TimetableFragment;
 import ru.melod1n.schedule.util.Util;
 

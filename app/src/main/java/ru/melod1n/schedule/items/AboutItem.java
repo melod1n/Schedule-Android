@@ -1,4 +1,4 @@
-package ru.melod1n.schedule.adapter.items;
+package ru.melod1n.schedule.items;
 
 public class AboutItem {
 

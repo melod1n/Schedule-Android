@@ -22,8 +22,8 @@ import java.util.ArrayList;
 
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.TimetableAdapter;
-import ru.melod1n.schedule.adapter.items.BellItem;
-import ru.melod1n.schedule.adapter.items.TimetableItem;
+import ru.melod1n.schedule.items.BellItem;
+import ru.melod1n.schedule.items.TimetableItem;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;

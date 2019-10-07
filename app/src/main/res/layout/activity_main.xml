@@ -16,11 +16,12 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:layout_gravity="bottom"
         android:background="?colorSurface"
         app:itemIconTint="@drawable/ic_navigation_view_icons_tint"
-        app:labelVisibilityMode="unlabeled"
+        app:itemTextColor="@drawable/ic_navigation_view_icons_tint"
+        app:labelVisibilityMode="selected"
         app:menu="@menu/activity_main_bottom" />
 
 </FrameLayout>

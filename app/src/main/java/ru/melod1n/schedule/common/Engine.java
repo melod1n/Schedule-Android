@@ -2,22 +2,36 @@ package ru.melod1n.schedule.common;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import ru.melod1n.schedule.adapter.items.BellItem;
-import ru.melod1n.schedule.adapter.items.NoteItem;
-import ru.melod1n.schedule.adapter.items.SubjectItem;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.helper.TimeHelper;
 import ru.melod1n.schedule.io.FileStreams;
+import ru.melod1n.schedule.items.BellItem;
+import ru.melod1n.schedule.items.LessonItem;
+import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.util.ArrayUtil;
+import ru.melod1n.schedule.util.Util;
 
 public class Engine {
+
+    private static ArrayList<BellItem> bells = new ArrayList<>();
+
+    static {
+        bells.add(new BellItem(480, 520));
+        bells.add(new BellItem(535, 575));
+        bells.add(new BellItem(590, 630));
+        bells.add(new BellItem(645, 685));
+        bells.add(new BellItem(700, 740));
+        bells.add(new BellItem(750, 790));
+    }
 
     public static void checkDatabaseUpdates() {
         if (AppGlobal.preferences.getBoolean("is_db_updated", false)) {
@@ -31,12 +45,12 @@ public class Engine {
                 JSONArray bls = o.optJSONArray("bells");
                 JSONArray nts = o.optJSONArray("notes");
 
-                ArrayList<SubjectItem> subjects = new ArrayList<>(subs.length());
+                ArrayList<LessonItem> subjects = new ArrayList<>(subs.length());
                 ArrayList<BellItem> bells = new ArrayList<>(subs.length());
                 ArrayList<NoteItem> notes = new ArrayList<>(subs.length());
 
                 for (int i = 0; i < subs.length(); i++) {
-                    subjects.add(new SubjectItem(subs.optJSONObject(i)));
+                    subjects.add(new LessonItem(subs.optJSONObject(i)));
                 }
 
                 for (int i = 0; i < bls.length(); i++) {
@@ -52,7 +66,7 @@ public class Engine {
                 if (!ArrayUtil.isEmpty(notes))
                     CacheStorage.insert(DatabaseHelper.TABLE_NOTES, notes);
                 if (!ArrayUtil.isEmpty(subjects))
-                    CacheStorage.insert(DatabaseHelper.TABLE_SUBJECTS, subjects);
+                    CacheStorage.insert(DatabaseHelper.TABLE_LESSONS, subjects);
 
                 TimeHelper.load();
 
@@ -62,5 +76,21 @@ public class Engine {
                 AppGlobal.preferences.edit().putBoolean("is_db_updated", true).apply();
             }
         }
+    }
+
+    public static int getStartTimeAt(int order) {
+        return bells.get(order).getStart();
+    }
+
+    public static int getEndTimeAt(int order) {
+        return bells.get(order).getEnd();
+    }
+
+    @NonNull
+    public static String getTimeByInt(int time) {
+        int hours = (int) Math.floor(time / 60);
+        int minutes = time - hours * 60;
+
+        return String.format("%s:%s", Util.leadingZero(hours), Util.leadingZero(minutes));
     }
 }

@@ -3,11 +3,14 @@ package ru.melod1n.schedule;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -22,22 +25,24 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.fragment.ParentSubjectsFragment;
+import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.fragment.AgendaFragment;
+import ru.melod1n.schedule.fragment.MainScheduleFragment;
 import ru.melod1n.schedule.fragment.NotesFragment;
 import ru.melod1n.schedule.fragment.SettingsFragment;
-import ru.melod1n.schedule.fragment.TimetableFragment;
+import ru.melod1n.schedule.fragment.UpdatesFragment;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.navigationView)
     BottomNavigationView navView;
 
-    private ParentSubjectsFragment df = new ParentSubjectsFragment();
-    private TimetableFragment tf = new TimetableFragment();
-    private NotesFragment nf = new NotesFragment();
-    private SettingsFragment sf = new SettingsFragment();
+    private MainScheduleFragment subjectsFragment = new MainScheduleFragment();
+    private NotesFragment notesFragment = new NotesFragment();
+    private AgendaFragment homeworkFragment = new AgendaFragment();
+    private UpdatesFragment updatesFragment = new UpdatesFragment();
 
     private int selected_id;
     private Fragment selected_fragment;
@@ -49,63 +54,44 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        ThemeManager.setDark(((ColorDrawable) navView.getBackground()).getColor() != Color.WHITE);
+
         checkFirstLaunch(savedInstanceState);
 
         checkCrash();
 
-        navView.setOnNavigationItemReselectedListener(null);
-        navView.setOnNavigationItemSelectedListener(this);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
+        navView.setOnNavigationItemSelectedListener(this::onItemSelected);
     }
 
     private void checkFirstLaunch(Bundle savedInstanceState) {
         if (Util.isFirstLaunch()) {
-            startSetupActivity();
+            startActivity(new Intent(this, SetupActivity.class));
+            finish();
         } else {
-            Intent intent = getIntent();
-
-            if (intent.hasExtra("open_settings")) {
-                selected_id = R.id.settings;
-                selected_fragment = sf;
-                replaceFragment(sf);
-                navView.setSelectedItemId(selected_id);
-            } else {
-                if (savedInstanceState == null) {
-                    int i = Integer.parseInt(AppGlobal.preferences.getString(SettingsFragment.KEY_OPEN_ON_START, "1"));
-                    switch (i) {
-                        default:
-                        case 0:
-                            selected_id = R.id.timetable;
-                            selected_fragment = tf;
-                            break;
-                        case 1:
-                            selected_id = R.id.schedule;
-                            selected_fragment = df;
-                            break;
-                        case 2:
-                            selected_id = R.id.notes;
-                            selected_fragment = nf;
-                            break;
-                    }
-
-                    replaceFragment(selected_fragment);
-                    navView.setSelectedItemId(selected_id);
+            if (savedInstanceState == null) {
+                int i = Integer.parseInt(AppGlobal.preferences.getString(SettingsFragment.KEY_OPEN_ON_START, "1"));
+                switch (i) {
+                    default:
+                    case 0:
+                    case 1:
+                        selected_id = R.id.nav_schedule;
+                        selected_fragment = subjectsFragment;
+                        break;
+                    case 2:
+                        selected_id = R.id.nav_notes;
+                        selected_fragment = notesFragment;
+                        break;
                 }
+
+                replaceFragment(selected_fragment);
+                navView.setSelectedItemId(selected_id);
             }
 
             setupShortcuts();
         }
     }
 
-    private void startSetupActivity() {
-        startActivity(new Intent(this, SetupActivity.class));
-        finish();
-    }
+    ;
 
     private void checkCrash() {
         if (AppGlobal.preferences.getBoolean("isCrashed", false)) {
@@ -114,12 +100,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             if (!AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SHOW_ERROR, true)) return;
 
-            AlertDialog.Builder adb = new AlertDialog.Builder(this);
-            adb.setTitle(R.string.warning);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.warning);
 
-            adb.setMessage(R.string.cause_error);
-            adb.setPositiveButton(android.R.string.ok, null);
-            adb.setNeutralButton(R.string.show, (p1, p2) -> {
+            builder.setMessage(R.string.cause_error);
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.setNeutralButton(R.string.show, (p1, p2) -> {
                 AlertDialog.Builder adb1 = new AlertDialog.Builder(MainActivity.this);
                 adb1.setTitle(R.string.error_log);
                 adb1.setMessage(trace);
@@ -127,12 +113,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 adb1.setNeutralButton(R.string.copy, (p11, p21) -> Util.copyText(trace));
                 adb1.create().show();
             });
-            adb.create().show();
+            builder.create().show();
         }
     }
 
     private void setupShortcuts() {
-        if (true) return;
+        if (Build.VERSION.SDK_INT < 100) return;
         ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
 
 
@@ -156,7 +142,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         shortcuts.add(schedule);
         shortcuts.add(notes);
 
-        shortcutManager.setDynamicShortcuts(shortcuts);
+        if (shortcutManager != null) {
+            shortcutManager.setDynamicShortcuts(shortcuts);
+        }
     }
 
     public void replaceFragment(Fragment fragment) {
@@ -190,36 +178,56 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.notes:
-                selected_fragment = nf;
-                break;
-            case R.id.schedule:
-                selected_fragment = df;
-                break;
-            case R.id.timetable:
-                selected_fragment = tf;
-                break;
-            case R.id.settings:
-                selected_fragment = sf;
-                break;
-        }
-
+    private boolean onItemSelected(@NonNull MenuItem item) {
+        selected_fragment = getFragmentById(item.getItemId());
         selected_id = item.getItemId();
-        replaceFragment(selected_fragment);
+
+        if (getVisibleFragment() != selected_fragment)
+            replaceFragment(selected_fragment);
 
         return true;
+    }
+
+    @Nullable
+    private Fragment getVisibleFragment() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments.isEmpty()) return null;
+
+        for (Fragment fragment : fragments) {
+            if (fragment.isVisible()) return fragment;
+        }
+
+        return null;
+    }
+
+    @Nullable
+    private Fragment getFragmentById(int navId) {
+        switch (navId) {
+            case R.id.nav_notes:
+                return notesFragment;
+            case R.id.nav_schedule:
+                return subjectsFragment;
+            case R.id.nav_agenda:
+                return homeworkFragment;
+            case R.id.nav_updates:
+                return updatesFragment;
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment visibleFragment = getVisibleFragment();
+        if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(SettingsFragment.class.getSimpleName())) {
+            replaceFragment(getFragmentById(navView.getSelectedItemId()));
+        } else
+            super.onBackPressed();
     }
 
     @Override
     protected void onDestroy() {
         AppGlobal.saveData();
         super.onDestroy();
-    }
-
-    public View getView() {
-        return findViewById(R.id.container);
     }
 }

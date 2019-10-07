@@ -1,4 +1,4 @@
-package ru.melod1n.schedule.adapter.items;
+package ru.melod1n.schedule.items;
 
 import org.json.JSONObject;
 
@@ -22,7 +22,7 @@ public class NoteItem implements Serializable {
     }
 
     public NoteItem(JSONObject o) {
-        id = o.optInt("id", 0);
+        id = o.optInt("id");
         title = o.optString("title", "");
         text = o.optString("text", "");
         position = o.optInt("position");

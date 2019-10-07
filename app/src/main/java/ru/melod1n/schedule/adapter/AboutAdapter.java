@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.adapter.items.AboutItem;
+import ru.melod1n.schedule.items.AboutItem;
 
 public class AboutAdapter extends RecyclerAdapter<AboutItem, AboutAdapter.ViewHolder> {
 

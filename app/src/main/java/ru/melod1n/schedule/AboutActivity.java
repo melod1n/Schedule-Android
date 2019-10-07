@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.adapter.AboutAdapter;
-import ru.melod1n.schedule.adapter.items.AboutItem;
+import ru.melod1n.schedule.items.AboutItem;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.current.BaseActivity;
-import ru.melod1n.schedule.helper.FontHelper;
 
 public class AboutActivity extends BaseActivity {
 
@@ -54,9 +53,6 @@ public class AboutActivity extends BaseActivity {
 
         list.setHasFixedSize(true);
         list.setLayoutManager(manager);
-
-        name.setTypeface(FontHelper.getFont(FontHelper.PS_MEDIUM));
-        version.setTypeface(FontHelper.getFont(FontHelper.PS_REGULAR));
 
         String version_ = getString(R.string.version_about, AppGlobal.app_version_name, AppGlobal.app_version_code);
         version.setText(version_);

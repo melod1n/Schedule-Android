@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import ru.melod1n.schedule.common.AppGlobal;
@@ -28,21 +27,19 @@ public class ViewUtil {
         fadeView(v, 200);
     }
 
-    public static void applyToolbarStyles(@NonNull Toolbar tb) {
-        boolean isDark = ThemeManager.isDark() || AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES;
-
+    public static void applyToolbarStyles(@NonNull Toolbar toolbar) {
         int color = ThemeManager.isDark() ? Color.WHITE : Color.BLACK;
 
-        if (tb.getNavigationIcon() != null) {
-            tb.getNavigationIcon().setTint(color);
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(color);
         }
 
-        if (tb.getOverflowIcon() != null) {
-            tb.getOverflowIcon().setTint(color);
+        if (toolbar.getOverflowIcon() != null) {
+            toolbar.getOverflowIcon().setTint(color);
         }
 
-        for (int i = 0; i < tb.getMenu().size(); i++) {
-            MenuItem item = tb.getMenu().getItem(i);
+        for (int i = 0; i < toolbar.getMenu().size(); i++) {
+            MenuItem item = toolbar.getMenu().getItem(i);
             if (item.getIcon() != null)
                 item.getIcon().setTint(color);
         }

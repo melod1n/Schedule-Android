@@ -8,14 +8,6 @@
     <color name="tab_text">#515151</color>
     <color name="subject_title">#646464</color>
     <color name="cab_title">#8F8F8F</color>
-
-    <color name="dark_surface">#121212</color>
-    <color name="dark_primary">#161616</color>
-    <color name="dark_primary_dark">#000000</color>
-    <color name="dark_accent">#4DB6AC</color>
-    <color name="dark_background">#000000</color>
-    <color name="dark_tab_text">#B4B4B4</color>
-    <color name="dark_subject_title">#A7A7A7</color>
-    <color name="dark_cab_title">#888888</color>
+    <color name="control_normal">#121212</color>
 
 </resources>

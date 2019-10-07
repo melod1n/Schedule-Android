@@ -4,24 +4,24 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/timetable"
-            android:icon="@drawable/ic_clock_outline"
-            android:title="@string/timetable"
-            android:visible="false" />
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/ic_nav_event"
+            android:title="@string/nav_schedule" />
 
         <item
-            android:id="@+id/notes"
-            android:icon="@drawable/ic_notebook_outline"
-            android:title="@string/notes" />
+            android:id="@+id/nav_agenda"
+            android:icon="@drawable/ic_nav_agenda"
+            android:title="@string/nav_agenda" />
 
         <item
-            android:id="@+id/schedule"
-            android:icon="@drawable/ic_event_outline"
-            android:title="@string/schedule" />
+            android:id="@+id/nav_notes"
+            android:icon="@drawable/ic_nav_notebook"
+            android:title="@string/nav_notes" />
 
         <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_settings_outline"
-            android:title="@string/settings" />
+            android:id="@+id/nav_updates"
+            android:icon="@drawable/ic_update"
+            android:title="@string/nav_updates" />
+
     </group>
 </menu>

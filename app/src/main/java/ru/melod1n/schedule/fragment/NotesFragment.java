@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -21,17 +22,18 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.melod1n.schedule.MainActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.NoteAdapter;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
-import ru.melod1n.schedule.adapter.items.NoteItem;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
+import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.view.FullScreenNoteDialog;
 
-public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemClickListener, Toolbar.OnMenuItemClickListener {
+public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
 
     private ItemTouchHelper ith;
 
@@ -51,10 +53,10 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
     FloatingActionButton add;
 
     @BindView(R.id.no_items_container)
-    View empty;
+    TextView noItems;
 
     @BindView(R.id.toolbar)
-    Toolbar tb;
+    Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,11 +74,14 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
-        tb.setTitle(R.string.notes);
-        tb.inflateMenu(R.menu.fragment_notes);
-        tb.setOnMenuItemClickListener(this);
+        noItems.setText(R.string.no_notes);
 
-        tb.getMenu().findItem(R.id.change_grid).setTitle(twoColumns ? R.string.set_two_columns : R.string.set_one_column);
+        toolbar.setTitle(R.string.nav_notes);
+        toolbar.inflateMenu(R.menu.activity_main);
+        toolbar.getMenu().add("");
+        toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
+
+        toolbar.getMenu().getItem(1).setTitle(twoColumns ? R.string.set_two_columns : R.string.set_one_column);
 
         manager = new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL);
         manager.setSpanCount(twoColumns ? 1 : 2);
@@ -199,8 +204,15 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
         });
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
+
+    private boolean onMenuItemClick(MenuItem item) {
+        if (item.getItemId() == R.id.settings) {
+            if (getActivity() == null) return false;
+
+            ((MainActivity) getActivity()).replaceFragment(new SettingsFragment());
+            return true;
+        }
+
         if (manager == null) return false;
 
         twoColumns = manager.getSpanCount() == 2;
@@ -224,12 +236,12 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
         }
 
         adapter.changeItems(values);
-        adapter.notifyItemRangeChanged(0, adapter.getItemCount() - 1, -1);
+        adapter.notifyItemRangeChanged(0, adapter.getItemCount(), -1);
     }
 
     private void checkCount() {
-        tb.getMenu().getItem(0).setVisible(adapter != null && adapter.getItemCount() > 0);
-        empty.setVisibility(adapter == null ? View.VISIBLE : adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
+        toolbar.getMenu().getItem(0).setVisible(adapter != null && adapter.getItemCount() > 0);
+        noItems.setVisibility(adapter == null ? View.VISIBLE : adapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
 
     @Override

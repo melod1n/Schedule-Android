@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,32 +24,45 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.adapter.ScheduleAdapter;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
-import ru.melod1n.schedule.adapter.SubjectAdapter;
-import ru.melod1n.schedule.adapter.items.SubjectItem;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
+import ru.melod1n.schedule.items.DayItem;
+import ru.melod1n.schedule.items.LessonItem;
+import ru.melod1n.schedule.items.LocationItem;
+import ru.melod1n.schedule.items.SubjectItem;
+import ru.melod1n.schedule.items.TeacherItem;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.view.FullScreenSubjectDialog;
 
-public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
+public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
 
-    private RecyclerView list;
-    private SwipeRefreshLayout refresh;
-    private View empty;
-    private FloatingActionButton add;
+    @BindView(R.id.list)
+    RecyclerView list;
 
-    private SubjectAdapter adapter;
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout refresh;
+
+    @BindView(R.id.no_items_container)
+    TextView noItems;
+
+    @BindView(R.id.fab_add)
+    FloatingActionButton add;
+
+    private ScheduleAdapter adapter;
 
     private int day;
 
-    public SubjectsFragment() {
+    public ScheduleFragment() {
     }
 
-    public SubjectsFragment(int i) {
+    public ScheduleFragment(int i) {
         this.day = i;
     }
 
@@ -66,8 +80,8 @@ public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItem
                 adapter.changeItems(new ArrayList<>(adapter.getValues().subList(0, bellsCount)));
                 adapter.notifyDataSetChanged();
 
-                CacheStorage.delete(DatabaseHelper.TABLE_SUBJECTS, "day=" + day);
-                CacheStorage.insert(DatabaseHelper.TABLE_SUBJECTS, adapter.getValues());
+                CacheStorage.delete(DatabaseHelper.TABLE_LESSONS, "day=" + day);
+                CacheStorage.insert(DatabaseHelper.TABLE_LESSONS, adapter.getValues());
             } else {
                 getSubjects();
             }
@@ -81,7 +95,7 @@ public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItem
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_day, container, false);
+        return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
 
     @Override
@@ -92,13 +106,12 @@ public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItem
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
-        initViews(view);
 
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        manager.setOrientation(RecyclerView.VERTICAL);
+        noItems.setText(R.string.no_lessons);
 
-        list.setLayoutManager(manager);
+        list.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         initDragDrop();
 
@@ -116,11 +129,7 @@ public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItem
             int dragFrom = -1;
             int dragTo = -1;
 
-            public boolean onMove(@NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                final int fromPosition = viewHolder.getAdapterPosition();
-                final int toPosition = target.getAdapterPosition();
-
-
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return true;
             }
 
@@ -167,7 +176,7 @@ public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItem
                 super.clearView(recyclerView, viewHolder);
 
                 if (dragFrom != -1 && dragTo != -1 && dragFrom != dragTo) {
-                    adapter.onEndMove(dragFrom, dragTo, day);
+                    adapter.onEndMove(day);
                 }
 
                 dragFrom = dragTo = -1;
@@ -191,6 +200,7 @@ public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItem
             if (bellsCount == 10) {
                 Toast.makeText(getActivity(), "Достигнуто максимальное количество уроков.", Toast.LENGTH_LONG).show();
             } else {
+                if (getActivity() == null) return;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(R.string.warning);
                 builder.setMessage("Количество уроков превышает количество Ваших звонков. Увеличить количество звонков на 1?");
@@ -206,18 +216,23 @@ public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItem
             FullScreenSubjectDialog dialog = FullScreenSubjectDialog.display(getFragmentManager(), position == -1 ? null : adapter.getItem(position));
             dialog.setOnDoneListener(item -> {
                 if (position == -1) {
-                    item.setDay(day);
+                    item.setOrder(day);
 
-                    CacheStorage.insert(DatabaseHelper.TABLE_SUBJECTS, item);
-                    getSubjects();
+//                    if (!item.getHomework().isEmpty())
+//                        EventBus.getDefault().postSticky(new Object[]{"add_subject", item});
+
+                    CacheStorage.insert(DatabaseHelper.TABLE_LESSONS, item);
+
+                    adapter.getValues().add(item);
+                    adapter.notifyItemInserted(adapter.getItemCount() - 1);
                 } else {
                     if (item == null) {
-                        CacheStorage.delete(DatabaseHelper.TABLE_SUBJECTS, "id = " + adapter.getItem(position).getId());
+                        CacheStorage.delete(DatabaseHelper.TABLE_LESSONS, "id = " + adapter.getItem(position).getOrder());
                         adapter.remove(position);
                         adapter.notifyItemRemoved(position);
                         checkCount();
                     } else {
-                        CacheStorage.update(DatabaseHelper.TABLE_SUBJECTS, item, "id = ?", item.getId());
+                        CacheStorage.update(DatabaseHelper.TABLE_LESSONS, item, "id = ?", item.getOrder());
                         adapter.notifyItemChanged(position, -1);
                     }
                 }
@@ -228,20 +243,55 @@ public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItem
     }
 
     private void checkCount() {
-        empty.setVisibility(adapter == null ? View.VISIBLE : adapter.getValues().size() == 0 ? View.VISIBLE : View.GONE);
+        noItems.setVisibility(adapter == null ? View.VISIBLE : adapter.getValues().size() == 0 ? View.VISIBLE : View.GONE);
     }
 
     private void getSubjects() {
-        ArrayList<SubjectItem> items = CacheStorage.getSubjects(day);
-        createAdapter(items);
+        ArrayList<DayItem> a = CacheStorage.getDays(day);
+        ArrayList<LessonItem> lessons = new ArrayList<>();
+
+        int i = 1;
+        while (i < 7) {
+            LessonItem item = new LessonItem();
+            item.setOrder(i - 1);
+            item.setLessonStringType("Тип №" + i);
+
+            LocationItem location = new LocationItem();
+            location.setTitle(String.valueOf(3 * (int) Math.pow(i, 2)));
+            location.setBuilding("Здание №" + i);
+
+            item.setClassRoom(location);
+
+            TeacherItem teacher = new TeacherItem();
+            teacher.setTitle("Владимир Путин #" + i);
+
+            item.setTeacher(teacher);
+
+            SubjectItem subject = new SubjectItem();
+            subject.setTitle("Предмет #" + i);
+
+            item.setSubject(subject);
+
+            lessons.add(item);
+            i++;
+        }
+
+        if (a.isEmpty()) {
+            DayItem item = new DayItem();
+            item.setLessons(day %2 == 0 ? lessons : new ArrayList<>());
+            a.add(item);
+        }
+
+        DayItem item = a.get(0);
+        createAdapter(item.getLessons());
         checkCount();
 
         refresh.setRefreshing(false);
     }
 
-    private void createAdapter(ArrayList<SubjectItem> values) {
+    private void createAdapter(ArrayList<LessonItem> values) {
         if (adapter == null) {
-            adapter = new SubjectAdapter(this, values);
+            adapter = new ScheduleAdapter(this, values);
             adapter.setOnItemClickListener(this);
             list.setAdapter(adapter);
             return;
@@ -249,12 +299,5 @@ public class SubjectsFragment extends Fragment implements RecyclerAdapter.OnItem
 
         adapter.changeItems(values);
         adapter.notifyItemRangeChanged(0, adapter.getItemCount(), -1);
-    }
-
-    private void initViews(View root) {
-        empty = root.findViewById(R.id.no_items_container);
-        list = root.findViewById(R.id.list);
-        refresh = root.findViewById(R.id.refresh);
-        add = root.findViewById(R.id.fab_add);
     }
 }

@@ -7,13 +7,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.fragment.SubjectsFragment;
+import ru.melod1n.schedule.fragment.ScheduleFragment;
 
-public class DayFragmentAdapter extends FragmentPagerAdapter {
+public class ScheduleMainAdapter extends FragmentPagerAdapter {
 
     private static final int NUM_ITEMS = 6;
 
-    public DayFragmentAdapter(FragmentManager fragmentManager) {
+    public ScheduleMainAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 
@@ -24,7 +24,7 @@ public class DayFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new SubjectsFragment(position);
+        return new ScheduleFragment(position);
     }
 
     @Override

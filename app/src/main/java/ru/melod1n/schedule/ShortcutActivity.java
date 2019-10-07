@@ -12,7 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import ru.melod1n.schedule.fragment.ParentSubjectsFragment;
+import ru.melod1n.schedule.fragment.MainScheduleFragment;
 import ru.melod1n.schedule.fragment.NotesFragment;
 import ru.melod1n.schedule.fragment.TimetableFragment;
 
@@ -33,7 +33,7 @@ public class ShortcutActivity extends AppCompatActivity {
                 break;
             default:
             case 1:
-                f = new ParentSubjectsFragment();
+                f = new MainScheduleFragment();
                 break;
             case 2:
                 f = new NotesFragment();

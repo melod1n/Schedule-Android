@@ -21,7 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.adapter.items.NoteItem;
+import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.common.ThemeManager;
 
 public class FullScreenNoteDialog extends DialogFragment {

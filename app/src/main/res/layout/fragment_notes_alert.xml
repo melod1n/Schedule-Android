@@ -10,6 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="?colorPrimary"
         android:paddingStart="6dp"
         android:paddingEnd="16dp"
         app:contentInsetStartWithNavigation="0dp"

@@ -20,8 +20,8 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.adapter.items.SubjectItem;
 import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.items.LessonItem;
 
 public class FullScreenSubjectDialog extends DialogFragment {
 
@@ -45,11 +45,11 @@ public class FullScreenSubjectDialog extends DialogFragment {
     private boolean edit;
     private int color;
 
-    private SubjectItem item;
+    private LessonItem item;
 
     private OnDoneListener listener;
 
-    public static FullScreenSubjectDialog display(FragmentManager manager, SubjectItem item) {
+    public static FullScreenSubjectDialog display(FragmentManager manager, LessonItem item) {
         FullScreenSubjectDialog dialog = new FullScreenSubjectDialog();
         dialog.item = item;
         dialog.edit = item != null;
@@ -81,7 +81,7 @@ public class FullScreenSubjectDialog extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_day_alert, container, false);
+        return inflater.inflate(R.layout.fragment_schedule_alert, container, false);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class FullScreenSubjectDialog extends DialogFragment {
         picker.setColors(ThemeManager.isDark() ? ThemeManager.COLOR_PALETTE_DARK : ThemeManager.COLOR_PALETTE_LIGHT);
 
         if (edit) {
-            picker.setSelectedPosition(item.getPosition());
+//            picker.setSelectedPosition(item.getPosition());
             this.color = picker.getSelectedColor();
         } else {
             picker.setSelectedColor(Color.BLACK);
@@ -102,9 +102,9 @@ public class FullScreenSubjectDialog extends DialogFragment {
         picker.setOnChoosedColorListener((position, color) -> FullScreenSubjectDialog.this.color = color);
 
         if (edit) {
-            name.setText(item.getName());
-            cab.setText(item.getCab());
-            homework.setText(item.getHomework());
+//            name.setText(item.getName());
+//            cab.setText(item.getCab());
+//            homework.setText(item.getHomework());
             name.setSelection(name.getText().length());
         }
 
@@ -113,7 +113,7 @@ public class FullScreenSubjectDialog extends DialogFragment {
         int color = ThemeManager.isDark() ? Color.WHITE : Color.BLACK;
 
         toolbar.getNavigationIcon().setTint(color);
-        toolbar.inflateMenu(R.menu.fragment_day_alert);
+        toolbar.inflateMenu(R.menu.fragment_schedule_alert);
 
         for (int i = 0; i < toolbar.getMenu().size(); i++) {
             MenuItem item = toolbar.getMenu().getItem(i);
@@ -163,17 +163,18 @@ public class FullScreenSubjectDialog extends DialogFragment {
         String hw_ = homework.getText().toString().trim();
 
         if (!edit)
-            item = new SubjectItem();
+            item = new LessonItem();
 
-        item.setName(name_);
-        item.setCab(cab_);
-        item.setHomework(hw_);
-        item.setPosition(picker.getSelectedPosition());
+//        item.setName(name_);
+//        item.setCab(cab_);
+//        item.setHomework(hw_);
+//        item.setPosition(picker.getSelectedPosition());
 
         if (listener != null)
             listener.onDone(item);
 
-        onDismiss(getDialog());
+        if (getDialog() != null)
+            getDialog().dismiss();
     }
 
     private void showConfirmDeleteDialog() {
@@ -184,6 +185,9 @@ public class FullScreenSubjectDialog extends DialogFragment {
             if (listener != null && edit)
                 listener.onDone(null);
 
+//            if (!item.getHomework().isEmpty())
+//                EventBus.getDefault().postSticky(new Object[]{"delete_subject", item.getHomework()});
+
             dismiss();
         });
 
@@ -191,6 +195,6 @@ public class FullScreenSubjectDialog extends DialogFragment {
     }
 
     public interface OnDoneListener {
-        void onDone(SubjectItem item);
+        void onDone(LessonItem item);
     }
 }

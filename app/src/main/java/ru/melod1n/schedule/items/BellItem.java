@@ -1,4 +1,4 @@
-package ru.melod1n.schedule.adapter.items;
+package ru.melod1n.schedule.items;
 
 import org.json.JSONObject;
 
@@ -17,6 +17,11 @@ public class BellItem {
         this.start = start;
         this.id = id;
         this.day = day;
+    }
+
+    public BellItem(int start, int end) {
+        this.start = start;
+        this.end = end;
     }
 
     public BellItem(JSONObject o) {

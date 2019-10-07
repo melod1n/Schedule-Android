@@ -11,11 +11,6 @@ import ru.melod1n.schedule.fragment.SettingsFragment;
 
 public class ThemeManager {
 
-    public static final int[] COLORS = new int[]{
-            Color.WHITE,
-            getColor(R.color.dark_primary),
-    };
-
     public static final int[] COLOR_PALETTE_LIGHT = new int[]{
             Color.LTGRAY,
             0xffEF9A9A,
@@ -55,39 +50,54 @@ public class ThemeManager {
     };
 
     private static boolean dark;
+    private static String themeType;
     private static int theme, fullscreen_alert_theme, bottom_sheet_theme;
     private static int primary, primary_dark, accent, background, main, icons, icons_selected;
 
     static void init() {
-        dark = AppGlobal.preferences.getBoolean(SettingsFragment.KEY_DARK_THEME, false);
-
-        AppCompatDelegate.setDefaultNightMode(dark ? AppGlobal.preferences.getBoolean(SettingsFragment.KEY_AUTO_DARK_THEME, false) ? AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM : AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        dark = AppGlobal.preferences.getBoolean("isDark", false);
+        themeType = AppGlobal.preferences.getString(SettingsFragment.KEY_THEME, "light");
+        AppCompatDelegate.setDefaultNightMode(getNightMode());
 
         theme = R.style.AppTheme;
         fullscreen_alert_theme = R.style.AppTheme_FullScreenDialog;
 
-        primary = getColor(isDark() ? R.color.dark_primary : R.color.primary);
-        primary_dark = getColor(isDark() ? R.color.dark_primary_dark : R.color.primary_dark);
-        accent = getColor(isDark() ? R.color.accent : R.color.accent);
-        background = getColor(isDark() ? R.color.dark_background : R.color.background);
+        primary = getColor(R.color.primary);
+        primary_dark = getColor(R.color.primary_dark);
+        accent = getColor(R.color.accent);
+        background = getColor(R.color.background);
         main = getAccent();
         icons = Color.GRAY;
-        icons_selected = isLight() ? getAccent() : Color.WHITE;
+        icons_selected = isDark() ? Color.WHITE : getAccent();
         bottom_sheet_theme = R.style.BottomSheet;
     }
 
-    public static void switchTheme(boolean dark) {
-        AppGlobal.preferences.edit().putBoolean(SettingsFragment.KEY_DARK_THEME, dark).apply();
+    public static void switchTheme() {
         init();
         EventBus.getDefault().post(new Object[]{"theme_update"});
     }
 
-    public static boolean isDark() {
-        return dark;
+    private static int getNightMode() {
+        return getNightMode(themeType);
     }
 
-    public static boolean isLight() {
-        return !dark;
+    public static int getNightMode(String themeType) {
+        switch (themeType) {
+            case "light":
+                return AppCompatDelegate.MODE_NIGHT_NO;
+            case "dark":
+                return AppCompatDelegate.MODE_NIGHT_YES;
+            case "system":
+                return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+            case "auto_battery":
+                return AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY;
+            default:
+                return AppCompatDelegate.MODE_NIGHT_UNSPECIFIED;
+        }
+    }
+
+    public static boolean isDark() {
+        return dark;
     }
 
     public static int getFullScreenDialogTheme() {
@@ -132,5 +142,10 @@ public class ThemeManager {
 
     private static int getColor(int res) {
         return AppGlobal.context.getColor(res);
+    }
+
+    public static void setDark(boolean dark) {
+        ThemeManager.dark = dark;
+        AppGlobal.preferences.edit().putBoolean("isDark", dark).apply();
     }
 }

@@ -147,7 +147,19 @@ public class TimePickerDialog extends BottomSheetDialog {
                     inputHours.requestFocus();
                     return true;
                 }
+            } else if (key == KeyEvent.KEYCODE_ENTER) {
+                buttonApply.performClick();
+                return true;
             }
+            return false;
+        });
+
+        inputNumber.setOnKeyListener((view, i, keyEvent) -> {
+            if (i == KeyEvent.KEYCODE_ENTER) {
+                buttonApply.performClick();
+                return true;
+            }
+
             return false;
         });
 
@@ -215,25 +227,27 @@ public class TimePickerDialog extends BottomSheetDialog {
         space.setVisibility(this.textViewTitle.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
     }
 
-    @SuppressLint("SetTextI18n")
     private void setListener() {
-        buttonApply.setOnClickListener(v -> {
-            if ((showTime && (inputHours.getText().toString().trim().isEmpty()) || (!showTime && inputNumber.getText().toString().trim().isEmpty())))
-                return;
-            dismiss();
-            if (showTime) {
-                if (timeListener != null) {
-                    String minutes = inputMinutes.getText().toString().trim();
-                    if (minutes.isEmpty())
-                        inputMinutes.setText("00");
-                    timeListener.onChoosedTime(Integer.parseInt(inputHours.getText().toString()), Integer.parseInt(inputMinutes.getText().toString()));
-                }
-            } else {
-                if (numListener != null)
-                    numListener.onChoosedNum(Integer.parseInt(inputNumber.getText().toString()));
-            }
-        });
+        buttonApply.setOnClickListener(applyClick);
     }
+
+    @SuppressLint("SetTextI18n")
+    private View.OnClickListener applyClick = view -> {
+        if ((showTime && (inputHours.getText().toString().trim().isEmpty()) || (!showTime && inputNumber.getText().toString().trim().isEmpty())))
+            return;
+        dismiss();
+        if (showTime) {
+            if (timeListener != null) {
+                String minutes = inputMinutes.getText().toString().trim();
+                if (minutes.isEmpty())
+                    inputMinutes.setText("00");
+                timeListener.onChoosedTime(Integer.parseInt(inputHours.getText().toString()), Integer.parseInt(inputMinutes.getText().toString()));
+            }
+        } else {
+            if (numListener != null)
+                numListener.onChoosedNum(Integer.parseInt(inputNumber.getText().toString()));
+        }
+    };
 
     public void setOnChoosedNumListener(OnChoosedNumListener listener) {
         this.numListener = listener;

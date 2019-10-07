@@ -18,7 +18,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.helper.PermissionHelper;
@@ -112,13 +111,7 @@ public class SetupActivity extends AppCompatActivity {
         setFabClick();
 
         final HorizontalColorPicker picker = v.findViewById(R.id.picker);
-
-        picker.setColors(ThemeManager.COLORS);
-        picker.setSelectedColor(ThemeManager.getPrimary());
-        picker.setOnChoosedColorListener((position, color) -> {
-            if (ThemeManager.getPrimary() == color) return;
-            switchTheme(color != ThemeManager.COLORS[0]);
-        });
+        picker.setVisibility(View.GONE);
     }
 
     private void initSecond() {
@@ -218,8 +211,7 @@ public class SetupActivity extends AppCompatActivity {
     private void initFourth() {
         initView();
 
-        fab.show();
-        fab.setEnabled(true);
+        fab.hide();
 
         setFabClick();
         findViewById(R.id.auto).setOnClickListener(p1 -> showNumBell(false));
@@ -273,11 +265,6 @@ public class SetupActivity extends AppCompatActivity {
         });
     }
 
-    private void switchTheme(boolean dark) {
-        ThemeManager.switchTheme(dark);
-        Util.restart(this, true);
-    }
-
     @Override
     public void onBackPressed() {
         if (stage > 0) {
@@ -319,6 +306,8 @@ public class SetupActivity extends AppCompatActivity {
                 .setTitle(R.string.bells_count)
                 .setView(v).setNegativeButton(android.R.string.cancel, null).setPositiveButton(android.R.string.ok, (p1, p2) -> {
             AppGlobal.preferences.edit().putInt("bells_count", bells).apply();
+
+            fab.show();
 
             if (manual)
                 startActivityForResult(new Intent(SetupActivity.this, ShortcutActivity.class).putExtra("fragment", 1), 667);

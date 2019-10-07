@@ -4,14 +4,12 @@
 
     <androidx.preference.PreferenceCategory android:title="@string/interface_title" />
 
-    <androidx.preference.SwitchPreference
-        android:key="dark_theme"
-        android:title="@string/dark_theme" />
-
-    <androidx.preference.SwitchPreference
-        android:key="auto_dark_theme"
-        android:summary="@string/auto_dark_theme_summary"
-        android:title="@string/auto_dark_theme_title" />
+    <androidx.preference.ListPreference
+        android:defaultValue="light"
+        android:entryValues="@array/themes_entries"
+        android:entries="@array/themes"
+        android:key="theme"
+        android:title="@string/theme" />
 
     <androidx.preference.CheckBoxPreference
         android:defaultValue="true"
@@ -49,7 +47,7 @@
 
     <PreferenceScreen
         android:key="setup_bells"
-        android:title="Setup bells" />
+        android:title="@string/setup_bells" />
 
     <androidx.preference.PreferenceCategory android:title="@string/application" />
 
@@ -61,7 +59,7 @@
 
     <PreferenceScreen
         android:key="setup_app"
-        android:title="Setup application" />
+        android:title="@string/setup_application" />
 
     <androidx.preference.PreferenceScreen
         android:key="about"

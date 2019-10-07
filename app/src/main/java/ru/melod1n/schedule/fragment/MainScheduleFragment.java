@@ -14,14 +14,14 @@ import com.google.android.material.tabs.TabLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.melod1n.schedule.MainActivity;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.adapter.DayFragmentAdapter;
+import ru.melod1n.schedule.adapter.ScheduleMainAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.util.Util;
-import ru.melod1n.schedule.util.ViewUtil;
 
 
-public class ParentSubjectsFragment extends Fragment {
+public class MainScheduleFragment extends Fragment {
 
     @BindView(R.id.pager)
     ViewPager pager;
@@ -30,20 +30,30 @@ public class ParentSubjectsFragment extends Fragment {
     TabLayout tabs;
 
     @BindView(R.id.toolbar)
-    Toolbar tb;
+    Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_day_tab, container, false);
+        return inflater.inflate(R.layout.fragment_main_schedule, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
-        tb.setTitle(R.string.schedule);
+        toolbar.setTitle(R.string.nav_schedule);
 
-        ViewUtil.applyToolbarStyles(tb);
+        toolbar.inflateMenu(R.menu.activity_main);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.settings) {
+                if (getActivity() == null) return false;
+
+                ((MainActivity) getActivity()).replaceFragment(new SettingsFragment());
+                return true;
+            }
+
+            return false;
+        });
 
         tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
 
@@ -51,7 +61,7 @@ public class ParentSubjectsFragment extends Fragment {
     }
 
     private void createPagerAdapter() {
-        pager.setAdapter(new DayFragmentAdapter(getChildFragmentManager()));
+        pager.setAdapter(new ScheduleMainAdapter(getChildFragmentManager()));
         pager.computeScroll();
         pager.setOffscreenPageLimit(5);
         tabs.setupWithViewPager(pager);

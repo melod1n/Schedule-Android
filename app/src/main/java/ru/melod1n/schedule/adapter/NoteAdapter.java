@@ -2,7 +2,6 @@ package ru.melod1n.schedule.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.adapter.items.NoteItem;
+import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
@@ -77,22 +76,19 @@ public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolde
 
             card.setCardBackgroundColor(colors[item.getPosition()]);
 
-            int textColor = ColorUtil.isDark(item.getPosition()) ? Color.WHITE : Color.BLACK;
+            int textColor = ColorUtil.isDark(colors[item.getPosition()]) ? Color.WHITE : Color.BLACK;
 
             title.setTextColor(textColor);
             text.setTextColor(textColor);
 
-            if (!TextUtils.isEmpty(item.getTitle())) {
-                String title_ = item.getTitle().length() > 35 ? item.getTitle().substring(0, 35) + "..." : item.getTitle();
-                title.setText(title_);
-                title.setVisibility(title_.trim().isEmpty() ? View.GONE : View.VISIBLE);
-            }
+            String title_ = item.getTitle().length() > 35 ? item.getTitle().substring(0, 35) + "..." : item.getTitle();
+            title.setText(title_);
 
             String text_ = item.getText().length() > 120 ? item.getText().substring(0, 120) + "..." : item.getText();
             text.setText(text_);
 
             text.setVisibility(text_.trim().isEmpty() ? View.GONE : View.VISIBLE);
-
+            title.setVisibility(title_.trim().isEmpty() ? View.GONE : View.VISIBLE);
         }
     }
 }

@@ -1,5 +1,6 @@
 package ru.melod1n.schedule.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.helper.TimeHelper;
 import ru.melod1n.schedule.util.Util;
+import ru.melod1n.schedule.util.ViewUtil;
 import ru.melod1n.schedule.view.TimePickerDialog;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
@@ -39,8 +41,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     public static final String KEY_SHOW_ERROR = "show_error";
     public static final String KEY_OPEN_ON_START = "open_on_start";
-    public static final String KEY_DARK_THEME = "dark_theme";
-    public static final String KEY_AUTO_DARK_THEME = "auto_dark_theme";
+    public static final String KEY_THEME = "theme";
 
     private int bells_count, dur_lesson, dur_break;
 
@@ -49,22 +50,48 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.settings);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_backward);
+        toolbar.setNavigationOnClickListener(view1 -> {
+            if (getActivity() != null)
+                getActivity().onBackPressed();
+        });
+
+        ViewUtil.applyToolbarStyles(toolbar);
     }
 
     @Override
     public void onCreatePreferences(Bundle p1, String p2) {
         setPreferencesFromResource(R.xml.prefs, p2);
 
-        findPreference(KEY_AUTO_DARK_THEME).setOnPreferenceChangeListener(this);
-        findPreference(KEY_AUTO_DARK_THEME).setVisible(ThemeManager.isDark());
+        Preference theme = findPreference(KEY_THEME);
+        Preference lessonsStart = findPreference(KEY_LESSONS_START);
+        Preference lessonBreakLength = findPreference(KEY_LESSON_BREAK_LENGTH);
+        Preference bellsCount = findPreference(KEY_BELLS_COUNT);
+        Preference about = findPreference(KEY_ABOUT);
+        Preference setupBells = findPreference(KEY_SETUP_BELLS);
+        Preference setupApp = findPreference(KEY_SETUP_APP);
 
-        findPreference(KEY_DARK_THEME).setOnPreferenceClickListener(this);
-        findPreference(KEY_LESSONS_START).setOnPreferenceClickListener(this);
-        findPreference(KEY_LESSON_BREAK_LENGTH).setOnPreferenceClickListener(this);
-        findPreference(KEY_BELLS_COUNT).setOnPreferenceClickListener(this);
-        findPreference(KEY_ABOUT).setOnPreferenceClickListener(this);
-        findPreference(KEY_SETUP_BELLS).setOnPreferenceClickListener(this);
-        findPreference(KEY_SETUP_APP).setOnPreferenceClickListener(this);
+        if (theme != null)
+            theme.setOnPreferenceChangeListener(this);
+
+        if (lessonsStart != null)
+            lessonsStart.setOnPreferenceClickListener(this);
+
+        if (lessonBreakLength != null)
+            lessonBreakLength.setOnPreferenceClickListener(this);
+
+        if (bellsCount != null)
+            bellsCount.setOnPreferenceClickListener(this);
+
+        if (about != null)
+            about.setOnPreferenceClickListener(this);
+
+        if (setupBells != null)
+            setupBells.setOnPreferenceClickListener(this);
+
+        if (setupApp != null)
+            setupApp.setOnPreferenceClickListener(this);
+
     }
 
     @Override
@@ -82,9 +109,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             case KEY_BELLS_COUNT:
                 showNumBell();
                 break;
-            case KEY_DARK_THEME:
-                switchTheme(!ThemeManager.isDark());
-                break;
             case KEY_SETUP_BELLS:
                 Toast.makeText(getActivity(), "In progress...", Toast.LENGTH_SHORT).show();
                 break;
@@ -96,6 +120,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     private void showConfirmSetupAppDialog() {
+        if (getActivity() == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.warning);
         builder.setMessage("Перенастроить приложение?");
@@ -110,33 +135,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         switch (preference.getKey()) {
-            case KEY_AUTO_DARK_THEME:
-                boolean isOn = (boolean) newValue;
+            case KEY_THEME:
+                AppGlobal.preferences.edit().putString(KEY_THEME, (String) newValue).apply();
+                ThemeManager.switchTheme();
 
-                int nightMode = AppCompatDelegate.MODE_NIGHT_YES;
-
-                if (isOn)
-                    nightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM | AppCompatDelegate.MODE_NIGHT_YES;
-
+                int nightMode = ThemeManager.getNightMode((String) newValue);
                 AppCompatDelegate.setDefaultNightMode(nightMode);
-                break;
+                return true;
         }
-        return true;
-    }
-
-    private void switchTheme(boolean isDark) {
-        findPreference(KEY_AUTO_DARK_THEME).setVisible(isDark);
-
-        ThemeManager.switchTheme(isDark);
-
-        int nightMode = isDark ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO;
-        AppCompatDelegate.setDefaultNightMode(nightMode);
-
-        Util.restart(getActivity(), new Intent().putExtra("open_settings", true), true);
+        return false;
     }
 
     private void showStartLessonsDialog() {
-        TimePickerDialog dialog = new TimePickerDialog(getContext(), true);
+        if (getActivity() == null) return;
+        TimePickerDialog dialog = new TimePickerDialog(getActivity(), true);
 
         dialog.setTitle(R.string.set_lessons_time);
 
@@ -151,7 +163,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     private void showNumBell() {
-        View v = getLayoutInflater().inflate(R.layout.choose_bells_count, null, false);
+        @SuppressLint("InflateParams") View v = getLayoutInflater().inflate(R.layout.choose_bells_count, null, false);
 
         NumberPicker picker = v.findViewById(R.id.picker);
         picker.setMaxValue(10);
@@ -164,7 +176,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         picker.setWrapSelectorWheel(false);
         picker.setOnValueChangedListener((picker1, old_val, new_val) -> bells_count = new_val);
 
-        new AlertDialog.Builder(getContext())
+        if (getActivity() == null) return;
+
+        new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.bells_count)
                 .setView(v).setNegativeButton(android.R.string.cancel, null).setPositiveButton(R.string.edit, (p1, p2) -> {
             if (bellsCount > bells_count) {
@@ -175,9 +189,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                     AppGlobal.preferences.edit().putInt(KEY_BELLS_COUNT, bells_count).apply();
                     showConfirmRecreateDialog();
                 });
-                builder.setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> {
-                    showNumBell();
-                });
+                builder.setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> showNumBell());
                 builder.show();
             } else {
                 AppGlobal.preferences.edit().putInt(KEY_BELLS_COUNT, bells_count).apply();
@@ -194,6 +206,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     private void showConfirmRecreateDialog() {
+        if (getActivity() == null) return;
         AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
         adb.setTitle(R.string.warning);
         adb.setMessage(getString(R.string.recreate_bells) + "?");
@@ -211,7 +224,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     private void showLessonBreakLength() {
-        TimePickerDialog subject = new TimePickerDialog(getContext());
+        if (getActivity() == null) return;
+        TimePickerDialog subject = new TimePickerDialog(getActivity());
 
         subject.setTitle(getString(R.string.lesson_length_title));
         subject.setHintNum(TimeHelper.lesson_length);
@@ -220,7 +234,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         subject.setOnChoosedNumListener(num -> {
             dur_lesson = num;
 
-            TimePickerDialog break_ = new TimePickerDialog(getContext());
+            TimePickerDialog break_ = new TimePickerDialog(getActivity());
 
             break_.setTitle(getString(R.string.break_length));
             break_.setHintNum(TimeHelper.break_length);
