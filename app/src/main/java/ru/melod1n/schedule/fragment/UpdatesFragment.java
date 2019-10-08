@@ -44,7 +44,7 @@ public class UpdatesFragment extends Fragment {
 
         DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();
 
-        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar, view);
+        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }

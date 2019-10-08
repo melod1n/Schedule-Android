@@ -35,6 +35,14 @@ public class AgendaAdapter extends RecyclerAdapter<HomeworkItem, AgendaAdapter.V
         holder.bind(position);
     }
 
+    @Override
+    public boolean onQueryItem(HomeworkItem item, String lowerQuery) {
+        if (item.getTitle().toLowerCase().contains(lowerQuery))
+            return true;
+
+        return super.onQueryItem(item, lowerQuery);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -50,8 +58,6 @@ public class AgendaAdapter extends RecyclerAdapter<HomeworkItem, AgendaAdapter.V
         @BindView(R.id.homework_card)
         MaterialCardView cardView;
 
-        //int[] colors = ThemeManager.isDark() ? ThemeManager.COLOR_PALETTE_DARK : ThemeManager.COLOR_PALETTE_LIGHT;
-
         ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -61,14 +67,10 @@ public class AgendaAdapter extends RecyclerAdapter<HomeworkItem, AgendaAdapter.V
         public void bind(int position) {
             HomeworkItem item = getItem(position);
 
-            date.setText(item.date);
+            date.setText(item.getDate());
+            subject.setText(item.getTitle().replace("\n", " "));
 
-            //cardView.setCardBackgroundColor(colors[item.color]);
-
-            String title = item.title;
-            subject.setText(title.replace("\n", " "));
-
-            String homework = item.text;
+            String homework = item.getText();
             if (homework.length() > 450) {
                 homework = homework.substring(0, 446) + "...";
             }

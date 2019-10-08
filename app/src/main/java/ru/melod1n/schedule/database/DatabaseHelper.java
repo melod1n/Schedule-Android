@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_SUBJECTS = "subjects";
     public static final String TABLE_TEACHERS = "teachers";
     public static final String TABLE_CLASSROOMS = "classrooms";
-    public static final String TABLE_PARICIPANTS = "participants";
+    public static final String TABLE_PARTICIPANTS = "participants";
 
     //DB FIELDS
     public static final String ID = "id";
@@ -50,6 +50,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static String SUBGROUP = "subgroup";
 
+    public static String COLOR_POSITION = "color_position";
+
     //TABLES
 
     private final static String SQL_CREATE_TABLE_DAYS = "create table " + TABLE_DAYS +
@@ -72,7 +74,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private final static String SQL_CREATE_TABLE_SUBJECTS = "create table " + TABLE_SUBJECTS +
             " (" + ID + " integer primary key unique on conflict replace, " +
-            TITLE + " text" +
+            TITLE + " text, " +
+            COLOR_POSITION + " integer" +
             ");";
 
     private final static String SQL_CREATE_TABLE_TEACHERS = "create table " + TABLE_TEACHERS +
@@ -86,7 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             BUILDING + " text" +
             ");";
 
-    private final static String SQL_CREATE_TABLE_PARTICIPANTS = "create table " + TABLE_PARICIPANTS +
+    private final static String SQL_CREATE_TABLE_PARTICIPANTS = "create table " + TABLE_PARTICIPANTS +
             " (" + ID + " integer primary key unique on conflict replace, " +
             TITLE + " text, " +
             SUBGROUP + " text" +
@@ -115,11 +118,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_SUBJECTS = "drop table if exists " + TABLE_SUBJECTS;
     private static final String SQL_DELETE_TEACHERS = "drop table if exists " + TABLE_TEACHERS;
     private static final String SQL_DELETE_CLASSROOMS = "drop table if exists " + TABLE_CLASSROOMS;
-    private static final String SQL_DELETE_PARTICIPANTS = "drop table if exists " + TABLE_PARICIPANTS;
+    private static final String SQL_DELETE_PARTICIPANTS = "drop table if exists " + TABLE_PARTICIPANTS;
 
     //DB INFO
     private static final String DB_NAME = "schedule.db";
-    private static final int DB_VERSION = 26;
+    private static final int DB_VERSION = 27;
 
     private static DatabaseHelper instance;
 
@@ -161,11 +164,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int old, int new_version) {
-        AppGlobal.saveData();
+       // AppGlobal.saveData();
 
         dropTables(db);
         onCreate(db);
 
-        AppGlobal.preferences.edit().putBoolean("is_db_updated", true).apply();
+        //TODO: доделать
+        //AppGlobal.preferences.edit().putBoolean("is_db_updated", true).apply();
     }
 }

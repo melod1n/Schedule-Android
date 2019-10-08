@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 public class HomeworkItem implements Serializable {
 
-    public String text, title, date;
-    public int color;
+    private String text;
+    private String title;
+    private String date;
+    private int color;
 
     public HomeworkItem(String text) {
         this.text = text;
@@ -19,5 +21,37 @@ public class HomeworkItem implements Serializable {
     }
 
     public HomeworkItem() {
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

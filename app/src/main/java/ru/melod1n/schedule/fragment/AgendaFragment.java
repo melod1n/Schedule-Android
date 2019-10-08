@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -30,6 +31,7 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.AgendaAdapter;
 import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.items.HomeworkItem;
+import ru.melod1n.schedule.util.ViewUtil;
 
 public class AgendaFragment extends Fragment {
 
@@ -50,6 +52,11 @@ public class AgendaFragment extends Fragment {
 
     private AgendaAdapter adapter;
 
+    private SearchView searchView;
+    private MenuItem searchViewItem;
+
+    private boolean searchViewCollapsed = true;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,9 +70,7 @@ public class AgendaFragment extends Fragment {
 
         noItems.setText(R.string.no_agenda);
 
-        toolbar.setTitle(R.string.nav_agenda);
-//        toolbar.inflateMenu(R.menu.activity_main);
-//        toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
+        prepareToolbar();
 
         list.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
@@ -75,11 +80,53 @@ public class AgendaFragment extends Fragment {
 
         DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();
 
-        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar, view);
+        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         getHomework();
+    }
+
+    private void prepareToolbar() {
+        toolbar.setTitle(R.string.nav_agenda);
+        toolbar.inflateMenu(R.menu.fragment_agenda);
+        toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
+
+        ViewUtil.applyToolbarStyles(toolbar);
+
+        searchViewItem = toolbar.getMenu().findItem(R.id.agenda_search);
+
+        searchView = (SearchView) searchViewItem.getActionView();
+        searchView.setQueryHint(getString(R.string.title));
+
+        searchView.setOnCloseListener(() -> {
+            searchViewCollapsed = true;
+            return false;
+        });
+
+        searchView.setOnSearchClickListener(view -> searchViewCollapsed = false);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.filter(newText);
+                checkCount();
+                return true;
+            }
+        });
+    }
+
+    public MenuItem getSearchViewItem() {
+        return searchViewItem;
+    }
+
+    public boolean isSearchViewCollapsed() {
+        return searchViewCollapsed;
     }
 
     @Override

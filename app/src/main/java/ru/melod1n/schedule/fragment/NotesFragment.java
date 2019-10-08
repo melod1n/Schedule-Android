@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,7 @@ import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.NoteItem;
+import ru.melod1n.schedule.util.ViewUtil;
 import ru.melod1n.schedule.view.FullScreenNoteDialog;
 
 public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
@@ -43,7 +45,7 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 
     private NoteAdapter adapter;
 
-    private boolean twoColumns;
+    private boolean oneColumn;
 
     @BindView(R.id.list)
     RecyclerView list;
@@ -60,11 +62,17 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+
+    private SearchView searchView;
+    private MenuItem searchViewItem;
+
+    private boolean searchViewCollapsed = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        twoColumns = AppGlobal.preferences.getBoolean("two_columns", false);
+        oneColumn = AppGlobal.preferences.getBoolean("two_columns", false);
     }
 
     @Override
@@ -78,15 +86,10 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 
         noItems.setText(R.string.no_notes);
 
-        toolbar.setTitle(R.string.nav_notes);
-        //toolbar.inflateMenu(R.menu.activity_main);
-        toolbar.getMenu().add("");
-        toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
-
-        toolbar.getMenu().getItem(0).setTitle(twoColumns ? R.string.set_two_columns : R.string.set_one_column);
+        prepareToolbar();
 
         manager = new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL);
-        manager.setSpanCount(twoColumns ? 1 : 2);
+        manager.setSpanCount(oneColumn ? 1 : 2);
         list.setHasFixedSize(true);
 
         list.setLayoutManager(manager);
@@ -101,11 +104,55 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 
         DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();
 
-        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar, view);
+        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         getNotes();
+    }
+
+    private void prepareToolbar() {
+            toolbar.setTitle(R.string.nav_notes);
+            toolbar.inflateMenu(R.menu.fragment_notes);
+            toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
+
+            toolbar.getMenu().findItem(R.id.notes_columns).setTitle(oneColumn ? R.string.set_two_columns : R.string.set_one_column);
+
+            ViewUtil.applyToolbarStyles(toolbar);
+
+            searchViewItem = toolbar.getMenu().findItem(R.id.notes_search);
+
+            searchView = (SearchView) searchViewItem.getActionView();
+            searchView.setQueryHint(getString(R.string.title));
+
+            searchView.setOnCloseListener(() -> {
+                searchViewCollapsed = true;
+                return false;
+            });
+
+        searchView.setOnSearchClickListener(view -> searchViewCollapsed = false);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.filter(newText);
+                checkCount();
+                return true;
+            }
+        });
+    }
+
+    public MenuItem getSearchViewItem() {
+        return searchViewItem;
+    }
+
+    public boolean isSearchViewCollapsed() {
+        return searchViewCollapsed;
     }
 
     private void initDragDrop() {
@@ -214,24 +261,20 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 
 
     private boolean onMenuItemClick(MenuItem item) {
-        if (item.getItemId() == R.id.settings) {
-            if (getActivity() == null) return false;
+        if (item.getItemId() == R.id.notes_columns) {
+            if (manager == null) return false;
 
-            ((MainActivity) getActivity()).replaceFragment(new SettingsFragment());
-            return true;
+            oneColumn = manager.getSpanCount() == 2;
+            AppGlobal.preferences.edit().putBoolean("two_columns", oneColumn).apply();
+
+            manager.setSpanCount(oneColumn ? 1 : 2);
+            ith.attachToRecyclerView(null);
+
+            initDragDrop();
+
+            item.setTitle(oneColumn ? R.string.set_two_columns : R.string.set_one_column);
         }
 
-        if (manager == null) return false;
-
-        twoColumns = manager.getSpanCount() == 2;
-        AppGlobal.preferences.edit().putBoolean("two_columns", twoColumns).apply();
-
-        manager.setSpanCount(twoColumns ? 1 : 2);
-        ith.attachToRecyclerView(null);
-
-        initDragDrop();
-
-        item.setTitle(twoColumns ? R.string.set_two_columns : R.string.set_one_column);
         return true;
     }
 

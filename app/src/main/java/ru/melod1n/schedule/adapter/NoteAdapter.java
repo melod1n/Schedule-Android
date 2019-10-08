@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
+import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.util.ColorUtil;
 
 public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolder> {
@@ -49,6 +49,13 @@ public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolde
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         holder.bind(position);
+    }
+
+    @Override
+    public boolean onQueryItem(NoteItem item, String lowerQuery) {
+        if (item.getTitle().toLowerCase().contains(lowerQuery) || item.getText().toLowerCase().contains(lowerQuery))
+            return true;
+        return super.onQueryItem(item, lowerQuery);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

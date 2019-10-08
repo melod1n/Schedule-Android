@@ -90,6 +90,7 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         if (cleanValues == null) {
             cleanValues = new ArrayList<>(values);
         }
+
         values.clear();
 
         if (query.isEmpty()) {

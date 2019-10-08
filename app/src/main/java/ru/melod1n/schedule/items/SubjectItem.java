@@ -3,6 +3,7 @@ package ru.melod1n.schedule.items;
 public class SubjectItem {
 
     private int id;
+    private int colorPosition;
     private String title;
 
     public int getId() {
@@ -19,5 +20,13 @@ public class SubjectItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getColorPosition() {
+        return colorPosition;
+    }
+
+    public void setColorPosition(int colorPosition) {
+        this.colorPosition = colorPosition;
     }
 }

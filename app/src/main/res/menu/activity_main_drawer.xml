@@ -14,21 +14,25 @@
             android:id="@+id/drawer_providers"
             android:title="@string/drawer_providers" />
 
-<!--        <item-->
-<!--            android:id="@+id/nav_search"-->
-<!--            android:icon="@drawable/ic_search"-->
-<!--            android:title="@string/ic_nav_search" />-->
-
     </group>
 
     <group android:id="@+id/one">
         <item
             android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings_outline"
             android:title="@string/settings" />
 
         <item
             android:id="@+id/drawer_about"
+            android:icon="@drawable/ic_info_outline"
             android:title="@string/drawer_about" />
+    </group>
+
+    <group android:id="@+id/exit">
+        <item
+            android:id="@+id/drawer_exit"
+            android:icon="@drawable/ic_exit_to_app"
+            android:title="@string/drawer_exit" />
     </group>
 
 </menu>

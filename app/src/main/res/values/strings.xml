@@ -142,4 +142,5 @@
 	<string name="drawer_providers">Providers</string>
 	<string name="drawer_groups_list">Groups list</string>
 	<string name="drawer_quick_edit">Quick edit</string>
+	<string name="drawer_exit">Exit</string>
 </resources>

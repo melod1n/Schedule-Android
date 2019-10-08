@@ -129,4 +129,8 @@
 	<string name="no_notes">Нет заметок</string>
 	<string name="no_updates">Нет обновлений</string>
     <string name="ic_nav_search">Поиск</string>
+    <string name="drawer_about">О приложении</string>
+	<string name="drawer_groups_list">Группы</string>
+	<string name="drawer_providers">Провайдеры</string>
+	<string name="drawer_quick_edit">Быстрое редактирование</string>
 </resources>

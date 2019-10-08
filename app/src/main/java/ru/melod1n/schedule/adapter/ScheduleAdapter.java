@@ -97,7 +97,7 @@ public class ScheduleAdapter extends RecyclerAdapter<LessonItem, ScheduleAdapter
             LocationItem location = item.getClassRoom();
             lessonClassroom.setText(String.format("%s, %s", location.getTitle(), location.getBuilding()));
 
-            int color = colors[item.getColor()];
+            int color = colors[subject.getColorPosition()];
 
             lessonLine.setBackgroundColor(color);
             lessonType.setTextColor(color);

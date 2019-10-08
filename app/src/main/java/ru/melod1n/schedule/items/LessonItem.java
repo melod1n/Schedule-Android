@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class LessonItem {
 
-    private int color;
     private int order;
     private LessonType lessonType;
     private String lessonStringType;
@@ -65,15 +64,6 @@ public class LessonItem {
 //
 //        return Util.leadingZero(hours_end) + ":" + Util.leadingZero(minutes_end);
 //    }
-
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
 
     public String getLessonStringType() {
         return lessonStringType;

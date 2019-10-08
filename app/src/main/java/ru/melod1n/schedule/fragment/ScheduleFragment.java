@@ -270,10 +270,9 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
             SubjectItem subject = new SubjectItem();
             subject.setTitle("Предмет #" + i);
+            subject.setColorPosition(new Random().nextInt(16));
 
             item.setSubject(subject);
-
-            item.setColor(new Random().nextInt(16));
 
             lessons.add(item);
             i++;

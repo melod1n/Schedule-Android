@@ -2,11 +2,13 @@ package ru.melod1n.schedule.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -21,6 +23,7 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.ScheduleMainAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.util.Util;
+import ru.melod1n.schedule.util.ViewUtil;
 
 
 public class MainScheduleFragment extends Fragment {
@@ -34,6 +37,11 @@ public class MainScheduleFragment extends Fragment {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    private SearchView searchView;
+    private MenuItem searchViewItem;
+
+    private boolean searchViewCollapsed = true;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_main_schedule, container, false);
@@ -43,30 +51,50 @@ public class MainScheduleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
-        toolbar.setTitle(R.string.nav_schedule);
-
-//        toolbar.inflateMenu(R.menu.activity_main);
-//        toolbar.setOnMenuItemClickListener(item -> {
-//            if (item.getItemId() == R.id.settings) {
-//                if (getActivity() == null) return false;
-//
-//                ((MainActivity) getActivity()).replaceFragment(new SettingsFragment());
-//                return true;
-//            }
-//
-//            return false;
-//        });
+        prepareToolbar();
 
         tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();
 
-        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar, view);
+        ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
 
         createPagerAdapter();
+    }
+
+    private void prepareToolbar() {
+        toolbar.setTitle(R.string.nav_schedule);
+        toolbar.inflateMenu(R.menu.fragment_main_schedule);
+        toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
+
+        ViewUtil.applyToolbarStyles(toolbar);
+
+        searchViewItem = toolbar.getMenu().findItem(R.id.schedule_search);
+
+        searchView = (SearchView) searchViewItem.getActionView();
+        searchView.setQueryHint(getString(R.string.title));
+
+        searchView.setOnCloseListener(() -> {
+            searchViewCollapsed = true;
+            return false;
+        });
+
+        searchView.setOnSearchClickListener(view -> searchViewCollapsed = false);
+    }
+
+    public MenuItem getSearchViewItem() {
+        return searchViewItem;
+    }
+
+    public boolean isSearchViewCollapsed() {
+        return searchViewCollapsed;
+    }
+
+    private boolean onMenuItemClick(@NonNull MenuItem item) {
+        return true;
     }
 
     private void createPagerAdapter() {

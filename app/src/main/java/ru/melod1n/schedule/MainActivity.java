@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
+    @BindView(R.id.fragment_container)
+    FrameLayout fragmentContainer;
+
     private MainScheduleFragment subjectsFragment = new MainScheduleFragment();
     private NotesFragment notesFragment = new NotesFragment();
     private AgendaFragment homeworkFragment = new AgendaFragment();
@@ -84,20 +88,20 @@ public class MainActivity extends AppCompatActivity {
         return drawerLayout;
     }
 
-    public ActionBarDrawerToggle initToggle(Toolbar toolbar, View contentView) {
+    public ActionBarDrawerToggle initToggle(Toolbar toolbar) {
         return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
 
                 float slideX = drawerView.getWidth() * slideOffset;
-                contentView.setTranslationX(slideX);
+                fragmentContainer.setTranslationX(slideX);
 
-                float offset = 1 - slideOffset;
-                if (offset < 0.85) offset = (float) 0.85;
+//                float offset = 1 - slideOffset;
+//                if (offset < 0.85) offset = (float) 0.85;
 
-                contentView.setScaleX(offset);
-                contentView.setScaleY(offset);
+                //contentView.setScaleX(offset);
+                // contentView.setScaleY(offset);
             }
         };
     }
@@ -276,6 +280,12 @@ public class MainActivity extends AppCompatActivity {
         Fragment visibleFragment = getVisibleFragment();
         if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(SettingsFragment.class.getSimpleName())) {
             replaceFragment(getFragmentById(navView.getSelectedItemId()));
+        } else if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(AgendaFragment.class.getSimpleName()) && !((AgendaFragment) visibleFragment).isSearchViewCollapsed()) {
+            ((AgendaFragment) visibleFragment).getSearchViewItem().collapseActionView();
+        } else if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(NotesFragment.class.getSimpleName()) && !((NotesFragment) visibleFragment).isSearchViewCollapsed()) {
+            ((NotesFragment) visibleFragment).getSearchViewItem().collapseActionView();
+        } else if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(MainScheduleFragment.class.getSimpleName()) && !((MainScheduleFragment) visibleFragment).isSearchViewCollapsed()) {
+            ((MainScheduleFragment) visibleFragment).getSearchViewItem().collapseActionView();
         } else {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -283,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onBackPressed();
             }
         }
+
     }
 
     @Override
