@@ -143,4 +143,6 @@
 	<string name="drawer_groups_list">Groups list</string>
 	<string name="drawer_quick_edit">Quick edit</string>
 	<string name="drawer_exit">Exit</string>
+    <string name="max_hubach">Max Hubach</string>
+	<string name="backend_logic_developer">Backend Logic Developer</string>
 </resources>

@@ -9,4 +9,13 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
 
+    <item
+        android:title="Пошел" />
+
+    <item
+        android:title="На" />
+
+    <item
+        android:title="Хуй" />
+
 </menu>

@@ -77,8 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         checkCrash();
 
-        if (!ThemeManager.isDark())
-            getWindow().setStatusBarColor(Color.argb(155, 255, 255, 255));
+        getWindow().setStatusBarColor(0);
 
         navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
         navView.setOnNavigationItemSelectedListener(this::onItemSelected);
@@ -89,25 +88,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ActionBarDrawerToggle initToggle(Toolbar toolbar) {
-        return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
 
                 float slideX = drawerView.getWidth() * slideOffset;
-                fragmentContainer.setTranslationX(slideX);
-
-//                float offset = 1 - slideOffset;
-//                if (offset < 0.85) offset = (float) 0.85;
-
-                //contentView.setScaleX(offset);
-                // contentView.setScaleY(offset);
+                ((FrameLayout) fragmentContainer.getParent()).setTranslationX(slideX);
             }
         };
+
+        return toggle;
     }
 
     private void checkFirstLaunch(Bundle savedInstanceState) {
-        if (Util.isFirstLaunch()) {
+        if (!Util.isFirstLaunch()) {
             startActivity(new Intent(this, SetupActivity.class));
             finish();
         } else {
