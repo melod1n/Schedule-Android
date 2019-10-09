@@ -24,7 +24,6 @@ import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.helper.TimeHelper;
 import ru.melod1n.schedule.util.Util;
-import ru.melod1n.schedule.util.ViewUtil;
 import ru.melod1n.schedule.view.TimePickerDialog;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
@@ -55,8 +54,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             if (getActivity() != null)
                 getActivity().onBackPressed();
         });
-
-        ViewUtil.applyToolbarStyles(toolbar);
     }
 
     @Override

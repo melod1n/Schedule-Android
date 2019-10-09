@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private final static String SQL_CREATE_TABLE_THEMES = "create table " + TABLE_THEMES +
             " (" + ID + " integer primary key autoincrement, " +
-            THEME_KEY + " text unique, " +
+            THEME_KEY + " text unique on conflict replace, " +
             THEME_OBJECT + " blob" +
             ");";
 
@@ -133,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //DB INFO
     private static final String DB_NAME = "schedule.db";
-    private static final int DB_VERSION = 29;
+    private static final int DB_VERSION = 30;
 
     private static DatabaseHelper instance;
 

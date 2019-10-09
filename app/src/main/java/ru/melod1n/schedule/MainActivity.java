@@ -9,12 +9,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -30,7 +30,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.fragment.AgendaFragment;
 import ru.melod1n.schedule.fragment.MainScheduleFragment;
@@ -40,6 +39,7 @@ import ru.melod1n.schedule.fragment.SettingsFragment;
 import ru.melod1n.schedule.fragment.UpdatesFragment;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
+import ru.melod1n.schedule.widget.Toolbar;
 
 public class MainActivity extends BaseActivity {
 
@@ -103,6 +103,15 @@ public class MainActivity extends BaseActivity {
         navDrawer.setItemTextColor(new ColorStateList(states, textColors));
         navDrawer.setItemIconTintList(new ColorStateList(states, iconColors));
 
+        View header = navDrawer.getHeaderView(0);
+        header.setBackgroundColor(theme.getColorDrawerHeaderBackground());
+
+        TextView title = header.findViewById(R.id.drawer_header_title);
+        TextView subtitle = header.findViewById(R.id.drawer_header_subtitle);
+
+        title.setTextColor(theme.getColorDrawerHeaderTitle());
+        subtitle.setTextColor(theme.getColorDrawerHeaderSubtitle());
+
         navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
     }
 
@@ -122,7 +131,7 @@ public class MainActivity extends BaseActivity {
             }
         };
 
-        toggle.getDrawerArrowDrawable().setColor(ThemeManager.getCurrentTheme().getColorControlNormal());
+        toggle.getDrawerArrowDrawable().setColor(toolbar.getTitleColor());
 
         return toggle;
     }

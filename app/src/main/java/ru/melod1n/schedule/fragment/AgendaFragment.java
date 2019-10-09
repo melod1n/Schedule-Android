@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +29,7 @@ import ru.melod1n.schedule.MainActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.AgendaAdapter;
 import ru.melod1n.schedule.items.HomeworkItem;
-import ru.melod1n.schedule.util.ViewUtil;
+import ru.melod1n.schedule.widget.Toolbar;
 
 public class AgendaFragment extends Fragment {
 
@@ -88,8 +87,6 @@ public class AgendaFragment extends Fragment {
         toolbar.setTitle(R.string.nav_agenda);
         toolbar.inflateMenu(R.menu.fragment_agenda);
         toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
-
-        ViewUtil.applyToolbarStyles(toolbar);
 
         searchViewItem = toolbar.getMenu().findItem(R.id.agenda_search);
 

@@ -2,6 +2,7 @@ package ru.melod1n.schedule.adapter;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -97,7 +98,7 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             //int textColorSecondaryInverse = item.getColorTextSecondaryInverse();
 
             toolbar.setTitle(item.getName());
-            toolbar.setTitleTextColor(textColorPrimary);
+            toolbar.setTitleTextColor(ColorUtil.isLight(colorPrimary) ? Color.BLACK : Color.WHITE);
             toolbar.setBackgroundColor(colorPrimary);
 
             String textAuthor = String.format("Author: %s", item.getMadeBy());
@@ -164,14 +165,14 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             };
 
             int[] bottomNavigationViewColors = new int[]{
-                    colorAccent,
-                    textColorSecondary
+                    item.getColorBottomBarIconsActive(),
+                    item.getColorBottomBarIconsNormal()
             };
 
             ColorStateList colorStateList = new ColorStateList(bottomNavigationViewStates, bottomNavigationViewColors);
             bottomNavigationView.setItemIconTintList(colorStateList);
             bottomNavigationView.setItemTextColor(colorStateList);
-            bottomNavigationView.setBackgroundColor(colorSurface);
+            bottomNavigationView.setBackgroundColor(item.getColorBottomBar());
         }
     }
 }

@@ -26,24 +26,20 @@ public class BottomNavigationView extends com.google.android.material.bottomnavi
     private void init() {
         ThemeItem theme = ThemeManager.getCurrentTheme();
 
-        int colorSurface = theme.getColorSurface();
-        int colorAccent = theme.getColorAccent();
-        int textColorSecondary = theme.getColorTextSecondary();
-
         int[][] bottomNavigationViewStates = new int[][]{
                 new int[]{android.R.attr.state_checked},
                 new int[]{-android.R.attr.state_checked}
         };
 
         int[] bottomNavigationViewColors = new int[]{
-                colorAccent,
-                textColorSecondary
+                theme.getColorBottomBarIconsActive(),
+                theme.getColorBottomBarIconsNormal()
         };
 
         ColorStateList colorStateList = new ColorStateList(bottomNavigationViewStates, bottomNavigationViewColors);
 
         setItemIconTintList(colorStateList);
         setItemTextColor(colorStateList);
-        setBackgroundColor(colorSurface);
+        setBackgroundColor(theme.getColorBottomBar());
     }
 }

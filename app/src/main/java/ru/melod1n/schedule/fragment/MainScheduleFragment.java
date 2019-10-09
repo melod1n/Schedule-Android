@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -23,7 +22,7 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.ScheduleMainAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.util.Util;
-import ru.melod1n.schedule.util.ViewUtil;
+import ru.melod1n.schedule.widget.Toolbar;
 
 
 public class MainScheduleFragment extends Fragment {
@@ -61,7 +60,6 @@ public class MainScheduleFragment extends Fragment {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
         createPagerAdapter();
     }
 
@@ -69,8 +67,6 @@ public class MainScheduleFragment extends Fragment {
         toolbar.setTitle(R.string.nav_schedule);
         toolbar.inflateMenu(R.menu.fragment_main_schedule);
         toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
-
-        ViewUtil.applyToolbarStyles(toolbar);
 
         searchViewItem = toolbar.getMenu().findItem(R.id.schedule_search);
 

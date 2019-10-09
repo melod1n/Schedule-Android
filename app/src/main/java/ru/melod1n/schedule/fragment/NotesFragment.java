@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -34,8 +33,8 @@ import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.NoteItem;
-import ru.melod1n.schedule.util.ViewUtil;
 import ru.melod1n.schedule.view.FullScreenNoteDialog;
+import ru.melod1n.schedule.widget.Toolbar;
 
 public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
 
@@ -115,8 +114,6 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
         toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
 
         toolbar.getMenu().findItem(R.id.notes_columns).setTitle(oneColumn ? R.string.set_two_columns : R.string.set_one_column);
-
-        ViewUtil.applyToolbarStyles(toolbar);
 
         searchViewItem = toolbar.getMenu().findItem(R.id.notes_search);
 

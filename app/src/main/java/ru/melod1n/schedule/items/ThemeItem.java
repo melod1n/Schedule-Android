@@ -18,6 +18,9 @@ public class ThemeItem implements Serializable {
     private int engineVersion;
 
     private boolean dark;
+    private boolean lightStatusBar;
+    private boolean lightNavigationBar;
+
     private boolean selected;
 
     private int colorSurface;
@@ -25,7 +28,9 @@ public class ThemeItem implements Serializable {
     private int colorPrimaryDark;
     private int colorAccent;
     private int colorBackground;
-    private int colorTabsText;
+    private int colorTabsTextNormal;
+    private int colorTabsTextActive;
+    private int colorTabsIndicator;
     private int colorControlNormal;
     private int colorTextPrimary;
     private int colorTextSecondary;
@@ -39,6 +44,9 @@ public class ThemeItem implements Serializable {
     private int colorDrawerHeaderBackground;
     private int colorDrawerHeaderTitle;
     private int colorDrawerHeaderSubtitle;
+    private int colorBottomBar;
+    private int colorBottomBarIconsNormal;
+    private int colorBottomBarIconsActive;
 
     public ThemeItem() {
     }
@@ -50,6 +58,8 @@ public class ThemeItem implements Serializable {
         this.key = o.optString("key");
 
         this.dark = o.optBoolean("dark");
+        this.lightStatusBar = o.optBoolean("light_status_bar");
+        this.lightNavigationBar = o.optBoolean("light_navigation_bar");
 
         JSONObject colors = o.optJSONObject("colors");
         if (!ArrayUtil.isEmpty(colors)) {
@@ -58,7 +68,9 @@ public class ThemeItem implements Serializable {
             this.colorPrimaryDark = parseColor(colors.optString("primary_dark"));
             this.colorAccent = parseColor(colors.optString("accent"));
             this.colorBackground = parseColor(colors.optString("background"));
-            this.colorTabsText = parseColor(colors.optString("tabs_text"));
+            this.colorTabsTextNormal = parseColor(colors.optString("tabs_text_normal"));
+            this.colorTabsTextActive = parseColor(colors.optString("tabs_text_active"));
+            this.colorTabsIndicator = parseColor(colors.optString("tabs_indicator"));
             this.colorControlNormal = parseColor(colors.optString("control_normal"));
             this.colorTextPrimary = parseColor(colors.optString("text_primary"));
             this.colorTextSecondary = parseColor(colors.optString("text_secondary"));
@@ -72,6 +84,9 @@ public class ThemeItem implements Serializable {
             this.colorDrawerHeaderBackground = parseColor(colors.optString("drawer_header_background"));
             this.colorDrawerHeaderTitle = parseColor(colors.optString("drawer_header_title"));
             this.colorDrawerHeaderSubtitle = parseColor(colors.optString("drawer_header_subtitle"));
+            this.colorBottomBar = parseColor(colors.optString("bottom_bar"));
+            this.colorBottomBarIconsNormal = parseColor(colors.optString("bottom_bar_icons_normal"));
+            this.colorBottomBarIconsActive = parseColor(colors.optString("bottom_bar_icons_active"));
         }
     }
 
@@ -150,8 +165,8 @@ public class ThemeItem implements Serializable {
         this.colorBackground = parseColor(colorBackground);
     }
 
-    public void setColorTabsText(String colorTabsText) {
-        this.colorTabsText = parseColor(colorTabsText);
+    public void setColorTabsTextNormal(String colorTabsTextNormal) {
+        this.colorTabsTextNormal = parseColor(colorTabsTextNormal);
     }
 
     public void setColorControlNormal(String colorControlNormal) {
@@ -214,12 +229,12 @@ public class ThemeItem implements Serializable {
         this.colorBackground = colorBackground;
     }
 
-    public int getColorTabsText() {
-        return colorTabsText;
+    public int getColorTabsTextNormal() {
+        return colorTabsTextNormal;
     }
 
     public void setColorTabsText(int colorTabsText) {
-        this.colorTabsText = colorTabsText;
+        this.colorTabsTextNormal = colorTabsText;
     }
 
     public int getColorControlNormal() {
@@ -340,5 +355,66 @@ public class ThemeItem implements Serializable {
 
     public void setColorDrawer(int colorDrawer) {
         this.colorDrawer = colorDrawer;
+    }
+
+    public void setColorTabsTextNormal(int colorTabsTextNormal) {
+        this.colorTabsTextNormal = colorTabsTextNormal;
+    }
+
+    public int getColorTabsTextActive() {
+        return colorTabsTextActive;
+    }
+
+    public void setColorTabsTextActive(int colorTabsTextActive) {
+        this.colorTabsTextActive = colorTabsTextActive;
+    }
+
+    public boolean isLightStatusBar() {
+        return lightStatusBar;
+    }
+
+    public void setLightStatusBar(boolean lightStatusBar) {
+        this.lightStatusBar = lightStatusBar;
+    }
+
+    public boolean isLightNavigationBar() {
+        return lightNavigationBar;
+    }
+
+    public void setLightNavigationBar(boolean lightNavigationBar) {
+        this.lightNavigationBar = lightNavigationBar;
+    }
+
+
+    public int getColorTabsIndicator() {
+        return colorTabsIndicator;
+    }
+
+    public void setColorTabsIndicator(int colorTabsIndicator) {
+        this.colorTabsIndicator = colorTabsIndicator;
+    }
+
+    public int getColorBottomBar() {
+        return colorBottomBar;
+    }
+
+    public void setColorBottomBar(int colorBottomBar) {
+        this.colorBottomBar = colorBottomBar;
+    }
+
+    public int getColorBottomBarIconsNormal() {
+        return colorBottomBarIconsNormal;
+    }
+
+    public void setColorBottomBarIconsNormal(int colorBottomBarIconsNormal) {
+        this.colorBottomBarIconsNormal = colorBottomBarIconsNormal;
+    }
+
+    public int getColorBottomBarIconsActive() {
+        return colorBottomBarIconsActive;
+    }
+
+    public void setColorBottomBarIconsActive(int colorBottomBarIconsActive) {
+        this.colorBottomBarIconsActive = colorBottomBarIconsActive;
     }
 }

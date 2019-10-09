@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.ThemeItem;
-import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
 
 public class ThemeManager {
@@ -60,22 +59,17 @@ public class ThemeManager {
         String themeKey = AppGlobal.preferences.getString("theme", DEFAULT_THEME);
 
         ArrayList<ThemeItem> themes = CacheStorage.getThemes();
+        insertStockThemes(themes);
 
-        if (ArrayUtil.isEmpty(themes)) {
-            insertStockThemes(themes);
-
-            currentTheme = themes.get(0);
-        } else {
-            for (ThemeItem theme : themes) {
-                if (themeKey.toLowerCase().equals(theme.getKey().toLowerCase())) {
-                    currentTheme = theme;
-                    break;
-                }
+        for (ThemeItem theme : themes) {
+            if (themeKey.toLowerCase().equals(theme.getKey().toLowerCase())) {
+                currentTheme = theme;
+                break;
             }
+        }
 
-            if (currentTheme == null) {
-                currentTheme = CacheStorage.getThemes(DEFAULT_THEME).get(0);
-            }
+        if (currentTheme == null) {
+            currentTheme = CacheStorage.getThemes(DEFAULT_THEME).get(0);
         }
     }
 

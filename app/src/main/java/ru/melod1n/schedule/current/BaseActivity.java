@@ -35,17 +35,21 @@ public abstract class BaseActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(primaryDark);
         getWindow().setNavigationBarColor(primaryDark);
 
-        if (ColorUtil.isLight(primaryDark)) {
-            int visibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        int visibility = 0;
 
+        if (theme.isLightStatusBar()) {
+            visibility += View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+        }
+
+        if (theme.isLightNavigationBar()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 visibility += View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
             } else {
                 getWindow().setNavigationBarColor(ColorUtil.darkenColor(primaryDark));
             }
-
-            getWindow().getDecorView().setSystemUiVisibility(visibility);
         }
+
+        getWindow().getDecorView().setSystemUiVisibility(visibility);
     }
 
     protected void applyBackground() {
