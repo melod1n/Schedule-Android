@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.melod1n.schedule.widget.TextPlain xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/no_items_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:drawableTop="@drawable/ic_no_items"
-    android:drawableTint="?android:textColorSecondary"
     android:gravity="center"
     android:orientation="vertical"
     android:text="@string/no_items_title"
-    android:textColor="?android:textColorSecondary"
     android:textSize="18sp" />

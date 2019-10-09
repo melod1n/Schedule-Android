@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -18,6 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import ru.melod1n.schedule.AboutActivity;
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.ThemesActivity;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
@@ -71,8 +71,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         Preference setupBells = findPreference(KEY_SETUP_BELLS);
         Preference setupApp = findPreference(KEY_SETUP_APP);
 
-        if (theme != null)
-            theme.setOnPreferenceChangeListener(this);
+        if (theme != null) {
+            theme.setOnPreferenceClickListener(this);
+
+            theme.setSummary(getString(R.string.theme_summary, ThemeManager.getCurrentTheme().getName()));
+        }
 
         if (lessonsStart != null)
             lessonsStart.setOnPreferenceClickListener(this);
@@ -97,6 +100,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public boolean onPreferenceClick(Preference preference) {
         switch (preference.getKey()) {
+            case KEY_THEME:
+                startThemesActivity();
+                break;
             case KEY_ABOUT:
                 startAboutActivity();
                 break;
@@ -119,6 +125,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         return true;
     }
 
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        return false;
+    }
+
     private void showConfirmSetupAppDialog() {
         if (getActivity() == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -130,20 +141,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         });
         builder.setNegativeButton(android.R.string.cancel, null);
         builder.show();
-    }
-
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        switch (preference.getKey()) {
-            case KEY_THEME:
-                AppGlobal.preferences.edit().putString(KEY_THEME, (String) newValue).apply();
-                ThemeManager.switchTheme();
-
-                int nightMode = ThemeManager.getNightMode((String) newValue);
-                AppCompatDelegate.setDefaultNightMode(nightMode);
-                return true;
-        }
-        return false;
     }
 
     private void showStartLessonsDialog() {
@@ -256,5 +253,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private void startAboutActivity() {
         startActivity(new Intent(getActivity(), AboutActivity.class));
+    }
+
+    private void startThemesActivity() {
+        startActivity(new Intent(getActivity(), ThemesActivity.class));
     }
 }

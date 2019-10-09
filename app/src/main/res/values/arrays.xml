@@ -21,18 +21,4 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-
-    <string-array name="themes">
-        <item>@string/light</item>
-        <item>@string/dark</item>
-        <item>@string/follow_system</item>
-        <item>@string/follow_energy_saving</item>
-    </string-array>
-
-    <string-array name="themes_entries">
-        <item>light</item>
-        <item>dark</item>
-        <item>system</item>
-        <item>auto_battery</item>
-    </string-array>
 </resources>

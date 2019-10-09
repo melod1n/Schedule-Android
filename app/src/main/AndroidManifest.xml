@@ -28,7 +28,7 @@
         <activity android:name="AboutActivity" />
         <activity android:name="ShortcutActivity" />
         <activity android:name="SetupActivity" />
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ThemesActivity" />
 
     </application>
 </manifest>

@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.items.ParticipantItem;
 import ru.melod1n.schedule.items.SubjectItem;
 import ru.melod1n.schedule.items.TeacherItem;
+import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
 
@@ -39,8 +41,11 @@ import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_BELLS;
 import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_DAYS;
 import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_LESSONS;
 import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_NOTES;
+import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_THEMES;
 import static ru.melod1n.schedule.database.DatabaseHelper.TEACHER;
 import static ru.melod1n.schedule.database.DatabaseHelper.TEXT;
+import static ru.melod1n.schedule.database.DatabaseHelper.THEME_KEY;
+import static ru.melod1n.schedule.database.DatabaseHelper.THEME_OBJECT;
 import static ru.melod1n.schedule.database.DatabaseHelper.TITLE;
 
 public class CacheStorage {
@@ -89,6 +94,22 @@ public class CacheStorage {
 
     private static byte[] getBlob(@NonNull Cursor cursor, String columnName) {
         return cursor.getBlob(cursor.getColumnIndex(columnName));
+    }
+
+    public static ArrayList<ThemeItem> getThemes() {
+        return getThemes(null);
+    }
+
+    public static ArrayList<ThemeItem> getThemes(String key) {
+        Cursor cursor = (key == null || key.trim().isEmpty()) ? selectCursor(TABLE_THEMES) : selectCursor(TABLE_THEMES, THEME_KEY, key);
+
+        ArrayList<ThemeItem> items = new ArrayList<>(cursor.getCount());
+
+        while (cursor.moveToNext()) {
+            items.add(parseTheme(cursor));
+        }
+
+        return items;
     }
 
     public static ArrayList<LessonItem> getSubjects(int day) {
@@ -209,9 +230,16 @@ public class CacheStorage {
                 case TABLE_BELLS:
                     putValues(cv, (BellItem) item);
                     break;
+                case TABLE_THEMES:
+                    putValues(cv, (ThemeItem) item);
+                    break;
             }
 
-            database.insert(table, null, cv);
+            try {
+                database.insert(table, null, cv);
+            } catch (Exception ignored) {
+            }
+
             cv.clear();
         }
 
@@ -235,9 +263,15 @@ public class CacheStorage {
                 case TABLE_BELLS:
                     putValues(cv, (BellItem) item);
                     break;
+                case TABLE_THEMES:
+                    putValues(cv, (ThemeItem) item);
+                    break;
             }
 
-            database.update(table, cv, where, new String[]{String.valueOf(args)});
+            try {
+                database.update(table, cv, where, new String[]{String.valueOf(args)});
+            } catch (Exception ignored) {
+            }
             cv.clear();
         }
 
@@ -271,6 +305,22 @@ public class CacheStorage {
         values.put(DAY_OF_WEEK, item.getDayOfWeek());
         values.put(DAY_OF_YEAR, item.getDayOfYear());
         values.put(LESSONS, Util.serialize(item.getLessons()));
+    }
+
+    private static void putValues(@NonNull ContentValues values, @NonNull ThemeItem item) {
+        values.put(THEME_KEY, item.getKey());
+        values.put(THEME_OBJECT, Util.serialize(item));
+    }
+
+    @Nullable
+    private static ThemeItem parseTheme(Cursor cursor) {
+        ThemeItem item = (ThemeItem) Util.deserialize(getBlob(cursor, THEME_OBJECT));
+
+        if (item == null) return null;
+
+        item.setKey(getString(cursor, THEME_KEY));
+
+        return item;
     }
 
     private static LessonItem parseLesson(Cursor cursor) {

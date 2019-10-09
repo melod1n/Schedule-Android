@@ -23,7 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.util.ViewUtil;
 
@@ -71,7 +70,7 @@ public class TimePickerDialog extends BottomSheetDialog {
     }
 
     public TimePickerDialog(@NonNull Context context, boolean showTime) {
-        super(context, ThemeManager.getBottomSheetTheme());
+        super(context);
         this.showTime = showTime;
         init();
     }
@@ -194,7 +193,14 @@ public class TimePickerDialog extends BottomSheetDialog {
             @Override
             public void onTextChanged(CharSequence text, int p2, int p3, int p4) {
                 if (!text.toString().isEmpty()) {
-                    int integer = Integer.parseInt(text.toString());
+                    int integer;
+                    try {
+                        integer = Integer.parseInt(text.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                        integer = 0;
+                    }
 
                     if (integer > 1440) {
                         inputNumber.setText("1440");

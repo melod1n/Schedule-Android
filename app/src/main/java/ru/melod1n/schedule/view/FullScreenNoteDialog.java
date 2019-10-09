@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import butterknife.BindView;
@@ -61,12 +60,6 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_notes_alert, container, false);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, ThemeManager.getFullScreenDialogTheme());
     }
 
     @Override
@@ -155,7 +148,7 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
             item = new NoteItem();
 
         if (color == 0)
-            color = ThemeManager.getAccent();
+            color = ThemeManager.getCurrentTheme().getColorAccent();
 
         item.setTitle(title_);
         item.setText(text_);

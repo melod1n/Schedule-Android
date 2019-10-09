@@ -11,30 +11,31 @@
         android:id="@+id/theme_engine_card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
+            <ru.melod1n.schedule.widget.Toolbar
                 android:id="@+id/theme_engine_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="false"
                 android:focusable="false"
-                app:menu="@menu/theme_engine"
-                app:navigationIcon="@drawable/ic_arrow_backward"
                 app:title="Theme title" />
 
-
             <LinearLayout
+                android:id="@+id/theme_engine_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/theme_engine_toolbar"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -52,7 +53,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/theme_engine_switch"
@@ -84,7 +86,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/theme_engine_simple_button"
@@ -122,11 +125,15 @@
                 android:id="@+id/theme_engine_bottom_navigation_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/theme_engine_layout"
                 android:clickable="false"
+                android:contextClickable="false"
                 android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:longClickable="false"
                 app:menu="@menu/theme_engine_bottom" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
 

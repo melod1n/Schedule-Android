@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.MainActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.AgendaAdapter;
-import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.items.HomeworkItem;
 import ru.melod1n.schedule.util.ViewUtil;
 
@@ -74,8 +73,6 @@ public class AgendaFragment extends Fragment {
 
         list.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        refresh.setProgressBackgroundColorSchemeColor(ThemeManager.getBackground());
-        refresh.setColorSchemeColors(ThemeManager.getMain());
         refresh.setOnRefreshListener(this::getHomework);
 
         DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();

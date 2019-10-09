@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.preference.PreferenceCategory android:title="@string/interface_title" />
+    <ru.melod1n.schedule.preference.PreferenceHeader android:title="@string/interface_title" />
 
-    <androidx.preference.ListPreference
-        android:defaultValue="light"
-        android:entryValues="@array/themes_entries"
-        android:entries="@array/themes"
+    <PreferenceScreen
+        android:defaultValue="stock_light"
         android:key="theme"
         android:title="@string/theme" />
 
@@ -18,7 +16,7 @@
         android:title="@string/expand_current_day_title"
         app:isPreferenceVisible="false" />
 
-    <androidx.preference.CheckBoxPreference
+    <ru.melod1n.schedule.preference.PreferenceCheckBox
         android:defaultValue="true"
         android:key="select_current_day"
         android:summary="@string/select_current_day_summary"
@@ -31,7 +29,7 @@
         android:key="open_on_start"
         android:title="@string/open_on_start_title" />
 
-    <androidx.preference.PreferenceCategory android:title="@string/data" />
+    <ru.melod1n.schedule.preference.PreferenceHeader android:title="@string/data" />
 
     <androidx.preference.PreferenceScreen
         android:key="lessons_start"
@@ -49,9 +47,9 @@
         android:key="setup_bells"
         android:title="@string/setup_bells" />
 
-    <androidx.preference.PreferenceCategory android:title="@string/application" />
+    <ru.melod1n.schedule.preference.PreferenceHeader android:title="@string/application" />
 
-    <androidx.preference.CheckBoxPreference
+    <ru.melod1n.schedule.preference.PreferenceCheckBox
         android:defaultValue="true"
         android:key="show_error"
         android:summary="@string/show_error_summary"
@@ -65,4 +63,4 @@
         android:key="about"
         android:title="@string/about" />
 
-</androidx.preference.PreferenceScreen>
+</PreferenceScreen>

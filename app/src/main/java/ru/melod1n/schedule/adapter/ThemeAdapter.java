@@ -1,7 +1,7 @@
 package ru.melod1n.schedule.adapter;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -15,7 +15,6 @@ import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,13 +29,11 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
-import ru.melod1n.schedule.util.ViewUtil;
 
 public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHolder> {
 
-
-    public ThemeAdapter(Fragment fragment, ArrayList<ThemeItem> values) {
-        super(fragment, values);
+    public ThemeAdapter(Context context, ArrayList<ThemeItem> values) {
+        super(context, values);
     }
 
     @NonNull
@@ -47,7 +44,6 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
         holder.bind(position);
     }
 
@@ -88,24 +84,21 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
         }
 
         void bind(int position) {
-
             ThemeItem item = getItem(position);
 
-            int colorSurface = Color.parseColor(item.getColorSurface());
-            int colorPrimary = Color.parseColor(item.getColorPrimary());
-            int colorAccent = Color.parseColor(item.getColorAccent());
-            int colorBackground = Color.parseColor(item.getColorBackground());
-            int colorControlNormal = Color.parseColor(item.getColorControlNormal());
-            int textColorPrimary = Color.parseColor(item.getColorTextPrimary());
-            int textColorSecondary = Color.parseColor(item.getColorTextSecondary());
-            int textColorPrimaryInverse = Color.parseColor(item.getColorTextPrimaryInverse());
-            int textColorSecondaryInverse = Color.parseColor(item.getColorTextSecondaryInverse());
+            int colorSurface = item.getColorSurface();
+            int colorPrimary = item.getColorPrimary();
+            int colorAccent = item.getColorAccent();
+            int colorBackground = item.getColorBackground();
+            //int colorControlNormal = item.getColorControlNormal();
+            int textColorPrimary = item.getColorTextPrimary();
+            int textColorSecondary = item.getColorTextSecondary();
+            int textColorPrimaryInverse = item.getColorTextPrimaryInverse();
+            //int textColorSecondaryInverse = item.getColorTextSecondaryInverse();
 
             toolbar.setTitle(item.getName());
             toolbar.setTitleTextColor(textColorPrimary);
             toolbar.setBackgroundColor(colorPrimary);
-            toolbar.setOverflowIcon(getDrawable(R.drawable.ic_more_vert));
-            ViewUtil.applyToolbarStyles(toolbar, colorControlNormal, item.isDark());
 
             String textAuthor = String.format("Author: %s", item.getMadeBy());
             String textVersion = String.format(Locale.getDefault(), "Engine version: %d", item.getEngineVersion());
@@ -117,8 +110,13 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             textSpan.setSpan(new ForegroundColorSpan(textColorSecondary), textAuthor.length(), text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             textView.setText(textSpan);
+            textView.setOnClickListener(view -> {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(itemView, position);
+                }
+            });
 
-            int[][] switchTrackStates = new int[][]{
+            int[][] states = new int[][]{
                     new int[]{android.R.attr.state_checked},
                     new int[]{-android.R.attr.state_checked}
             };
@@ -128,18 +126,13 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
                     item.alphaColor(textColorSecondary, 0.5f)
             };
 
-            int[][] switchThumbStates = new int[][]{
-                    new int[]{android.R.attr.state_checked},
-                    new int[]{-android.R.attr.state_checked}
-            };
-
             int[] switchThumbColors = new int[]{
                     colorAccent,
                     ColorUtil.isDark(colorBackground) ? ColorUtil.lightenColor(textColorSecondary, 1.2f) : colorBackground
             };
 
-            switchCompat.getThumbDrawable().setTintList(new ColorStateList(switchThumbStates, switchThumbColors));
-            switchCompat.getTrackDrawable().setTintList(new ColorStateList(switchTrackStates, switchTrackColors));
+            switchCompat.getThumbDrawable().setTintList(new ColorStateList(states, switchThumbColors));
+            switchCompat.getTrackDrawable().setTintList(new ColorStateList(states, switchTrackColors));
 
             radioButton.setSupportButtonTintList(ColorStateList.valueOf(colorAccent));
 

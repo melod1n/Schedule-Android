@@ -1,7 +1,6 @@
 package ru.melod1n.schedule;
 
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -14,10 +13,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.adapter.AboutAdapter;
-import ru.melod1n.schedule.items.AboutItem;
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.current.BaseActivity;
+import ru.melod1n.schedule.items.AboutItem;
 
 public class AboutActivity extends BaseActivity {
 
@@ -35,12 +33,10 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(ThemeManager.getCurrentTheme());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
 
-        toolbar.getNavigationIcon().setTint(ThemeManager.isDark() ? Color.WHITE : Color.BLACK);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         LinearLayoutManager manager = new LinearLayoutManager(this);

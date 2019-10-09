@@ -1,11 +1,7 @@
-<com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.melod1n.schedule.widget.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tabs"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?colorPrimary"
     app:tabGravity="center"
-    app:tabIndicatorColor="?tabIndicatorColor"
-    app:tabIndicatorHeight="2dp"
-    app:tabSelectedTextColor="?tabSelectedTextColor"
-    app:tabTextColor="?tabTextColor" />
+    app:tabIndicatorHeight="2dp" />

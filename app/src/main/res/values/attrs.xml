@@ -3,4 +3,10 @@
 
     <attr name="colorSurface" format="color" />
 
+    <declare-styleable name="TextPlain">
+
+        <attr name="colorDef" format="string" />
+
+    </declare-styleable>
+
 </resources>

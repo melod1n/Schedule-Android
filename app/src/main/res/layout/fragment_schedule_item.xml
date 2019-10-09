@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
+    android:baselineAligned="false"
     android:orientation="horizontal"
     android:padding="8dp">
 
@@ -22,14 +24,14 @@
             android:orientation="vertical"
             android:padding="4dp">
 
-            <TextView
+            <ru.melod1n.schedule.widget.TextPlain
                 android:id="@+id/lessonStartTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 tools:text="10:30" />
 
-            <TextView
+            <ru.melod1n.schedule.widget.TextPlain
                 android:id="@+id/lessonEndTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +55,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
+        <ru.melod1n.schedule.widget.TextPlain
             android:id="@+id/lessonType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,39 +63,38 @@
             android:padding="2dp"
             android:text="Научно-исследовательский семинар"
             android:textAllCaps="true"
-            android:textColor="?colorAccent"
             android:textStyle="bold"
+            app:colorDef="accent"
             tools:ignore="HardcodedText" />
 
-        <TextView
+        <ru.melod1n.schedule.widget.TextPlain
             android:id="@+id/lessonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="2dp"
-            android:textColor="?android:textColorPrimary"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:colorDef="primary"
             tools:text="Научно-исследовательский семинар 'Разработка облачных и мобильных приложенимй на платформе Apple iOS' (анг)" />
 
 
-        <TextView
+        <ru.melod1n.schedule.widget.TextPlain
             android:id="@+id/lessonClassroom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="2dp"
-            android:textColor="?android:textColorPrimary"
             android:textSize="12sp"
+            app:colorDef="primary"
             tools:text="Ауд. 432, Кочновский пр-д, д. 3" />
 
-        <TextView
+        <ru.melod1n.schedule.widget.TextPlain
             android:id="@+id/lessonTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="2dp"
-            android:textColor="?android:textColorSecondary"
             android:visibility="gone"
             tools:text="Проф. Александров Дмитрий Владимирович" />
 

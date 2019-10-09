@@ -7,9 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
+import androidx.annotation.NonNull;
+
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
@@ -57,6 +62,37 @@ public class Util {
     public static void copyText(String text) {
         ClipboardManager cm = (ClipboardManager) AppGlobal.context.getSystemService(Context.CLIPBOARD_SERVICE);
         cm.setPrimaryClip(ClipData.newPlainText(null, text));
+    }
+
+    @NonNull
+    public static String readFileFromAssets(String fileName) {
+        StringBuilder returnString = new StringBuilder();
+        InputStream fIn = null;
+        InputStreamReader isr = null;
+        BufferedReader input = null;
+        try {
+            fIn = AppGlobal.context.getResources().getAssets().open(fileName);
+            isr = new InputStreamReader(fIn);
+            input = new BufferedReader(isr);
+            String line;
+            while ((line = input.readLine()) != null) {
+                returnString.append(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (isr != null)
+                    isr.close();
+                if (fIn != null)
+                    fIn.close();
+                if (input != null)
+                    input.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        return returnString.toString();
     }
 
     public static String leadingZero(int num) {

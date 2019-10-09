@@ -30,7 +30,6 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.NoteAdapter;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
@@ -97,8 +96,6 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 
         initDragDrop();
 
-        refresh.setProgressBackgroundColorSchemeColor(ThemeManager.getBackground());
-        refresh.setColorSchemeColors(ThemeManager.getMain());
         refresh.setOnRefreshListener(this::getNotes);
 
         add.setOnClickListener(v -> showDialog());

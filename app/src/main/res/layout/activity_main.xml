@@ -5,7 +5,6 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:windowBackground"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:openDrawer="start">
@@ -20,14 +19,11 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="56dp" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <ru.melod1n.schedule.widget.BottomNavigationView
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_gravity="bottom"
-            android:background="?colorSurface"
-            app:itemIconTint="@drawable/ic_navigation_view_icons_tint"
-            app:itemTextColor="@drawable/ic_navigation_view_icons_tint"
             app:labelVisibilityMode="selected"
             app:menu="@menu/activity_main_bottom" />
 

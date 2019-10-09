@@ -10,6 +10,7 @@ import ru.melod1n.schedule.common.AppGlobal;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     //COLUMNS
+    public static final String TABLE_THEMES = "themes";
     public static final String TABLE_NOTES = "notes";
     public static final String TABLE_LESSONS = "lessons";
     public static final String TABLE_BELLS = "bells";
@@ -46,11 +47,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String CLASSROOM = "classroom";
     public static final String PARTICIPANTS = "participants";
 
-    public static String BUILDING = "building";
+    public static final String BUILDING = "building";
 
-    public static String SUBGROUP = "subgroup";
+    public static final String SUBGROUP = "subgroup";
 
-    public static String COLOR_POSITION = "color_position";
+    public static final String COLOR_POSITION = "color_position";
+
+    public static final String THEME_OBJECT = "theme";
+    public static final String THEME_KEY = "theme_key";
 
     //TABLES
 
@@ -110,6 +114,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             POSITION + " integer" +
             ");";
 
+    private final static String SQL_CREATE_TABLE_THEMES = "create table " + TABLE_THEMES +
+            " (" + ID + " integer primary key autoincrement, " +
+            THEME_KEY + " text unique, " +
+            THEME_OBJECT + " blob" +
+            ");";
+
     //DROP TABLES
     private static final String SQL_DELETE_LESSONS = "drop table if exists " + TABLE_LESSONS;
     private static final String SQL_DELETE_NOTES = "drop table if exists " + TABLE_NOTES;
@@ -119,10 +129,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_TEACHERS = "drop table if exists " + TABLE_TEACHERS;
     private static final String SQL_DELETE_CLASSROOMS = "drop table if exists " + TABLE_CLASSROOMS;
     private static final String SQL_DELETE_PARTICIPANTS = "drop table if exists " + TABLE_PARTICIPANTS;
+    private static final String SQL_DELETE_THEMES = "drop table if exists " + TABLE_THEMES;
 
     //DB INFO
     private static final String DB_NAME = "schedule.db";
-    private static final int DB_VERSION = 27;
+    private static final int DB_VERSION = 29;
 
     private static DatabaseHelper instance;
 
@@ -138,6 +149,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private static void dropTables(@NonNull SQLiteDatabase db) {
+        db.execSQL(SQL_DELETE_THEMES);
         db.execSQL(SQL_DELETE_DAYS);
         db.execSQL(SQL_DELETE_LESSONS);
         db.execSQL(SQL_DELETE_SUBJECTS);
@@ -151,6 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(@NonNull SQLiteDatabase db) {
+        db.execSQL(SQL_CREATE_TABLE_THEMES);
         db.execSQL(SQL_CREATE_TABLE_DAYS);
         db.execSQL(SQL_CREATE_TABLE_LESSONS);
         db.execSQL(SQL_CREATE_TABLE_SUBJECTS);
@@ -164,7 +177,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int old, int new_version) {
-       // AppGlobal.saveData();
+        // AppGlobal.saveData();
 
         dropTables(db);
         onCreate(db);

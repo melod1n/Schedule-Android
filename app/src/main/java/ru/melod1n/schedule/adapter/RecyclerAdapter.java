@@ -18,8 +18,8 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
     protected Context context;
     protected LayoutInflater inflater;
     protected Fragment fragment;
-    protected OnItemClickListener click;
-    protected OnItemLongClickListener long_click;
+    protected OnItemClickListener onItemClickListener;
+    protected OnItemLongClickListener onItemLongClickListener;
     private ArrayList<T> values;
     private ArrayList<T> cleanValues;
 
@@ -55,11 +55,11 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
     }
 
     protected void updateListeners(View v, int i) {
-        if (click != null) {
+        if (onItemClickListener != null) {
             initClick(v, i);
         }
 
-        if (long_click != null) {
+        if (onItemLongClickListener != null) {
             initLongClick(v, i);
         }
     }
@@ -127,22 +127,22 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
     }
 
     private void initClick(final View v, final int i) {
-        v.setOnClickListener(p1 -> click.onItemClick(v, i));
+        v.setOnClickListener(p1 -> onItemClickListener.onItemClick(v, i));
     }
 
     private void initLongClick(final View v, final int position) {
         v.setOnLongClickListener(p1 -> {
-            long_click.onItemLongClick(v, position);
-            return click != null;
+            onItemLongClickListener.onItemLongClick(v, position);
+            return onItemClickListener != null;
         });
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        this.click = listener;
+        this.onItemClickListener = listener;
     }
 
     public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        this.long_click = listener;
+        this.onItemLongClickListener = listener;
     }
 
     public interface OnItemClickListener {

@@ -3,8 +3,7 @@ package ru.melod1n.schedule;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -15,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -33,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.fragment.AgendaFragment;
 import ru.melod1n.schedule.fragment.MainScheduleFragment;
 import ru.melod1n.schedule.fragment.NotesFragment;
@@ -42,7 +41,7 @@ import ru.melod1n.schedule.fragment.UpdatesFragment;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.navigationView)
     BottomNavigationView navView;
@@ -72,24 +71,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        ThemeManager.setDark(((ColorDrawable) navView.getBackground()).getColor() != Color.WHITE);
+        setContentView(drawerLayout);
+        applyBackground();
 
         checkFirstLaunch(savedInstanceState);
 
         checkCrash();
 
-        getWindow().setStatusBarColor(0);
+        prepareDrawer();
 
-        navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
         navView.setOnNavigationItemSelectedListener(this::onItemSelected);
     }
 
+    private void prepareDrawer() {
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_checked},
+                new int[]{-android.R.attr.state_checked}
+        };
+
+        int[] textColors = new int[]{
+                theme.getColorDrawerTextActive(),
+                theme.getColorDrawerTextNormal()
+        };
+
+        int[] iconColors = new int[]{
+                theme.getColorDrawerIconActive(),
+                theme.getColorDrawerIconNormal()
+        };
+
+        navDrawer.setBackgroundColor(theme.getColorDrawer());
+        navDrawer.setItemTextColor(new ColorStateList(states, textColors));
+        navDrawer.setItemIconTintList(new ColorStateList(states, iconColors));
+
+        navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
+    }
+
+    @NonNull
     public DrawerLayout getDrawerLayout() {
         return drawerLayout;
     }
 
     public ActionBarDrawerToggle initToggle(Toolbar toolbar) {
-        return new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -98,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
                 ((FrameLayout) fragmentContainer.getParent()).setTranslationX(slideX);
             }
         };
+
+        toggle.getDrawerArrowDrawable().setColor(ThemeManager.getCurrentTheme().getColorControlNormal());
+
+        return toggle;
     }
 
     private void checkFirstLaunch(Bundle savedInstanceState) {
@@ -217,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
         selected_fragment = getFragmentById(item.getItemId());
         selected_id = item.getItemId();
 
-        if (getVisibleFragment() != selected_fragment && !(getVisibleFragment().getClass().getSimpleName().equals(ScheduleFragment.class.getSimpleName()) && selected_id == R.id.nav_schedule)) {
+        if (getVisibleFragment() != selected_fragment && !((getVisibleFragment() != null && getVisibleFragment().getClass().getSimpleName().equals(ScheduleFragment.class.getSimpleName())) && selected_id == R.id.nav_schedule)) {
             replaceFragment(selected_fragment);
             return true;
         }

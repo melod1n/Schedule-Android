@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import butterknife.BindView;
@@ -55,12 +54,6 @@ public class FullScreenLessonDialog extends FullScreenDialog<LessonItem> {
         dialog.edit = item != null;
         dialog.show(manager, TAG);
         return dialog;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, ThemeManager.getFullScreenDialogTheme());
     }
 
     @Override

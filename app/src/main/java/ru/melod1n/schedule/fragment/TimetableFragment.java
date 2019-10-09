@@ -22,13 +22,12 @@ import java.util.ArrayList;
 
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.TimetableAdapter;
-import ru.melod1n.schedule.items.BellItem;
-import ru.melod1n.schedule.items.TimetableItem;
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.helper.TimeHelper;
+import ru.melod1n.schedule.items.BellItem;
+import ru.melod1n.schedule.items.TimetableItem;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.view.TimePickerDialog;
@@ -73,8 +72,6 @@ public class TimetableFragment extends Fragment implements Toolbar.OnMenuItemCli
         tb.getMenu().add(R.string.recreate_all_bells);
         tb.setOnMenuItemClickListener(this);
 
-        refresh.setProgressBackgroundColorSchemeColor(ThemeManager.getBackground());
-        refresh.setColorSchemeColors(ThemeManager.getMain());
         refresh.setOnRefreshListener(this::getTimetable);
 
         getTimetable();

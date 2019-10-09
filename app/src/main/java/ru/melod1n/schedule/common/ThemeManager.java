@@ -2,12 +2,15 @@ package ru.melod1n.schedule.common;
 
 import android.graphics.Color;
 
-import androidx.appcompat.app.AppCompatDelegate;
+import org.json.JSONArray;
 
-import org.greenrobot.eventbus.EventBus;
+import java.util.ArrayList;
 
-import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.fragment.SettingsFragment;
+import ru.melod1n.schedule.database.CacheStorage;
+import ru.melod1n.schedule.database.DatabaseHelper;
+import ru.melod1n.schedule.items.ThemeItem;
+import ru.melod1n.schedule.util.ArrayUtil;
+import ru.melod1n.schedule.util.Util;
 
 public class ThemeManager {
 
@@ -49,103 +52,56 @@ public class ThemeManager {
             0xffD84315
     };
 
-    private static boolean dark;
-    private static String themeType;
-    private static int theme, fullscreen_alert_theme, bottom_sheet_theme;
-    private static int primary, primary_dark, accent, background, main, icons, icons_selected;
+    private static final String DEFAULT_THEME = "stock_light";
+
+    private static volatile ThemeItem currentTheme;
 
     static void init() {
-        dark = AppGlobal.preferences.getBoolean("isDark", false);
-        themeType = AppGlobal.preferences.getString(SettingsFragment.KEY_THEME, "light");
-        AppCompatDelegate.setDefaultNightMode(getNightMode());
+        String themeKey = AppGlobal.preferences.getString("theme", DEFAULT_THEME);
 
-        theme = R.style.AppTheme;
-        fullscreen_alert_theme = R.style.AppTheme_FullScreenDialog;
+        ArrayList<ThemeItem> themes = CacheStorage.getThemes();
 
-        primary = getColor(R.color.primary);
-        primary_dark = getColor(R.color.primary_dark);
-        accent = getColor(R.color.accent);
-        background = getColor(R.color.background);
-        main = getAccent();
-        icons = Color.GRAY;
-        icons_selected = isDark() ? Color.WHITE : getAccent();
-        bottom_sheet_theme = R.style.BottomSheet;
-    }
+        if (ArrayUtil.isEmpty(themes)) {
+            insertStockThemes(themes);
 
-    public static void switchTheme() {
-        init();
-        EventBus.getDefault().post(new Object[]{"theme_update"});
-    }
+            currentTheme = themes.get(0);
+        } else {
+            for (ThemeItem theme : themes) {
+                if (themeKey.toLowerCase().equals(theme.getKey().toLowerCase())) {
+                    currentTheme = theme;
+                    break;
+                }
+            }
 
-    private static int getNightMode() {
-        return getNightMode(themeType);
-    }
-
-    public static int getNightMode(String themeType) {
-        switch (themeType) {
-            case "light":
-                return AppCompatDelegate.MODE_NIGHT_NO;
-            case "dark":
-                return AppCompatDelegate.MODE_NIGHT_YES;
-            case "system":
-                return AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-            case "auto_battery":
-                return AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY;
-            default:
-                return AppCompatDelegate.MODE_NIGHT_UNSPECIFIED;
+            if (currentTheme == null) {
+                currentTheme = CacheStorage.getThemes(DEFAULT_THEME).get(0);
+            }
         }
     }
 
+    public static void insertStockThemes(ArrayList<ThemeItem> themes) {
+        try {
+            JSONArray o = new JSONArray(Util.readFileFromAssets("stock_themes"));
+            for (int i = 0; i < o.length(); i++) {
+                themes.add(new ThemeItem(o.optJSONObject(i)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        CacheStorage.insert(DatabaseHelper.TABLE_THEMES, themes);
+    }
+
+    public static ThemeItem getCurrentTheme() {
+        return currentTheme;
+    }
+
+    public static void setCurrentTheme(String key) {
+        AppGlobal.preferences.edit().putString("theme", key).apply();
+        init();
+    }
+
     public static boolean isDark() {
-        return dark;
-    }
-
-    public static int getFullScreenDialogTheme() {
-        return fullscreen_alert_theme;
-    }
-
-    public static int getBottomSheetTheme() {
-        return bottom_sheet_theme;
-    }
-
-    public static int getIcons() {
-        return icons;
-    }
-
-    public static int getIconsSelected() {
-        return icons_selected;
-    }
-
-    public static int getMain() {
-        return main;
-    }
-
-    public static int getCurrentTheme() {
-        return theme;
-    }
-
-    public static int getPrimary() {
-        return primary;
-    }
-
-    public static int getPrimaryDark() {
-        return primary_dark;
-    }
-
-    public static int getAccent() {
-        return accent;
-    }
-
-    public static int getBackground() {
-        return background;
-    }
-
-    private static int getColor(int res) {
-        return AppGlobal.context.getColor(res);
-    }
-
-    public static void setDark(boolean dark) {
-        ThemeManager.dark = dark;
-        AppGlobal.preferences.edit().putBoolean("isDark", dark).apply();
+        return currentTheme.isDark();
     }
 }

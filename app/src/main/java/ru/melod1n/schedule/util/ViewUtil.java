@@ -45,6 +45,22 @@ public class ViewUtil {
         }
     }
 
+    public static void applyToolbarStyles(@NonNull Toolbar toolbar, int colorControl) {
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(colorControl);
+        }
+
+        if (toolbar.getOverflowIcon() != null) {
+            toolbar.getOverflowIcon().setTint(colorControl);
+        }
+
+        for (int i = 0; i < toolbar.getMenu().size(); i++) {
+            MenuItem item = toolbar.getMenu().getItem(i);
+            if (item.getIcon() != null)
+                item.getIcon().setTint(colorControl);
+        }
+    }
+
     public static void applyToolbarStyles(@NonNull Toolbar toolbar) {
         applyToolbarStyles(toolbar, -1, null);
     }
