@@ -1,6 +1,8 @@
 package ru.melod1n.schedule.items;
 
-public class ParticipantItem {
+import java.io.Serializable;
+
+public class ParticipantItem implements Serializable {
 
     private int id;
     private String title;

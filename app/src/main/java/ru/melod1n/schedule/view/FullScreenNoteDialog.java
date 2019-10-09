@@ -21,10 +21,11 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.current.FullScreenDialog;
+import ru.melod1n.schedule.items.NoteItem;
 
-public class FullScreenNoteDialog extends DialogFragment {
+public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
 
     private static final String TAG = "fullscreen_note_dialog";
 
@@ -48,8 +49,6 @@ public class FullScreenNoteDialog extends DialogFragment {
 
     @BindView(R.id.picker)
     HorizontalColorPicker picker;
-
-    private OnDoneListener listener;
 
     public static FullScreenNoteDialog display(FragmentManager manager, NoteItem item) {
         FullScreenNoteDialog dialog = new FullScreenNoteDialog();
@@ -129,12 +128,12 @@ public class FullScreenNoteDialog extends DialogFragment {
     }
 
     private void showConfirmDeleteDialog() {
-        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
         adb.setMessage(R.string.confirm_delete_text);
         adb.setNegativeButton(R.string.no, null);
         adb.setPositiveButton(R.string.yes, (dialog, which) -> {
-            if (listener != null && edit)
-                listener.onDone(null);
+            if (getOnActionListener() != null && edit)
+                getOnActionListener().onItemDelete(item);
 
             dismiss();
         });
@@ -143,7 +142,7 @@ public class FullScreenNoteDialog extends DialogFragment {
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
+    public void onDismiss(@NonNull DialogInterface dialog) {
         String title_ = title.getText().toString().trim();
         String text_ = text.getText().toString().trim();
 
@@ -162,18 +161,15 @@ public class FullScreenNoteDialog extends DialogFragment {
         item.setText(text_);
         item.setPosition(picker.getSelectedPosition());
 
-        if (listener != null)
-            listener.onDone(item);
+        if (getOnActionListener() != null) {
+            if (edit) {
+                getOnActionListener().onItemEdit(item);
+            } else {
+                getOnActionListener().onItemInsert(item);
+            }
+        }
 
         super.onDismiss(dialog);
-    }
-
-    public void setOnDoneListener(OnDoneListener listener) {
-        this.listener = listener;
-    }
-
-    public interface OnDoneListener {
-        void onDone(NoteItem item);
     }
 
 }

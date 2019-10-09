@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="surface">#ffffff</color>
     <color name="primary">#ffffff</color>
     <color name="primary_dark">#f8f8f8</color>
     <color name="accent">#00695C</color>
     <color name="background">#ffffff</color>
-    <color name="tab_text">#515151</color>
-    <color name="subject_title">#646464</color>
-    <color name="cab_title">#8F8F8F</color>
+    <color name="tabs_text">#515151</color>
     <color name="control_normal">#121212</color>
 
 </resources>

@@ -1,6 +1,8 @@
 package ru.melod1n.schedule.items;
 
-public class LocationItem {
+import java.io.Serializable;
+
+public class LocationItem implements Serializable {
 
     private int id;
     private String title;

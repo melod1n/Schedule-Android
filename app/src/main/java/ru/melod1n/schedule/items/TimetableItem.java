@@ -1,8 +1,9 @@
 package ru.melod1n.schedule.items;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TimetableItem {
+public class TimetableItem implements Serializable {
 
     private ArrayList<BellItem> bells;
     private String title;

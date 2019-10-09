@@ -36,6 +36,7 @@ import ru.melod1n.schedule.common.ThemeManager;
 import ru.melod1n.schedule.fragment.AgendaFragment;
 import ru.melod1n.schedule.fragment.MainScheduleFragment;
 import ru.melod1n.schedule.fragment.NotesFragment;
+import ru.melod1n.schedule.fragment.ScheduleFragment;
 import ru.melod1n.schedule.fragment.SettingsFragment;
 import ru.melod1n.schedule.fragment.UpdatesFragment;
 import ru.melod1n.schedule.util.ArrayUtil;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ActionBarDrawerToggle initToggle(Toolbar toolbar) {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+        return new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -97,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 ((FrameLayout) fragmentContainer.getParent()).setTranslationX(slideX);
             }
         };
-
-        return toggle;
     }
 
     private void checkFirstLaunch(Bundle savedInstanceState) {
@@ -218,8 +217,7 @@ public class MainActivity extends AppCompatActivity {
         selected_fragment = getFragmentById(item.getItemId());
         selected_id = item.getItemId();
 
-        if (getVisibleFragment() != selected_fragment) {
-
+        if (getVisibleFragment() != selected_fragment && !(getVisibleFragment().getClass().getSimpleName().equals(ScheduleFragment.class.getSimpleName()) && selected_id == R.id.nav_schedule)) {
             replaceFragment(selected_fragment);
             return true;
         }
@@ -233,9 +231,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (getVisibleFragment() != selected_fragment) {
             replaceFragment(selected_fragment);
-
-            drawerLayout.closeDrawer(GravityCompat.START);
         }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
     }

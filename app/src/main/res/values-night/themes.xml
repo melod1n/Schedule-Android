@@ -9,7 +9,7 @@
         <item name="colorAccent">@color/accent</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="colorSurface">@color/surface</item>
-        <item name="tabTextColor">@color/tab_text</item>
+        <item name="tabTextColor">@color/tabs_text</item>
         <item name="tabSelectedTextColor">@color/accent</item>
         <item name="tabIndicatorColor">@color/accent</item>
         <item name="android:windowLightStatusBar">false</item>

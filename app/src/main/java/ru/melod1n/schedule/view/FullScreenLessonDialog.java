@@ -21,11 +21,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.items.LessonItem;
 
-public class FullScreenSubjectDialog extends DialogFragment {
+public class FullScreenLessonDialog extends FullScreenDialog<LessonItem> {
 
-    private static final String TAG = "fullscreen_subject_dialog";
+    private static final String TAG = "fullscreen_lesson_dialog";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -43,22 +44,17 @@ public class FullScreenSubjectDialog extends DialogFragment {
     HorizontalColorPicker picker;
 
     private boolean edit;
+
     private int color;
 
     private LessonItem item;
 
-    private OnDoneListener listener;
-
-    public static FullScreenSubjectDialog display(FragmentManager manager, LessonItem item) {
-        FullScreenSubjectDialog dialog = new FullScreenSubjectDialog();
+    public static FullScreenLessonDialog display(FragmentManager manager, LessonItem item) {
+        FullScreenLessonDialog dialog = new FullScreenLessonDialog();
         dialog.item = item;
         dialog.edit = item != null;
         dialog.show(manager, TAG);
         return dialog;
-    }
-
-    public void setOnDoneListener(OnDoneListener listener) {
-        this.listener = listener;
     }
 
     @Override
@@ -99,7 +95,7 @@ public class FullScreenSubjectDialog extends DialogFragment {
             this.color = Color.BLACK;
         }
 
-        picker.setOnChoosedColorListener((position, color) -> FullScreenSubjectDialog.this.color = color);
+        picker.setOnChoosedColorListener((position, color) -> FullScreenLessonDialog.this.color = color);
 
         if (edit) {
 //            name.setText(item.getName());
@@ -170,8 +166,13 @@ public class FullScreenSubjectDialog extends DialogFragment {
 //        item.setHomework(hw_);
 //        item.setPosition(picker.getSelectedPosition());
 
-        if (listener != null)
-            listener.onDone(item);
+        if (getOnActionListener() != null) {
+            if (edit) {
+                getOnActionListener().onItemEdit(item);
+            } else {
+                getOnActionListener().onItemInsert(item);
+            }
+        }
 
         if (getDialog() != null)
             getDialog().dismiss();
@@ -182,8 +183,9 @@ public class FullScreenSubjectDialog extends DialogFragment {
         adb.setMessage(R.string.confirm_delete_text);
         adb.setNegativeButton(R.string.no, null);
         adb.setPositiveButton(R.string.yes, (dialog, which) -> {
-            if (listener != null && edit)
-                listener.onDone(null);
+            if (edit && getOnActionListener() != null) {
+                getOnActionListener().onItemDelete(item);
+            }
 
 //            if (!item.getHomework().isEmpty())
 //                EventBus.getDefault().postSticky(new Object[]{"delete_subject", item.getHomework()});
@@ -192,9 +194,5 @@ public class FullScreenSubjectDialog extends DialogFragment {
         });
 
         adb.create().show();
-    }
-
-    public interface OnDoneListener {
-        void onDone(LessonItem item);
     }
 }

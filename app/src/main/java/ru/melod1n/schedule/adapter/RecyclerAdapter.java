@@ -30,8 +30,8 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         this.inflater = LayoutInflater.from(context);
     }
 
-    public RecyclerAdapter(Fragment f, ArrayList<T> values) {
-        this.fragment = f;
+    public RecyclerAdapter(Fragment fragment, ArrayList<T> values) {
+        this.fragment = fragment;
         this.context = fragment.getActivity();
         this.values = values;
         this.inflater = LayoutInflater.from(context);

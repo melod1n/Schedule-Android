@@ -27,8 +27,8 @@ public class ViewUtil {
         fadeView(v, 200);
     }
 
-    public static void applyToolbarStyles(@NonNull Toolbar toolbar) {
-        int color = ThemeManager.isDark() ? Color.WHITE : Color.BLACK;
+    public static void applyToolbarStyles(@NonNull Toolbar toolbar, int colorControl, Boolean isDark) {
+        int color = colorControl == -1 ? (isDark == null ? ThemeManager.isDark() : isDark) ? Color.WHITE : Color.BLACK : colorControl;
 
         if (toolbar.getNavigationIcon() != null) {
             toolbar.getNavigationIcon().setTint(color);
@@ -43,6 +43,10 @@ public class ViewUtil {
             if (item.getIcon() != null)
                 item.getIcon().setTint(color);
         }
+    }
+
+    public static void applyToolbarStyles(@NonNull Toolbar toolbar) {
+        applyToolbarStyles(toolbar, -1, null);
     }
 
     public static void showKeyboard(@NonNull View v) {

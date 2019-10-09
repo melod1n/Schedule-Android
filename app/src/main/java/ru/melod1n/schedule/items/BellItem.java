@@ -2,10 +2,12 @@ package ru.melod1n.schedule.items;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 import ru.melod1n.schedule.helper.TimeHelper;
 import ru.melod1n.schedule.util.Util;
 
-public class BellItem {
+public class BellItem implements Serializable {
 
     public int start, end, id, day;
 

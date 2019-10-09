@@ -2,9 +2,10 @@ package ru.melod1n.schedule.items;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class LessonItem {
+public class LessonItem implements Serializable {
 
     private int order;
     private LessonType lessonType;

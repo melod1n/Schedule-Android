@@ -6,9 +6,7 @@
     <color name="primary_dark">#000000</color>
     <color name="accent">#4DB6AC</color>
     <color name="background">#000000</color>
-    <color name="tab_text">#B4B4B4</color>
-    <color name="subject_title">#A7A7A7</color>
-    <color name="cab_title">#888888</color>
+    <color name="tabs_text">#B4B4B4</color>
     <color name="control_normal">#ffffff</color>
 
 </resources>

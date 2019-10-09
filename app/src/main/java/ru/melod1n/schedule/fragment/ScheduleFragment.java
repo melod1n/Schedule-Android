@@ -32,6 +32,7 @@ import ru.melod1n.schedule.adapter.RecyclerAdapter;
 import ru.melod1n.schedule.adapter.ScheduleAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.DayItem;
@@ -40,7 +41,7 @@ import ru.melod1n.schedule.items.LocationItem;
 import ru.melod1n.schedule.items.SubjectItem;
 import ru.melod1n.schedule.items.TeacherItem;
 import ru.melod1n.schedule.util.ArrayUtil;
-import ru.melod1n.schedule.view.FullScreenSubjectDialog;
+import ru.melod1n.schedule.view.FullScreenLessonDialog;
 
 public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
 
@@ -214,9 +215,10 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
                 builder.show();
             }
         } else {
-            FullScreenSubjectDialog dialog = FullScreenSubjectDialog.display(getFragmentManager(), position == -1 ? null : adapter.getItem(position));
-            dialog.setOnDoneListener(item -> {
-                if (position == -1) {
+            FullScreenLessonDialog dialog = FullScreenLessonDialog.display(getFragmentManager(), position == -1 ? null : adapter.getItem(position));
+            dialog.setOnActionListener(new FullScreenDialog.OnActionListener<LessonItem>() {
+                @Override
+                public void onItemInsert(LessonItem item) {
                     item.setOrder(day);
 
 //                    if (!item.getHomework().isEmpty())
@@ -226,19 +228,28 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
                     adapter.getValues().add(item);
                     adapter.notifyItemInserted(adapter.getItemCount() - 1);
-                } else {
-                    if (item == null) {
-                        CacheStorage.delete(DatabaseHelper.TABLE_LESSONS, "id = " + adapter.getItem(position).getOrder());
-                        adapter.remove(position);
-                        adapter.notifyItemRemoved(position);
-                        checkCount();
-                    } else {
-                        CacheStorage.update(DatabaseHelper.TABLE_LESSONS, item, "id = ?", item.getOrder());
-                        adapter.notifyItemChanged(position, -1);
-                    }
-                }
-                if (position == -1 || item == null)
                     adapter.notifyItemRangeChanged(0, adapter.getItemCount(), -1);
+
+                    checkCount();
+                }
+
+                @Override
+                public void onItemEdit(LessonItem item) {
+                    CacheStorage.update(DatabaseHelper.TABLE_LESSONS, item, "id = ?", item.getOrder());
+
+                    adapter.notifyItemChanged(position, -1);
+                }
+
+                @Override
+                public void onItemDelete(LessonItem item) {
+                    CacheStorage.delete(DatabaseHelper.TABLE_LESSONS, "id = " + adapter.getItem(position).getOrder());
+
+                    adapter.remove(position);
+                    adapter.notifyItemRemoved(position);
+                    adapter.notifyItemRangeChanged(0, adapter.getItemCount(), -1);
+
+                    checkCount();
+                }
             });
         }
     }
@@ -280,7 +291,7 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
         if (a.isEmpty()) {
             DayItem item = new DayItem();
-            item.setLessons(day %2 == 0 ? lessons : new ArrayList<>());
+            item.setLessons(day % 2 == 0 ? lessons : new ArrayList<>());
             a.add(item);
         }
 

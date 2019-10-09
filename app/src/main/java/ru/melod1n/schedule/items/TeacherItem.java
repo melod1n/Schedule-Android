@@ -1,6 +1,8 @@
 package ru.melod1n.schedule.items;
 
-public class TeacherItem {
+import java.io.Serializable;
+
+public class TeacherItem implements Serializable {
 
     private int id;
     private String title;

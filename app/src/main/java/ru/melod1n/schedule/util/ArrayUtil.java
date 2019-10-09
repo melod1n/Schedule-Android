@@ -1,5 +1,7 @@
 package ru.melod1n.schedule.util;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -401,5 +403,9 @@ public class ArrayUtil {
      */
     public static boolean isEmpty(Collection collection) {
         return collection == null || collection.isEmpty();
+    }
+
+    public static boolean isEmpty(JSONObject colors) {
+        return colors == null || colors.length() == 0;
     }
 }

@@ -1,6 +1,8 @@
 package ru.melod1n.schedule.items;
 
-public class AboutItem {
+import java.io.Serializable;
+
+public class AboutItem implements Serializable {
 
     private Integer icon;
     private String name, job;

@@ -1,6 +1,8 @@
 package ru.melod1n.schedule.items;
 
-public class SubjectItem {
+import java.io.Serializable;
+
+public class SubjectItem  implements Serializable {
 
     private int id;
     private int colorPosition;

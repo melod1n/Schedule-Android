@@ -31,6 +31,7 @@ import ru.melod1n.schedule.adapter.NoteAdapter;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.NoteItem;
@@ -112,23 +113,23 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
     }
 
     private void prepareToolbar() {
-            toolbar.setTitle(R.string.nav_notes);
-            toolbar.inflateMenu(R.menu.fragment_notes);
-            toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
+        toolbar.setTitle(R.string.nav_notes);
+        toolbar.inflateMenu(R.menu.fragment_notes);
+        toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
 
-            toolbar.getMenu().findItem(R.id.notes_columns).setTitle(oneColumn ? R.string.set_two_columns : R.string.set_one_column);
+        toolbar.getMenu().findItem(R.id.notes_columns).setTitle(oneColumn ? R.string.set_two_columns : R.string.set_one_column);
 
-            ViewUtil.applyToolbarStyles(toolbar);
+        ViewUtil.applyToolbarStyles(toolbar);
 
-            searchViewItem = toolbar.getMenu().findItem(R.id.notes_search);
+        searchViewItem = toolbar.getMenu().findItem(R.id.notes_search);
 
-            searchView = (SearchView) searchViewItem.getActionView();
-            searchView.setQueryHint(getString(R.string.title));
+        searchView = (SearchView) searchViewItem.getActionView();
+        searchView.setQueryHint(getString(R.string.title));
 
-            searchView.setOnCloseListener(() -> {
-                searchViewCollapsed = true;
-                return false;
-            });
+        searchView.setOnCloseListener(() -> {
+            searchViewCollapsed = true;
+            return false;
+        });
 
         searchView.setOnSearchClickListener(view -> searchViewCollapsed = false);
 
@@ -236,26 +237,37 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
         if (adapter == null) return;
 
         FullScreenNoteDialog dialog = FullScreenNoteDialog.display(getFragmentManager(), position == -1 ? null : adapter.getItem(position));
-        dialog.setOnDoneListener(item -> {
-            if (position == -1) {
-                adapter.getValues().add(item);
-                adapter.notifyItemInserted(adapter.getItemCount() - 1);
+        dialog.setOnActionListener(new FullScreenDialog.OnActionListener<NoteItem>() {
+            @Override
+            public void onItemInsert(NoteItem item) {
                 CacheStorage.insert(DatabaseHelper.TABLE_NOTES, item);
+
+                adapter.getValues().add(item);
+
+                adapter.notifyItemInserted(adapter.getItemCount() - 1);
+                adapter.notifyItemRangeChanged(0, adapter.getItemCount() - 1, -1);
+
                 checkCount();
-            } else {
-                if (item == null) {
-                    CacheStorage.delete(DatabaseHelper.TABLE_NOTES, "id = " + adapter.getItem(position).getId());
-                    adapter.remove(position);
-                    adapter.notifyItemRemoved(position);
-                    checkCount();
-                } else {
-                    CacheStorage.update(DatabaseHelper.TABLE_NOTES, item, "id = ?", item.getId());
-                    adapter.notifyItemChanged(position);
-                }
+                getNotes();
             }
 
-            if (position == -1 || item == null)
+            @Override
+            public void onItemEdit(NoteItem item) {
+                CacheStorage.update(DatabaseHelper.TABLE_NOTES, item, "id = ?", item.getId());
+
+                adapter.notifyItemChanged(position);
+            }
+
+            @Override
+            public void onItemDelete(NoteItem item) {
+                CacheStorage.delete(DatabaseHelper.TABLE_NOTES, "id = " + item.getId());
+
+                adapter.remove(position);
+                adapter.notifyItemRemoved(position);
                 adapter.notifyItemRangeChanged(0, adapter.getItemCount() - 1, -1);
+
+                checkCount();
+            }
         });
     }
 
