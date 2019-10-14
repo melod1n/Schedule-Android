@@ -5,7 +5,7 @@ import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 
 public class BottomNavigationView extends com.google.android.material.bottomnavigation.BottomNavigationView {
@@ -24,7 +24,7 @@ public class BottomNavigationView extends com.google.android.material.bottomnavi
     }
 
     private void init() {
-        ThemeItem theme = ThemeManager.getCurrentTheme();
+        ThemeItem theme = ThemeEngine.getCurrentTheme();
 
         int[][] bottomNavigationViewStates = new int[][]{
                 new int[]{android.R.attr.state_checked},

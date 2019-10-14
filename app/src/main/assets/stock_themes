@@ -1,12 +1,16 @@
 [
   {
-    "name": "Stock Light",
-    "made_by": "μSchedule",
-    "key": "stock_light",
+    "id": "stock_light",
+    "title": "Stock Light",
+    "author": "μSchedule",
     "version": 1,
-    "dark": false,
-    "light_status_bar": true,
-    "light_navigation_bar": true,
+
+    "ui": {
+      "dark": false,
+      "light_status_bar": true,
+      "light_navigation_bar": true
+    },
+
     "colors": {
       "surface": "#ffffff",
       "primary": "#ffffff",
@@ -35,13 +39,17 @@
     }
   },
   {
-    "name": "Stock Dark",
-    "made_by": "μSchedule",
-    "key": "stock_dark",
+    "id": "stock_dark",
+    "title": "Stock Dark",
+    "author": "μSchedule",
     "version": 1,
-    "dark": true,
-    "light_status_bar": false,
-    "light_navigation_bar": false,
+
+    "ui": {
+      "dark": true,
+      "light_status_bar": false,
+      "light_navigation_bar": false
+    },
+
     "colors": {
       "surface": "#121212",
       "primary": "#161616",
@@ -70,18 +78,22 @@
     }
   },
   {
-    "name": "Stock Pink",
-    "made_by": "μSchedule",
-    "key": "stock_pink",
+    "id": "stock_pink",
+    "title": "Stock Pink",
+    "author": "μSchedule",
     "version": 1,
-    "dark": false,
-    "light_status_bar": false,
-    "light_navigation_bar": false,
+
+    "ui": {
+      "dark": false,
+      "light_status_bar": false,
+      "light_navigation_bar": false
+    },
+
     "colors": {
       "surface": "#ffffff",
       "primary": "#E91E63",
       "primary_dark": "#C2185B",
-      "accent": "#7C4DFF",
+      "accent": "#E91E63",
       "background": "#ffffff",
       "tabs_text_normal": "#dddddd",
       "tabs_text_active": "#ffffff",
@@ -100,6 +112,84 @@
       "drawer_header_title": "#ffffff",
       "drawer_header_subtitle": "#dddddd",
       "bottom_bar": "#E91E63",
+      "bottom_bar_icons_normal": "#dddddd",
+      "bottom_bar_icons_active": "#ffffff"
+    }
+  },
+  {
+    "id": "stock_red",
+    "title": "Stock Red",
+    "author": "μSchedule",
+    "version": 1,
+
+    "ui": {
+      "dark": false,
+      "light_status_bar": false,
+      "light_navigation_bar": false
+    },
+
+    "colors": {
+      "surface": "#ffffff",
+      "primary": "#F44336",
+      "primary_dark": "#D32F2F",
+      "accent": "#F44336",
+      "background": "#ffffff",
+      "tabs_text_normal": "#dddddd",
+      "tabs_text_active": "#ffffff",
+      "tabs_indicator": "#ffffff",
+      "control_normal": "#121212",
+      "text_primary": "#212121",
+      "text_secondary": "#757575",
+      "text_primary_inverse": "#ffffff",
+      "text_secondary_inverse": "#cccccc",
+      "drawer": "#ffffff",
+      "drawer_text_normal": "#212121",
+      "drawer_text_active": "#F44336",
+      "drawer_icon_normal": "#757575",
+      "drawer_icon_active": "#F44336",
+      "drawer_header_background": "#F44336",
+      "drawer_header_title": "#ffffff",
+      "drawer_header_subtitle": "#dddddd",
+      "bottom_bar": "#F44336",
+      "bottom_bar_icons_normal": "#dddddd",
+      "bottom_bar_icons_active": "#ffffff"
+    }
+  },
+  {
+    "id": "stock_indigo",
+    "title": "Stock Indigo",
+    "author": "μSchedule",
+    "version": 1,
+
+    "ui": {
+      "dark": false,
+      "light_status_bar": false,
+      "light_navigation_bar": false
+    },
+
+    "colors": {
+      "surface": "#ffffff",
+      "primary": "#3F51B5",
+      "primary_dark": "#303F9F",
+      "accent": "#3F51B5",
+      "background": "#ffffff",
+      "tabs_text_normal": "#dddddd",
+      "tabs_text_active": "#ffffff",
+      "tabs_indicator": "#ffffff",
+      "control_normal": "#121212",
+      "text_primary": "#212121",
+      "text_secondary": "#757575",
+      "text_primary_inverse": "#ffffff",
+      "text_secondary_inverse": "#cccccc",
+      "drawer": "#ffffff",
+      "drawer_text_normal": "#212121",
+      "drawer_text_active": "#3F51B5",
+      "drawer_icon_normal": "#757575",
+      "drawer_icon_active": "#3F51B5",
+      "drawer_header_background": "#3F51B5",
+      "drawer_header_title": "#ffffff",
+      "drawer_header_subtitle": "#dddddd",
+      "bottom_bar": "#3F51B5",
       "bottom_bar_icons_normal": "#dddddd",
       "bottom_bar_icons_active": "#ffffff"
     }

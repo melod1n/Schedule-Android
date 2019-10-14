@@ -2,18 +2,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-	
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-		android:id="@+id/refresh"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_gravity="center">
 
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/list"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
+    <ru.melod1n.schedule.widget.RefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
-	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-	
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </ru.melod1n.schedule.widget.RefreshLayout>
+
 </LinearLayout>

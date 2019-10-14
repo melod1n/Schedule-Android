@@ -116,7 +116,7 @@ public class AppGlobal extends Application {
 
         CrashManager.init();
         TimeHelper.init();
-        ThemeManager.init();
+        ThemeEngine.init();
         Engine.checkDatabaseUpdates();
     }
 }

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 
 public class HorizontalColorPicker extends RecyclerView {
 
@@ -224,7 +224,7 @@ public class HorizontalColorPicker extends RecyclerView {
                 circle.setImageDrawable(new ColorDrawable(item.getColor()));
                 circle.setBorderWidth(2);
 
-                int borderColor = ThemeManager.isDark() ? Color.WHITE : 0xff121212;
+                int borderColor = ThemeEngine.isDark() ? Color.WHITE : 0xff121212;
 
                 circle.setBorderColor(borderColor);
                 selected.getDrawable().setTint(borderColor);

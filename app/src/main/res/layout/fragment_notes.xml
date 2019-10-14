@@ -23,7 +23,7 @@
 
     <include layout="@layout/no_items" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ru.melod1n.schedule.widget.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

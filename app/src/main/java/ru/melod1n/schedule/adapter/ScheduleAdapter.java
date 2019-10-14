@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.Engine;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.fragment.ScheduleFragment;
@@ -78,7 +78,7 @@ public class ScheduleAdapter extends RecyclerAdapter<LessonItem, ScheduleAdapter
 //        @BindView(R.id.lessonTeacher)
 //        TextView lessonTeacher;
 
-        int[] colors = !ThemeManager.isDark() ? ThemeManager.COLOR_PALETTE_DARK : ThemeManager.COLOR_PALETTE_LIGHT;
+        int[] colors = !ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT;
 
         ViewHolder(View v) {
             super(v);

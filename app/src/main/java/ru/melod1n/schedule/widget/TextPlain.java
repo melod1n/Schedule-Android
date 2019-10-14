@@ -8,7 +8,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.TintTypedArray;
 
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ArrayUtil;
 
@@ -30,7 +30,7 @@ public class TextPlain extends AppCompatTextView {
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        item = ThemeManager.getCurrentTheme();
+        item = ThemeEngine.getCurrentTheme();
 
         final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                 R.styleable.TextPlain, defStyleAttr, 0);

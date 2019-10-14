@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.NoteItem;
@@ -69,7 +69,7 @@ public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolde
         @BindView(R.id.card)
         CardView card;
 
-        final int[] colors = ThemeManager.isDark() ? ThemeManager.COLOR_PALETTE_DARK : ThemeManager.COLOR_PALETTE_LIGHT;
+        final int[] colors = ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT;
 
         ViewHolder(View v) {
             super(v);

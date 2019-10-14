@@ -10,7 +10,7 @@ import androidx.preference.CheckBoxPreference;
 import androidx.preference.PreferenceViewHolder;
 
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 
 public class PreferenceCheckBox extends CheckBoxPreference {
@@ -34,7 +34,7 @@ public class PreferenceCheckBox extends CheckBoxPreference {
     public void onBindViewHolder(PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
 
-        ThemeItem theme = ThemeManager.getCurrentTheme();
+        ThemeItem theme = ThemeEngine.getCurrentTheme();
 
         int colorAccent = theme.getColorAccent();
         int textColorSecondary = theme.getColorTextSecondary();

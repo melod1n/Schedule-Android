@@ -1,13 +1,15 @@
 package ru.melod1n.schedule.view;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
@@ -20,15 +22,17 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.items.NoteItem;
+import ru.melod1n.schedule.util.ColorUtil;
+import ru.melod1n.schedule.util.ViewUtil;
 
 public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
 
     private static final String TAG = "fullscreen_note_dialog";
 
-    private static final int DEFAULT_COLOR = ThemeManager.isDark() ? ThemeManager.COLOR_PALETTE_DARK[0] : ThemeManager.COLOR_PALETTE_LIGHT[0];
+    private static final int DEFAULT_COLOR = ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK[0] : ThemeEngine.COLOR_PALETTE_LIGHT[0];
 
     private NoteItem item;
     private boolean edit;
@@ -49,12 +53,14 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
     @BindView(R.id.picker)
     HorizontalColorPicker picker;
 
-    public static FullScreenNoteDialog display(FragmentManager manager, NoteItem item) {
-        FullScreenNoteDialog dialog = new FullScreenNoteDialog();
-        dialog.item = item;
-        dialog.edit = item != null;
-        dialog.show(manager, TAG);
-        return dialog;
+    public FullScreenNoteDialog(FragmentManager fragmentManager, NoteItem item) {
+        super(fragmentManager, item);
+    }
+
+    public void display(FragmentManager manager, NoteItem item) {
+        this.item = item;
+        this.edit = item != null;
+        this.show(manager, TAG);
     }
 
     @Override
@@ -63,26 +69,16 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            dialog.getWindow().setLayout(width, height);
-            dialog.getWindow().setWindowAnimations(R.style.AppTheme_FullScreenDialog_Slide);
-        }
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        picker.setColors(ThemeManager.isDark() ? ThemeManager.COLOR_PALETTE_DARK : ThemeManager.COLOR_PALETTE_LIGHT);
+        picker.setColors(ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT);
 
         color = !edit ? DEFAULT_COLOR : picker.getColors().get(item.getPosition());
+        setColor(color);
         picker.setSelectedColor(color);
+
 
         picker.setOnChoosedColorListener((position, color) -> {
             FullScreenNoteDialog.this.color = color;
@@ -91,7 +87,7 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
 
         toolbar.setNavigationOnClickListener(p1 -> dismiss());
 
-        int color = ThemeManager.isDark() ? Color.WHITE : Color.BLACK;
+        int color = ThemeEngine.isDark() ? Color.WHITE : Color.BLACK;
 
         toolbar.getNavigationIcon().setTint(color);
 
@@ -106,8 +102,6 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
         delete.getIcon().setTint(color);
         delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-        setColor(this.color);
-
         toolbar.setOnMenuItemClickListener(i -> {
             if (i.getTitle().toString().equals(getString(R.string.delete))) {
                 showConfirmDeleteDialog();
@@ -116,8 +110,30 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
         });
     }
 
-    private void setColor(int color) {
-        this.color = color;
+    private void setColor(int primary) {
+        this.color = primary;
+
+        if (getDialog() == null || getDialog().getWindow() == null) return;
+
+        Window w = getDialog().getWindow();
+
+        int primaryDark = ColorUtil.darkenColor(primary);
+
+        ViewUtil.applyWindowStyles(w, primaryDark);
+        w.setBackgroundDrawable(new ColorDrawable(primary));
+        toolbar.setBackgroundColor(primary);
+
+        int visibility = 0;
+
+        if (!ThemeEngine.getCurrentTheme().isDark()) {
+            visibility += View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                visibility += View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            }
+        }
+
+        w.getDecorView().setSystemUiVisibility(visibility);
     }
 
     private void showConfirmDeleteDialog() {
@@ -148,7 +164,7 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
             item = new NoteItem();
 
         if (color == 0)
-            color = ThemeManager.getCurrentTheme().getColorAccent();
+            color = ThemeEngine.getCurrentTheme().getColorAccent();
 
         item.setTitle(title_);
         item.setText(text_);

@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import androidx.annotation.Nullable;
 
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
 
@@ -33,7 +33,7 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
     }
 
     private void init() {
-        ThemeItem theme = ThemeManager.getCurrentTheme();
+        ThemeItem theme = ThemeEngine.getCurrentTheme();
 
         int colorPrimary = theme.getColorPrimary();
         int titlePrimary;

@@ -11,7 +11,9 @@ import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.Util;
 
-public class ThemeManager {
+public class ThemeEngine {
+
+    private static final int ENGINE_VERSION = 1;
 
     public static final int[] COLOR_PALETTE_LIGHT = new int[]{
             Color.LTGRAY,
@@ -62,18 +64,20 @@ public class ThemeManager {
         insertStockThemes(themes);
 
         for (ThemeItem theme : themes) {
-            if (themeKey.toLowerCase().equals(theme.getKey().toLowerCase())) {
+            if (themeKey.toLowerCase().equals(theme.getId().toLowerCase())) {
                 currentTheme = theme;
                 break;
             }
         }
 
         if (currentTheme == null) {
+            insertStockThemes(null);
             currentTheme = CacheStorage.getThemes(DEFAULT_THEME).get(0);
         }
     }
 
     public static void insertStockThemes(ArrayList<ThemeItem> themes) {
+        if (themes == null) themes = new ArrayList<>();
         try {
             JSONArray o = new JSONArray(Util.readFileFromAssets("stock_themes"));
             for (int i = 0; i < o.length(); i++) {
@@ -90,8 +94,8 @@ public class ThemeManager {
         return currentTheme;
     }
 
-    public static void setCurrentTheme(String key) {
-        AppGlobal.preferences.edit().putString("theme", key).apply();
+    public static void setCurrentTheme(String id) {
+        AppGlobal.preferences.edit().putString("theme", id).apply();
         init();
     }
 

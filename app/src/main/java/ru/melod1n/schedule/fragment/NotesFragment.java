@@ -230,7 +230,7 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
     private void showDialog(final int position) {
         if (adapter == null) return;
 
-        FullScreenNoteDialog dialog = FullScreenNoteDialog.display(getFragmentManager(), position == -1 ? null : adapter.getItem(position));
+        FullScreenNoteDialog dialog = new FullScreenNoteDialog(getFragmentManager(), position == -1 ? null : adapter.getItem(position));
         dialog.setOnActionListener(new FullScreenDialog.OnActionListener<NoteItem>() {
             @Override
             public void onItemInsert(NoteItem item) {

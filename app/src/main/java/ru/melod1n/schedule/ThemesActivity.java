@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.adapter.ThemeAdapter;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.items.ThemeItem;
@@ -43,7 +43,7 @@ public class ThemesActivity extends BaseActivity {
         setContentView(refreshLayout.getRootView());
         applyBackground();
 
-        toolbar.setTitle(ThemeManager.getCurrentTheme().getName());
+        toolbar.setTitle(ThemeEngine.getCurrentTheme().getTitle());
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         refreshLayout.setOnRefreshListener(this::onRefresh);
@@ -52,7 +52,7 @@ public class ThemesActivity extends BaseActivity {
 
         getThemes();
 
-        list.smoothScrollToPosition(getIntent().getIntExtra("position", 0));
+        list.scrollToPosition(getIntent().getIntExtra("position", 0));
     }
 
     private void onRefresh() {
@@ -60,7 +60,7 @@ public class ThemesActivity extends BaseActivity {
     }
 
     private void getThemes() {
-        ThemeManager.insertStockThemes(new ArrayList<>());
+        ThemeEngine.insertStockThemes(new ArrayList<>());
 
         ArrayList<ThemeItem> items = CacheStorage.getThemes();
         createAdapter(items);
@@ -83,7 +83,7 @@ public class ThemesActivity extends BaseActivity {
     private void onItemClick(View v, int position) {
         ThemeItem item = adapter.getItem(position);
 
-        ThemeManager.setCurrentTheme(item.getKey());
+        ThemeEngine.setCurrentTheme(item.getId());
         
         startActivity(new Intent(this, MainActivity.class));
         Util.restart(this, new Intent().putExtra("position", position), true);

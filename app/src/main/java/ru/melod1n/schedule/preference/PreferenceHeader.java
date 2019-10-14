@@ -9,7 +9,7 @@ import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceViewHolder;
 
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 
 public class PreferenceHeader extends PreferenceCategory {
 
@@ -40,6 +40,6 @@ public class PreferenceHeader extends PreferenceCategory {
             return;
         }
 
-        titleView.setTextColor(ThemeManager.getCurrentTheme().getColorAccent());
+        titleView.setTextColor(ThemeEngine.getCurrentTheme().getColorAccent());
     }
 }

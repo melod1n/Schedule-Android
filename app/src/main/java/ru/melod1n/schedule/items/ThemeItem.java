@@ -12,9 +12,9 @@ import ru.melod1n.schedule.util.ArrayUtil;
 
 public class ThemeItem implements Serializable {
 
-    private String key;
-    private String name;
-    private String madeBy;
+    private String id;
+    private String title;
+    private String author;
     private int engineVersion;
 
     private boolean dark;
@@ -52,14 +52,17 @@ public class ThemeItem implements Serializable {
     }
 
     public ThemeItem(@NonNull JSONObject o) {
-        this.name = o.optString("name");
-        this.madeBy = o.optString("made_by");
+        this.id = o.optString("id");
+        this.title = o.optString("title");
+        this.author = o.optString("author");
         this.engineVersion = o.optInt("version");
-        this.key = o.optString("key");
 
-        this.dark = o.optBoolean("dark");
-        this.lightStatusBar = o.optBoolean("light_status_bar");
-        this.lightNavigationBar = o.optBoolean("light_navigation_bar");
+        JSONObject ui = o.optJSONObject("ui");
+        if (!ArrayUtil.isEmpty(ui)) {
+            this.dark = ui.optBoolean("dark");
+            this.lightStatusBar = ui.optBoolean("light_status_bar");
+            this.lightNavigationBar = ui.optBoolean("light_navigation_bar");
+        }
 
         JSONObject colors = o.optJSONObject("colors");
         if (!ArrayUtil.isEmpty(colors)) {
@@ -112,20 +115,20 @@ public class ThemeItem implements Serializable {
         return alphaColor(Color.parseColor(color), alphaFactor);
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getMadeBy() {
-        return madeBy;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setMadeBy(String madeBy) {
-        this.madeBy = madeBy;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public int getEngineVersion() {
@@ -285,12 +288,12 @@ public class ThemeItem implements Serializable {
         this.selected = selected;
     }
 
-    public String getKey() {
-        return key;
+    public String getId() {
+        return id;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getColorDrawerTextNormal() {

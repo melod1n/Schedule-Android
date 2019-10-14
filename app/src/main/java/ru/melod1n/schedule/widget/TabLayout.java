@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 
 public class TabLayout extends com.google.android.material.tabs.TabLayout {
@@ -22,7 +22,7 @@ public class TabLayout extends com.google.android.material.tabs.TabLayout {
     }
 
     private void init() {
-        ThemeItem theme = ThemeManager.getCurrentTheme();
+        ThemeItem theme = ThemeEngine.getCurrentTheme();
 
         setBackgroundColor(theme.getColorPrimary());
         setTabTextColors(theme.getColorTabsTextNormal(), theme.getColorTabsTextActive());

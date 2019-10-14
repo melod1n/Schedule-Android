@@ -97,11 +97,11 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             int textColorPrimaryInverse = item.getColorTextPrimaryInverse();
             //int textColorSecondaryInverse = item.getColorTextSecondaryInverse();
 
-            toolbar.setTitle(item.getName());
+            toolbar.setTitle(item.getTitle());
             toolbar.setTitleTextColor(ColorUtil.isLight(colorPrimary) ? Color.BLACK : Color.WHITE);
             toolbar.setBackgroundColor(colorPrimary);
 
-            String textAuthor = String.format("Author: %s", item.getMadeBy());
+            String textAuthor = String.format("Author: %s", item.getAuthor());
             String textVersion = String.format(Locale.getDefault(), "Engine version: %d", item.getEngineVersion());
 
             String text = String.format("%s\n%s", textAuthor, textVersion);

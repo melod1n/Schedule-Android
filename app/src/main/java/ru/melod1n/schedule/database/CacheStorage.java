@@ -44,7 +44,7 @@ import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_NOTES;
 import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_THEMES;
 import static ru.melod1n.schedule.database.DatabaseHelper.TEACHER;
 import static ru.melod1n.schedule.database.DatabaseHelper.TEXT;
-import static ru.melod1n.schedule.database.DatabaseHelper.THEME_KEY;
+import static ru.melod1n.schedule.database.DatabaseHelper.THEME_ID;
 import static ru.melod1n.schedule.database.DatabaseHelper.THEME_OBJECT;
 import static ru.melod1n.schedule.database.DatabaseHelper.TITLE;
 
@@ -100,8 +100,8 @@ public class CacheStorage {
         return getThemes(null);
     }
 
-    public static ArrayList<ThemeItem> getThemes(String key) {
-        Cursor cursor = (key == null || key.trim().isEmpty()) ? selectCursor(TABLE_THEMES) : selectCursor(TABLE_THEMES, THEME_KEY, key);
+    public static ArrayList<ThemeItem> getThemes(String id) {
+        Cursor cursor = (id == null || id.trim().isEmpty()) ? selectCursor(TABLE_THEMES) : selectCursor(TABLE_THEMES, THEME_ID, id);
 
         ArrayList<ThemeItem> items = new ArrayList<>(cursor.getCount());
 
@@ -308,7 +308,7 @@ public class CacheStorage {
     }
 
     private static void putValues(@NonNull ContentValues values, @NonNull ThemeItem item) {
-        values.put(THEME_KEY, item.getKey());
+        values.put(THEME_ID, item.getId());
         values.put(THEME_OBJECT, Util.serialize(item));
     }
 
@@ -318,7 +318,7 @@ public class CacheStorage {
 
         if (item == null) return null;
 
-        item.setKey(getString(cursor, THEME_KEY));
+        item.setId(getString(cursor, THEME_ID));
 
         return item;
     }

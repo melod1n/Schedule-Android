@@ -5,7 +5,7 @@ import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 
 public class FloatingActionButton extends com.google.android.material.floatingactionbutton.FloatingActionButton {
@@ -25,7 +25,7 @@ public class FloatingActionButton extends com.google.android.material.floatingac
     }
 
     private void init() {
-        ThemeItem theme = ThemeManager.getCurrentTheme();
+        ThemeItem theme = ThemeEngine.getCurrentTheme();
 
         int colorAccent = theme.getColorAccent();
         int textColorPrimaryInverse = theme.getColorTextPrimaryInverse();

@@ -19,7 +19,7 @@ import ru.melod1n.schedule.AboutActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.ThemesActivity;
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.helper.TimeHelper;
@@ -71,7 +71,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (theme != null) {
             theme.setOnPreferenceClickListener(this);
 
-            theme.setSummary(getString(R.string.theme_summary, ThemeManager.getCurrentTheme().getName()));
+            theme.setSummary(getString(R.string.theme_summary, ThemeEngine.getCurrentTheme().getTitle()));
         }
 
         if (lessonsStart != null)

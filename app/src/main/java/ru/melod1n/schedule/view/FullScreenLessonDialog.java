@@ -1,6 +1,5 @@
 package ru.melod1n.schedule.view;
 
-import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,7 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeManager;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.items.LessonItem;
 
@@ -48,24 +47,14 @@ public class FullScreenLessonDialog extends FullScreenDialog<LessonItem> {
 
     private LessonItem item;
 
-    public static FullScreenLessonDialog display(FragmentManager manager, LessonItem item) {
-        FullScreenLessonDialog dialog = new FullScreenLessonDialog();
-        dialog.item = item;
-        dialog.edit = item != null;
-        dialog.show(manager, TAG);
-        return dialog;
+    public FullScreenLessonDialog(FragmentManager fragmentManager, LessonItem item) {
+        super(fragmentManager, item);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            dialog.getWindow().setLayout(width, height);
-            dialog.getWindow().setWindowAnimations(R.style.AppTheme_FullScreenDialog_Slide);
-        }
+    public void display(FragmentManager manager, LessonItem item) {
+        this.item = item;
+        this.edit = item != null;
+        this.show(manager, TAG);
     }
 
     @Override
@@ -78,7 +67,7 @@ public class FullScreenLessonDialog extends FullScreenDialog<LessonItem> {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        picker.setColors(ThemeManager.isDark() ? ThemeManager.COLOR_PALETTE_DARK : ThemeManager.COLOR_PALETTE_LIGHT);
+        picker.setColors(ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT);
 
         if (edit) {
 //            picker.setSelectedPosition(item.getPosition());
@@ -99,7 +88,7 @@ public class FullScreenLessonDialog extends FullScreenDialog<LessonItem> {
 
         toolbar.setNavigationOnClickListener(p1 -> dismiss());
 
-        int color = ThemeManager.isDark() ? Color.WHITE : Color.BLACK;
+        int color = ThemeEngine.isDark() ? Color.WHITE : Color.BLACK;
 
         toolbar.getNavigationIcon().setTint(color);
         toolbar.inflateMenu(R.menu.fragment_schedule_alert);

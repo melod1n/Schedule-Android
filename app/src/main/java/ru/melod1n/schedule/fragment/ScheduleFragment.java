@@ -212,7 +212,7 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
                 builder.show();
             }
         } else {
-            FullScreenLessonDialog dialog = FullScreenLessonDialog.display(getFragmentManager(), position == -1 ? null : adapter.getItem(position));
+            FullScreenLessonDialog dialog = new FullScreenLessonDialog(getFragmentManager(), position == -1 ? null : adapter.getItem(position));
             dialog.setOnActionListener(new FullScreenDialog.OnActionListener<LessonItem>() {
                 @Override
                 public void onItemInsert(LessonItem item) {
