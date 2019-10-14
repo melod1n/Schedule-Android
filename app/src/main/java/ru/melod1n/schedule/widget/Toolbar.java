@@ -54,16 +54,26 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
             getOverflowIcon().setTint(titlePrimary);
         }
 
-        for (int i = 0; i < getMenu().size(); i++) {
-            MenuItem item = getMenu().getItem(i);
-
-            if (item.getIcon() != null) {
-                item.getIcon().setTint(titlePrimary);
-            }
-        }
+        setMenuIconsColor();
     }
 
     public int getTitleColor() {
         return titleColor;
+    }
+
+    @Override
+    public void inflateMenu(int resId) {
+        super.inflateMenu(resId);
+        setMenuIconsColor();
+    }
+
+    private void setMenuIconsColor() {
+        for (int i = 0; i < getMenu().size(); i++) {
+            MenuItem item = getMenu().getItem(i);
+
+            if (item.getIcon() != null) {
+                item.getIcon().setTint(titleColor);
+            }
+        }
     }
 }
