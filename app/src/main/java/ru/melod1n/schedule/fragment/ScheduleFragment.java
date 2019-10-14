@@ -118,7 +118,10 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
         refresh.setOnRefreshListener(this::getSubjects);
 
-        add.setOnClickListener(v -> showDialog());
+        add.setOnClickListener(v -> {
+            add.hide();
+            Toast.makeText(getContext(), R.string.in_progress_title, Toast.LENGTH_SHORT).show();
+        });
 
         getSubjects();
     }

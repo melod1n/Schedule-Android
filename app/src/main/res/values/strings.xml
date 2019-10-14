@@ -146,4 +146,5 @@
     <string name="max_hubach">Max Hubach</string>
 	<string name="backend_logic_developer">Backend Logic Developer</string>
     <string name="theme_summary">Current theme: %s</string>
+    <string name="in_progress_title">In progress...</string>
 </resources>
