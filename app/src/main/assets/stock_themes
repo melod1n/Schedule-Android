@@ -193,5 +193,44 @@
       "bottom_bar_icons_normal": "#dddddd",
       "bottom_bar_icons_active": "#ffffff"
     }
+  },
+  {
+    "id": "stock_blue",
+    "title": "Stock Blue",
+    "author": "μSchedule",
+    "version": 1,
+
+    "ui": {
+      "dark": false,
+      "light_status_bar": false,
+      "light_navigation_bar": false
+    },
+
+    "colors": {
+      "surface": "#ffffff",
+      "primary": "#2196F3",
+      "primary_dark": "#1976D2",
+      "accent": "#FF5722",
+      "background": "#ffffff",
+      "tabs_text_normal": "#dddddd",
+      "tabs_text_active": "#ffffff",
+      "tabs_indicator": "#ffffff",
+      "control_normal": "#121212",
+      "text_primary": "#212121",
+      "text_secondary": "#757575",
+      "text_primary_inverse": "#ffffff",
+      "text_secondary_inverse": "#cccccc",
+      "drawer": "#ffffff",
+      "drawer_text_normal": "#212121",
+      "drawer_text_active": "#FF5722",
+      "drawer_icon_normal": "#757575",
+      "drawer_icon_active": "#FF5722",
+      "drawer_header_background": "#2196F3",
+      "drawer_header_title": "#ffffff",
+      "drawer_header_subtitle": "#dddddd",
+      "bottom_bar": "#2196F3",
+      "bottom_bar_icons_normal": "#dddddd",
+      "bottom_bar_icons_active": "#ffffff"
+    }
   }
 ]

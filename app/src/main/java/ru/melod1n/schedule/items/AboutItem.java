@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class AboutItem implements Serializable {
 
+    private static int serialVersionUID = 1;
+
     private Integer icon;
     private String name, job;
     private String link;

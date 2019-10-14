@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class LocationItem implements Serializable {
 
+    private static int serialVersionUID = 1;
+
     private int id;
     private String title;
     private String building;

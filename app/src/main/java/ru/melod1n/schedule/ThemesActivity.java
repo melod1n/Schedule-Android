@@ -52,7 +52,15 @@ public class ThemesActivity extends BaseActivity {
 
         getThemes();
 
-        list.scrollToPosition(getIntent().getIntExtra("position", 0));
+        ThemeItem theme = ThemeEngine.getCurrentTheme();
+
+        int index = 0;
+
+        for (int i = 0; i < adapter.getItemCount(); i++) {
+            if (adapter.getItem(i).equals(theme)) index = i;
+        }
+
+        list.scrollToPosition(index);
     }
 
     private void onRefresh() {
@@ -84,9 +92,9 @@ public class ThemesActivity extends BaseActivity {
         ThemeItem item = adapter.getItem(position);
 
         ThemeEngine.setCurrentTheme(item.getId());
-        
+
         startActivity(new Intent(this, MainActivity.class));
-        Util.restart(this, new Intent().putExtra("position", position), true);
+        Util.restart(this, true);
         finishAffinity();
     }
 }

@@ -3,6 +3,7 @@ package ru.melod1n.schedule.items;
 import android.graphics.Color;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.json.JSONObject;
 
@@ -11,6 +12,8 @@ import java.io.Serializable;
 import ru.melod1n.schedule.util.ArrayUtil;
 
 public class ThemeItem implements Serializable {
+
+    private static int serialVersionUID = 1;
 
     private String id;
     private String title;
@@ -419,5 +422,16 @@ public class ThemeItem implements Serializable {
 
     public void setColorBottomBarIconsActive(int colorBottomBarIconsActive) {
         this.colorBottomBarIconsActive = colorBottomBarIconsActive;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof ThemeItem)) return false;
+        if (obj == this) return true;
+
+        ThemeItem themeItem = (ThemeItem) obj;
+
+        return id.toLowerCase().equals(themeItem.getId().toLowerCase());
     }
 }

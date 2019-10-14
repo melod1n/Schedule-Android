@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class HomeworkItem implements Serializable {
 
+    private static int serialVersionUID = 1;
+
     private String text;
     private String title;
     private String date;

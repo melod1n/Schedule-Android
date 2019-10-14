@@ -9,6 +9,8 @@ import ru.melod1n.schedule.util.Util;
 
 public class BellItem implements Serializable {
 
+    private static int serialVersionUID = 1;
+
     public int start, end, id, day;
 
     public BellItem() {

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class TeacherItem implements Serializable {
 
+    private static int serialVersionUID = 1;
+
     private int id;
     private String title;
 

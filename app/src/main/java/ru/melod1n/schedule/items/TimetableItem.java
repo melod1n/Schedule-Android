@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class TimetableItem implements Serializable {
 
+    private static int serialVersionUID = 1;
+
     private ArrayList<BellItem> bells;
     private String title;
 

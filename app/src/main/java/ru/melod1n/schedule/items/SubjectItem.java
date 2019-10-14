@@ -2,7 +2,9 @@ package ru.melod1n.schedule.items;
 
 import java.io.Serializable;
 
-public class SubjectItem  implements Serializable {
+public class SubjectItem implements Serializable {
+
+    private static int serialVersionUID = 1;
 
     private int id;
     private int colorPosition;

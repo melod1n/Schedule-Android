@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class NoteItem implements Serializable {
 
+    private static int serialVersionUID = 1;
+
     public int id;
     public String title, text;
 

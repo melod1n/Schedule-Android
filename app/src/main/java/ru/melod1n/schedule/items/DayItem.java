@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class DayItem implements Serializable {
 
+    private static int serialVersionUID = 1;
+
     private long date;
     private int dayOfWeek;
     private int dayOfYear;

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class LessonItem implements Serializable {
 
+    private static int serialVersionUID = 1;
+
     private int order;
     private LessonType lessonType;
     private String lessonStringType;

@@ -133,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //DB INFO
     private static final String DB_NAME = "schedule.db";
-    private static final int DB_VERSION = 32;
+    private static final int DB_VERSION = 33;
 
     private static DatabaseHelper instance;
 
