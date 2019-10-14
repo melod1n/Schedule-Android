@@ -91,7 +91,7 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
     @Override
     public void onItemClick(View v, int position) {
-        showDialog(position);
+        //showDialog(position);
     }
 
     @Override
