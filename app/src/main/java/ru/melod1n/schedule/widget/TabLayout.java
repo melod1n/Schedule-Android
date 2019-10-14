@@ -27,5 +27,8 @@ public class TabLayout extends com.google.android.material.tabs.TabLayout {
         setBackgroundColor(theme.getColorPrimary());
         setTabTextColors(theme.getColorTabsTextNormal(), theme.getColorTabsTextActive());
         setSelectedTabIndicatorColor(theme.getColorTabsIndicator());
+
+        setTabIndicatorFullWidth(false);
+        setSelectedTabIndicator(R.drawable.tabs_indicator_round);
     }
 }

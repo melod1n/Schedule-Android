@@ -50,6 +50,7 @@ public class ThemeItem implements Serializable {
     private int colorBottomBar;
     private int colorBottomBarIconsNormal;
     private int colorBottomBarIconsActive;
+    private int colorDivider;
 
     public ThemeItem() {
     }
@@ -93,6 +94,7 @@ public class ThemeItem implements Serializable {
             this.colorBottomBar = parseColor(colors.optString("bottom_bar"));
             this.colorBottomBarIconsNormal = parseColor(colors.optString("bottom_bar_icons_normal"));
             this.colorBottomBarIconsActive = parseColor(colors.optString("bottom_bar_icons_active"));
+            this.colorDivider = parseColor(colors.optString("divider"));
         }
     }
 
@@ -422,6 +424,14 @@ public class ThemeItem implements Serializable {
 
     public void setColorBottomBarIconsActive(int colorBottomBarIconsActive) {
         this.colorBottomBarIconsActive = colorBottomBarIconsActive;
+    }
+
+    public int getColorDivider() {
+        return colorDivider;
+    }
+
+    public void setColorDivider(int colorDivider) {
+        this.colorDivider = colorDivider;
     }
 
     @Override

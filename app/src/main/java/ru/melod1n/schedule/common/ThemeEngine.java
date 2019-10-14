@@ -53,7 +53,7 @@ public class ThemeEngine {
             0xffD84315
     };
 
-    private static final String DEFAULT_THEME = "stock_light";
+    private static final String DEFAULT_THEME = "teal";
 
     private static volatile ThemeItem currentTheme;
 

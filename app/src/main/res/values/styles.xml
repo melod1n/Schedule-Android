@@ -11,4 +11,14 @@
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
+    <style name="AppTheme.Tabs" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextAppearance">@style/AppTheme.Tabs.Text</item>
+        <item name="tabUnboundedRipple">false</item>
+        <item name="tabRippleColor">#00000000</item>
+    </style>
+
+    <style name="AppTheme.Tabs.Text" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="textAllCaps">false</item>
+    </style>
+
 </resources>

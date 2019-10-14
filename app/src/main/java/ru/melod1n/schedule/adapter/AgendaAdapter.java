@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.HomeworkItem;
 
 public class AgendaAdapter extends RecyclerAdapter<HomeworkItem, AgendaAdapter.ViewHolder> {
@@ -66,6 +67,8 @@ public class AgendaAdapter extends RecyclerAdapter<HomeworkItem, AgendaAdapter.V
 
         public void bind(int position) {
             HomeworkItem item = getItem(position);
+
+            cardView.setCardBackgroundColor(ThemeEngine.getCurrentTheme().getColorSurface());
 
             date.setText(item.getDate());
             subject.setText(item.getTitle().replace("\n", " "));

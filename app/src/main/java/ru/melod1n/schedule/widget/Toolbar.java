@@ -46,14 +46,6 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
         setSubtitleTextColor(titleSecondary);
         setPopupTheme(theme.isDark() ? R.style.ThemeOverlay_MaterialComponents_Dark : R.style.ThemeOverlay_MaterialComponents_Light);
 
-        if (getNavigationIcon() != null) {
-            getNavigationIcon().setTint(titlePrimary);
-        }
-
-        if (getOverflowIcon() != null) {
-            getOverflowIcon().setTint(titlePrimary);
-        }
-
         setMenuIconsColor();
     }
 
@@ -68,6 +60,14 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
     }
 
     private void setMenuIconsColor() {
+        if (getNavigationIcon() != null) {
+            getNavigationIcon().setTint(titleColor);
+        }
+
+        if (getOverflowIcon() != null) {
+            getOverflowIcon().setTint(titleColor);
+        }
+
         for (int i = 0; i < getMenu().size(); i++) {
             MenuItem item = getMenu().getItem(i);
 

@@ -7,8 +7,6 @@
 
     <include layout="@layout/list_recycler" />
 
-    <include layout="@layout/toolbar_shadow" />
-
     <include layout="@layout/no_items" />
 
     <ru.melod1n.schedule.widget.FloatingActionButton

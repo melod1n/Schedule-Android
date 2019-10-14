@@ -49,8 +49,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.settings);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_backward);
-        toolbar.setNavigationOnClickListener(view1 -> {
+        toolbar.setNavigationOnClickListener(v -> {
             if (getActivity() != null)
                 getActivity().onBackPressed();
         });

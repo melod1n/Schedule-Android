@@ -10,6 +10,10 @@
 
     <include layout="@layout/toolbar_tabs" />
 
+    <ru.melod1n.schedule.widget.Divider
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
