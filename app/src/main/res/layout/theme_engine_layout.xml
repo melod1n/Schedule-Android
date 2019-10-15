@@ -126,11 +126,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/theme_engine_layout"
-                android:clickable="false"
-                android:contextClickable="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:longClickable="false"
                 app:menu="@menu/theme_engine_bottom" />
 
         </RelativeLayout>

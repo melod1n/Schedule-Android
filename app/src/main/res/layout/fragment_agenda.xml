@@ -14,23 +14,13 @@
 
         <include layout="@layout/list_recycler" />
 
-        <View
+        <ru.melod1n.schedule.widget.HighlightView
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:background="@drawable/shadow_vertical_top" />
+            app:direction="bottom" />
 
     </FrameLayout>
 
     <include layout="@layout/no_items" />
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/fab_add"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|end"-->
-<!--        android:layout_margin="16dp"-->
-<!--        android:src="@drawable/ic_add"-->
-<!--        android:tint="?android:textColorPrimaryInverse"-->
-<!--        app:borderWidth="0dp" />-->
 
 </FrameLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.melod1n.schedule.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        app:listenThemeUpdates="true"
         app:navigationIcon="@drawable/ic_arrow_backward" />
 
     <FrameLayout
@@ -18,11 +19,11 @@
 
         <include layout="@layout/list_recycler" />
 
-        <View
+        <ru.melod1n.schedule.widget.HighlightView
             android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:background="@drawable/shadow_vertical_top" />
+            android:layout_height="wrap_content"
+            app:direction="bottom" />
 
     </FrameLayout>
 
-</FrameLayout>
+</ru.melod1n.schedule.widget.FrameLayout>

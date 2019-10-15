@@ -2,6 +2,9 @@ package ru.melod1n.schedule.common;
 
 import android.graphics.Color;
 
+import androidx.annotation.NonNull;
+
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -9,11 +12,12 @@ import java.util.ArrayList;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.ThemeItem;
+import ru.melod1n.schedule.util.Keys;
 import ru.melod1n.schedule.util.Util;
 
 public class ThemeEngine {
 
-    private static final int ENGINE_VERSION = 1;
+    public static final int ENGINE_VERSION = 2;
 
     public static final int[] COLOR_PALETTE_LIGHT = new int[]{
             Color.LTGRAY,
@@ -53,7 +57,7 @@ public class ThemeEngine {
             0xffD84315
     };
 
-    private static final String DEFAULT_THEME = "teal";
+    private static final String DEFAULT_THEME = "teal_md2";
 
     private static volatile ThemeItem currentTheme;
 
@@ -97,9 +101,18 @@ public class ThemeEngine {
     public static void setCurrentTheme(String id) {
         AppGlobal.preferences.edit().putString("theme", id).apply();
         init();
+        EventBus.getDefault().postSticky(new Object[]{Keys.THEME_UPDATE, currentTheme});
     }
 
     public static boolean isDark() {
         return currentTheme.isDark();
+    }
+
+    public static void setDark(boolean dark) {
+        currentTheme.setDark(dark);
+    }
+
+    public static boolean isThemeValid(@NonNull ThemeItem item) {
+        return item.getEngineVersion() == ENGINE_VERSION;
     }
 }

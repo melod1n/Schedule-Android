@@ -15,7 +15,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,6 +28,7 @@ import ru.melod1n.schedule.MainActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.AgendaAdapter;
 import ru.melod1n.schedule.items.HomeworkItem;
+import ru.melod1n.schedule.widget.RefreshLayout;
 import ru.melod1n.schedule.widget.Toolbar;
 
 public class AgendaFragment extends Fragment {
@@ -37,7 +37,7 @@ public class AgendaFragment extends Fragment {
     RecyclerView list;
 
     @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
+    RefreshLayout refresh;
 
 //    @BindView(R.id.fab_add)
 //    FloatingActionButton add;

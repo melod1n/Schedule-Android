@@ -70,7 +70,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (theme != null) {
             theme.setOnPreferenceClickListener(this);
 
-            theme.setSummary(getString(R.string.theme_summary, ThemeEngine.getCurrentTheme().getTitle()));
+            theme.setSummary(getString(R.string.theme_summary, ThemeEngine.getCurrentTheme().getTitle(), ThemeEngine.getCurrentTheme().getAuthor()));
         }
 
         if (lessonsStart != null)

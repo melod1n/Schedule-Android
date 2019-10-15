@@ -1,14 +1,12 @@
 package ru.melod1n.schedule.preference;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.core.content.res.TypedArrayUtils;
-import androidx.preference.CheckBoxPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,28 +18,28 @@ import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.Keys;
 
-public class PreferenceCheckBox extends CheckBoxPreference {
+public class PreferenceScreen extends Preference {
 
     private ThemeItem theme;
     private PreferenceViewHolder holder;
 
-    public PreferenceCheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+    public PreferenceScreen(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, -1);
     }
 
-    public PreferenceCheckBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public PreferenceScreen(Context context, AttributeSet attrs) {
+        super(context, attrs, TypedArrayUtils.getAttr(context, R.attr.preferenceScreenStyle,
+                android.R.attr.preferenceScreenStyle));
+    }
+
+    public PreferenceScreen(Context context) {
+        this(context, null);
+    }
+
+    public PreferenceScreen(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public PreferenceCheckBox(Context context, AttributeSet attrs) {
-        this(context, attrs, TypedArrayUtils.getAttr(context, R.attr.checkBoxPreferenceStyle, android.R.attr.checkBoxPreferenceStyle));
-
         if (theme == null) theme = ThemeEngine.getCurrentTheme();
         EventBus.getDefault().register(this);
-    }
-
-    public PreferenceCheckBox(Context context) {
-        this(context, null);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -64,27 +62,6 @@ public class PreferenceCheckBox extends CheckBoxPreference {
     }
 
     private void init() {
-        int colorAccent = theme.getColorAccent();
-        int textColorSecondary = theme.getColorTextSecondary();
-
-        AppCompatCheckBox checkBox = (AppCompatCheckBox) holder.findViewById(android.R.id.checkbox);
-
-        if (checkBox == null) {
-            return;
-        }
-
-        int[][] checkBoxStates = new int[][]{
-                new int[]{android.R.attr.state_checked},
-                new int[]{-android.R.attr.state_checked}
-        };
-
-        int[] checkBoxColors = new int[]{
-                colorAccent,
-                theme.alphaColor(textColorSecondary, 0.7f)
-        };
-
-        checkBox.setSupportButtonTintList(new ColorStateList(checkBoxStates, checkBoxColors));
-
         final TextView titleView = (TextView) holder.findViewById(android.R.id.title);
 
         if (titleView == null) {

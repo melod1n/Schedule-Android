@@ -28,6 +28,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
 
@@ -102,7 +103,7 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             toolbar.setBackgroundColor(colorPrimary);
 
             String textAuthor = String.format("Author: %s", item.getAuthor());
-            String textVersion = String.format(Locale.getDefault(), "Engine version: %d", item.getEngineVersion());
+            String textVersion = item.getEngineVersion() == ThemeEngine.ENGINE_VERSION ? String.format(Locale.getDefault(), "Engine version: %d", item.getEngineVersion()) : "Theme is incompatible";
 
             String text = String.format("%s\n%s", textAuthor, textVersion);
 
@@ -112,6 +113,18 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
 
             textView.setText(textSpan);
             textView.setOnClickListener(view -> {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(itemView, position);
+                }
+            });
+
+            toolbar.setOnClickListener(view -> {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(itemView, position);
+                }
+            });
+
+            bottomNavigationView.setOnClickListener(view -> {
                 if (onItemClickListener != null) {
                     onItemClickListener.onItemClick(itemView, position);
                 }

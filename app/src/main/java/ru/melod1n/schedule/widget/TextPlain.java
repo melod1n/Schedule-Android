@@ -4,17 +4,25 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.TintTypedArray;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ArrayUtil;
+import ru.melod1n.schedule.util.Keys;
 
 public class TextPlain extends AppCompatTextView {
 
-    private ThemeItem item;
+    private ThemeItem theme;
+
+    private String colorDef;
 
     public TextPlain(Context context) {
         this(context, null);
@@ -26,20 +34,34 @@ public class TextPlain extends AppCompatTextView {
 
     public TextPlain(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs, defStyleAttr);
-    }
-
-    private void init(AttributeSet attrs, int defStyleAttr) {
-        item = ThemeEngine.getCurrentTheme();
 
         final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                 R.styleable.TextPlain, defStyleAttr, 0);
 
-        String colorDef = a.getString(R.styleable.TextPlain_colorDef);
+        colorDef = a.getString(R.styleable.TextPlain_colorDef);
         if (colorDef == null || colorDef.isEmpty()) {
             colorDef = "secondary";
         }
 
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
+
+        theme = ThemeEngine.getCurrentTheme();
+
+        init();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onReceive(@NonNull Object[] data) {
+        String key = (String) data[0];
+        if (Keys.THEME_UPDATE.equals(key)) {
+            theme = (ThemeItem) data[1];
+            init();
+            requestLayout();
+        }
+    }
+
+    private void init() {
         int textColor = getColor(colorDef);
         setTextColor(textColor);
 
@@ -52,15 +74,15 @@ public class TextPlain extends AppCompatTextView {
         }
     }
 
-    private int getColor(String def) {
+    private int getColor(@NonNull String def) {
         switch (def) {
             case "primary":
-                return item.getColorTextPrimary();
+                return theme.getColorTextPrimary();
             default:
             case "secondary":
-                return item.getColorTextSecondary();
+                return theme.getColorTextSecondary();
             case "accent":
-                return item.getColorAccent();
+                return theme.getColorAccent();
         }
     }
 }

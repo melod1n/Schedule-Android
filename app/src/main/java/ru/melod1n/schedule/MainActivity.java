@@ -3,17 +3,14 @@ package ru.melod1n.schedule;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,7 +19,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +35,8 @@ import ru.melod1n.schedule.fragment.SettingsFragment;
 import ru.melod1n.schedule.fragment.UpdatesFragment;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
+import ru.melod1n.schedule.widget.DrawerToggle;
+import ru.melod1n.schedule.widget.NavigationDrawer;
 import ru.melod1n.schedule.widget.Toolbar;
 
 public class MainActivity extends BaseActivity {
@@ -47,7 +45,7 @@ public class MainActivity extends BaseActivity {
     BottomNavigationView navView;
 
     @BindView(R.id.navigationDrawer)
-    NavigationView navDrawer;
+    NavigationDrawer navDrawer;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -78,41 +76,8 @@ public class MainActivity extends BaseActivity {
 
         checkCrash();
 
-        prepareDrawer();
-
-        navView.setOnNavigationItemSelectedListener(this::onItemSelected);
-    }
-
-    private void prepareDrawer() {
-        int[][] states = new int[][]{
-                new int[]{android.R.attr.state_checked},
-                new int[]{-android.R.attr.state_checked}
-        };
-
-        int[] textColors = new int[]{
-                theme.getColorDrawerTextActive(),
-                theme.getColorDrawerTextNormal()
-        };
-
-        int[] iconColors = new int[]{
-                theme.getColorDrawerIconActive(),
-                theme.getColorDrawerIconNormal()
-        };
-
-        navDrawer.setBackgroundColor(theme.getColorDrawer());
-        navDrawer.setItemTextColor(new ColorStateList(states, textColors));
-        navDrawer.setItemIconTintList(new ColorStateList(states, iconColors));
-
-        View header = navDrawer.getHeaderView(0);
-        header.setBackgroundColor(theme.getColorDrawerHeaderBackground());
-
-        TextView title = header.findViewById(R.id.drawer_header_title);
-        TextView subtitle = header.findViewById(R.id.drawer_header_subtitle);
-
-        title.setTextColor(theme.getColorDrawerHeaderTitle());
-        subtitle.setTextColor(theme.getColorDrawerHeaderSubtitle());
-
         navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
+        navView.setOnNavigationItemSelectedListener(this::onItemSelected);
     }
 
     @NonNull
@@ -120,8 +85,8 @@ public class MainActivity extends BaseActivity {
         return drawerLayout;
     }
 
-    public ActionBarDrawerToggle initToggle(Toolbar toolbar) {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
+    public DrawerToggle initToggle(Toolbar toolbar) {
+        return new DrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -130,10 +95,6 @@ public class MainActivity extends BaseActivity {
                 ((FrameLayout) fragmentContainer.getParent()).setTranslationX(slideX);
             }
         };
-
-        toggle.getDrawerArrowDrawable().setColor(toolbar.getTitleColor());
-
-        return toggle;
     }
 
     private void checkFirstLaunch(Bundle savedInstanceState) {

@@ -1,10 +1,10 @@
 package ru.melod1n.schedule;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,7 +18,6 @@ import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.items.ThemeItem;
-import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.widget.Toolbar;
 
 public class ThemesActivity extends BaseActivity {
@@ -44,6 +43,7 @@ public class ThemesActivity extends BaseActivity {
         applyBackground();
 
         toolbar.setTitle(ThemeEngine.getCurrentTheme().getTitle());
+        toolbar.setSubtitle(ThemeEngine.getCurrentTheme().getAuthor());
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         refreshLayout.setOnRefreshListener(this::onRefresh);
@@ -52,15 +52,15 @@ public class ThemesActivity extends BaseActivity {
 
         getThemes();
 
-        ThemeItem theme = ThemeEngine.getCurrentTheme();
+//        ThemeItem theme = ThemeEngine.getCurrentTheme();
 
-        int index = 0;
-
-        for (int i = 0; i < adapter.getItemCount(); i++) {
-            if (adapter.getItem(i).equals(theme)) index = i;
-        }
-
-        list.scrollToPosition(index);
+//        int index = 0;
+//
+//        for (int i = 0; i < adapter.getItemCount(); i++) {
+//            if (adapter.getItem(i).equals(theme)) index = i;
+//        }
+//
+//        list.scrollToPosition(index);
     }
 
     private void onRefresh() {
@@ -91,10 +91,20 @@ public class ThemesActivity extends BaseActivity {
     private void onItemClick(View v, int position) {
         ThemeItem item = adapter.getItem(position);
 
-        ThemeEngine.setCurrentTheme(item.getId());
+        if (ThemeEngine.isThemeValid(item)) {
 
-        startActivity(new Intent(this, MainActivity.class));
-        Util.restart(this, true);
-        finishAffinity();
+            ThemeEngine.setCurrentTheme(item.getId());
+
+//            startActivity(new Intent(this, MainActivity.class));
+//            Util.restart(this, true);
+//            finishAffinity();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.warning);
+            builder.setMessage(item.getEngineVersion() > ThemeEngine.ENGINE_VERSION ? R.string.warning_theme_new : R.string.warning_theme_old);
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.show();
+        }
+
     }
 }

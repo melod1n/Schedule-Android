@@ -2,22 +2,31 @@ package ru.melod1n.schedule.widget;
 
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
+import ru.melod1n.schedule.util.Keys;
 
 public class Toolbar extends androidx.appcompat.widget.Toolbar {
 
     private static final String TAG = "schedule.widget.Toolbar";
 
     private int titleColor;
+
+    private ThemeItem theme;
 
     public Toolbar(Context context) {
         this(context, null);
@@ -29,21 +38,42 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
 
     public Toolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Toolbar, 0, 0);
+
+        if (a.hasValue(R.styleable.Toolbar_listenThemeUpdates)) {
+            if (a.getBoolean(R.styleable.Toolbar_listenThemeUpdates, false)) {
+                if (!EventBus.getDefault().isRegistered(this))
+                    EventBus.getDefault().register(this);
+            }
+        }
+
+        if (theme == null) theme = ThemeEngine.getCurrentTheme();
         init();
     }
 
+    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    public void onReceive(@NonNull Object[] data) {
+        String key = (String) data[0];
+        if (Keys.THEME_UPDATE.equals(key)) {
+            theme = (ThemeItem) data[1];
+            init();
+            requestLayout();
+        }
+    }
+
     private void init() {
-        ThemeItem theme = ThemeEngine.getCurrentTheme();
-
         int colorPrimary = theme.getColorPrimary();
-        int titlePrimary;
 
-        titleColor = titlePrimary = ColorUtil.isLight(colorPrimary) ? Color.BLACK : Color.WHITE;
-        int titleSecondary = ColorUtil.isLight(colorPrimary) ? Color.LTGRAY : Color.DKGRAY;
+        boolean light = ColorUtil.isLight(colorPrimary);
+
+        titleColor = light ? Color.BLACK : Color.WHITE;
+
+        int subtitleColor = light ? Color.GRAY : Color.LTGRAY;
 
         setBackgroundColor(colorPrimary);
-        setTitleTextColor(titlePrimary);
-        setSubtitleTextColor(titleSecondary);
+        setTitleTextColor(titleColor);
+        setSubtitleTextColor(subtitleColor);
         setPopupTheme(theme.isDark() ? R.style.ThemeOverlay_MaterialComponents_Dark : R.style.ThemeOverlay_MaterialComponents_Light);
 
         setMenuIconsColor();

@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -27,6 +26,7 @@ import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.util.ColorUtil;
 import ru.melod1n.schedule.util.ViewUtil;
+import ru.melod1n.schedule.widget.TextArea;
 
 public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
 
@@ -39,10 +39,10 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
     private int color;
 
     @BindView(R.id.note_title)
-    EditText title;
+    TextArea title;
 
     @BindView(R.id.note_text)
-    EditText text;
+    TextArea text;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -76,9 +76,8 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
         picker.setColors(ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT);
 
         color = !edit ? DEFAULT_COLOR : picker.getColors().get(item.getPosition());
-        setColor(color);
         picker.setSelectedColor(color);
-
+        setColor(color);
 
         picker.setOnChoosedColorListener((position, color) -> {
             FullScreenNoteDialog.this.color = color;

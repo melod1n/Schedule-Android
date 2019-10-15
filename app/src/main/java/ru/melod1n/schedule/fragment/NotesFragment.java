@@ -34,6 +34,7 @@ import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.view.FullScreenNoteDialog;
+import ru.melod1n.schedule.widget.RefreshLayout;
 import ru.melod1n.schedule.widget.Toolbar;
 
 public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
@@ -50,7 +51,7 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
     RecyclerView list;
 
     @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
+    RefreshLayout refresh;
 
     @BindView(R.id.fab_add)
     FloatingActionButton add;

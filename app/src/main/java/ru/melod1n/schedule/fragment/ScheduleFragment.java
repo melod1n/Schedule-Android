@@ -31,6 +31,7 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
 import ru.melod1n.schedule.adapter.ScheduleAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
@@ -91,6 +92,10 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
     @Override
     public void onItemClick(View v, int position) {
+        getActivity().setTheme(ThemeEngine.isDark() ? R.style.AppTheme : R.style.AppTheme_Dark);
+        ThemeEngine.setDark(!ThemeEngine.isDark());
+
+        new AlertDialog.Builder(getContext()).setTitle("Title").setMessage("Message").setPositiveButton("Positive", null).setNegativeButton("Negative", null).setNeutralButton("Neutral", null).show();
         //showDialog(position);
     }
 

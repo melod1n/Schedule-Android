@@ -1,13 +1,14 @@
 [
   {
-    "id": "teal",
-    "title": "Teal",
+    "id": "teal_md2",
+    "title": "White Teal",
     "author": "μSchedule",
-    "version": 1,
+    "version": 2,
     "ui": {
       "dark": false,
       "light_status_bar": true,
-      "light_navigation_bar": true
+      "light_navigation_bar": true,
+      "md2": true
     },
     "colors": {
       "surface": "#ffffff",
@@ -23,29 +24,33 @@
       "text_secondary": "#707070",
       "text_primary_inverse": "#ffffff",
       "text_secondary_inverse": "#cccccc",
-      "drawer": "#ffffff",
+      "drawer": "primary",
       "drawer_text_normal": "#121212",
-      "drawer_text_active": "#00695C",
+      "drawer_text_active": "accent",
       "drawer_icon_normal": "#707070",
-      "drawer_icon_active": "#00695C",
-      "drawer_header_background": "#ffffff",
+      "drawer_icon_active": "accent",
+      "drawer_header_background": "primary",
       "drawer_header_title": "#121212",
       "drawer_header_subtitle": "#707070",
-      "bottom_bar": "#ffffff",
+      "bottom_bar": "surface",
       "bottom_bar_icons_normal": "#707070",
       "bottom_bar_icons_active": "#00695C",
-      "divider": "#CECECE"
+      "highlight": "#CECECE",
+      "fab_color": "accent",
+      "fab_icon_color": "surface"
     }
   },
+
   {
-    "id": "teal_dark",
+    "id": "teal_md2_dark",
     "title": "Dark Teal",
     "author": "μSchedule",
-    "version": 1,
+    "version": 2,
     "ui": {
       "dark": true,
       "light_status_bar": false,
-      "light_navigation_bar": false
+      "light_navigation_bar": false,
+      "md2": true
     },
     "colors": {
       "surface": "#121212",
@@ -72,7 +77,50 @@
       "bottom_bar": "#121212",
       "bottom_bar_icons_normal": "#cccccc",
       "bottom_bar_icons_active": "#4DB6AC",
-      "divider": "#707070"
+      "highlight": "#707070",
+      "fab_color": "accent",
+      "fab_icon_color": "surface"
+    }
+  },
+  {
+    "id": "teal_md1",
+    "title": "Colored Teal",
+    "author": "μSchedule",
+    "version": 2,
+    "ui": {
+      "dark": false,
+      "light_status_bar": false,
+      "light_navigation_bar": false,
+      "md2": false
+    },
+    "colors": {
+      "surface": "#ffffff",
+      "primary": "#009688",
+      "primary_dark": "#00796B",
+      "accent": "#FF5722",
+      "background": "#ffffff",
+      "tabs_text_normal": "#cccccc",
+      "tabs_text_active": "#ffffff",
+      "tabs_indicator": "#ffffff",
+      "control_normal": "#ffffff",
+      "text_primary": "#212121",
+      "text_secondary": "#757575",
+      "text_primary_inverse": "#ffffff",
+      "text_secondary_inverse": "#cccccc",
+      "drawer": "surface",
+      "drawer_text_normal": "#212121",
+      "drawer_text_active": "accent",
+      "drawer_icon_normal": "#707070",
+      "drawer_icon_active": "accent",
+      "drawer_header_background": "primary",
+      "drawer_header_title": "#ffffff",
+      "drawer_header_subtitle": "#cccccc",
+      "bottom_bar": "primary",
+      "bottom_bar_icons_normal": "#cccccc",
+      "bottom_bar_icons_active": "#ffffff",
+      "highlight": "#bdbdbd",
+      "fab_color": "accent",
+      "fab_icon_color": "#ffffff"
     }
   },
   {

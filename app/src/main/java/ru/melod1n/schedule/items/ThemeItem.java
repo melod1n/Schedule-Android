@@ -23,6 +23,7 @@ public class ThemeItem implements Serializable {
     private boolean dark;
     private boolean lightStatusBar;
     private boolean lightNavigationBar;
+    private boolean md2;
 
     private boolean selected;
 
@@ -50,7 +51,9 @@ public class ThemeItem implements Serializable {
     private int colorBottomBar;
     private int colorBottomBarIconsNormal;
     private int colorBottomBarIconsActive;
-    private int colorDivider;
+    private int colorHighlight;
+    private int fabColor;
+    private int fabIconColor;
 
     public ThemeItem() {
     }
@@ -66,6 +69,7 @@ public class ThemeItem implements Serializable {
             this.dark = ui.optBoolean("dark");
             this.lightStatusBar = ui.optBoolean("light_status_bar");
             this.lightNavigationBar = ui.optBoolean("light_navigation_bar");
+            this.md2 = ui.optBoolean("md2");
         }
 
         JSONObject colors = o.optJSONObject("colors");
@@ -94,7 +98,9 @@ public class ThemeItem implements Serializable {
             this.colorBottomBar = parseColor(colors.optString("bottom_bar"));
             this.colorBottomBarIconsNormal = parseColor(colors.optString("bottom_bar_icons_normal"));
             this.colorBottomBarIconsActive = parseColor(colors.optString("bottom_bar_icons_active"));
-            this.colorDivider = parseColor(colors.optString("divider"));
+            this.colorHighlight = parseColor(colors.optString("highlight"));
+            this.fabColor = parseColor(colors.optString("fab_color"));
+            this.fabIconColor = parseColor(colors.optString("fab_icon_color"));
         }
     }
 
@@ -102,7 +108,20 @@ public class ThemeItem implements Serializable {
         try {
             return Color.parseColor(color);
         } catch (Exception e) {
-            return -1;
+            switch (color) {
+                case "primary":
+                    return colorPrimary;
+                case "primary_dark":
+                    return colorPrimaryDark;
+                case "accent":
+                    return colorAccent;
+                case "surface":
+                    return colorSurface;
+                case "background":
+                    return colorBackground;
+                default:
+                    return -1;
+            }
         }
     }
 
@@ -118,6 +137,14 @@ public class ThemeItem implements Serializable {
 
     public int alphaColor(String color, float alphaFactor) {
         return alphaColor(Color.parseColor(color), alphaFactor);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -152,49 +179,36 @@ public class ThemeItem implements Serializable {
         this.dark = dark;
     }
 
-
-    public void setColorSurface(String colorSurface) {
-        this.colorSurface = parseColor(colorSurface);
+    public boolean isLightStatusBar() {
+        return lightStatusBar;
     }
 
-    public void setColorPrimary(String colorPrimary) {
-        this.colorPrimary = parseColor(colorPrimary);
+    public void setLightStatusBar(boolean lightStatusBar) {
+        this.lightStatusBar = lightStatusBar;
     }
 
-    public void setColorPrimaryDark(String colorPrimaryDark) {
-        this.colorPrimaryDark = parseColor(colorPrimaryDark);
+    public boolean isLightNavigationBar() {
+        return lightNavigationBar;
     }
 
-    public void setColorAccent(String colorAccent) {
-        this.colorAccent = parseColor(colorAccent);
+    public void setLightNavigationBar(boolean lightNavigationBar) {
+        this.lightNavigationBar = lightNavigationBar;
     }
 
-    public void setColorBackground(String colorBackground) {
-        this.colorBackground = parseColor(colorBackground);
+    public boolean isMd2() {
+        return md2;
     }
 
-    public void setColorTabsTextNormal(String colorTabsTextNormal) {
-        this.colorTabsTextNormal = parseColor(colorTabsTextNormal);
+    public void setMd2(boolean md2) {
+        this.md2 = md2;
     }
 
-    public void setColorControlNormal(String colorControlNormal) {
-        this.colorControlNormal = parseColor(colorControlNormal);
+    public boolean isSelected() {
+        return selected;
     }
 
-    public void setColorTextPrimary(String colorTextPrimary) {
-        this.colorTextPrimary = parseColor(colorTextPrimary);
-    }
-
-    public void setColorTextSecondary(String colorTextSecondary) {
-        this.colorTextSecondary = parseColor(colorTextSecondary);
-    }
-
-    public void setColorTextPrimaryInverse(String colorTextPrimaryInverse) {
-        this.colorTextPrimaryInverse = parseColor(colorTextPrimaryInverse);
-    }
-
-    public void setColorTextSecondaryInverse(String colorTextSecondaryInverse) {
-        this.colorTextSecondaryInverse = parseColor(colorTextSecondaryInverse);
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public int getColorSurface() {
@@ -241,8 +255,24 @@ public class ThemeItem implements Serializable {
         return colorTabsTextNormal;
     }
 
-    public void setColorTabsText(int colorTabsText) {
-        this.colorTabsTextNormal = colorTabsText;
+    public void setColorTabsTextNormal(int colorTabsTextNormal) {
+        this.colorTabsTextNormal = colorTabsTextNormal;
+    }
+
+    public int getColorTabsTextActive() {
+        return colorTabsTextActive;
+    }
+
+    public void setColorTabsTextActive(int colorTabsTextActive) {
+        this.colorTabsTextActive = colorTabsTextActive;
+    }
+
+    public int getColorTabsIndicator() {
+        return colorTabsIndicator;
+    }
+
+    public void setColorTabsIndicator(int colorTabsIndicator) {
+        this.colorTabsIndicator = colorTabsIndicator;
     }
 
     public int getColorControlNormal() {
@@ -285,20 +315,12 @@ public class ThemeItem implements Serializable {
         this.colorTextSecondaryInverse = colorTextSecondaryInverse;
     }
 
-    public boolean isSelected() {
-        return selected;
+    public int getColorDrawer() {
+        return colorDrawer;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setColorDrawer(int colorDrawer) {
+        this.colorDrawer = colorDrawer;
     }
 
     public int getColorDrawerTextNormal() {
@@ -357,51 +379,6 @@ public class ThemeItem implements Serializable {
         this.colorDrawerHeaderSubtitle = colorDrawerHeaderSubtitle;
     }
 
-    public int getColorDrawer() {
-        return colorDrawer;
-    }
-
-    public void setColorDrawer(int colorDrawer) {
-        this.colorDrawer = colorDrawer;
-    }
-
-    public void setColorTabsTextNormal(int colorTabsTextNormal) {
-        this.colorTabsTextNormal = colorTabsTextNormal;
-    }
-
-    public int getColorTabsTextActive() {
-        return colorTabsTextActive;
-    }
-
-    public void setColorTabsTextActive(int colorTabsTextActive) {
-        this.colorTabsTextActive = colorTabsTextActive;
-    }
-
-    public boolean isLightStatusBar() {
-        return lightStatusBar;
-    }
-
-    public void setLightStatusBar(boolean lightStatusBar) {
-        this.lightStatusBar = lightStatusBar;
-    }
-
-    public boolean isLightNavigationBar() {
-        return lightNavigationBar;
-    }
-
-    public void setLightNavigationBar(boolean lightNavigationBar) {
-        this.lightNavigationBar = lightNavigationBar;
-    }
-
-
-    public int getColorTabsIndicator() {
-        return colorTabsIndicator;
-    }
-
-    public void setColorTabsIndicator(int colorTabsIndicator) {
-        this.colorTabsIndicator = colorTabsIndicator;
-    }
-
     public int getColorBottomBar() {
         return colorBottomBar;
     }
@@ -426,12 +403,28 @@ public class ThemeItem implements Serializable {
         this.colorBottomBarIconsActive = colorBottomBarIconsActive;
     }
 
-    public int getColorDivider() {
-        return colorDivider;
+    public int getColorHighlight() {
+        return colorHighlight;
     }
 
-    public void setColorDivider(int colorDivider) {
-        this.colorDivider = colorDivider;
+    public void setColorHighlight(int colorHighlight) {
+        this.colorHighlight = colorHighlight;
+    }
+
+    public int getFabColor() {
+        return fabColor;
+    }
+
+    public void setFabColor(int fabColor) {
+        this.fabColor = fabColor;
+    }
+
+    public int getFabIconColor() {
+        return fabIconColor;
+    }
+
+    public void setFabIconColor(int fabIconColor) {
+        this.fabIconColor = fabIconColor;
     }
 
     @Override

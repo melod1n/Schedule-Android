@@ -52,7 +52,7 @@
     <!-- permissions -->
 
     <!-- about -->
-    <string name="danil_nikolaev">Danil Nikolaev</string>
+    <string name="danil_nikolaev" translatable="false">Danil Nikolaev</string>
 	<string name="sergey_dilong">Sergey Dilong</string>
     <string name="creator_programmer_dn">Developer</string>
     <string name="api_help_hp">Help</string>
@@ -143,8 +143,10 @@
 	<string name="drawer_groups_list">Groups list</string>
 	<string name="drawer_quick_edit">Quick edit</string>
 	<string name="drawer_exit">Exit</string>
-    <string name="max_hubach">Max Hubach</string>
-	<string name="backend_logic_developer">Backend Logic Developer</string>
-    <string name="theme_summary">Current theme: %s</string>
-    <string name="in_progress_title">In progress...</string>
+    <string name="max_hubach" translatable="false">Max Hubach</string>
+	<string name="backend_logic_developer" translatable="false">Backend Logic Developer</string>
+    <string name="theme_summary" translatable="false">%s – %s</string>
+    <string name="in_progress_title">In progress&#8230;</string>
+    <string name="warning_theme_old">Theme is deprecated</string>
+	<string name="warning_theme_new">Update application for use this theme</string>
 </resources>

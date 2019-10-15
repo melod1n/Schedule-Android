@@ -48,8 +48,7 @@
     <!-- permissions -->
 
     <!-- about -->
-    <string name="danil_nikolaev">Данил Николаев</string>
-    <string name="creator_programmer_dn">Разработчик</string>
+	<string name="creator_programmer_dn">Разработчик</string>
     <string name="api_help_hp">Помощь</string>
     <string name="version_about" formatted="false">Версия %s Сборка %d</string>
 	<string name="application">Приложение</string>
@@ -133,4 +132,8 @@
 	<string name="drawer_groups_list">Группы</string>
 	<string name="drawer_providers">Провайдеры</string>
 	<string name="drawer_quick_edit">Быстрое редактирование</string>
+    <string name="drawer_exit">Выход</string>
+	<string name="in_progress_title">В процессе&#8230;</string>
+	<string name="warning_theme_new">Обновите приложение для использования этой темы</string>
+	<string name="warning_theme_old">Тема устарела</string>
 </resources>
