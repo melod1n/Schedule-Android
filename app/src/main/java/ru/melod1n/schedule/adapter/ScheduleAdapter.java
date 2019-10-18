@@ -44,7 +44,7 @@ public class ScheduleAdapter extends RecyclerAdapter<LessonItem, ScheduleAdapter
 
     @NonNull
     @Override
-    public ScheduleAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup vg, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup vg, int i) {
         View v = LayoutInflater.from(context).inflate(R.layout.fragment_schedule_item, vg, false);
         return new ViewHolder(v);
     }

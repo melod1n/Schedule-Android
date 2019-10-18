@@ -53,14 +53,14 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.fragment_container)
     FrameLayout fragmentContainer;
 
-    private MainScheduleFragment subjectsFragment = new MainScheduleFragment();
+    private MainScheduleFragment mainScheduleFragment = new MainScheduleFragment();
     private NotesFragment notesFragment = new NotesFragment();
     private AgendaFragment homeworkFragment = new AgendaFragment();
     private UpdatesFragment updatesFragment = new UpdatesFragment();
     private SettingsFragment settingsFragment = new SettingsFragment();
 
-    private int selected_id;
-    private Fragment selected_fragment;
+    private int selectedId;
+    private Fragment selectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,17 +108,17 @@ public class MainActivity extends BaseActivity {
                     default:
                     case 0:
                     case 1:
-                        selected_id = R.id.nav_schedule;
-                        selected_fragment = subjectsFragment;
+                        selectedId = R.id.nav_schedule;
+                        selectedFragment = mainScheduleFragment;
                         break;
                     case 2:
-                        selected_id = R.id.nav_notes;
-                        selected_fragment = notesFragment;
+                        selectedId = R.id.nav_notes;
+                        selectedFragment = notesFragment;
                         break;
                 }
 
-                replaceFragment(selected_fragment);
-                navView.setSelectedItemId(selected_id);
+                replaceFragment(selectedFragment);
+                navView.setSelectedItemId(selectedId);
             }
 
             setupShortcuts();
@@ -180,7 +180,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void replaceFragment(Fragment fragment) {
-        if (fragment == null) return;
+        if (fragment == null || fragment == selectedFragment) return;
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -211,11 +211,11 @@ public class MainActivity extends BaseActivity {
     }
 
     private boolean onItemSelected(@NonNull MenuItem item) {
-        selected_fragment = getFragmentById(item.getItemId());
-        selected_id = item.getItemId();
+        selectedFragment = getFragmentById(item.getItemId());
+        selectedId = item.getItemId();
 
-        if (getVisibleFragment() != selected_fragment && !((getVisibleFragment() != null && getVisibleFragment().getClass().getSimpleName().equals(ScheduleFragment.class.getSimpleName())) && selected_id == R.id.nav_schedule)) {
-            replaceFragment(selected_fragment);
+        if (getVisibleFragment() != selectedFragment && !((getVisibleFragment() != null && getVisibleFragment().getClass().getSimpleName().equals(ScheduleFragment.class.getSimpleName())) && selectedId == R.id.nav_schedule)) {
+            replaceFragment(selectedFragment);
             return true;
         }
 
@@ -223,11 +223,11 @@ public class MainActivity extends BaseActivity {
     }
 
     private boolean onDrawerItemSelected(@NonNull MenuItem item) {
-        selected_fragment = getFragmentById(item.getItemId());
-        selected_id = item.getItemId();
+        selectedFragment = getFragmentById(item.getItemId());
+        selectedId = item.getItemId();
 
-        if (getVisibleFragment() != selected_fragment) {
-            replaceFragment(selected_fragment);
+        if (getVisibleFragment() != selectedFragment) {
+            replaceFragment(selectedFragment);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -247,22 +247,26 @@ public class MainActivity extends BaseActivity {
         return null;
     }
 
-    @Nullable
     private Fragment getFragmentById(int navId) {
         switch (navId) {
             case R.id.nav_notes:
                 return notesFragment;
-            case R.id.nav_schedule:
-                return subjectsFragment;
             case R.id.nav_agenda:
                 return homeworkFragment;
             case R.id.nav_updates:
                 return updatesFragment;
             case R.id.drawer_settings:
                 return settingsFragment;
+            case R.id.drawer_about:
+                startAboutActivity();
+                return selectedFragment;
             default:
-                return null;
+                return mainScheduleFragment;
         }
+    }
+
+    private void startAboutActivity() {
+        startActivity(new Intent(this, AboutActivity.class));
     }
 
     @Override
@@ -283,7 +287,6 @@ public class MainActivity extends BaseActivity {
                 super.onBackPressed();
             }
         }
-
     }
 
     @Override

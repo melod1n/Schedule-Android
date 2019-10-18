@@ -59,8 +59,4 @@
         android:key="setup_app"
         android:title="@string/setup_application" />
 
-    <ru.melod1n.schedule.preference.PreferenceScreen
-        android:key="about"
-        android:title="@string/about" />
-
 </PreferenceScreen>

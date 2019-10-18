@@ -26,7 +26,7 @@ public class AgendaAdapter extends RecyclerAdapter<HomeworkItem, AgendaAdapter.V
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(inflater.inflate(R.layout.fragment_agenda_item, parent, false));
     }
 

@@ -1,25 +1,28 @@
 package ru.melod1n.schedule.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> {
     protected Context context;
     protected LayoutInflater inflater;
     protected Fragment fragment;
-    protected OnItemClickListener onItemClickListener;
-    protected OnItemLongClickListener onItemLongClickListener;
+
+    OnItemClickListener onItemClickListener;
+
+    private OnItemLongClickListener onItemLongClickListener;
+
     private ArrayList<T> values;
     private ArrayList<T> cleanValues;
 
@@ -30,31 +33,25 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         this.inflater = LayoutInflater.from(context);
     }
 
-    public RecyclerAdapter(Fragment fragment, ArrayList<T> values) {
+    RecyclerAdapter(@NonNull Fragment fragment, ArrayList<T> values) {
         this.fragment = fragment;
-        this.context = fragment.getActivity();
+        this.context = Objects.requireNonNull(fragment.getActivity());
         this.values = values;
         this.inflater = LayoutInflater.from(context);
     }
 
-    protected @ColorInt
-    int getColor(int resId) {
-        if (context == null) return -1;
-
-        return context.getResources().getColor(resId);
-    }
-
+    @NonNull
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position) {
+    public void onBindViewHolder(@NonNull VH holder, int position) {
         updateListeners(holder.itemView, position);
     }
 
-    protected void updateListeners(View v, int i) {
+    void updateListeners(View v, int i) {
         if (onItemClickListener != null) {
             initClick(v, i);
         }
@@ -122,17 +119,13 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
         return context.getString(resId, args);
     }
 
-    public Drawable getDrawable(int res) {
-        return context.getDrawable(res);
+    private void initClick(@NonNull final View itemView, final int i) {
+        itemView.setOnClickListener(p1 -> onItemClickListener.onItemClick(itemView, i));
     }
 
-    private void initClick(final View v, final int i) {
-        v.setOnClickListener(p1 -> onItemClickListener.onItemClick(v, i));
-    }
-
-    private void initLongClick(final View v, final int position) {
-        v.setOnLongClickListener(p1 -> {
-            onItemLongClickListener.onItemLongClick(v, position);
+    private void initLongClick(@NonNull final View itemView, final int position) {
+        itemView.setOnLongClickListener(p1 -> {
+            onItemLongClickListener.onItemLongClick(itemView, position);
             return onItemClickListener != null;
         });
     }
@@ -146,10 +139,10 @@ public abstract class RecyclerAdapter<T, VH extends RecyclerView.ViewHolder>
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View v, int position);
+        void onItemClick(View itemView, int position);
     }
 
     public interface OnItemLongClickListener {
-        void onItemLongClick(View v, int position);
+        void onItemLongClick(View itemView, int position);
     }
 }

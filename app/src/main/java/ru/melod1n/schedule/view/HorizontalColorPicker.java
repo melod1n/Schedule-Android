@@ -166,7 +166,7 @@ public class HorizontalColorPicker extends RecyclerView {
 
         @NonNull
         @Override
-        public Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = inflater.inflate(R.layout.abc_widget_colorpicker_horizontal_item, parent, false);
             return new ViewHolder(v);
         }

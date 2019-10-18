@@ -28,7 +28,6 @@ import ru.melod1n.schedule.view.TimePickerDialog;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
-    private static final String KEY_ABOUT = "about";
     private static final String KEY_LESSONS_START = "lessons_start";
     private static final String KEY_LESSON_BREAK_LENGTH = "lesson_break_length";
     private static final String KEY_SETUP_BELLS = "setup_bells";
@@ -63,7 +62,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         Preference lessonsStart = findPreference(KEY_LESSONS_START);
         Preference lessonBreakLength = findPreference(KEY_LESSON_BREAK_LENGTH);
         Preference bellsCount = findPreference(KEY_BELLS_COUNT);
-        Preference about = findPreference(KEY_ABOUT);
         Preference setupBells = findPreference(KEY_SETUP_BELLS);
         Preference setupApp = findPreference(KEY_SETUP_APP);
 
@@ -82,9 +80,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (bellsCount != null)
             bellsCount.setOnPreferenceClickListener(this);
 
-        if (about != null)
-            about.setOnPreferenceClickListener(this);
-
         if (setupBells != null)
             setupBells.setOnPreferenceClickListener(this);
 
@@ -98,9 +93,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         switch (preference.getKey()) {
             case KEY_THEME:
                 startThemesActivity();
-                break;
-            case KEY_ABOUT:
-                startAboutActivity();
                 break;
             case KEY_LESSONS_START:
                 showStartLessonsDialog();
@@ -245,10 +237,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         });
 
         subject.show();
-    }
-
-    private void startAboutActivity() {
-        startActivity(new Intent(getActivity(), AboutActivity.class));
     }
 
     private void startThemesActivity() {

@@ -39,9 +39,6 @@ public class AgendaFragment extends Fragment {
     @BindView(R.id.refresh)
     RefreshLayout refresh;
 
-//    @BindView(R.id.fab_add)
-//    FloatingActionButton add;
-
     @BindView(R.id.no_items_container)
     TextView noItems;
 
@@ -50,7 +47,6 @@ public class AgendaFragment extends Fragment {
 
     private AgendaAdapter adapter;
 
-    private SearchView searchView;
     private MenuItem searchViewItem;
 
     private boolean searchViewCollapsed = true;
@@ -90,7 +86,7 @@ public class AgendaFragment extends Fragment {
 
         searchViewItem = toolbar.getMenu().findItem(R.id.agenda_search);
 
-        searchView = (SearchView) searchViewItem.getActionView();
+        SearchView searchView = (SearchView) searchViewItem.getActionView();
         searchView.setQueryHint(getString(R.string.title));
 
         searchView.setOnCloseListener(() -> {
@@ -169,6 +165,7 @@ public class AgendaFragment extends Fragment {
         if (adapter == null) {
             adapter = new AgendaAdapter(this, values);
             adapter.setOnItemClickListener(this::onItemClick);
+            adapter.setOnItemLongClickListener(this::onItemClick);
             list.setAdapter(adapter);
             return;
         }
