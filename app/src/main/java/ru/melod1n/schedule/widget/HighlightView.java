@@ -24,8 +24,8 @@ public class HighlightView extends View {
 
     private int direction;
 
-    public static final int DIRECTION_TOP = 0;
-    public static final int DIRECTION_BOTTOM = 1;
+    public static final int DIRECTION_BOTTOM = 0;
+    public static final int DIRECTION_TOP = 1;
 
     public HighlightView(Context context) {
         this(context, null);
@@ -45,7 +45,7 @@ public class HighlightView extends View {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HighlightView, 0, 0);
 
         if (a.hasValue(R.styleable.HighlightView_direction)) {
-            direction = a.getInt(R.styleable.HighlightView_direction, 1);
+            direction = a.getInt(R.styleable.HighlightView_direction, 0);
         }
 
         a.recycle();

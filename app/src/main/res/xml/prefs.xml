@@ -2,9 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ru.melod1n.schedule.preference.PreferenceHeader android:title="@string/interface_title" />
+    <PreferenceCategory android:title="@string/interface_title" />
 
-    <ru.melod1n.schedule.preference.PreferenceScreen
+    <PreferenceScreen
         android:defaultValue="stock_light"
         android:key="theme"
         android:title="@string/theme" />
@@ -16,7 +16,7 @@
         android:title="@string/expand_current_day_title"
         app:isPreferenceVisible="false" />
 
-    <ru.melod1n.schedule.preference.PreferenceCheckBox
+    <CheckBoxPreference
         android:defaultValue="true"
         android:key="select_current_day"
         android:summary="@string/select_current_day_summary"
@@ -29,33 +29,33 @@
         android:key="open_on_start"
         android:title="@string/open_on_start_title" />
 
-    <ru.melod1n.schedule.preference.PreferenceHeader android:title="@string/data" />
+    <PreferenceCategory android:title="@string/data" />
 
-    <ru.melod1n.schedule.preference.PreferenceScreen
+    <PreferenceScreen
         android:key="lessons_start"
         android:title="@string/set_lessons_time" />
 
-    <ru.melod1n.schedule.preference.PreferenceScreen
+    <PreferenceScreen
         android:key="lesson_break_length"
         android:title="@string/input_ls_br_length" />
 
-    <ru.melod1n.schedule.preference.PreferenceScreen
+    <PreferenceScreen
         android:key="bells_count"
         android:title="@string/bells_count" />
 
-    <ru.melod1n.schedule.preference.PreferenceScreen
+    <PreferenceScreen
         android:key="setup_bells"
         android:title="@string/setup_bells" />
 
-    <ru.melod1n.schedule.preference.PreferenceHeader android:title="@string/application" />
+    <PreferenceCategory android:title="@string/application" />
 
-    <ru.melod1n.schedule.preference.PreferenceCheckBox
+    <CheckBoxPreference
         android:defaultValue="true"
         android:key="show_error"
         android:summary="@string/show_error_summary"
         android:title="@string/show_error_title" />
 
-    <ru.melod1n.schedule.preference.PreferenceScreen
+    <PreferenceScreen
         android:key="setup_app"
         android:title="@string/setup_application" />
 

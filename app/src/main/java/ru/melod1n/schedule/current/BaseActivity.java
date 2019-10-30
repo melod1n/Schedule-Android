@@ -3,7 +3,6 @@ package ru.melod1n.schedule.current;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private View contentView;
 
     protected ThemeItem theme;
+    protected boolean created;
 
     @Override
     public void setContentView(View contentView) {
@@ -32,9 +32,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         init();
         super.onCreate(savedInstanceState);
+        created = true;
     }
 
-    private void init() {
+    protected void init() {
         if (theme == null) theme = ThemeEngine.getCurrentTheme();
 
         setTheme(theme.isDark() ? R.style.AppTheme_Dark : R.style.AppTheme);
@@ -46,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceive(@NonNull Object[] data) {
+    public void onReceive(Object[] data) {
         String key = (String) data[0];
         if (Keys.THEME_UPDATE.equals(key)) {
             theme = (ThemeItem) data[1];
@@ -58,6 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
+        created = false;
         super.onDestroy();
     }
 

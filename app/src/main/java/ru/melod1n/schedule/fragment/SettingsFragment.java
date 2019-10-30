@@ -15,7 +15,6 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import org.greenrobot.eventbus.EventBus;
 
-import ru.melod1n.schedule.AboutActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.ThemesActivity;
 import ru.melod1n.schedule.common.AppGlobal;
@@ -69,6 +68,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             theme.setOnPreferenceClickListener(this);
 
             theme.setSummary(getString(R.string.theme_summary, ThemeEngine.getCurrentTheme().getTitle(), ThemeEngine.getCurrentTheme().getAuthor()));
+            //theme.setEnabled(false);
         }
 
         if (lessonsStart != null)

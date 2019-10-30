@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +42,8 @@ import ru.melod1n.schedule.widget.Toolbar;
 
 public class MainActivity extends BaseActivity {
 
+    private static final int REQUEST_LOGIN = 1;
+
     @BindView(R.id.navigationView)
     BottomNavigationView navView;
 
@@ -57,7 +60,6 @@ public class MainActivity extends BaseActivity {
     private NotesFragment notesFragment = new NotesFragment();
     private AgendaFragment homeworkFragment = new AgendaFragment();
     private UpdatesFragment updatesFragment = new UpdatesFragment();
-    private SettingsFragment settingsFragment = new SettingsFragment();
 
     private int selectedId;
     private Fragment selectedFragment;
@@ -69,15 +71,25 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setContentView(drawerLayout);
         applyBackground();
 
         checkFirstLaunch(savedInstanceState);
 
         checkCrash();
+        initNavDrawer();
 
         navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
         navView.setOnNavigationItemSelectedListener(this::onItemSelected);
+    }
+
+    private void initNavDrawer() {
+        View headerView = navDrawer.getHeaderView(0);
+
+        headerView.setOnClickListener(v -> openLoginScreen());
+    }
+
+    private void openLoginScreen() {
+        startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
     }
 
     @NonNull
@@ -86,15 +98,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public DrawerToggle initToggle(Toolbar toolbar) {
-        return new DrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-
-                float slideX = drawerView.getWidth() * slideOffset;
-                ((FrameLayout) fragmentContainer.getParent()).setTranslationX(slideX);
-            }
-        };
+        return new DrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
     }
 
     private void checkFirstLaunch(Bundle savedInstanceState) {
@@ -109,15 +113,13 @@ public class MainActivity extends BaseActivity {
                     case 0:
                     case 1:
                         selectedId = R.id.nav_schedule;
-                        selectedFragment = mainScheduleFragment;
                         break;
                     case 2:
                         selectedId = R.id.nav_notes;
-                        selectedFragment = notesFragment;
                         break;
                 }
 
-                replaceFragment(selectedFragment);
+                replaceFragment(getFragmentById(selectedId));
                 navView.setSelectedItemId(selectedId);
             }
 
@@ -182,6 +184,8 @@ public class MainActivity extends BaseActivity {
     public void replaceFragment(Fragment fragment) {
         if (fragment == null || fragment == selectedFragment) return;
 
+        selectedFragment = fragment;
+
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
 
@@ -211,11 +215,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private boolean onItemSelected(@NonNull MenuItem item) {
-        selectedFragment = getFragmentById(item.getItemId());
         selectedId = item.getItemId();
 
-        if (getVisibleFragment() != selectedFragment && !((getVisibleFragment() != null && getVisibleFragment().getClass().getSimpleName().equals(ScheduleFragment.class.getSimpleName())) && selectedId == R.id.nav_schedule)) {
-            replaceFragment(selectedFragment);
+        if (!((getVisibleFragment() != null && getVisibleFragment().getClass().getSimpleName().equals(ScheduleFragment.class.getSimpleName())) && selectedId == R.id.nav_schedule)) {
+            replaceFragment(getFragmentById(selectedId));
             return true;
         }
 
@@ -223,15 +226,11 @@ public class MainActivity extends BaseActivity {
     }
 
     private boolean onDrawerItemSelected(@NonNull MenuItem item) {
-        selectedFragment = getFragmentById(item.getItemId());
         selectedId = item.getItemId();
 
-        if (getVisibleFragment() != selectedFragment) {
-            replaceFragment(selectedFragment);
-        }
+        replaceFragment(getFragmentById(selectedId));
 
         drawerLayout.closeDrawer(GravityCompat.START);
-
         return true;
     }
 
@@ -256,17 +255,31 @@ public class MainActivity extends BaseActivity {
             case R.id.nav_updates:
                 return updatesFragment;
             case R.id.drawer_settings:
-                return settingsFragment;
+                openSettingsScreen();
+                return selectedFragment;
             case R.id.drawer_about:
-                startAboutActivity();
+                openAboutScreen();
                 return selectedFragment;
             default:
                 return mainScheduleFragment;
         }
     }
 
-    private void startAboutActivity() {
+    private void openSettingsScreen() {
+        startActivity(new Intent(this, SettingsActivity.class));
+    }
+
+    private void openAboutScreen() {
         startActivity(new Intent(this, AboutActivity.class));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_LOGIN && resultCode == RESULT_OK) { //успешно авторизовались
+            Toast.makeText(this, "Successful login", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

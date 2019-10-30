@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- buttons -->
-
-    <!-- alert titles -->
 	<string name="warning">Внимание!</string>
-
-    <!-- alert messages -->
     <string name="confirm_delete_text">Вы действительно хотите удалить это?</string>
-
-    <!-- timepicker -->
-
-    <!-- days of week -->
     <string name="monday">Понедельник</string>
     <string name="tuesday">Вторник</string>
     <string name="wednesday">Среда</string>
@@ -18,64 +9,37 @@
     <string name="friday">Пятница</string>
     <string name="saturday">Суббота</string>
     <string name="sunday">Воскресенье</string>
-
-	<!-- schedule item -->
     <string name="cab">Кабинет</string>
 	<string name="subject">Предмет</string>
     <string name="homework">Домашнее задание</string>
-	
-	<!-- timetable item -->
     <string name="confirm_recreate_bells">Вы действительно хотите переформировать список звонков?</string>
     <string name="recreate_all_bells">Переформировать все звонки</string>
 	<string name="recreate_bells">Переформировать звонки</string>
-
-    <!-- alert buttons -->
     <string name="add">Добавить</string>
     <string name="edit">Изменить</string>
 	<string name="delete">Удалить</string>
 	<string name="no">Нет</string>
 	<string name="yes">Да</string>
 	<string name="show">Показать</string>
-	<string name="copy">Копировать</string>
 
-	<!-- nav items -->
     <string name="timetable">Звонки</string>
     <string name="schedule">Расписание</string>
 	<string name="settings">Настройки</string>
-
-	<!-- setup screen strings -->
-
-    <!-- permissions -->
-
-    <!-- about -->
-	<string name="creator_programmer_dn">Разработчик</string>
-    <string name="api_help_hp">Помощь</string>
     <string name="version_about" formatted="false">Версия %s Сборка %d</string>
 	<string name="application">Приложение</string>
 	<string name="about">О приложении</string>
-
-	<!-- OTA -->
-
-    <!-- Crash manager -->
 	<string name="cause_error">В приложении произошла ошибка</string>
 	<string name="error_log">Лог с ошибкой сохранен</string>
-
-	<!-- settings -->
 	<string name="set_lessons_time">Время начала занятий</string>
 	<string name="input_ls_br_length">Продолжительность урока и перерыва</string>
-	
-	<!-- other -->
 	<string name="no_items_title">Здесь ничего нет</string>
 	<string name="data">Данные</string>
-
     <string name="creative_designer">Креативный дизайнер</string>
     <string name="notes">Заметки</string>
 	<string name="set_one_column">Сделать одну колонку</string>
 	<string name="set_two_columns">Сделать две колонки</string>
-	
 	<string name="interface_title">Интерфейс</string>
 	<string name="dark_theme">Тёмная тема</string>
-	
 	<string name="auto">Автоматически</string>
 	<string name="manual">Вручную</string>
     <string name="hello">Здравствуйте!</string>
@@ -84,17 +48,14 @@
 	<string name="timetable_list">Расписание звонков</string>
 	<string name="permissions">Разрешения</string>
 	<string name="done_msg">Готово!</string>
-
 	<string name="setup_1">Давайте проведём первоначальную настройку приложения</string>
 	<string name="setup_2">Пожалуйста, введите продолжительность вашего занятия и перерыва (мин.)</string>
 	<string name="setup_3">Пожалуйста, введите время начала ваших занятий</string>
 	<string name="setup_4">Вы хотите составить расписание звонков?</string>
 	<string name="setup_5">Для полного функционирования приложения необходимы разрешения</string>
 	<string name="setup_6">Первоначальная настройка завершена. Спасибо, что установили наше приложение.\nУдачи ;)</string>
-	
 	<string name="title">Заголовок</string>
 	<string name="text">Текст</string>
-	
 	<string name="bells_count">Количество звонков</string>
     <string name="apply">ОК</string>
 	<string name="confirm_recreate_bells_on_day">Вы действительно хотите переформировать звонки в %s?</string>
@@ -107,7 +68,6 @@
     <string name="open_on_start_title">Открывать при входе</string>
     <string name="auto_dark_theme_summary">Наследует системную тему</string>
 	<string name="auto_dark_theme_title">Автоматическая темная тема</string>
-	<string name="sergey_dilong">Сергей Дилонг</string>
 	<string name="save">Сохранить</string>
     <string name="break_length">Длительность перерыва (мин.)</string>
 	<string name="input">Ввести</string>

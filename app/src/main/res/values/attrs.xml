@@ -12,14 +12,21 @@
     <declare-styleable name="HighlightView">
 
         <attr name="direction" format="enum">
-            <enum name="top" value="0" />
-            <enum name="bottom" value="1" />
+            <enum name="bottom" value="0" />
+            <enum name="top" value="1" />
         </attr>
 
     </declare-styleable>
 
     <declare-styleable name="Toolbar">
         <attr name="listenThemeUpdates" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="Button">
+        <attr name="style" format="enum">
+            <enum name="simple" value="0" />
+            <enum name="outline" value="1" />
+        </attr>
     </declare-styleable>
 
 </resources>

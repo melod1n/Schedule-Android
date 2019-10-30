@@ -42,6 +42,7 @@ import ru.melod1n.schedule.items.SubjectItem;
 import ru.melod1n.schedule.items.TeacherItem;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.view.FullScreenLessonDialog;
+import ru.melod1n.schedule.view.PopupDialog;
 
 public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
 
@@ -95,7 +96,14 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
         getActivity().setTheme(ThemeEngine.isDark() ? R.style.AppTheme : R.style.AppTheme_Dark);
         ThemeEngine.setDark(!ThemeEngine.isDark());
 
-        new AlertDialog.Builder(getContext()).setTitle("Title").setMessage("Message").setPositiveButton("Positive", null).setNegativeButton("Negative", null).setNeutralButton("Neutral", null).show();
+        PopupDialog dialog = new PopupDialog();
+        dialog.setTitle("Some title");
+        dialog.setMessage("Some message");
+
+        dialog.show(getActivity().getSupportFragmentManager());
+
+
+        //new AlertDialog.Builder(getContext()).setTitle("Title").setMessage("Message").setPositiveButton("Positive", null).setNegativeButton("Negative", null).setNeutralButton("Neutral", null).show();
         //showDialog(position);
     }
 

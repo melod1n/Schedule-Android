@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- untranslatable -->
     <string name="app_name" translatable="false">Schedule</string>
-
-    <!-- buttons -->
-
-    <!-- alert titles -->
     <string name="warning">Warning!</string>
-
-    <!-- alert messages -->
-	<string name="confirm_delete_text">Do you really want delete this?</string>
-
-    <!-- timepicker -->
-
-    <!-- days of week -->
+    <string name="confirm_delete_text">Do you really want delete this?</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
@@ -21,132 +10,102 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
-
-    <!-- schedule item -->
     <string name="cab">Cab</string>
-	<string name="subject">Subject</string>
+    <string name="subject">Subject</string>
     <string name="homework">Homework</string>
-	
-	<!-- timetable item -->
     <string name="confirm_recreate_bells">Do you really want to recreate bells?</string>
     <string name="recreate_bells">Recreate bells</string>
-	<string name="recreate_all_bells">Recreate all bells</string>
+    <string name="recreate_all_bells">Recreate all bells</string>
     <string name="bell" translatable="false"><b>%1$s</b> - <b>%2$s</b></string>
-	
-	<!-- alert buttons -->
     <string name="add">Add</string>
     <string name="edit">Edit</string>
-	<string name="delete">Delete</string>
-	<string name="no">No</string>
-	<string name="yes">Yes</string>
-	<string name="show">Show</string>
-	<string name="copy">Copy</string>
-	
-	<!-- nav items -->
+    <string name="delete">Delete</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="show">Show</string>
     <string name="timetable">Timetable</string>
     <string name="schedule">Schedule</string>
-	<string name="settings">Settings</string>
-	
-	<!-- setup screen strings -->
-
-    <!-- permissions -->
-
-    <!-- about -->
+    <string name="settings">Settings</string>
     <string name="danil_nikolaev" translatable="false">Danil Nikolaev</string>
-	<string name="sergey_dilong">Sergey Dilong</string>
-    <string name="creator_programmer_dn">Developer</string>
-    <string name="api_help_hp">Help</string>
+    <string name="main_developer" translatable="false">Main Developer</string>
     <string name="version_about" formatted="false">Version %s Build %d</string>
-	<string name="application">Application</string>
-	<string name="about">About</string>
-	
-	<!-- OTA -->
-
-    <!-- Crash manager -->
-	<string name="cause_error">Application crashed</string>
-	<string name="error_log">Log with error was saved</string>
-	
-	<!-- settings -->
-	<string name="set_lessons_time">Lessons starting time</string>
-	<string name="input_ls_br_length">Lesson and break length</string>
-	
-	<!-- other -->
-	<string name="no_items_title">There\'s nothing here</string>
-	<string name="data">Data</string>
-
+    <string name="application">Application</string>
+    <string name="about">About</string>
+    <string name="cause_error">Application crashed</string>
+    <string name="error_log">Log with error was saved</string>
+    <string name="set_lessons_time">Lessons starting time</string>
+    <string name="input_ls_br_length">Lesson and break length</string>
+    <string name="no_items_title">There\'s nothing here</string>
+    <string name="data">Data</string>
     <string name="creative_designer">Creative Designer</string>
     <string name="notes">Notes</string>
-	<string name="set_one_column">Set one column</string>
-	<string name="set_two_columns">Set two columns</string>
-	
-	<string name="interface_title">Interface</string>
-	<string name="dark_theme">Dark theme</string>
-	
-	<string name="auto">Auto</string>
-	<string name="manual">Manual</string>
+    <string name="set_one_column">Set one column</string>
+    <string name="set_two_columns">Set two columns</string>
+    <string name="interface_title">Interface</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="auto">Auto</string>
+    <string name="manual">Manual</string>
     <string name="hello">Hello!</string>
-	<string name="necessary_data">Necessary data</string>
-	<string name="classes_start_time">Classes start time</string>
-	<string name="timetable_list">Timetable</string>
-	<string name="permissions">Permissions</string>
-	<string name="done_msg">Done!</string>
-	
-	<string name="setup_1">Let\'s do the initial setup of the application</string>
-	<string name="setup_2">Please enter the duration of your lesson and break (min.)</string>
-	<string name="setup_3">Please enter a start time of your classes</string>
-	<string name="setup_4">Do you want to setup timetable?</string>
-	<string name="setup_5">For the full functioning of the application, it needs permissions</string>
-	<string name="setup_6">Initial setup is complete. Thank you for installing our application.\nGood luck ;)</string>
-	
-	<string name="title">Title</string>
-	<string name="text">Text</string>
-	
-	<string name="bells_count">Bells count</string>
-
+    <string name="necessary_data">Necessary data</string>
+    <string name="classes_start_time">Classes start time</string>
+    <string name="timetable_list">Timetable</string>
+    <string name="permissions">Permissions</string>
+    <string name="done_msg">Done!</string>
+    <string name="setup_1">Let\'s do the initial setup of the application</string>
+    <string name="setup_2">Please enter the duration of your lesson and break (min.)</string>
+    <string name="setup_3">Please enter a start time of your classes</string>
+    <string name="setup_4">Do you want to setup timetable?</string>
+    <string name="setup_5">For the full functioning of the application, it needs permissions</string>
+    <string name="setup_6">Initial setup is complete. Thank you for installing our application.\nGood luck ;)</string>
+    <string name="title">Title</string>
+    <string name="text">Text</string>
+    <string name="bells_count">Bells count</string>
     <string name="confirm_recreate_bells_on_day">Do you really want to recreate bells on %s?</string>
     <string name="apply">Apply</string>
     <string name="expand_current_day_title">Expand current day</string>
-	<string name="expand_current_day_summary">Expands current day after loading data on bells screen</string>
-	<string name="select_current_day_title">Select current day</string>
-	<string name="select_current_day_summary">Selecting current day on schedule screen</string>
-	<string name="show_error_summary">Shows alert with error\'s description after app crash</string>
-	<string name="show_error_title">Show error</string>
-	<string name="open_on_start_title">Open on start</string>
+    <string name="expand_current_day_summary">Expands current day after loading data on bells screen</string>
+    <string name="select_current_day_title">Select current day</string>
+    <string name="select_current_day_summary">Selecting current day on schedule screen</string>
+    <string name="show_error_summary">Shows alert with error\'s description after app crash</string>
+    <string name="show_error_title">Show error</string>
+    <string name="open_on_start_title">Open on start</string>
     <string name="auto_dark_theme_title">Auto dark theme</string>
-	<string name="auto_dark_theme_summary">Follows system theme</string>
+    <string name="auto_dark_theme_summary">Follows system theme</string>
     <string name="save">Save</string>
-	<string name="bell_text" translatable="false">%s - %s</string>
-	<string name="input">Input</string>
-	<string name="break_length">Break\'s length (min.)</string>
-	<string name="lesson_length_title">Lesson\'s length (min.)</string>
-
-
-	<string name="light">Light</string>
-	<string name="dark">Dark</string>
-	<string name="follow_system">Follow system theme</string>
-	<string name="follow_energy_saving">Follow energy saving</string>
-	<string name="theme">Theme</string>
+    <string name="bell_text" translatable="false">%s - %s</string>
+    <string name="input">Input</string>
+    <string name="break_length">Break\'s length (min.)</string>
+    <string name="lesson_length_title">Lesson\'s length (min.)</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="follow_system">Follow system theme</string>
+    <string name="follow_energy_saving">Follow energy saving</string>
+    <string name="theme">Theme</string>
     <string name="setup_application">Setup application</string>
-	<string name="setup_bells">Setup bells</string>
-
+    <string name="setup_bells">Setup bells</string>
     <string name="nav_agenda">Agenda</string>
-	<string name="nav_schedule">Schedule</string>
-	<string name="nav_notes">Notes</string>
-	<string name="nav_updates">Updates</string>
+    <string name="nav_schedule">Schedule</string>
+    <string name="nav_notes">Notes</string>
+    <string name="nav_updates">Updates</string>
     <string name="no_notes">No notes</string>
-	<string name="no_updates">No updates</string>
-	<string name="no_lessons">No lessons</string>
-	<string name="no_agenda">No agenda</string>
+    <string name="no_updates">No updates</string>
+    <string name="no_lessons">No lessons</string>
+    <string name="no_agenda">No agenda</string>
     <string name="ic_nav_search">Search</string>
     <string name="drawer_about">About</string>
-	<string name="drawer_providers">Providers</string>
-	<string name="drawer_groups_list">Groups list</string>
-	<string name="drawer_quick_edit">Quick edit</string>
-	<string name="drawer_exit">Exit</string>
+    <string name="drawer_providers">Providers</string>
+    <string name="drawer_groups_list">Groups list</string>
+    <string name="drawer_quick_edit">Quick edit</string>
+    <string name="drawer_exit">Exit</string>
     <string name="max_hubach" translatable="false">Max Hubach</string>
-	<string name="backend_logic_developer" translatable="false">Backend Logic Developer</string>
+    <string name="backend_logic_developer" translatable="false">Backend Logic Developer</string>
     <string name="theme_summary" translatable="false">%s – %s</string>
     <string name="in_progress_title">In progress&#8230;</string>
     <string name="warning_theme_old">Theme is deprecated</string>
-	<string name="warning_theme_new">Update application for use this theme</string>
+    <string name="warning_theme_new">Update application for use this theme</string>
+    <string name="input_login">Login</string>
+    <string name="input_password">Password</string>
+    <string name="registration">Registration</string>
+    <string name="login">Login</string>
+    <string name="error">Error</string>
 </resources>

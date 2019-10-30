@@ -15,7 +15,6 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,6 +30,7 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
+import ru.melod1n.schedule.widget.Toolbar;
 
 public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHolder> {
 
@@ -98,9 +98,11 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             int textColorPrimaryInverse = item.getColorTextPrimaryInverse();
             //int textColorSecondaryInverse = item.getColorTextSecondaryInverse();
 
-            toolbar.setTitle(item.getTitle());
-            toolbar.setTitleTextColor(ColorUtil.isLight(colorPrimary) ? Color.BLACK : Color.WHITE);
-            toolbar.setBackgroundColor(colorPrimary);
+            boolean light = ColorUtil.isLight(colorPrimary);
+
+            int titleColor = light ? Color.BLACK : Color.WHITE;
+
+            int subtitleColor = light ? Color.GRAY : Color.LTGRAY;
 
             String textAuthor = String.format("Author: %s", item.getAuthor());
             String textVersion = item.getEngineVersion() == ThemeEngine.ENGINE_VERSION ? String.format(Locale.getDefault(), "Engine version: %d", item.getEngineVersion()) : "Theme is incompatible";
@@ -130,45 +132,45 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
                 }
             });
 
-            int[][] states = new int[][]{
-                    new int[]{android.R.attr.state_checked},
-                    new int[]{-android.R.attr.state_checked}
-            };
-
-            int[] switchTrackColors = new int[]{
-                    item.alphaColor(colorAccent, 0.5f),
-                    item.alphaColor(textColorSecondary, 0.5f)
-            };
-
-            int[] switchThumbColors = new int[]{
-                    colorAccent,
-                    ColorUtil.isDark(colorBackground) ? ColorUtil.lightenColor(textColorSecondary, 1.2f) : colorBackground
-            };
-
-            switchCompat.getThumbDrawable().setTintList(new ColorStateList(states, switchThumbColors));
-            switchCompat.getTrackDrawable().setTintList(new ColorStateList(states, switchTrackColors));
-
-            radioButton.setSupportButtonTintList(ColorStateList.valueOf(colorAccent));
-
-            int[][] checkBoxStates = new int[][]{
-                    new int[]{android.R.attr.state_checked},
-                    new int[]{-android.R.attr.state_checked}
-            };
-
-            int[] checkBoxColors = new int[]{
-                    colorAccent,
-                    item.alphaColor(textColorSecondary, 0.7f)
-            };
-
-            checkBox.setSupportButtonTintList(new ColorStateList(checkBoxStates, checkBoxColors));
-
-            simpleButton.setTextColor(textColorPrimaryInverse);
-            simpleButton.setBackgroundTintList(ColorStateList.valueOf(colorAccent));
-
-            outlineButton.setTextColor(colorAccent);
-            outlineButton.setStrokeColor(ColorStateList.valueOf(item.alphaColor(textColorSecondary, 0.3f)));
-            outlineButton.setRippleColor(ColorStateList.valueOf(colorAccent));
-            outlineButton.setBackgroundTintList(ColorStateList.valueOf(0));
+//            int[][] states = new int[][]{
+//                    new int[]{android.R.attr.state_checked},
+//                    new int[]{-android.R.attr.state_checked}
+//            };
+//
+//            int[] switchTrackColors = new int[]{
+//                    item.alphaColor(colorAccent, 0.5f),
+//                    item.alphaColor(textColorSecondary, 0.5f)
+//            };
+//
+//            int[] switchThumbColors = new int[]{
+//                    colorAccent,
+//                    ColorUtil.isDark(colorBackground) ? ColorUtil.lightenColor(textColorSecondary, 1.2f) : colorBackground
+//            };
+//
+//            switchCompat.getThumbDrawable().setTintList(new ColorStateList(states, switchThumbColors));
+//            switchCompat.getTrackDrawable().setTintList(new ColorStateList(states, switchTrackColors));
+//
+//            radioButton.setSupportButtonTintList(ColorStateList.valueOf(colorAccent));
+//
+//            int[][] checkBoxStates = new int[][]{
+//                    new int[]{android.R.attr.state_checked},
+//                    new int[]{-android.R.attr.state_checked}
+//            };
+//
+//            int[] checkBoxColors = new int[]{
+//                    colorAccent,
+//                    item.alphaColor(textColorSecondary, 0.7f)
+//            };
+//
+//            checkBox.setSupportButtonTintList(new ColorStateList(checkBoxStates, checkBoxColors));
+//
+//            simpleButton.setTextColor(textColorPrimaryInverse);
+//            simpleButton.setBackgroundTintList(ColorStateList.valueOf(colorAccent));
+//
+//            outlineButton.setTextColor(colorAccent);
+//            outlineButton.setStrokeColor(ColorStateList.valueOf(item.alphaColor(textColorSecondary, 0.3f)));
+//            outlineButton.setRippleColor(ColorStateList.valueOf(colorAccent));
+//            outlineButton.setBackgroundTintList(ColorStateList.valueOf(0));
 
             cardView.setCardBackgroundColor(colorBackground);
 
@@ -186,6 +188,11 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             bottomNavigationView.setItemIconTintList(colorStateList);
             bottomNavigationView.setItemTextColor(colorStateList);
             bottomNavigationView.setBackgroundColor(item.getColorBottomBar());
+
+            toolbar.setTitle(item.getTitle());
+            toolbar.setBackgroundColor(colorPrimary);
+            toolbar.setTitleTextColor(titleColor);
+            toolbar.setSubtitleTextColor(subtitleColor);
         }
     }
 }

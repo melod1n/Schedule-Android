@@ -59,7 +59,7 @@ public class ThemeEngine {
 
     private static final String DEFAULT_THEME = "teal_md2";
 
-    private static volatile ThemeItem currentTheme;
+    private static ThemeItem currentTheme;
 
     static void init() {
         String themeKey = AppGlobal.preferences.getString("theme", DEFAULT_THEME);
@@ -83,7 +83,7 @@ public class ThemeEngine {
     public static void insertStockThemes(ArrayList<ThemeItem> themes) {
         if (themes == null) themes = new ArrayList<>();
         try {
-            JSONArray o = new JSONArray(Util.readFileFromAssets("stock_themes"));
+            JSONArray o = new JSONArray(Util.readFileFromAssets("stock_themes.json"));
             for (int i = 0; i < o.length(); i++) {
                 themes.add(new ThemeItem(o.optJSONObject(i)));
             }

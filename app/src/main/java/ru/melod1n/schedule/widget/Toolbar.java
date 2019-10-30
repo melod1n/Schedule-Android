@@ -3,12 +3,17 @@ package ru.melod1n.schedule.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -45,6 +50,9 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
             if (a.getBoolean(R.styleable.Toolbar_listenThemeUpdates, false)) {
                 if (!EventBus.getDefault().isRegistered(this))
                     EventBus.getDefault().register(this);
+            } else {
+                if (EventBus.getDefault().isRegistered(this))
+                    EventBus.getDefault().unregister(this);
             }
         }
 
@@ -52,17 +60,16 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
         init();
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onReceive(@NonNull Object[] data) {
         String key = (String) data[0];
         if (Keys.THEME_UPDATE.equals(key)) {
             theme = (ThemeItem) data[1];
             init();
-            requestLayout();
         }
     }
 
-    private void init() {
+    public void init() {
         int colorPrimary = theme.getColorPrimary();
 
         boolean light = ColorUtil.isLight(colorPrimary);
@@ -76,7 +83,28 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
         setSubtitleTextColor(subtitleColor);
         setPopupTheme(theme.isDark() ? R.style.ThemeOverlay_MaterialComponents_Dark : R.style.ThemeOverlay_MaterialComponents_Light);
 
+        if (getNavigationIcon() != null) {
+            getNavigationIcon().setTint(titleColor);
+        }
+
+        if (getOverflowIcon() != null) {
+            getOverflowIcon().setTint(titleColor);
+        }
+
         setMenuIconsColor();
+
+        TextView toolbarTitle = null;
+        for (int i = 0; i < getChildCount(); ++i) {
+            View child = getChildAt(i);
+            if (child instanceof TextView) {
+                toolbarTitle = (TextView) child;
+                break;
+            }
+        }
+
+        if (toolbarTitle != null) {
+            toolbarTitle.setTypeface(ResourcesCompat.getFont(getContext(), theme.isMd2() ? R.font.ps_regular : R.font.roboto_regular), Typeface.BOLD);
+        }
     }
 
     public int getTitleColor() {
@@ -90,14 +118,6 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
     }
 
     private void setMenuIconsColor() {
-        if (getNavigationIcon() != null) {
-            getNavigationIcon().setTint(titleColor);
-        }
-
-        if (getOverflowIcon() != null) {
-            getOverflowIcon().setTint(titleColor);
-        }
-
         for (int i = 0; i < getMenu().size(); i++) {
             MenuItem item = getMenu().getItem(i);
 
@@ -105,5 +125,11 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
                 item.getIcon().setTint(titleColor);
             }
         }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        init();
     }
 }

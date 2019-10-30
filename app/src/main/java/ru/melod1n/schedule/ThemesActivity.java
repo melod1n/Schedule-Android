@@ -42,8 +42,7 @@ public class ThemesActivity extends BaseActivity {
         setContentView(refreshLayout.getRootView());
         applyBackground();
 
-        toolbar.setTitle(ThemeEngine.getCurrentTheme().getTitle());
-        toolbar.setSubtitle(ThemeEngine.getCurrentTheme().getAuthor());
+        applyTitle();
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         refreshLayout.setOnRefreshListener(this::onRefresh);
@@ -51,16 +50,11 @@ public class ThemesActivity extends BaseActivity {
         list.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         getThemes();
+    }
 
-//        ThemeItem theme = ThemeEngine.getCurrentTheme();
-
-//        int index = 0;
-//
-//        for (int i = 0; i < adapter.getItemCount(); i++) {
-//            if (adapter.getItem(i).equals(theme)) index = i;
-//        }
-//
-//        list.scrollToPosition(index);
+    private void applyTitle() {
+        toolbar.setTitle(ThemeEngine.getCurrentTheme().getTitle());
+        toolbar.setSubtitle(ThemeEngine.getCurrentTheme().getAuthor());
     }
 
     private void onRefresh() {
@@ -92,12 +86,8 @@ public class ThemesActivity extends BaseActivity {
         ThemeItem item = adapter.getItem(position);
 
         if (ThemeEngine.isThemeValid(item)) {
-
             ThemeEngine.setCurrentTheme(item.getId());
-
-//            startActivity(new Intent(this, MainActivity.class));
-//            Util.restart(this, true);
-//            finishAffinity();
+            applyTitle();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.warning);

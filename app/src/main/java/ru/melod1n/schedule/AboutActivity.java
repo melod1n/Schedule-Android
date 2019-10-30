@@ -54,7 +54,7 @@ public class AboutActivity extends BaseActivity {
         version.setText(version_);
 
         ArrayList<AboutItem> items = new ArrayList<>();
-        items.add(new AboutItem(R.drawable.ic_computer, getString(R.string.danil_nikolaev), getString(R.string.creator_programmer_dn), "https://t.me/melod1n"));
+        items.add(new AboutItem(R.drawable.ic_computer, getString(R.string.danil_nikolaev), getString(R.string.main_developer), "https://t.me/melod1n"));
         items.add(new AboutItem(R.drawable.innomax, getString(R.string.max_hubach), getString(R.string.backend_logic_developer), "https://t.me/innomaxx"));
 
         AboutAdapter adapter = new AboutAdapter(this, items);
