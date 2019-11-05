@@ -25,11 +25,13 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
+import ru.melod1n.schedule.widget.HighlightView;
 import ru.melod1n.schedule.widget.Toolbar;
 
 public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHolder> {
@@ -78,6 +80,9 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
         @BindView(R.id.theme_engine_bottom_navigation_view)
         BottomNavigationView bottomNavigationView;
 
+        @BindViews({R.id.theme_engine_highlight_view0, R.id.theme_engine_highlight_view1})
+        HighlightView[] highlightViews;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,12 +102,6 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             int textColorSecondary = item.getColorTextSecondary();
             int textColorPrimaryInverse = item.getColorTextPrimaryInverse();
             //int textColorSecondaryInverse = item.getColorTextSecondaryInverse();
-
-            boolean light = ColorUtil.isLight(colorPrimary);
-
-            int titleColor = light ? Color.BLACK : Color.WHITE;
-
-            int subtitleColor = light ? Color.GRAY : Color.LTGRAY;
 
             String textAuthor = String.format("Author: %s", item.getAuthor());
             String textVersion = item.getEngineVersion() == ThemeEngine.ENGINE_VERSION ? String.format(Locale.getDefault(), "Engine version: %d", item.getEngineVersion()) : "Theme is incompatible";
@@ -190,9 +189,10 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             bottomNavigationView.setBackgroundColor(item.getColorBottomBar());
 
             toolbar.setTitle(item.getTitle());
-            toolbar.setBackgroundColor(colorPrimary);
-            toolbar.setTitleTextColor(titleColor);
-            toolbar.setSubtitleTextColor(subtitleColor);
+            toolbar.setTheme(item);
+
+            for (HighlightView highlightView : highlightViews)
+                highlightView.setTheme(item);
         }
     }
 }

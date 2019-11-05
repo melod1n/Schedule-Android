@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.ThemeItem;
+import ru.melod1n.schedule.util.ColorUtil;
 import ru.melod1n.schedule.util.Keys;
 import ru.melod1n.schedule.util.Util;
 
@@ -59,6 +60,8 @@ public class ThemeEngine {
 
     private static final String DEFAULT_THEME = "teal_md2";
 
+    private static int colorMain;
+
     private static ThemeItem currentTheme;
 
     static void init() {
@@ -78,6 +81,8 @@ public class ThemeEngine {
             insertStockThemes(null);
             currentTheme = CacheStorage.getThemes(DEFAULT_THEME).get(0);
         }
+
+        colorMain = ColorUtil.isLight(currentTheme.getColorPrimary()) ? Color.BLACK : Color.WHITE;
     }
 
     public static void insertStockThemes(ArrayList<ThemeItem> themes) {
@@ -114,5 +119,9 @@ public class ThemeEngine {
 
     public static boolean isThemeValid(@NonNull ThemeItem item) {
         return item.getEngineVersion() == ENGINE_VERSION;
+    }
+
+    public static int getColorMain() {
+        return colorMain;
     }
 }

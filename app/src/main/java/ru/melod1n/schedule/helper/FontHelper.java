@@ -5,12 +5,15 @@ import android.graphics.Typeface;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
+import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.widget.Button;
 
 public class FontHelper {
 
     public enum Font {
-        PS_REGULAR, PS_MEDIUM, ROBOTO_REGULAR
+        PS_REGULAR, PS_MEDIUM, ROBOTO_REGULAR, ROBOTO_MEDIUM
     }
 
     public static void applyFont(View view, Font font) {
@@ -23,31 +26,24 @@ public class FontHelper {
         }
     }
 
-    private static Typeface getFont(Context context, String fontPath) {
-        return Typeface.createFromAsset(context.getAssets(), fontPath);
+    private static Typeface getFont(Context context, int fontPath) {
+        return ResourcesCompat.getFont(context, fontPath);
     }
 
-    private static String getFontPath(Font font) {
-        if (font == null) return null;
-
-        String path = "fonts/";
+    private static int getFontPath(Font font) {
+        if (font == null) return -1;
 
         switch (font) {
             case PS_REGULAR:
-                path += "ps_regular";
-                break;
+                return R.font.ps_regular;
             case PS_MEDIUM:
-                path += "ps_medium";
-                break;
+                return R.font.ps_medium;
             default:
             case ROBOTO_REGULAR:
-                path += "roboto_regular";
-                break;
+                return R.font.roboto_regular;
+            case ROBOTO_MEDIUM:
+                return R.font.roboto_medium;
         }
-
-        path += ".ttf";
-
-        return path;
     }
 
 }

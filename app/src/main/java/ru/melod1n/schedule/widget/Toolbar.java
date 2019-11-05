@@ -60,12 +60,16 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
         init();
     }
 
+    public void setTheme(ThemeItem theme) {
+        this.theme = theme;
+        init();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onReceive(@NonNull Object[] data) {
         String key = (String) data[0];
         if (Keys.THEME_UPDATE.equals(key)) {
-            theme = (ThemeItem) data[1];
-            init();
+            setTheme((ThemeItem) data[1]);
         }
     }
 

@@ -44,16 +44,33 @@ public class HighlightView extends View {
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.HighlightView, 0, 0);
 
+        boolean listenUpdates = true;
+
+        if (a.hasValue(R.styleable.HighlightView_listenUpdates)) {
+            listenUpdates = a.getBoolean(R.styleable.HighlightView_listenUpdates, true);
+        }
+
         if (a.hasValue(R.styleable.HighlightView_direction)) {
             direction = a.getInt(R.styleable.HighlightView_direction, 0);
         }
 
         a.recycle();
 
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
+        if (listenUpdates) {
+            if (!EventBus.getDefault().isRegistered(this))
+                EventBus.getDefault().register(this);
+        } else {
+            if (EventBus.getDefault().isRegistered(this)) {
+                EventBus.getDefault().unregister(this);
+            }
+        }
 
         theme = ThemeEngine.getCurrentTheme();
+        init();
+    }
+
+    public void setTheme(ThemeItem theme) {
+        this.theme = theme;
         init();
     }
 
@@ -61,9 +78,7 @@ public class HighlightView extends View {
     public void onReceive(@NonNull Object[] data) {
         String key = (String) data[0];
         if (Keys.THEME_UPDATE.equals(key)) {
-            theme = (ThemeItem) data[1];
-            init();
-            requestLayout();
+            setTheme((ThemeItem) data[1]);
         }
     }
 

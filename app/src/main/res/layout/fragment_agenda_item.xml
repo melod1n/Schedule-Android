@@ -9,14 +9,10 @@
     android:paddingStart="4dp"
     android:paddingEnd="4dp">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ru.melod1n.schedule.widget.CardView
         android:id="@+id/homework_card"
-        app:cardBackgroundColor="?colorSurface"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="3dp"
-        app:cardUseCompatPadding="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,6 +63,6 @@
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </ru.melod1n.schedule.widget.CardView>
 
 </LinearLayout>

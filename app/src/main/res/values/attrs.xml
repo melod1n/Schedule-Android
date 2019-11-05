@@ -16,6 +16,8 @@
             <enum name="top" value="1" />
         </attr>
 
+        <attr name="listenUpdates" format="boolean" />
+
     </declare-styleable>
 
     <declare-styleable name="Toolbar">

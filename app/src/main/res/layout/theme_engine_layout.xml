@@ -32,6 +32,13 @@
                 app:listenThemeUpdates="false"
                 app:title="Theme title" />
 
+            <ru.melod1n.schedule.widget.HighlightView
+                android:id="@+id/theme_engine_highlight_view0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/theme_engine_toolbar"
+                app:listenUpdates="false" />
+
             <LinearLayout
                 android:id="@+id/theme_engine_layout"
                 android:layout_width="match_parent"
@@ -122,11 +129,20 @@
 
             </LinearLayout>
 
+            <ru.melod1n.schedule.widget.HighlightView
+                android:id="@+id/theme_engine_highlight_view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/theme_engine_bottom_navigation_view"
+                app:direction="top"
+                app:listenUpdates="false" />
+
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/theme_engine_bottom_navigation_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/theme_engine_layout"
+                app:elevation="0dp"
                 app:menu="@menu/theme_engine_bottom" />
 
         </RelativeLayout>

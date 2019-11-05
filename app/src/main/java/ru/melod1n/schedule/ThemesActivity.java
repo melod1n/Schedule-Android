@@ -1,15 +1,19 @@
 package ru.melod1n.schedule;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,16 +37,19 @@ public class ThemesActivity extends BaseActivity {
 
     private ThemeAdapter adapter;
 
+    private Drawable navigationIcon;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_themes);
         ButterKnife.bind(this);
 
-        setContentView(refreshLayout.getRootView());
         applyBackground();
-
         applyTitle();
+
+        navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_backward);
+
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         refreshLayout.setOnRefreshListener(this::onRefresh);
@@ -88,6 +95,9 @@ public class ThemesActivity extends BaseActivity {
         if (ThemeEngine.isThemeValid(item)) {
             ThemeEngine.setCurrentTheme(item.getId());
             applyTitle();
+
+            navigationIcon.setTint(Color.RED); //я не знаю почему, но работает лишь так
+            toolbar.setNavigationIcon(navigationIcon);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.warning);
