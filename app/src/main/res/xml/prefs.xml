@@ -17,6 +17,7 @@
         app:isPreferenceVisible="false" />
 
     <CheckBoxPreference
+        app:iconSpaceReserved="false"
         android:defaultValue="true"
         android:key="select_current_day"
         android:summary="@string/select_current_day_summary"

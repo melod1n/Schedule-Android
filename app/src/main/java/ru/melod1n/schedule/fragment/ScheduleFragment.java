@@ -1,5 +1,6 @@
 package ru.melod1n.schedule.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,18 +94,10 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
     @Override
     public void onItemClick(View v, int position) {
-        getActivity().setTheme(ThemeEngine.isDark() ? R.style.AppTheme : R.style.AppTheme_Dark);
-        ThemeEngine.setDark(!ThemeEngine.isDark());
-
-        PopupDialog dialog = new PopupDialog();
-        dialog.setTitle("Some title");
-        dialog.setMessage("Some message");
-
-        dialog.show(getActivity().getSupportFragmentManager());
-
-
-        //new AlertDialog.Builder(getContext()).setTitle("Title").setMessage("Message").setPositiveButton("Positive", null).setNegativeButton("Negative", null).setNeutralButton("Neutral", null).show();
-        //showDialog(position);
+        PopupDialog dialogFragment = new PopupDialog();
+        dialogFragment.setTitle("Тест");
+        dialogFragment.setMessage("Пожалуйста, не беспокойтесь");
+        dialogFragment.show(getActivity().getSupportFragmentManager());
     }
 
     @Override

@@ -1,43 +1,37 @@
 package ru.melod1n.schedule.view;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.view.Window;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.common.ThemeEngine;
+import ru.melod1n.schedule.items.ThemeItem;
 
 public class PopupDialog extends DialogFragment {
 
     private CharSequence title;
     private CharSequence message;
 
-    @BindView(R.id.alertTitle)
-    TextView titleTextView;
-
-    @BindView(R.id.message)
-    TextView messageTextView;
-
-    private boolean created;
-    private boolean needUpdate;
+    private ThemeItem theme;
 
     public void show(FragmentManager fragmentManager) {
         PopupDialog dialog = new PopupDialog();
         dialog.show(fragmentManager, PopupDialog.class.getSimpleName());
-        if (needUpdate) {
-            needUpdate = false;
-            dialog.update();
-        }
     }
 
     public static PopupDialog getInstance() {
@@ -48,57 +42,44 @@ public class PopupDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LinearLayout root = (LinearLayout) inflater.inflate(R.layout.abc_modal_dialog, container);
-        root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        theme = ThemeEngine.getCurrentTheme();
 
-//
-//        TextView textView = new TextView(getContext());
-//        textView.setText("Hui");
-//
-//        LinearLayout layout = new LinearLayout(getContext());
-//        layout.addView(textView);
-//        layout.addView(root);
+        if (getDialog() != null && getDialog().getWindow() != null) {
+            Drawable background = getContext().getDrawable(theme.isMd2() ? R.drawable.popup_dialog_bg : R.drawable.popup_dialog_bg_md1);
 
+            getDialog().getWindow().setBackgroundDrawable(background);
+            getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        }
 
-        return root;
+        return inflater.inflate(R.layout.abc_popup_dialog, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ButterKnife.bind(this, view);
-        created = true;
-    }
+        TextView titleTextView = view.findViewById(R.id.title);
+        TextView messageTextView = view.findViewById(R.id.message);
 
-    private void update() {
-        setTitle();
-        setMessage();
-    }
-
-    private void setTitle() {
-        if (created) {
-            titleTextView.setText(title);
-        } else {
-            needUpdate = true;
-        }
-    }
-
-    private void setMessage() {
-        if (created) {
-            messageTextView.setText(message);
-        } else {
-            needUpdate = true;
-        }
+        titleTextView.setText(title);
+        messageTextView.setText(message);
     }
 
     public void setTitle(CharSequence title) {
         this.title = title;
-        setTitle();
+    }
+
+    public void setTitle(@StringRes int title) {
+        if (getContext() != null)
+            setTitle(getString(title));
     }
 
     public void setMessage(CharSequence message) {
         this.message = message;
-        setMessage();
+    }
+
+    public void setMessage(@StringRes int message) {
+        if (getContext() != null)
+            setMessage(getString(message));
     }
 }

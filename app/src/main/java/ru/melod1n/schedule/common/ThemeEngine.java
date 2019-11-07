@@ -124,4 +124,8 @@ public class ThemeEngine {
     public static int getColorMain() {
         return colorMain;
     }
+
+    public static void setColorMain(int colorMain) {
+        ThemeEngine.colorMain = colorMain;
+    }
 }

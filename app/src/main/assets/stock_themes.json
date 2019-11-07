@@ -123,9 +123,50 @@
     }
   },
   {
+    "id": "teal_md1_dark",
+    "title": "Dark Colored Teal",
+    "author": "μSchedule",
+    "version": 2,
+    "ui": {
+      "dark": true,
+      "light_status_bar": false,
+      "light_navigation_bar": false,
+      "md2": false
+    },
+    "colors": {
+      "surface": "#ffffff",
+      "primary": "#00796B",
+      "primary_dark": "#004D40",
+      "accent": "#E64A19",
+      "background": "#000000",
+      "tabs_text_normal": "#cccccc",
+      "tabs_text_active": "surface",
+      "tabs_indicator": "surface",
+      "control_normal": "#ffffff",
+      "text_primary": "#ffffff",
+      "text_secondary": "#cccccc",
+      "text_primary_inverse": "#121212",
+      "text_secondary_inverse": "#707070",
+      "drawer": "background",
+      "drawer_text_normal": "#ffffff",
+      "drawer_text_active": "accent",
+      "drawer_icon_normal": "#cccccc",
+      "drawer_icon_active": "accent",
+      "drawer_header_background": "primary",
+      "drawer_header_title": "#ffffff",
+      "drawer_header_subtitle": "#cccccc",
+      "bottom_bar": "primary",
+      "bottom_bar_icons_normal": "#cccccc",
+      "bottom_bar_icons_active": "surface",
+      "highlight": "#707070",
+      "fab_color": "accent",
+      "fab_icon_color": "surface"
+    }
+  },
+  {
     "id": "@innomaxx_theme",
     "title": "@innomaxx Theme",
-    "author": "μSchedule",
+    "author": "@innomaxx",
     "version": "2",
     "ui": {
       "dark": false,

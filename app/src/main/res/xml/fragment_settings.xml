@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceScreen
+        app:icon="@drawable/ic_account_box"
+        app:key="account"
+        app:title="@string/pref_account_title" />
+
+    <PreferenceScreen
+        app:icon="@drawable/ic_palette"
+        app:key="appearance"
+        app:title="@string/pref_appearance_title" />
+
+    <PreferenceScreen
+        app:icon="@drawable/ic_security"
+        app:key="security"
+        app:title="@string/pref_security_title" />
+
+    <PreferenceScreen
+        app:icon="@drawable/ic_schedule"
+        app:key="schedule"
+        app:title="@string/pref_schedule_title" />
+
+</PreferenceScreen>

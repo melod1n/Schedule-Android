@@ -12,10 +12,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceScreen;
 
 import org.greenrobot.eventbus.EventBus;
 
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.SettingsActivity;
 import ru.melod1n.schedule.ThemesActivity;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeEngine;
@@ -32,6 +34,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private static final String KEY_SETUP_BELLS = "setup_bells";
     private static final String KEY_SETUP_APP = "setup_app";
 
+    private static final String KEY_APPEARANCE = "appearance";
+
     static final String KEY_BELLS_COUNT = "bells_count";
     static final String KEY_EXPAND_CURRENT_DAY = "expand_current_day";
     static final String KEY_SELECT_CURRENT_DAY = "select_current_day";
@@ -42,20 +46,22 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private int bells_count, dur_lesson, dur_break;
 
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.settings);
-        toolbar.setNavigationOnClickListener(v -> {
-            if (getActivity() != null)
-                getActivity().onBackPressed();
-        });
-    }
+    private int currentPreferenceLayout;
 
     @Override
     public void onCreatePreferences(Bundle p1, String p2) {
-        setPreferencesFromResource(R.xml.prefs, p2);
+        if (getArguments() != null) {
+            currentPreferenceLayout = getArguments().getInt("layout_id", R.xml.fragment_settings);
+        } else {
+            currentPreferenceLayout = R.xml.fragment_settings;
+        }
+
+        init();
+    }
+
+    private void init() {
+        setTitle();
+        setPreferencesFromResource(currentPreferenceLayout, null);
 
         Preference theme = findPreference(KEY_THEME);
         Preference lessonsStart = findPreference(KEY_LESSONS_START);
@@ -63,6 +69,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         Preference bellsCount = findPreference(KEY_BELLS_COUNT);
         Preference setupBells = findPreference(KEY_SETUP_BELLS);
         Preference setupApp = findPreference(KEY_SETUP_APP);
+
+        PreferenceScreen appearance = findPreference(KEY_APPEARANCE);
+
+        if (appearance != null) {
+            appearance.setOnPreferenceClickListener(this);
+        }
+
+        PreferenceScreen rootScreen = getPreferenceScreen();
+
+        applyTintInPreferenceScreen(rootScreen);
 
         if (theme != null) {
             theme.setOnPreferenceClickListener(this);
@@ -88,9 +104,41 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     }
 
+    private void setTitle() {
+        int title = -1;
+        switch (currentPreferenceLayout) {
+            case R.xml.fragment_settings:
+                title = R.string.settings;
+                break;
+            case R.xml.category_appearance:
+                title = R.string.pref_appearance_title;
+                break;
+        }
+
+        getActivity().setTitle(title);
+    }
+
+    private void applyTintInPreferenceScreen(PreferenceScreen rootScreen) {
+        if (rootScreen.getPreferenceCount() > 0) {
+            for (int i = 0; i < rootScreen.getPreferenceCount(); i++) {
+                Preference preference = rootScreen.getPreference(i);
+                tintPreference(preference);
+            }
+        }
+    }
+
+    private void tintPreference(@NonNull Preference preference) {
+        if (preference.getIcon() != null)
+            preference.getIcon().setTint(!ThemeEngine.getCurrentTheme().isMd2() ? ThemeEngine.getCurrentTheme().getColorAccent() : ThemeEngine.getColorMain());
+    }
+
     @Override
     public boolean onPreferenceClick(Preference preference) {
         switch (preference.getKey()) {
+            case KEY_APPEARANCE:
+                currentPreferenceLayout = R.xml.category_appearance;
+                init();
+                break;
             case KEY_THEME:
                 startThemesActivity();
                 break;
@@ -241,5 +289,23 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private void startThemesActivity() {
         startActivity(new Intent(getActivity(), ThemesActivity.class));
+    }
+
+    public boolean onBackPressed() {
+        if (currentPreferenceLayout == R.xml.fragment_settings) {
+            return true;
+        } else {
+            currentPreferenceLayout = R.xml.fragment_settings;
+            init();
+
+            return false;
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        ((SettingsActivity) getActivity()).setFragmentElement(currentPreferenceLayout);
+        super.onDestroy();
     }
 }

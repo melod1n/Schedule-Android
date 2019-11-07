@@ -22,7 +22,7 @@ public class TextPlain extends AppCompatTextView {
 
     private ThemeItem theme;
 
-    private String colorDef;
+    private int colorDef;
 
     public TextPlain(Context context) {
         this(context, null);
@@ -38,17 +38,18 @@ public class TextPlain extends AppCompatTextView {
         final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                 R.styleable.TextPlain, defStyleAttr, 0);
 
-        colorDef = a.getString(R.styleable.TextPlain_colorDef);
-        if (colorDef == null || colorDef.isEmpty()) {
-            colorDef = "secondary";
+        if (a.hasValue(R.styleable.TextPlain_colorDef)) {
+            colorDef = a.getInt(R.styleable.TextPlain_colorDef, 1);
+        } else {
+            colorDef = 1;
         }
-
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this);
 
         theme = ThemeEngine.getCurrentTheme();
 
         init();
+
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -74,14 +75,14 @@ public class TextPlain extends AppCompatTextView {
         }
     }
 
-    private int getColor(@NonNull String def) {
+    private int getColor(int def) {
         switch (def) {
-            case "primary":
+            case 0:
                 return theme.getColorTextPrimary();
             default:
-            case "secondary":
+            case 1:
                 return theme.getColorTextSecondary();
-            case "accent":
+            case 2:
                 return theme.getColorAccent();
         }
     }

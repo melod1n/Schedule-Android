@@ -5,7 +5,11 @@
 
     <declare-styleable name="TextPlain">
 
-        <attr name="colorDef" format="string" />
+        <attr name="colorDef" format="enum">
+            <enum name="primary" value="0" />
+            <enum name="secondary" value="1" />
+            <enum name="accent" value="2" />
+        </attr>
 
     </declare-styleable>
 

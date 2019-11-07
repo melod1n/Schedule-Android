@@ -36,6 +36,7 @@ import ru.melod1n.schedule.fragment.SettingsFragment;
 import ru.melod1n.schedule.fragment.UpdatesFragment;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
+import ru.melod1n.schedule.view.PopupDialog;
 import ru.melod1n.schedule.widget.DrawerToggle;
 import ru.melod1n.schedule.widget.NavigationDrawer;
 import ru.melod1n.schedule.widget.Toolbar;
@@ -133,6 +134,11 @@ public class MainActivity extends BaseActivity {
             AppGlobal.preferences.edit().putBoolean("isCrashed", false).putString("crashLog", "").apply();
 
             if (!AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SHOW_ERROR, true)) return;
+
+            PopupDialog dialog = new PopupDialog();
+            dialog.setTitle(R.string.warning);
+            dialog.setMessage(R.string.cause_error);
+            dialog.show(getSupportFragmentManager());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.warning);

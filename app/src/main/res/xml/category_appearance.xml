@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_appearance_main_title" />
+
+    <PreferenceScreen
+        android:key="theme"
+        android:title="@string/theme"
+        app:iconSpaceReserved="false" />
+
+    <PreferenceScreen
+        app:iconSpaceReserved="false"
+        app:key="theme_manager"
+        app:title="@string/prefs_appearance_theme_manager_title" />
+
+</PreferenceScreen>

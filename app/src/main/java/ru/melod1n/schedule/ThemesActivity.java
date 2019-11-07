@@ -22,6 +22,7 @@ import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.items.ThemeItem;
+import ru.melod1n.schedule.util.ViewUtil;
 import ru.melod1n.schedule.widget.Toolbar;
 
 public class ThemesActivity extends BaseActivity {
@@ -57,6 +58,22 @@ public class ThemesActivity extends BaseActivity {
         list.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         getThemes();
+
+        if (savedInstanceState == null) {
+            scrollToCurrentTheme();
+        }
+    }
+
+    private void scrollToCurrentTheme() {
+        int index = 0;
+
+        for (int i = 0; i < adapter.getItemCount(); i++) {
+            ThemeItem item = adapter.getItem(i);
+
+            if (item.equals(ThemeEngine.getCurrentTheme())) index = i;
+        }
+
+        list.smoothScrollToPosition(index);
     }
 
     private void applyTitle() {
@@ -96,6 +113,8 @@ public class ThemesActivity extends BaseActivity {
             ThemeEngine.setCurrentTheme(item.getId());
             applyTitle();
 
+            fadeLayout();
+
             navigationIcon.setTint(Color.RED); //я не знаю почему, но работает лишь так
             toolbar.setNavigationIcon(navigationIcon);
         } else {
@@ -106,5 +125,9 @@ public class ThemesActivity extends BaseActivity {
             builder.show();
         }
 
+    }
+
+    private void fadeLayout() {
+        ViewUtil.fadeView(toolbar.getRootView(), 400);
     }
 }
