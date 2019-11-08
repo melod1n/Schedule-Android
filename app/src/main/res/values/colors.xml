@@ -7,7 +7,6 @@
     <color name="accent">#353535</color>
     <color name="background">#ffffff</color>
     <color name="tabs_text">#515151</color>
-    <color name="control_normal">#121212</color>
 
     <color name="dark_surface">#121212</color>
     <color name="dark_primary">#161616</color>
@@ -16,7 +15,5 @@
     <color name="dark_background">#000000</color>
     <color name="dark_tabs_text">#B4B4B4</color>
     <color name="dark_control_normal">#ffffff</color>
-
-    <color name="a">#E64A19</color>
 
 </resources>

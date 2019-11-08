@@ -127,26 +127,6 @@ public class AgendaFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceive(Object[] data) {
-        switch ((String) data[0]) {
-//            case "add_subject":
-//                LessonItem item = (LessonItem) data[1];
-//                adapter.getValues().add(new HomeworkItem(item.getHomework(), item.getName(), "22.08.19", item.getPosition()));
-//                adapter.notifyItemInserted(adapter.getItemCount() - 1);
-//                adapter.notifyItemRangeChanged(0, adapter.getItemCount(), -1);
-//                break;
-//            case "delete_subject":
-//                String homework = (String) data[1];
-//                for (int i = 0; i < adapter.getItemCount(); i++) {
-//                    HomeworkItem homeworkItem = adapter.getItem(i);
-//                    if (homeworkItem.text.equals(homework)) {
-//                        adapter.getValues().remove(i);
-//                        adapter.notifyItemRemoved(i);
-//                        adapter.notifyItemRangeChanged(0, adapter.getItemCount(), -1);
-//                        break;
-//                    }
-//                }
-//                break;
-        }
     }
 
     private void getHomework() {
@@ -183,13 +163,6 @@ public class AgendaFragment extends Fragment {
     }
 
     private boolean onMenuItemClick(MenuItem menuItem) {
-        if (menuItem.getItemId() == R.id.settings) {
-            if (getActivity() == null) return false;
-
-            ((MainActivity) getActivity()).replaceFragment(new SettingsFragment());
-            return true;
-        }
-
         return false;
     }
 }

@@ -14,7 +14,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import ru.melod1n.schedule.fragment.MainScheduleFragment;
 import ru.melod1n.schedule.fragment.NotesFragment;
-import ru.melod1n.schedule.fragment.TimetableFragment;
 
 public class ShortcutActivity extends AppCompatActivity {
 
@@ -28,9 +27,6 @@ public class ShortcutActivity extends AppCompatActivity {
         Fragment f;
 
         switch (fragment) {
-            case 0:
-                f = new TimetableFragment();
-                break;
             default:
             case 1:
                 f = new MainScheduleFragment();

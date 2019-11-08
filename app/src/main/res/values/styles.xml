@@ -21,15 +21,4 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="AppTheme.Tabs.Caps" parent="Widget.MaterialComponents.TabLayout">
-        <item name="tabTextAppearance">@style/AppTheme.Tabs.Text</item>
-        <item name="tabUnboundedRipple">false</item>
-        <item name="tabRippleColor">#00000000</item>
-    </style>
-
-    <style name="AppTheme.Tabs.Text.Caps" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/roboto_regular</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
 </resources>

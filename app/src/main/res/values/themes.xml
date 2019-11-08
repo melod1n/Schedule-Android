@@ -34,16 +34,6 @@
         <item name="colorControlNormal">@color/dark_control_normal</item>
     </style>
 
-    <style name="BottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="dialogCornerRadius">12dp</item>
-        <item name="colorAccent">@color/accent</item>
-    </style>
-
-    <style name="BottomSheet.Dark" parent="Theme.Design.BottomSheetDialog">
-        <item name="dialogCornerRadius">12dp</item>
-        <item name="colorAccent">@color/dark_accent</item>
-    </style>
-
     <style name="AppTheme.FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog">
         <item name="dialogCornerRadius">12dp</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>

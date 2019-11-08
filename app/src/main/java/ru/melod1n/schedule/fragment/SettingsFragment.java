@@ -1,6 +1,7 @@
 package ru.melod1n.schedule.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
@@ -25,7 +25,6 @@ import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.helper.TimeHelper;
 import ru.melod1n.schedule.util.Util;
-import ru.melod1n.schedule.view.TimePickerDialog;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
@@ -181,18 +180,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private void showStartLessonsDialog() {
         if (getActivity() == null) return;
-        TimePickerDialog dialog = new TimePickerDialog(getActivity(), true);
-
-        dialog.setTitle(R.string.set_lessons_time);
-
-        int hours = TimeHelper.getHours();
-        int minutes = TimeHelper.getMinutes();
-
-        dialog.setHintTime(hours, minutes);
-        dialog.setTime(hours, minutes);
-
-        dialog.setOnChoosedTimeListener(this::setLessonsStart);
-        dialog.show();
+//        TimePickerDialog dialog = new TimePickerDialog(getActivity(), true);
+//
+//        dialog.setTitle(R.string.set_lessons_time);
+//
+//        int hours = TimeHelper.getHours();
+//        int minutes = TimeHelper.getMinutes();
+//
+//        dialog.setHintTime(hours, minutes);
+//        dialog.setTime(hours, minutes);
+//
+//        dialog.setOnChoosedTimeListener(this::setLessonsStart);
+//        dialog.show();
     }
 
     private void showNumBell() {
@@ -258,33 +257,33 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private void showLessonBreakLength() {
         if (getActivity() == null) return;
-        TimePickerDialog subject = new TimePickerDialog(getActivity());
-
-        subject.setTitle(getString(R.string.lesson_length_title));
-        subject.setHintNum(TimeHelper.lesson_length);
-        subject.setNum(TimeHelper.lesson_length);
-
-        subject.setOnChoosedNumListener(num -> {
-            dur_lesson = num;
-
-            TimePickerDialog break_ = new TimePickerDialog(getActivity());
-
-            break_.setTitle(getString(R.string.break_length));
-            break_.setHintNum(TimeHelper.break_length);
-            break_.setNum(TimeHelper.break_length);
-
-            break_.setOnChoosedNumListener(num1 -> {
-                SettingsFragment.this.dur_break = num1;
-                TimeHelper.lesson_length = dur_lesson;
-                TimeHelper.break_length = SettingsFragment.this.dur_break;
-                TimeHelper.save();
-                showConfirmRecreateDialog();
-            });
-
-            break_.show();
-        });
-
-        subject.show();
+//        TimePickerDialog subject = new TimePickerDialog(getActivity());
+//
+//        subject.setTitle(getString(R.string.lesson_length_title));
+//        subject.setHintNum(TimeHelper.lesson_length);
+//        subject.setNum(TimeHelper.lesson_length);
+//
+//        subject.setOnChoosedNumListener(num -> {
+//            dur_lesson = num;
+//
+//            TimePickerDialog break_ = new TimePickerDialog(getActivity());
+//
+//            break_.setTitle(getString(R.string.break_length));
+//            break_.setHintNum(TimeHelper.break_length);
+//            break_.setNum(TimeHelper.break_length);
+//
+//            break_.setOnChoosedNumListener(num1 -> {
+//                SettingsFragment.this.dur_break = num1;
+//                TimeHelper.lesson_length = dur_lesson;
+//                TimeHelper.break_length = SettingsFragment.this.dur_break;
+//                TimeHelper.save();
+//                showConfirmRecreateDialog();
+//            });
+//
+//            break_.show();
+//        });
+//
+//        subject.show();
     }
 
     private void startThemesActivity() {

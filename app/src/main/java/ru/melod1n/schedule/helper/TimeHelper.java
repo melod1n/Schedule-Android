@@ -5,7 +5,6 @@ import android.text.TextUtils;
 
 import java.util.ArrayList;
 
-import ru.melod1n.schedule.items.BellItem;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
@@ -45,7 +44,7 @@ public class TimeHelper {
         break_length = prefs.getInt("break", -1);
         bells_count = prefs.getInt("bells_count", -1);
 
-        createTimetable(day);
+        //createTimetable(day);
     }
 
     public static void save() {
@@ -91,45 +90,45 @@ public class TimeHelper {
         return -1;
     }
 
-    public static void createTimetable(int day) {
-        int start_time = start_value;
-        int end_time = start_time + break_length;
-
-        ArrayList<BellItem> bells = new ArrayList<>();
-
-        for (int j = 0; j < (day != -1 ? 1 : 6); j++) {
-
-            start_time = start_value;
-            end_time = start_time + lesson_length;
-
-            for (int i = 0; i < bells_count; i++) {
-
-                if (DAY - start_time < 0) {
-                    while (DAY - start_time < 0)
-                        start_time = -1 * (DAY - start_time);
-                } else if (DAY - start_time == 0) {
-                    start_time = 0;
-                }
-
-                if (DAY - end_time < 0) {
-                    while (DAY - end_time < 0)
-                        end_time = -1 * (DAY - end_time);
-                } else if (DAY - end_time == 0) {
-                    end_time = 0;
-                }
-
-                BellItem item = new BellItem();
-                item.setStart(start_time);
-                item.setEnd(end_time);
-                item.setId(i);
-                item.setDay(day != -1 ? day : j);
-                bells.add(item);
-
-                start_time = end_time + break_length;
-                end_time = start_time + lesson_length;
-            }
-        }
-
-        CacheStorage.insert(DatabaseHelper.TABLE_BELLS, bells);
-    }
+//    public static void createTimetable(int day) {
+//        int start_time = start_value;
+//        int end_time = start_time + break_length;
+//
+//        ArrayList<BellItem> bells = new ArrayList<>();
+//
+//        for (int j = 0; j < (day != -1 ? 1 : 6); j++) {
+//
+//            start_time = start_value;
+//            end_time = start_time + lesson_length;
+//
+//            for (int i = 0; i < bells_count; i++) {
+//
+//                if (DAY - start_time < 0) {
+//                    while (DAY - start_time < 0)
+//                        start_time = -1 * (DAY - start_time);
+//                } else if (DAY - start_time == 0) {
+//                    start_time = 0;
+//                }
+//
+//                if (DAY - end_time < 0) {
+//                    while (DAY - end_time < 0)
+//                        end_time = -1 * (DAY - end_time);
+//                } else if (DAY - end_time == 0) {
+//                    end_time = 0;
+//                }
+//
+//                BellItem item = new BellItem();
+//                item.setStart(start_time);
+//                item.setEnd(end_time);
+//                item.setId(i);
+//                item.setDay(day != -1 ? day : j);
+//                bells.add(item);
+//
+//                start_time = end_time + break_length;
+//                end_time = start_time + lesson_length;
+//            }
+//        }
+//
+//        CacheStorage.insert(DatabaseHelper.TABLE_BELLS, bells);
+//    }
 }

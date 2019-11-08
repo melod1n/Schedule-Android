@@ -106,8 +106,8 @@ public class ScheduleAdapter extends RecyclerAdapter<LessonItem, ScheduleAdapter
 //            lessonTeacher.setText(teacher.getTitle());
 //            lessonTeacher.setVisibility(View.GONE);
 
-            lessonStartTime.setText(Engine.getTimeByInt(Engine.getStartTimeAt(item.getOrder())));
-            lessonEndTime.setText(Engine.getTimeByInt(Engine.getEndTimeAt(item.getOrder())));
+            lessonStartTime.setText("8:00");
+            lessonEndTime.setText("8:40");
         }
     }
 

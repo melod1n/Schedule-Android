@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-import ru.melod1n.schedule.items.BellItem;
 import ru.melod1n.schedule.items.DayItem;
 import ru.melod1n.schedule.items.LessonItem;
 import ru.melod1n.schedule.items.LocationItem;
@@ -112,30 +111,30 @@ public class CacheStorage {
         return items;
     }
 
-    public static ArrayList<LessonItem> getSubjects(int day) {
-        Cursor c = selectCursor(TABLE_LESSONS, DAY, day);
-
-        ArrayList<LessonItem> subs = new ArrayList<>(c.getCount());
-        ArrayList<BellItem> bells = getBells(day);
-
-        int position = 0;
-
-        while (c.moveToNext()) {
-            LessonItem item = parseLesson(c);
-
-            if (!ArrayUtil.isEmpty(bells) && position <= bells.size() - 1) {
-                BellItem bell = bells.get(position);
-//                item.setStart(bell.getStart());
-//                item.setEnd(bell.getEnd());
-            }
-
-            subs.add(item);
-            position++;
-        }
-
-        c.close();
-        return subs;
-    }
+//    public static ArrayList<LessonItem> getSubjects(int day) {
+//        Cursor c = selectCursor(TABLE_LESSONS, DAY, day);
+//
+//        ArrayList<LessonItem> subs = new ArrayList<>(c.getCount());
+//        ArrayList<BellItem> bells = getBells(day);
+//
+//        int position = 0;
+//
+//        while (c.moveToNext()) {
+//            LessonItem item = parseLesson(c);
+//
+//            if (!ArrayUtil.isEmpty(bells) && position <= bells.size() - 1) {
+//                BellItem bell = bells.get(position);
+////                item.setStart(bell.getStart());
+////                item.setEnd(bell.getEnd());
+//            }
+//
+//            subs.add(item);
+//            position++;
+//        }
+//
+//        c.close();
+//        return subs;
+//    }
 
     public static ArrayList<DayItem> getDays() {
         return getDays(-1);
@@ -177,29 +176,29 @@ public class CacheStorage {
         return notes;
     }
 
-    public static ArrayList<BellItem> getBells() {
-        Cursor c = selectCursor(TABLE_BELLS);
-
-        ArrayList<BellItem> items = new ArrayList<>(c.getCount());
-        while (c.moveToNext()) {
-            items.add(parseBell(c));
-        }
-
-        c.close();
-        return items;
-    }
-
-    public static ArrayList<BellItem> getBells(int day) {
-        Cursor c = selectCursor(TABLE_BELLS, DAY, day);
-
-        ArrayList<BellItem> items = new ArrayList<>(c.getCount());
-        while (c.moveToNext()) {
-            items.add(parseBell(c));
-        }
-
-        c.close();
-        return items;
-    }
+//    public static ArrayList<BellItem> getBells() {
+//        Cursor c = selectCursor(TABLE_BELLS);
+//
+//        ArrayList<BellItem> items = new ArrayList<>(c.getCount());
+//        while (c.moveToNext()) {
+//            items.add(parseBell(c));
+//        }
+//
+//        c.close();
+//        return items;
+//    }
+//
+//    public static ArrayList<BellItem> getBells(int day) {
+//        Cursor c = selectCursor(TABLE_BELLS, DAY, day);
+//
+//        ArrayList<BellItem> items = new ArrayList<>(c.getCount());
+//        while (c.moveToNext()) {
+//            items.add(parseBell(c));
+//        }
+//
+//        c.close();
+//        return items;
+//    }
 
     public static void insert(String table, Object item) {
         ArrayList<Object> array = new ArrayList<>();
@@ -227,9 +226,9 @@ public class CacheStorage {
                 case TABLE_LESSONS:
                     putValues(cv, (LessonItem) item);
                     break;
-                case TABLE_BELLS:
-                    putValues(cv, (BellItem) item);
-                    break;
+//                case TABLE_BELLS:
+//                    putValues(cv, (BellItem) item);
+//                    break;
                 case TABLE_THEMES:
                     putValues(cv, (ThemeItem) item);
                     break;
@@ -260,9 +259,9 @@ public class CacheStorage {
                 case TABLE_LESSONS:
                     putValues(cv, (LessonItem) item);
                     break;
-                case TABLE_BELLS:
-                    putValues(cv, (BellItem) item);
-                    break;
+//                case TABLE_BELLS:
+//                    putValues(cv, (BellItem) item);
+//                    break;
                 case TABLE_THEMES:
                     putValues(cv, (ThemeItem) item);
                     break;
@@ -360,16 +359,16 @@ public class CacheStorage {
         return item;
     }
 
-    private static BellItem parseBell(Cursor c) {
-        BellItem i = new BellItem();
-
-        i.id = getInt(c, ID);
-        i.start = getInt(c, START);
-        i.end = getInt(c, END);
-        i.day = getInt(c, DAY);
-
-        return i;
-    }
+//    private static BellItem parseBell(Cursor c) {
+//        BellItem i = new BellItem();
+//
+//        i.id = getInt(c, ID);
+//        i.start = getInt(c, START);
+//        i.end = getInt(c, END);
+//        i.day = getInt(c, DAY);
+//
+//        return i;
+//    }
 
     private static void putValues(@NonNull ContentValues cv, @NonNull NoteItem item) {
         cv.put(TITLE, item.title);
@@ -377,9 +376,9 @@ public class CacheStorage {
         cv.put(TEXT, item.text);
     }
 
-    private static void putValues(@NonNull ContentValues cv, @NonNull BellItem item) {
-        cv.put(START, item.start);
-        cv.put(END, item.end);
-        cv.put(DAY, item.day);
-    }
+//    private static void putValues(@NonNull ContentValues cv, @NonNull BellItem item) {
+//        cv.put(START, item.start);
+//        cv.put(END, item.end);
+//        cv.put(DAY, item.day);
+//    }
 }

@@ -14,7 +14,6 @@ import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.helper.TimeHelper;
 import ru.melod1n.schedule.io.FileStreams;
-import ru.melod1n.schedule.items.BellItem;
 import ru.melod1n.schedule.items.LessonItem;
 import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.util.ArrayUtil;
@@ -22,16 +21,7 @@ import ru.melod1n.schedule.util.Util;
 
 public class Engine {
 
-    private static ArrayList<BellItem> bells = new ArrayList<>();
 
-    static {
-        bells.add(new BellItem(480, 520));
-        bells.add(new BellItem(535, 575));
-        bells.add(new BellItem(590, 630));
-        bells.add(new BellItem(645, 685));
-        bells.add(new BellItem(700, 740));
-        bells.add(new BellItem(750, 790));
-    }
 
     public static void checkDatabaseUpdates() {
         if (AppGlobal.preferences.getBoolean("is_db_updated", false)) {
@@ -46,23 +36,23 @@ public class Engine {
                 JSONArray nts = o.optJSONArray("notes");
 
                 ArrayList<LessonItem> subjects = new ArrayList<>(subs.length());
-                ArrayList<BellItem> bells = new ArrayList<>(subs.length());
+                //ArrayList<BellItem> bells = new ArrayList<>(subs.length());
                 ArrayList<NoteItem> notes = new ArrayList<>(subs.length());
 
                 for (int i = 0; i < subs.length(); i++) {
                     subjects.add(new LessonItem(subs.optJSONObject(i)));
                 }
 
-                for (int i = 0; i < bls.length(); i++) {
-                    bells.add(new BellItem(bls.optJSONObject(i)));
-                }
+//                for (int i = 0; i < bls.length(); i++) {
+//                    bells.add(new BellItem(bls.optJSONObject(i)));
+//                }
 
                 for (int i = 0; i < nts.length(); i++) {
                     notes.add(new NoteItem(nts.optJSONObject(i)));
                 }
 
-                if (!ArrayUtil.isEmpty(bells))
-                    CacheStorage.insert(DatabaseHelper.TABLE_BELLS, bells);
+//                if (!ArrayUtil.isEmpty(bells))
+//                    CacheStorage.insert(DatabaseHelper.TABLE_BELLS, bells);
                 if (!ArrayUtil.isEmpty(notes))
                     CacheStorage.insert(DatabaseHelper.TABLE_NOTES, notes);
                 if (!ArrayUtil.isEmpty(subjects))
@@ -78,13 +68,13 @@ public class Engine {
         }
     }
 
-    public static int getStartTimeAt(int order) {
-        return bells.get(order).getStart();
-    }
-
-    public static int getEndTimeAt(int order) {
-        return bells.get(order).getEnd();
-    }
+//    public static int getStartTimeAt(int order) {
+//        return bells.get(order).getStart();
+//    }
+//
+//    public static int getEndTimeAt(int order) {
+//        return bells.get(order).getEnd();
+//    }
 
     @NonNull
     public static String getTimeByInt(int time) {

@@ -31,40 +31,6 @@ public class ViewUtil {
         fadeView(v, 200);
     }
 
-    public static void applyToolbarStyles(@NonNull Toolbar toolbar, int colorControl, Boolean isDark) {
-        int color = colorControl == -1 ? (isDark == null ? ThemeEngine.isDark() : isDark) ? Color.WHITE : Color.BLACK : colorControl;
-
-        if (toolbar.getNavigationIcon() != null) {
-            toolbar.getNavigationIcon().setTint(color);
-        }
-
-        if (toolbar.getOverflowIcon() != null) {
-            toolbar.getOverflowIcon().setTint(color);
-        }
-
-        for (int i = 0; i < toolbar.getMenu().size(); i++) {
-            MenuItem item = toolbar.getMenu().getItem(i);
-            if (item.getIcon() != null)
-                item.getIcon().setTint(color);
-        }
-    }
-
-    public static void applyToolbarStyles(@NonNull Toolbar toolbar, int colorControl) {
-        if (toolbar.getNavigationIcon() != null) {
-            toolbar.getNavigationIcon().setTint(colorControl);
-        }
-
-        if (toolbar.getOverflowIcon() != null) {
-            toolbar.getOverflowIcon().setTint(colorControl);
-        }
-
-        for (int i = 0; i < toolbar.getMenu().size(); i++) {
-            MenuItem item = toolbar.getMenu().getItem(i);
-            if (item.getIcon() != null)
-                item.getIcon().setTint(colorControl);
-        }
-    }
-
     public static void applyWindowStyles(Window window) {
         applyWindowStyles(window, ThemeEngine.getCurrentTheme().getColorPrimaryDark());
     }
@@ -90,10 +56,6 @@ public class ViewUtil {
         }
 
         window.getDecorView().setSystemUiVisibility(visibility);
-    }
-
-    public static void applyToolbarStyles(@NonNull Toolbar toolbar) {
-        applyToolbarStyles(toolbar, -1, null);
     }
 
     public static void showKeyboard(@NonNull View v) {

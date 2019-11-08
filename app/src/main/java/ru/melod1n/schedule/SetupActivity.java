@@ -1,6 +1,7 @@
 package ru.melod1n.schedule;
 
 import android.Manifest;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +26,6 @@ import ru.melod1n.schedule.helper.TimeHelper;
 import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.util.ViewUtil;
 import ru.melod1n.schedule.view.HorizontalColorPicker;
-import ru.melod1n.schedule.view.TimePickerDialog;
 
 public class SetupActivity extends AppCompatActivity {
 
@@ -128,44 +128,44 @@ public class SetupActivity extends AppCompatActivity {
         setFabClick();
 
         input.setOnClickListener(p1 -> {
-            TimePickerDialog subject = new TimePickerDialog(SetupActivity.this);
-            subject.setTitle(getString(R.string.lesson_length_title));
-
-            if (l != -1) {
-                subject.setHintNum(l);
-                subject.setNum(l);
-            } else
-                subject.setHintNum(0);
-
-            subject.setOnChoosedNumListener(num -> {
-                l = num;
-
-                TimePickerDialog break_ = new TimePickerDialog(SetupActivity.this);
-                break_.setTitle(getString(R.string.break_length));
-
-                if (b != -1) {
-                    break_.setHintNum(b);
-                    break_.setNum(b);
-                } else
-                    break_.setHintNum(0);
-
-                break_.setOnChoosedNumListener(num1 -> {
-                    b = num1;
-
-                    fab.show();
-
-                    stage++;
-                    init();
-
-                    TimeHelper.lesson_length = l;
-                    TimeHelper.break_length = b;
-                    TimeHelper.save();
-                });
-
-                break_.show();
-            });
-
-            subject.show();
+//            TimePickerDialog subject = new TimePickerDialog(SetupActivity.this);
+//            subject.setTitle(getString(R.string.lesson_length_title));
+//
+//            if (l != -1) {
+//                subject.setHintNum(l);
+//                subject.setNum(l);
+//            } else
+//                subject.setHintNum(0);
+//
+//            subject.setOnChoosedNumListener(num -> {
+//                l = num;
+//
+//                TimePickerDialog break_ = new TimePickerDialog(SetupActivity.this);
+//                break_.setTitle(getString(R.string.break_length));
+//
+//                if (b != -1) {
+//                    break_.setHintNum(b);
+//                    break_.setNum(b);
+//                } else
+//                    break_.setHintNum(0);
+//
+//                break_.setOnChoosedNumListener(num1 -> {
+//                    b = num1;
+//
+//                    fab.show();
+//
+//                    stage++;
+//                    init();
+//
+//                    TimeHelper.lesson_length = l;
+//                    TimeHelper.break_length = b;
+//                    TimeHelper.save();
+//                });
+//
+//                break_.show();
+//            });
+//
+//            subject.show();
         });
     }
 
@@ -183,28 +183,28 @@ public class SetupActivity extends AppCompatActivity {
         setFabClick();
 
         input.setOnClickListener(p1 -> {
-            TimePickerDialog dialog = new TimePickerDialog(SetupActivity.this, true);
-            dialog.setTitle(R.string.set_lessons_time);
-
-            if (h != -1 && m != -1) {
-                dialog.setTime(h, m);
-                dialog.setHintTime(h, m);
-            } else
-                dialog.setHintTime(0, 0);
-
-            dialog.setOnChoosedTimeListener((hours, minutes) -> {
-                fab.show();
-
-                h = hours;
-                m = minutes;
-
-                stage++;
-                init();
-
-                setLessonsStart();
-            });
-
-            dialog.show();
+//            TimePickerDialog dialog = new TimePickerDialog(SetupActivity.this, true);
+//            dialog.setTitle(R.string.set_lessons_time);
+//
+//            if (h != -1 && m != -1) {
+//                dialog.setTime(h, m);
+//                dialog.setHintTime(h, m);
+//            } else
+//                dialog.setHintTime(0, 0);
+//
+//            dialog.setOnChoosedTimeListener((hours, minutes) -> {
+//                fab.show();
+//
+//                h = hours;
+//                m = minutes;
+//
+//                stage++;
+//                init();
+//
+//                setLessonsStart();
+//            });
+//
+//            dialog.show();
         });
     }
 
