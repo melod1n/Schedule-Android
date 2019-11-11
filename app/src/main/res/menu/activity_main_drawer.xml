@@ -4,14 +4,17 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_quick_edit"
+            android:icon="@drawable/ic_pencil_outline"
             android:title="@string/drawer_quick_edit" />
 
         <item
             android:id="@+id/drawer_groups_list"
+            android:icon="@drawable/ic_groups_outline"
             android:title="@string/drawer_groups_list" />
 
         <item
             android:id="@+id/drawer_providers"
+            android:icon="@drawable/ic_server_network"
             android:title="@string/drawer_providers" />
 
     </group>
