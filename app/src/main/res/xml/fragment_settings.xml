@@ -22,4 +22,9 @@
         app:key="schedule"
         app:title="@string/pref_schedule_title" />
 
+    <PreferenceScreen
+        app:icon="@drawable/ic_info"
+        app:key="debug"
+        app:title="@string/pref_debug_title" />
+
 </PreferenceScreen>

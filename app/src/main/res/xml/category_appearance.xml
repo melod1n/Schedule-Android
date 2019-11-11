@@ -15,6 +15,18 @@
     <PreferenceScreen
         app:iconSpaceReserved="false"
         app:key="theme_manager"
+        app:summary="@string/pref_appearance_theme_manager_summary"
         app:title="@string/prefs_appearance_theme_manager_title" />
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_appearance_other_title" />
+
+    <SwitchPreferenceCompat
+        app:defaultValue="true"
+        app:iconSpaceReserved="false"
+        app:key="select_current_day"
+        app:summary="@string/pref_appearance_select_current_day_summary"
+        app:title="@string/pref_appearance_select_current_day_title" />
 
 </PreferenceScreen>

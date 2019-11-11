@@ -4,13 +4,13 @@ import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
 
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
+import ru.melod1n.schedule.fragment.SettingsFragment;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
 import ru.melod1n.schedule.util.Keys;
@@ -59,13 +59,14 @@ public class ThemeEngine {
     };
 
     private static final String DEFAULT_THEME = "teal_md2";
+    private static final String THEMES_FILE_NAME = "stock_themes.json";
 
     private static int colorMain;
 
     private static ThemeItem currentTheme;
 
     static void init() {
-        String themeKey = AppGlobal.preferences.getString("theme", DEFAULT_THEME);
+        String themeKey = Engine.getPrefString(SettingsFragment.KEY_THEME, DEFAULT_THEME);
 
         ArrayList<ThemeItem> themes = CacheStorage.getThemes();
         insertStockThemes(themes);
@@ -88,7 +89,7 @@ public class ThemeEngine {
     public static void insertStockThemes(ArrayList<ThemeItem> themes) {
         if (themes == null) themes = new ArrayList<>();
         try {
-            JSONArray o = new JSONArray(Util.readFileFromAssets("stock_themes.json"));
+            JSONArray o = new JSONArray(Util.readFileFromAssets(THEMES_FILE_NAME));
             for (int i = 0; i < o.length(); i++) {
                 themes.add(new ThemeItem(o.optJSONObject(i)));
             }
@@ -104,17 +105,13 @@ public class ThemeEngine {
     }
 
     public static void setCurrentTheme(String id) {
-        AppGlobal.preferences.edit().putString("theme", id).apply();
+        Engine.editPreferences(SettingsFragment.KEY_THEME, id);
         init();
-        EventBus.getDefault().postSticky(new Object[]{Keys.THEME_UPDATE, currentTheme});
+        Engine.sendEvent(Keys.THEME_UPDATE, currentTheme);
     }
 
     public static boolean isDark() {
         return currentTheme.isDark();
-    }
-
-    public static void setDark(boolean dark) {
-        currentTheme.setDark(dark);
     }
 
     public static boolean isThemeValid(@NonNull ThemeItem item) {
@@ -123,9 +120,5 @@ public class ThemeEngine {
 
     public static int getColorMain() {
         return colorMain;
-    }
-
-    public static void setColorMain(int colorMain) {
-        ThemeEngine.colorMain = colorMain;
     }
 }

@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="?colorPrimary"
     android:orientation="vertical">
 
     <LinearLayout
@@ -19,26 +19,24 @@
 
         <ImageView
             android:id="@+id/drawer_header_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            app:srcCompat="@mipmap/ic_launcher_round" />
+            tools:src="@drawable/ic_launcher_hi_res" />
 
         <TextView
             android:id="@+id/drawer_header_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="Danil Nikolaev"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="?android:textColorPrimary" />
+            tools:text="Danil Nikolaev" />
 
         <TextView
             android:id="@+id/drawer_header_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="lischenkodev@gmail.com"
-            android:textColor="?android:textColorSecondary" />
+            tools:text="lischenkodev@gmail.com" />
 
     </LinearLayout>
 

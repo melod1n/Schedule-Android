@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -87,6 +89,16 @@ public class MainActivity extends BaseActivity {
         View headerView = navDrawer.getHeaderView(0);
 
         headerView.setOnClickListener(v -> openLoginScreen());
+
+        ImageView drawerAvatar = headerView.findViewById(R.id.drawer_header_avatar);
+        TextView drawerTitle = headerView.findViewById(R.id.drawer_header_title);
+        TextView drawerSubtitle = headerView.findViewById(R.id.drawer_header_subtitle);
+
+        drawerTitle.setText(R.string.drawer_title_no_user);
+        drawerSubtitle.setText(R.string.drawer_subtitle_no_user);
+
+        drawerAvatar.setImageResource(R.drawable.ic_account_circle);
+        drawerAvatar.getDrawable().setTint(drawerTitle.getTextColors().getDefaultColor());
     }
 
     private void openLoginScreen() {
@@ -108,18 +120,6 @@ public class MainActivity extends BaseActivity {
             finish();
         } else {
             if (savedInstanceState == null) {
-                int i = Integer.parseInt(AppGlobal.preferences.getString(SettingsFragment.KEY_OPEN_ON_START, "1"));
-                switch (i) {
-                    default:
-                    case 0:
-                    case 1:
-                        selectedId = R.id.nav_schedule;
-                        break;
-                    case 2:
-                        selectedId = R.id.nav_notes;
-                        break;
-                }
-
                 replaceFragment(getFragmentById(selectedId));
                 navView.setSelectedItemId(selectedId);
             }

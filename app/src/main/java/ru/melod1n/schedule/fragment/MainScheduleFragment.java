@@ -1,6 +1,9 @@
 package ru.melod1n.schedule.fragment;
 
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,12 +18,18 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.MainActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.ScheduleMainAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
+import ru.melod1n.schedule.common.Engine;
 import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.widget.Toolbar;
 
@@ -54,6 +63,8 @@ public class MainScheduleFragment extends Fragment {
 
         tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
 
+        if (getActivity() == null) return;
+
         DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();
 
         ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar);
@@ -61,6 +72,15 @@ public class MainScheduleFragment extends Fragment {
         toggle.syncState();
 
         createPagerAdapter();
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onReceive(@NotNull Object[] data) {
+        String key = (String) data[0];
+        if (SettingsFragment.KEY_SHOW_DATE.equals(key)) {
+            setToolbarSubtitle((Boolean) data[1]);
+        }
     }
 
     private void prepareToolbar() {
@@ -79,6 +99,18 @@ public class MainScheduleFragment extends Fragment {
         });
 
         searchView.setOnSearchClickListener(view -> searchViewCollapsed = false);
+        setToolbarSubtitle(null);
+    }
+
+    private void setToolbarSubtitle(Boolean bool) {
+        boolean b = bool == null ? Engine.getPrefBool(SettingsFragment.KEY_SHOW_DATE, false) : bool;
+
+        String subtitle = b ? Engine.getCurrentDate() : Engine.getInterim();
+
+        SpannableString string = new SpannableString(subtitle);
+        string.setSpan(new AbsoluteSizeSpan(Util.px(14)), 0, subtitle.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        toolbar.setSubtitle(string);
     }
 
     public MenuItem getSearchViewItem() {
@@ -90,7 +122,7 @@ public class MainScheduleFragment extends Fragment {
     }
 
     private boolean onMenuItemClick(@NonNull MenuItem item) {
-        return true;
+        return false;
     }
 
     private void createPagerAdapter() {
@@ -101,5 +133,13 @@ public class MainScheduleFragment extends Fragment {
 
         if (AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SELECT_CURRENT_DAY, true))
             pager.setCurrentItem(Util.getNumOfCurrentDay());
+    }
+
+    @Override
+    public void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
     }
 }

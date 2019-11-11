@@ -1,6 +1,5 @@
 package ru.melod1n.schedule.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,18 +29,12 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
 import ru.melod1n.schedule.adapter.ScheduleAdapter;
-import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.common.ThemeEngine;
-import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.database.CacheStorage;
-import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.DayItem;
 import ru.melod1n.schedule.items.LessonItem;
 import ru.melod1n.schedule.items.LocationItem;
 import ru.melod1n.schedule.items.SubjectItem;
 import ru.melod1n.schedule.items.TeacherItem;
-import ru.melod1n.schedule.util.ArrayUtil;
-import ru.melod1n.schedule.view.FullScreenLessonDialog;
 import ru.melod1n.schedule.view.PopupDialog;
 
 public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
@@ -72,24 +64,7 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceive(Object[] data) {
-        if (ArrayUtil.isEmpty(data)) return;
 
-        String key = (String) data[0];
-        if (key.equals("bells_update")) {
-            int bellsCount = AppGlobal.preferences.getInt(SettingsFragment.KEY_BELLS_COUNT, 0);
-
-            if (adapter == null) return;
-
-            if (adapter.getItemCount() > bellsCount) {
-                adapter.changeItems(new ArrayList<>(adapter.getValues().subList(0, bellsCount)));
-                adapter.notifyDataSetChanged();
-
-                CacheStorage.delete(DatabaseHelper.TABLE_LESSONS, "day=" + day);
-                CacheStorage.insert(DatabaseHelper.TABLE_LESSONS, adapter.getValues());
-            } else {
-                getSubjects();
-            }
-        }
     }
 
     @Override
@@ -97,7 +72,8 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
         PopupDialog dialogFragment = new PopupDialog();
         dialogFragment.setTitle("Тест");
         dialogFragment.setMessage("Пожалуйста, не беспокойтесь");
-        dialogFragment.show(getActivity().getSupportFragmentManager());
+        if (getActivity() != null)
+            dialogFragment.show(getActivity().getSupportFragmentManager());
     }
 
     @Override
@@ -120,7 +96,7 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
         list.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        initDragDrop();
+        //initDragDrop();
 
         refresh.setOnRefreshListener(this::getSubjects);
 
@@ -193,71 +169,6 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
         ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
         ith.attachToRecyclerView(list);
-    }
-
-    private void showDialog() {
-        showDialog(-1);
-    }
-
-    private void showDialog(final int position) {
-        if (adapter == null) return;
-
-        int bellsCount = AppGlobal.preferences.getInt(SettingsFragment.KEY_BELLS_COUNT, 0);
-
-        if (adapter.getItemCount() == bellsCount && position == -1) {
-            if (bellsCount == 10) {
-                Toast.makeText(getActivity(), "Достигнуто максимальное количество уроков.", Toast.LENGTH_LONG).show();
-            } else {
-                if (getActivity() == null) return;
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(R.string.warning);
-                builder.setMessage("Количество уроков превышает количество Ваших звонков. Увеличить количество звонков на 1?");
-                builder.setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-                    AppGlobal.preferences.edit().putInt(SettingsFragment.KEY_BELLS_COUNT, bellsCount + 1).apply();
-                    SettingsFragment.updateBellsCount();
-                    showDialog(position);
-                });
-                builder.setNegativeButton(android.R.string.cancel, null);
-                builder.show();
-            }
-        } else {
-            FullScreenLessonDialog dialog = new FullScreenLessonDialog(getFragmentManager(), position == -1 ? null : adapter.getItem(position));
-            dialog.setOnActionListener(new FullScreenDialog.OnActionListener<LessonItem>() {
-                @Override
-                public void onItemInsert(LessonItem item) {
-                    item.setOrder(day);
-
-//                    if (!item.getHomework().isEmpty())
-//                        EventBus.getDefault().postSticky(new Object[]{"add_subject", item});
-
-                    CacheStorage.insert(DatabaseHelper.TABLE_LESSONS, item);
-
-                    adapter.getValues().add(item);
-                    adapter.notifyItemInserted(adapter.getItemCount() - 1);
-                    adapter.notifyItemRangeChanged(0, adapter.getItemCount(), -1);
-
-                    checkCount();
-                }
-
-                @Override
-                public void onItemEdit(LessonItem item) {
-                    CacheStorage.update(DatabaseHelper.TABLE_LESSONS, item, "id = ?", item.getOrder());
-
-                    adapter.notifyItemChanged(position, -1);
-                }
-
-                @Override
-                public void onItemDelete(LessonItem item) {
-                    CacheStorage.delete(DatabaseHelper.TABLE_LESSONS, "id = " + adapter.getItem(position).getOrder());
-
-                    adapter.remove(position);
-                    adapter.notifyItemRemoved(position);
-                    adapter.notifyItemRangeChanged(0, adapter.getItemCount(), -1);
-
-                    checkCount();
-                }
-            });
-        }
     }
 
     private void checkCount() {

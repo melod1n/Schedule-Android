@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +21,6 @@ import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.items.ThemeItem;
-import ru.melod1n.schedule.util.ViewUtil;
 import ru.melod1n.schedule.widget.Toolbar;
 
 public class ThemesActivity extends BaseActivity {
@@ -40,6 +38,10 @@ public class ThemesActivity extends BaseActivity {
 
     private Drawable navigationIcon;
 
+    private View rootView;
+
+    private volatile boolean animating;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,8 @@ public class ThemesActivity extends BaseActivity {
 
         applyBackground();
         applyTitle();
+
+        rootView = toolbar.getRootView();
 
         navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_backward);
 
@@ -110,6 +114,8 @@ public class ThemesActivity extends BaseActivity {
         ThemeItem item = adapter.getItem(position);
 
         if (ThemeEngine.isThemeValid(item)) {
+            if (animating || item.equals(theme)) return;
+
             ThemeEngine.setCurrentTheme(item.getId());
             applyTitle();
 
@@ -128,6 +134,9 @@ public class ThemesActivity extends BaseActivity {
     }
 
     private void fadeLayout() {
-        ViewUtil.fadeView(toolbar.getRootView(), 400);
+        animating = true;
+
+        rootView.setAlpha(0);
+        rootView.animate().alpha(1).setDuration(250).withEndAction(() -> animating = false).start();
     }
 }

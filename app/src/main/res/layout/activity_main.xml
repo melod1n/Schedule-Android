@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:openDrawer="start">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,26 +17,25 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="56dp" />
-
-        <ru.melod1n.schedule.widget.HighlightView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="56dp"
-            app:direction="top" />
+            android:layout_above="@+id/navigationView" />
 
         <ru.melod1n.schedule.widget.BottomNavigationView
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
             android:elevation="0dp"
             app:elevation="0dp"
             app:labelVisibilityMode="selected"
             app:menu="@menu/activity_main_bottom" />
 
-    </FrameLayout>
+        <ru.melod1n.schedule.widget.HighlightView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/navigationView"
+            app:direction="top" />
+
+    </RelativeLayout>
 
     <ru.melod1n.schedule.widget.NavigationDrawer
         android:id="@+id/navigationDrawer"
@@ -46,6 +45,5 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

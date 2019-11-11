@@ -27,7 +27,7 @@
     <string name="settings">Settings</string>
     <string name="danil_nikolaev" translatable="false">Danil Nikolaev</string>
     <string name="main_developer" translatable="false">Main Developer</string>
-    <string name="version_about" formatted="false">Version %s Build %d</string>
+    <string name="version_about">Version %s Build %d</string>
     <string name="cause_error">Application crashed</string>
     <string name="error_log">Log with error was saved</string>
     <string name="no_items_title">There\'s nothing here</string>
@@ -85,4 +85,28 @@
     <string name="pref_schedule_title">Schedule</string>
     <string name="pref_appearance_main_title">Main</string>
     <string name="prefs_appearance_theme_manager_title">Theme manager</string>
+    <string name="pref_debug_title">Debug</string>
+    <string name="pref_debug_main_title">Main</string>
+    <string name="pref_debug_show_error_title">Show error</string>
+    <string name="pref_debug_show_error_summary">Shows error on start after crash</string>
+    <string name="pref_appearance_other_title">Other</string>
+    <string name="pref_appearance_select_current_day_title">Select current day</string>
+    <string name="pref_appearance_select_current_day_summary">Schedule screen</string>
+    <string name="pref_appearance_theme_manager_summary">Select another theme</string>
+    <string name="drawer_subtitle_no_user">Offline mode</string>
+    <string name="drawer_title_no_user">Local user</string>
+    <string name="pref_schedule_show_date_instead_interim_title">Show date in toolbar instead of interim</string>
+
+    <string name="january">January</string>
+    <string name="february">February</string>
+    <string name="march">March</string>
+    <string name="april">April</string>
+    <string name="may">May</string>
+    <string name="june">June</string>
+    <string name="july">July</string>
+    <string name="august">August</string>
+    <string name="september">September</string>
+    <string name="october">October</string>
+    <string name="november">November</string>
+    <string name="december">December</string>
 </resources>

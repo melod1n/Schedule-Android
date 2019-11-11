@@ -1,16 +1,13 @@
 package ru.melod1n.schedule.util;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeEngine;

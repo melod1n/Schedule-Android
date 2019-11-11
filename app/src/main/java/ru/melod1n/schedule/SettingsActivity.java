@@ -7,7 +7,6 @@ import androidx.annotation.LayoutRes;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.fragment.SettingsFragment;
-import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.widget.Toolbar;
 
 public class SettingsActivity extends BaseActivity {
@@ -65,5 +64,11 @@ public class SettingsActivity extends BaseActivity {
     public void setFragmentElement(@LayoutRes int layoutId) {
         this.layoutId = layoutId;
         AppGlobal.preferences.edit().putInt("settings_layout", layoutId).apply();
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppGlobal.preferences.edit().remove("settings_layout").apply();
+        super.onDestroy();
     }
 }

@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.util.DisplayMetrics;
 
 import androidx.annotation.NonNull;
 
@@ -143,6 +144,11 @@ public class Util {
         return days[day];
     }
 
+    public static String getMonthString(int month) {
+        String[] months = AppGlobal.context.getResources().getStringArray(R.array.months);
+        return months[month];
+    }
+
     public static int getNumOfCurrentDay() {
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
@@ -170,5 +176,13 @@ public class Util {
         }
 
         return day;
+    }
+
+    public static int px(float dp){
+        return (int) (dp * (AppGlobal.context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+    public static int dp(float px){
+        return (int) (px / (AppGlobal.context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 }
