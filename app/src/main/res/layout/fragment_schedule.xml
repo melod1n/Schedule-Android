@@ -7,11 +7,6 @@
 
     <include layout="@layout/list_recycler" />
 
-    <ru.melod1n.schedule.widget.HighlightView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:direction="bottom" />
-
     <include layout="@layout/no_items" />
 
     <ru.melod1n.schedule.widget.FloatingActionButton

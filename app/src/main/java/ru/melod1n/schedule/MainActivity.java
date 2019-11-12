@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -138,22 +137,22 @@ public class MainActivity extends BaseActivity {
             PopupDialog dialog = new PopupDialog();
             dialog.setTitle(R.string.warning);
             dialog.setMessage(R.string.cause_error);
-            dialog.show(getSupportFragmentManager());
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.warning);
-
-            builder.setMessage(R.string.cause_error);
-            builder.setPositiveButton(android.R.string.ok, null);
-            builder.setNeutralButton(R.string.show, (p1, p2) -> {
-                AlertDialog.Builder adb1 = new AlertDialog.Builder(MainActivity.this);
-                adb1.setTitle(R.string.error_log);
-                adb1.setMessage(trace);
-                adb1.setPositiveButton(android.R.string.ok, null);
-                adb1.setNeutralButton(R.string.copy, (p11, p21) -> Util.copyText(trace));
-                adb1.create().show();
-            });
-            builder.create().show();
+//            dialog.show(getSupportFragmentManager());
+//
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setTitle(R.string.warning);
+//
+//            builder.setMessage(R.string.cause_error);
+//            builder.setPositiveButton(android.R.string.ok, null);
+//            builder.setNeutralButton(R.string.show, (p1, p2) -> {
+//                AlertDialog.Builder adb1 = new AlertDialog.Builder(MainActivity.this);
+//                adb1.setTitle(R.string.error_log);
+//                adb1.setMessage(trace);
+//                adb1.setPositiveButton(android.R.string.ok, null);
+//                adb1.setNeutralButton(R.string.copy, (p11, p21) -> Util.copyText(trace));
+//                adb1.show();
+//            });
+//            builder.show();
         }
     }
 

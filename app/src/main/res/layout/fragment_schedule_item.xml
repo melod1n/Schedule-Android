@@ -78,7 +78,6 @@
             app:colorDef="primary"
             tools:text="Научно-исследовательский семинар 'Разработка облачных и мобильных приложенимй на платформе Apple iOS' (анг)" />
 
-
         <ru.melod1n.schedule.widget.TextPlain
             android:id="@+id/lessonClassroom"
             android:layout_width="match_parent"

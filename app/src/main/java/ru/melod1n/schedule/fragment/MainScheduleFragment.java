@@ -127,7 +127,6 @@ public class MainScheduleFragment extends Fragment {
 
     private void createPagerAdapter() {
         pager.setAdapter(new ScheduleMainAdapter(getChildFragmentManager()));
-        pager.computeScroll();
         pager.setOffscreenPageLimit(5);
         tabs.setupWithViewPager(pager);
 

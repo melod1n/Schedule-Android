@@ -178,11 +178,19 @@ public class Util {
         return day;
     }
 
-    public static int px(float dp){
+    public static int px(float dp) {
         return (int) (dp * (AppGlobal.context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
-    public static int dp(float px){
+    public static int dp(float px) {
         return (int) (px / (AppGlobal.context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+    public static int tryToParseInt(String string) {
+        try {
+            return Integer.parseInt(string);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

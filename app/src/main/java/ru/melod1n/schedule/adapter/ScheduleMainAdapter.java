@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.fragment.ScheduleFragment;
@@ -22,6 +24,7 @@ public class ScheduleMainAdapter extends FragmentPagerAdapter {
         return NUM_ITEMS;
     }
 
+    @NotNull
     @Override
     public Fragment getItem(int position) {
         return new ScheduleFragment(position);

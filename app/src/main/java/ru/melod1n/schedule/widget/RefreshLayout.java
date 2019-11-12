@@ -25,6 +25,7 @@ public class RefreshLayout extends SwipeRefreshLayout {
 
     public RefreshLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
 
@@ -38,7 +39,6 @@ public class RefreshLayout extends SwipeRefreshLayout {
         if (Keys.THEME_UPDATE.equals(key)) {
             theme = (ThemeItem) data[1];
             init();
-            requestLayout();
         }
     }
 

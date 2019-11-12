@@ -114,6 +114,7 @@ public class AppGlobal extends Application {
 
         database = DatabaseHelper.get().getWritableDatabase();
 
+        TimeManager.init();
         CrashManager.init();
         TimeHelper.init();
         ThemeEngine.init();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ru.melod1n.schedule.widget.TextPlain xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.melod1n.schedule.widget.NoItemsView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/no_items_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
