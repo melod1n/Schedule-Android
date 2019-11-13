@@ -17,7 +17,6 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.common.TimeManager;
 import ru.melod1n.schedule.items.ThemeItem;
-import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Keys;
 
 public class NoItemsView extends AppCompatTextView {
@@ -41,7 +40,7 @@ public class NoItemsView extends AppCompatTextView {
         theme = ThemeEngine.getCurrentTheme();
         init();
 
-        TimeManager.setOnHourChangeListener(currentHour -> {
+        TimeManager.addOnHourChangeListener(currentHour -> {
 
             String subtitle = new SimpleDateFormat("HH:mm:ss").format(new Date(System.currentTimeMillis())) + " – ";
 
@@ -67,13 +66,11 @@ public class NoItemsView extends AppCompatTextView {
         int textColor = theme.getColorTextSecondary();
         setTextColor(textColor);
 
-        Drawable[] drawables = getCompoundDrawables();
-        if (!ArrayUtil.isEmpty(drawables)) {
-            for (Drawable drawable : drawables) {
-                if (drawable != null)
-                    drawable.setTint(textColor);
-            }
-        }
+        Drawable icon = getContext().getDrawable(R.drawable.ic_no_items);
+        if (icon == null) return;
+        icon.setTint(textColor);
+
+        setCompoundDrawables(null, icon, null, null);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
