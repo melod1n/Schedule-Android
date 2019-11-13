@@ -3,33 +3,25 @@
     <string name="app_name" translatable="false">μSchedule</string>
     <string name="warning">Warning!</string>
     <string name="confirm_delete_text">Do you really want delete this?</string>
-    <string name="monday">Monday</string>
-    <string name="tuesday">Tuesday</string>
-    <string name="wednesday">Wednesday</string>
-    <string name="thursday">Thursday</string>
-    <string name="friday">Friday</string>
-    <string name="saturday">Saturday</string>
-    <string name="sunday">Sunday</string>
+
     <string name="cab">Cab</string>
     <string name="subject">Subject</string>
     <string name="homework">Homework</string>
-    <string name="confirm_recreate_bells">Do you really want to recreate bells?</string>
-    <string name="recreate_bells">Recreate bells</string>
-    <string name="recreate_all_bells">Recreate all bells</string>
-    <string name="bell" translatable="false"><b>%1$s</b> - <b>%2$s</b></string>
-    <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="show">Show</string>
     <string name="timetable">Timetable</string>
     <string name="schedule">Schedule</string>
     <string name="settings">Settings</string>
+
     <string name="danil_nikolaev" translatable="false">Danil Nikolaev</string>
     <string name="main_developer" translatable="false">Main Developer</string>
+
+    <string name="max_hubach" translatable="false">Max Hubach</string>
+    <string name="backend_logic_developer" translatable="false">Backend Logic Developer</string>
+
     <string name="version_about">Version %s Build %d</string>
     <string name="cause_error">Application crashed</string>
-    <string name="error_log">Log with error was saved</string>
     <string name="no_items_title">There\'s nothing here</string>
     <string name="notes">Notes</string>
     <string name="set_one_column">Set one column</string>
@@ -51,7 +43,6 @@
     <string name="title">Title</string>
     <string name="text">Text</string>
     <string name="bells_count">Bells count</string>
-    <string name="confirm_recreate_bells_on_day">Do you really want to recreate bells on %s?</string>
     <string name="save">Save</string>
     <string name="input">Input</string>
     <string name="theme">Theme</string>
@@ -68,8 +59,6 @@
     <string name="drawer_groups_list">Groups list</string>
     <string name="drawer_quick_edit">Quick edit</string>
     <string name="drawer_exit">Exit</string>
-    <string name="max_hubach" translatable="false">Max Hubach</string>
-    <string name="backend_logic_developer" translatable="false">Backend Logic Developer</string>
     <string name="theme_summary" translatable="false">%s – %s</string>
     <string name="in_progress_title">In progress&#8230;</string>
     <string name="warning_theme_old">Theme is deprecated</string>
@@ -109,4 +98,12 @@
     <string name="october">October</string>
     <string name="november">November</string>
     <string name="december">December</string>
+
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 </resources>
