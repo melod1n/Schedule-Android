@@ -10,9 +10,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.common.TimeManager;
@@ -40,26 +37,28 @@ public class NoItemsView extends AppCompatTextView {
         theme = ThemeEngine.getCurrentTheme();
         init();
 
-        TimeManager.addOnHourChangeListener(currentHour -> {
+        initIcon(TimeManager.getCurrentHour());
+        TimeManager.addOnHourChangeListener(this::initIcon);
+    }
 
-            String subtitle = new SimpleDateFormat("HH:mm:ss").format(new Date(System.currentTimeMillis())) + " – ";
+    private void initIcon(int currentHour) {
+        String subtitle = "";
 
-            if (currentHour > 6 && currentHour < 12) { //morning
-                subtitle += "пичка утра";
-            } else if (currentHour > 12 && currentHour < 17) { //afternoon
-                subtitle += "пикча дня";
-            } else if (currentHour > 17 && currentHour < 23) { //evening
-                subtitle += "пикча вечера";
-            } else { //night
-                subtitle += "пикча ночи";
-            }
+        if (currentHour > 6 && currentHour < 12) { //morning
+            subtitle += "пичка утра";
+        } else if (currentHour > 12 && currentHour < 17) { //afternoon
+            subtitle += "пикча дня";
+        } else if (currentHour > 17 && currentHour < 23) { //evening
+            subtitle += "пикча вечера";
+        } else { //night
+            subtitle += "пикча ночи";
+        }
 
-            if (getText() == null || getText().toString().isEmpty()) return;
+        if (getText() == null || getText().toString().isEmpty()) return;
 
-            String text = getContext().getString(R.string.no_items_title) + "\n(" + subtitle + ")";
+        String text = getContext().getString(R.string.no_items_title) + "\n(" + subtitle + ")";
 
-            NoItemsView.this.post(() -> setText(text));
-        });
+        NoItemsView.this.post(() -> setText(text));
     }
 
     private void init() {
@@ -70,7 +69,7 @@ public class NoItemsView extends AppCompatTextView {
         if (icon == null) return;
         icon.setTint(textColor);
 
-        setCompoundDrawables(null, icon, null, null);
+        setCompoundDrawablesWithIntrinsicBounds(null, icon, null, null);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

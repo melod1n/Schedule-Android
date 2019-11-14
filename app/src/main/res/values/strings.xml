@@ -73,7 +73,7 @@
     <string name="pref_security_title">Security</string>
     <string name="pref_schedule_title">Schedule</string>
     <string name="pref_appearance_main_title">Main</string>
-    <string name="prefs_appearance_theme_manager_title">Theme manager</string>
+    <string name="pref_appearance_theme_manager_title">Theme manager</string>
     <string name="pref_debug_title">Debug</string>
     <string name="pref_debug_main_title">Main</string>
     <string name="pref_debug_show_error_title">Show error</string>
@@ -106,4 +106,8 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="pref_appearance_theme_changing_title">Theme changing</string>
+    <string name="pref_appearance_auto_switch_theme_title">Auto theme switch</string>
+    <string name="pref_appearance_day_time_theme_title">Day time</string>
+    <string name="pref_appearance_night_time_theme_title">Night time</string>
 </resources>

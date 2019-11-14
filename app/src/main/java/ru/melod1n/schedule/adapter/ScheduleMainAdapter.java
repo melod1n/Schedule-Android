@@ -3,7 +3,7 @@ package ru.melod1n.schedule.adapter;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,12 +11,12 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.fragment.ScheduleFragment;
 
-public class ScheduleMainAdapter extends FragmentPagerAdapter {
+public class ScheduleMainAdapter extends FragmentStatePagerAdapter {
 
     private static final int NUM_ITEMS = 6;
 
     public ScheduleMainAdapter(FragmentManager fragmentManager) {
-        super(fragmentManager);
+        super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
     @Override
@@ -31,8 +31,8 @@ public class ScheduleMainAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
+    public int getItemPosition(@NotNull Object object) {
+        return ((ScheduleFragment) object).getDay();
     }
 
     @Override

@@ -11,6 +11,7 @@ import androidx.preference.PreferenceScreen;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.SettingsActivity;
 import ru.melod1n.schedule.ThemesActivity;
+import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.Engine;
 import ru.melod1n.schedule.common.ThemeEngine;
 
@@ -24,6 +25,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     public static final String KEY_THEME = "theme";
     private static final String KEY_THEME_MANAGER = "theme_manager";
+    private static final String KEY_AUTO_SWITCH_THEME = "auto_switch_theme";
+    private static final String KEY_DAY_TIME_THEME = "day_time_theme";
+    private static final String KEY_NIGHT_TIME_THEME = "night_time_theme";
     static final String KEY_SELECT_CURRENT_DAY = "select_current_day";
 
     public static final String KEY_SHOW_DATE = "show_date_instead_interim";
@@ -31,6 +35,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public static final String KEY_SHOW_ERROR = "show_error";
 
     private int currentPreferenceLayout;
+
+    private Preference dayTimeTheme, nightTimeTheme;
 
     @Override
     public void onCreatePreferences(Bundle p1, String p2) {
@@ -64,6 +70,26 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (themeManager != null) {
             themeManager.setOnPreferenceClickListener(this);
         }
+
+        Preference autoSwitchTheme = findPreference(KEY_AUTO_SWITCH_THEME);
+
+        if (autoSwitchTheme != null) {
+            autoSwitchTheme.setOnPreferenceChangeListener(this);
+        }
+
+        dayTimeTheme = findPreference(KEY_DAY_TIME_THEME);
+
+        if (dayTimeTheme != null) {
+            dayTimeTheme.setOnPreferenceClickListener(this);
+        }
+
+        nightTimeTheme = findPreference(KEY_NIGHT_TIME_THEME);
+
+        if (nightTimeTheme != null) {
+            nightTimeTheme.setOnPreferenceClickListener(this);
+        }
+
+        autoSwitchVisibility(null);
 
         Preference schedule = findPreference(CATEGORY_SCHEDULE);
 
@@ -127,9 +153,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         switch (preference.getKey()) {
             case KEY_THEME_MANAGER:
                 startThemesActivity();
-                break;
+                return true;
+            case KEY_DAY_TIME_THEME:
+            case KEY_NIGHT_TIME_THEME:
+                return true;
         }
-        return true;
+
+        return false;
     }
 
 
@@ -139,8 +169,23 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             case KEY_SHOW_DATE:
                 sendChangeShowDateEvent((boolean) newValue);
                 return true;
+            case KEY_AUTO_SWITCH_THEME:
+                autoSwitchVisibility((boolean) newValue);
+                return true;
         }
         return false;
+    }
+
+    private void autoSwitchVisibility(Boolean b) {
+        boolean visible = b != null ? b : AppGlobal.preferences.getBoolean(KEY_AUTO_SWITCH_THEME, false);
+
+        if (dayTimeTheme != null) {
+            dayTimeTheme.setVisible(visible);
+        }
+
+        if (nightTimeTheme != null) {
+            nightTimeTheme.setVisible(visible);
+        }
     }
 
     private void sendChangeShowDateEvent(boolean newValue) {

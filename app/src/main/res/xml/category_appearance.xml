@@ -16,7 +16,27 @@
         app:iconSpaceReserved="false"
         app:key="theme_manager"
         app:summary="@string/pref_appearance_theme_manager_summary"
-        app:title="@string/prefs_appearance_theme_manager_title" />
+        app:title="@string/pref_appearance_theme_manager_title" />
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref_appearance_theme_changing_title" />
+
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
+        app:iconSpaceReserved="false"
+        app:key="auto_switch_theme"
+        app:title="@string/pref_appearance_auto_switch_theme_title" />
+
+    <PreferenceScreen
+        app:iconSpaceReserved="false"
+        app:key="day_time_theme"
+        app:title="@string/pref_appearance_day_time_theme_title" />
+
+    <PreferenceScreen
+        app:iconSpaceReserved="false"
+        app:key="night_time_theme"
+        app:title="@string/pref_appearance_night_time_theme_title" />
 
     <PreferenceCategory
         app:iconSpaceReserved="false"

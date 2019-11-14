@@ -45,7 +45,6 @@ public class MainScheduleFragment extends Fragment {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    private SearchView searchView;
     private MenuItem searchViewItem;
 
     private boolean searchViewCollapsed = true;
@@ -86,11 +85,10 @@ public class MainScheduleFragment extends Fragment {
     private void prepareToolbar() {
         toolbar.setTitle(R.string.nav_schedule);
         toolbar.inflateMenu(R.menu.fragment_main_schedule);
-        toolbar.setOnMenuItemClickListener(this::onMenuItemClick);
 
         searchViewItem = toolbar.getMenu().findItem(R.id.schedule_search);
 
-        searchView = (SearchView) searchViewItem.getActionView();
+        SearchView searchView = (SearchView) searchViewItem.getActionView();
         searchView.setQueryHint(getString(R.string.title));
 
         searchView.setOnCloseListener(() -> {
@@ -119,10 +117,6 @@ public class MainScheduleFragment extends Fragment {
 
     public boolean isSearchViewCollapsed() {
         return searchViewCollapsed;
-    }
-
-    private boolean onMenuItemClick(@NonNull MenuItem item) {
-        return false;
     }
 
     private void createPagerAdapter() {

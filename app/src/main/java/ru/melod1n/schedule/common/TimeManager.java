@@ -90,6 +90,14 @@ public class TimeManager {
         return currentHour;
     }
 
+    public static int getCurrentMinute() {
+        return currentMinute;
+    }
+
+    public static int getCurrentSecond() {
+        return currentSecond;
+    }
+
     public static void addOnHourChangeListener(OnHourChangeListener onHourChangeListeners) {
         TimeManager.onHourChangeListeners.add(onHourChangeListeners);
     }

@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
 import ru.melod1n.schedule.adapter.ScheduleAdapter;
-import ru.melod1n.schedule.common.TimeManager;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.items.DayItem;
 import ru.melod1n.schedule.items.LessonItem;
@@ -153,8 +152,7 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
-                        ItemTouchHelper.DOWN | ItemTouchHelper.UP);
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.DOWN | ItemTouchHelper.UP);
             }
 
             @Override
@@ -231,5 +229,9 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
         adapter.changeItems(values);
         adapter.notifyItemRangeChanged(0, adapter.getItemCount(), -1);
+    }
+
+    public int getDay() {
+        return day;
     }
 }
