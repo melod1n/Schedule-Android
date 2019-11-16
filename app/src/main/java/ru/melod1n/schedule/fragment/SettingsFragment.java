@@ -1,5 +1,7 @@
 package ru.melod1n.schedule.fragment;
 
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,6 +10,10 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Calendar;
+
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.SettingsActivity;
 import ru.melod1n.schedule.ThemesActivity;
@@ -15,6 +21,7 @@ import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.Engine;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.common.TimeManager;
+import ru.melod1n.schedule.items.ThemeItem;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
@@ -34,6 +41,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public static final String KEY_SHOW_DATE = "show_date_instead_interim";
 
     public static final String KEY_SHOW_ERROR = "show_error";
+    public static final String KEY_SET_MORNING_TIME = "set_morning_time";
+    public static final String KEY_SET_EVENING_TIME = "set_evening_time";
 
     private int currentPreferenceLayout;
 
@@ -48,6 +57,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         }
 
         init();
+
+        TimeManager.addOnHourChangeListener(currentHour -> {
+            if (getActivity() != null)
+                getActivity().runOnUiThread(() -> autoSwitchVisibility(null));
+        });
     }
 
     private void init() {
@@ -63,7 +77,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         Preference theme = findPreference(KEY_THEME);
 
         if (theme != null) {
-            theme.setSummary(getString(R.string.theme_summary, ThemeEngine.getCurrentTheme().getTitle(), ThemeEngine.getCurrentTheme().getAuthor()));
+            ThemeItem currentTheme = ThemeEngine.getCurrentTheme();
+
+            if (StringUtils.isEmpty(currentTheme.getAuthor())) {
+                theme.setSummary(currentTheme.getTitle());
+            } else {
+                theme.setSummary(getString(R.string.theme_summary, currentTheme.getTitle(), currentTheme.getAuthor()));
+            }
         }
 
         themeManager = findPreference(KEY_THEME_MANAGER);
@@ -108,6 +128,18 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
         if (debug != null) {
             debug.setOnPreferenceClickListener(this::changeRootLayout);
+        }
+
+        Preference setMorningTime = findPreference(KEY_SET_MORNING_TIME);
+
+        if (setMorningTime != null) {
+            setMorningTime.setOnPreferenceClickListener(this);
+        }
+
+        Preference setEveningTime = findPreference(KEY_SET_EVENING_TIME);
+
+        if (setEveningTime != null) {
+            setEveningTime.setOnPreferenceClickListener(this);
         }
 
         applyTintInPreferenceScreen(getPreferenceScreen());
@@ -157,11 +189,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             case KEY_THEME_MANAGER:
                 startThemesActivity(preference);
                 return true;
+            case KEY_SET_MORNING_TIME:
+                setMorningTime();
+                return true;
+            case KEY_SET_EVENING_TIME:
+                setEveningTime();
+                return true;
         }
 
         return false;
     }
-
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -199,28 +236,25 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private void autoSwitchVisibility(Boolean b) {
         boolean visible = b != null ? b : AppGlobal.preferences.getBoolean(KEY_AUTO_SWITCH_THEME, false);
 
-        if (dayTimeTheme != null) {
-            dayTimeTheme.setVisible(visible);
-
-            if (TimeManager.isEvening() || TimeManager.isAfternoon()) { //daytime
-                dayTimeTheme.setSummary(R.string.pref_appearance_time_theme_current_theme);
-            } else {
-                dayTimeTheme.setSummary("");
-            }
-        }
-
-        if (nightTimeTheme != null) {
-            nightTimeTheme.setVisible(visible);
-
-            if (TimeManager.isEvening() || TimeManager.isNight()) {
-                nightTimeTheme.setSummary(R.string.pref_appearance_time_theme_current_theme);
-            } else {
-                nightTimeTheme.setSummary("");
-            }
-        }
-
         if (themeManager != null) {
             themeManager.setVisible(!visible);
+        }
+
+        if (dayTimeTheme == null || nightTimeTheme == null) return;
+
+        dayTimeTheme.setVisible(visible);
+        nightTimeTheme.setVisible(visible);
+
+        if (TimeManager.isMorning() || TimeManager.isAfternoon()) {
+            dayTimeTheme.setSummary(R.string.pref_appearance_time_theme_current_theme);
+        } else {
+            dayTimeTheme.setSummary("");
+        }
+
+        if (TimeManager.isEvening() || TimeManager.isNight()) {
+            nightTimeTheme.setSummary(R.string.pref_appearance_time_theme_current_theme);
+        } else {
+            nightTimeTheme.setSummary("");
         }
     }
 
@@ -264,6 +298,34 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         }
 
         startActivity(new Intent(getActivity(), ThemesActivity.class).putExtra("request", request));
+    }
+
+    private void setMorningTime() {
+        Calendar currentCalendar = Calendar.getInstance();
+
+        Calendar morningCalendar = (Calendar) currentCalendar.clone();
+        morningCalendar.set(Calendar.HOUR, 8);
+
+        setTime(morningCalendar.getTimeInMillis());
+    }
+
+    private void setEveningTime() {
+        Calendar currentCalendar = Calendar.getInstance();
+
+        Calendar morningCalendar = (Calendar) currentCalendar.clone();
+        morningCalendar.set(Calendar.HOUR, 19);
+
+        setTime(morningCalendar.getTimeInMillis());
+    }
+
+    private void setTime(long millis) {
+        if (getContext() == null) return;
+
+        AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+
+        if (manager != null) {
+            manager.setTime(millis);
+        }
     }
 
     public boolean onBackPressed() {

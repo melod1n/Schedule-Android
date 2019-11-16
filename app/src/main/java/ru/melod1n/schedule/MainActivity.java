@@ -28,6 +28,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.common.AppGlobal;
+import ru.melod1n.schedule.common.ThemeEngine;
+import ru.melod1n.schedule.common.TimeManager;
 import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.fragment.AgendaFragment;
 import ru.melod1n.schedule.fragment.MainScheduleFragment;
@@ -35,6 +37,7 @@ import ru.melod1n.schedule.fragment.NotesFragment;
 import ru.melod1n.schedule.fragment.ScheduleFragment;
 import ru.melod1n.schedule.fragment.SettingsFragment;
 import ru.melod1n.schedule.fragment.UpdatesFragment;
+import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.view.PopupDialog;
@@ -73,6 +76,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        checkTheme();
+        TimeManager.addOnHourChangeListener(currentHour -> checkTheme());
+
         applyBackground();
 
         checkFirstLaunch(savedInstanceState);
@@ -82,6 +88,16 @@ public class MainActivity extends BaseActivity {
 
         navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
         navView.setOnNavigationItemSelectedListener(this::onItemSelected);
+    }
+
+    private void checkTheme() {
+        if (ThemeEngine.isAutoTheme()) {
+            ThemeItem item = TimeManager.isMorning() || TimeManager.isAfternoon() ? ThemeEngine.getDayTheme() : ThemeEngine.getNightTheme();
+
+            if (!ThemeEngine.getCurrentTheme().equals(item)) {
+                ThemeEngine.setCurrentTheme(item.getId());
+            }
+        }
     }
 
     private void initNavDrawer() {

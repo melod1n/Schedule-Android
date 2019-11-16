@@ -13,4 +13,21 @@
         app:summary="@string/pref_debug_show_error_summary"
         app:title="@string/pref_debug_show_error_title" />
 
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false"
+        app:title="@string/pref_debug_time_title" />
+
+    <PreferenceScreen
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false"
+        app:key="set_morning_time"
+        app:title="@string/pref_debug_set_morning_time_title" />
+
+    <PreferenceScreen
+        app:iconSpaceReserved="false"
+        app:isPreferenceVisible="false"
+        app:key="set_evening_time"
+        app:title="@string/pref_debug_set_evening_time_title" />
+
 </PreferenceScreen>

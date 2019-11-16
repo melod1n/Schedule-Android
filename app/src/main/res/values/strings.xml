@@ -111,4 +111,7 @@
     <string name="pref_appearance_day_time_theme_title">Day time</string>
     <string name="pref_appearance_night_time_theme_title">Night time</string>
     <string name="pref_appearance_time_theme_current_theme">Current theme</string>
+    <string name="pref_debug_time_title">Time</string>
+    <string name="pref_debug_set_morning_time_title">Set morning time</string>
+    <string name="pref_debug_set_evening_time_title">Set evening time</string>
 </resources>

@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -56,7 +58,13 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
 
             int colorPrimary = item.getColorPrimary();
 
-            Spanned text = Html.fromHtml(String.format("<b>%s</b> – %s", item.getTitle(), item.getAuthor()));
+            Spanned text;
+
+            if (!StringUtils.isEmpty(item.getAuthor())) {
+                text = Html.fromHtml(String.format("<b>%s</b> – %s", item.getTitle(), item.getAuthor()));
+            } else {
+                text = Html.fromHtml(String.format("<b>%s</b>", item.getTitle()));
+            }
 
             textView.setTextColor(ColorUtil.isLight(colorPrimary) ? Color.BLACK : Color.WHITE);
             textView.setText(text);

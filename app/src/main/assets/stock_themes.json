@@ -1,7 +1,7 @@
 [
   {
     "id": "teal_md2",
-    "title": "White Teal",
+    "title": "Default",
     "author": "μSchedule",
     "version": 3,
     "ui": {
@@ -165,8 +165,8 @@
   },
   {
     "id": "@innomaxx_theme",
-    "title": "@innomaxx Theme",
-    "author": "@innomaxx",
+    "title": "@innomaxx",
+    "author": "",
     "version": 3,
     "ui": {
       "dark": false,
