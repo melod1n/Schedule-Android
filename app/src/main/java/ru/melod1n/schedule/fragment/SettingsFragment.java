@@ -14,6 +14,7 @@ import ru.melod1n.schedule.ThemesActivity;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.Engine;
 import ru.melod1n.schedule.common.ThemeEngine;
+import ru.melod1n.schedule.common.TimeManager;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
@@ -25,9 +26,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     public static final String KEY_THEME = "theme";
     private static final String KEY_THEME_MANAGER = "theme_manager";
-    private static final String KEY_AUTO_SWITCH_THEME = "auto_switch_theme";
-    private static final String KEY_DAY_TIME_THEME = "day_time_theme";
-    private static final String KEY_NIGHT_TIME_THEME = "night_time_theme";
+    public static final String KEY_AUTO_SWITCH_THEME = "auto_switch_theme";
+    public static final String KEY_DAY_TIME_THEME = "day_time_theme";
+    public static final String KEY_NIGHT_TIME_THEME = "night_time_theme";
     static final String KEY_SELECT_CURRENT_DAY = "select_current_day";
 
     public static final String KEY_SHOW_DATE = "show_date_instead_interim";
@@ -36,7 +37,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private int currentPreferenceLayout;
 
-    private Preference dayTimeTheme, nightTimeTheme;
+    private Preference dayTimeTheme, nightTimeTheme, themeManager;
 
     @Override
     public void onCreatePreferences(Bundle p1, String p2) {
@@ -65,7 +66,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             theme.setSummary(getString(R.string.theme_summary, ThemeEngine.getCurrentTheme().getTitle(), ThemeEngine.getCurrentTheme().getAuthor()));
         }
 
-        Preference themeManager = findPreference(KEY_THEME_MANAGER);
+        themeManager = findPreference(KEY_THEME_MANAGER);
 
         if (themeManager != null) {
             themeManager.setOnPreferenceClickListener(this);
@@ -151,11 +152,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public boolean onPreferenceClick(@NonNull Preference preference) {
         switch (preference.getKey()) {
-            case KEY_THEME_MANAGER:
-                startThemesActivity();
-                return true;
             case KEY_DAY_TIME_THEME:
             case KEY_NIGHT_TIME_THEME:
+            case KEY_THEME_MANAGER:
+                startThemesActivity(preference);
                 return true;
         }
 
@@ -170,7 +170,27 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 sendChangeShowDateEvent((boolean) newValue);
                 return true;
             case KEY_AUTO_SWITCH_THEME:
-                autoSwitchVisibility((boolean) newValue);
+                boolean autoTheme = (boolean) newValue;
+
+
+                ThemeEngine.setAutoTheme(autoTheme);
+                autoSwitchVisibility(autoTheme);
+
+                if (autoTheme) {
+                    if (TimeManager.isMorning() || TimeManager.isAfternoon()) {
+                        if (!ThemeEngine.getCurrentTheme().equals(ThemeEngine.getDayTheme())) {
+                            ThemeEngine.setCurrentTheme(ThemeEngine.getDayTheme().getId());
+                        }
+                    } else {
+                        if (!ThemeEngine.getCurrentTheme().equals(ThemeEngine.getNightTheme())) {
+                            ThemeEngine.setCurrentTheme(ThemeEngine.getNightTheme().getId());
+                        }
+                    }
+                } else {
+                    if (!ThemeEngine.getCurrentTheme().getId().toLowerCase().equals(ThemeEngine.getSelectedThemeKey())) {
+                        ThemeEngine.setCurrentTheme(ThemeEngine.getSelectedThemeKey());
+                    }
+                }
                 return true;
         }
         return false;
@@ -181,10 +201,26 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
         if (dayTimeTheme != null) {
             dayTimeTheme.setVisible(visible);
+
+            if (TimeManager.isEvening() || TimeManager.isAfternoon()) { //daytime
+                dayTimeTheme.setSummary(R.string.pref_appearance_time_theme_current_theme);
+            } else {
+                dayTimeTheme.setSummary("");
+            }
         }
 
         if (nightTimeTheme != null) {
             nightTimeTheme.setVisible(visible);
+
+            if (TimeManager.isEvening() || TimeManager.isNight()) {
+                nightTimeTheme.setSummary(R.string.pref_appearance_time_theme_current_theme);
+            } else {
+                nightTimeTheme.setSummary("");
+            }
+        }
+
+        if (themeManager != null) {
+            themeManager.setVisible(!visible);
         }
     }
 
@@ -212,8 +248,22 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         return true;
     }
 
-    private void startThemesActivity() {
-        startActivity(new Intent(getActivity(), ThemesActivity.class));
+    private void startThemesActivity(@NonNull Preference preference) {
+        int request = -1;
+
+        switch (preference.getKey()) {
+            case KEY_THEME_MANAGER:
+                request = 0;
+                break;
+            case KEY_DAY_TIME_THEME:
+                request = 1;
+                break;
+            case KEY_NIGHT_TIME_THEME:
+                request = 2;
+                break;
+        }
+
+        startActivity(new Intent(getActivity(), ThemesActivity.class).putExtra("request", request));
     }
 
     public boolean onBackPressed() {

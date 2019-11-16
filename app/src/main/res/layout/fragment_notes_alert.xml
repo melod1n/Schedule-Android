@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ru.melod1n.schedule.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="?colorPrimary"
+        android:background="#00000000"
         android:paddingStart="6dp"
         android:paddingEnd="16dp"
         app:contentInsetStartWithNavigation="0dp"
+        app:listenThemeUpdates="false"
         app:navigationIcon="@drawable/ic_close" />
 
     <LinearLayout

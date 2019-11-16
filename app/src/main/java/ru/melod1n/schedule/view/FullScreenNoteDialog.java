@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import butterknife.BindView;
@@ -97,7 +96,7 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
         }
 
         MenuItem delete = toolbar.getMenu().add(R.string.delete);
-        delete.setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_trash_outline));
+        delete.setIcon(R.drawable.ic_trash_outline);
         delete.getIcon().setTint(color);
         delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
@@ -120,7 +119,6 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
 
         ViewUtil.applyWindowStyles(w, primaryDark);
         w.setBackgroundDrawable(new ColorDrawable(primary));
-        toolbar.setBackgroundColor(primary);
 
         int visibility = 0;
 

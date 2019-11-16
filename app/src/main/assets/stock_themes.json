@@ -3,7 +3,7 @@
     "id": "teal_md2",
     "title": "White Teal",
     "author": "μSchedule",
-    "version": 2,
+    "version": 3,
     "ui": {
       "dark": false,
       "light_status_bar": true,
@@ -44,7 +44,7 @@
     "id": "teal_md2_dark",
     "title": "Dark Teal",
     "author": "μSchedule",
-    "version": 2,
+    "version": 3,
     "ui": {
       "dark": true,
       "light_status_bar": false,
@@ -85,7 +85,7 @@
     "id": "teal_md1",
     "title": "Colored Teal",
     "author": "μSchedule",
-    "version": 2,
+    "version": 3,
     "ui": {
       "dark": false,
       "light_status_bar": false,
@@ -126,7 +126,7 @@
     "id": "teal_md1_dark",
     "title": "Dark Colored Teal",
     "author": "μSchedule",
-    "version": 2,
+    "version": 3,
     "ui": {
       "dark": true,
       "light_status_bar": false,
@@ -167,7 +167,7 @@
     "id": "@innomaxx_theme",
     "title": "@innomaxx Theme",
     "author": "@innomaxx",
-    "version": "2",
+    "version": 3,
     "ui": {
       "dark": false,
       "light_status_bar": false,

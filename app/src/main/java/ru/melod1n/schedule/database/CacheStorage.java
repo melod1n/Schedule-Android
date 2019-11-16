@@ -17,15 +17,12 @@ import ru.melod1n.schedule.items.ParticipantItem;
 import ru.melod1n.schedule.items.SubjectItem;
 import ru.melod1n.schedule.items.TeacherItem;
 import ru.melod1n.schedule.items.ThemeItem;
-import ru.melod1n.schedule.util.ArrayUtil;
 import ru.melod1n.schedule.util.Util;
 
 import static ru.melod1n.schedule.common.AppGlobal.database;
 import static ru.melod1n.schedule.database.DatabaseHelper.CLASSROOM;
-import static ru.melod1n.schedule.database.DatabaseHelper.DAY;
 import static ru.melod1n.schedule.database.DatabaseHelper.DAY_OF_WEEK;
 import static ru.melod1n.schedule.database.DatabaseHelper.DAY_OF_YEAR;
-import static ru.melod1n.schedule.database.DatabaseHelper.END;
 import static ru.melod1n.schedule.database.DatabaseHelper.ID;
 import static ru.melod1n.schedule.database.DatabaseHelper.LESSONS;
 import static ru.melod1n.schedule.database.DatabaseHelper.LESSON_TYPE;
@@ -33,10 +30,8 @@ import static ru.melod1n.schedule.database.DatabaseHelper.LESSON_TYPE_CUSTOM;
 import static ru.melod1n.schedule.database.DatabaseHelper.ORDER;
 import static ru.melod1n.schedule.database.DatabaseHelper.PARTICIPANTS;
 import static ru.melod1n.schedule.database.DatabaseHelper.POSITION;
-import static ru.melod1n.schedule.database.DatabaseHelper.START;
 import static ru.melod1n.schedule.database.DatabaseHelper.START_TIME;
 import static ru.melod1n.schedule.database.DatabaseHelper.SUBJECT;
-import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_BELLS;
 import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_DAYS;
 import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_LESSONS;
 import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_NOTES;
@@ -100,7 +95,7 @@ public class CacheStorage {
     }
 
     public static ArrayList<ThemeItem> getThemes(String id) {
-        Cursor cursor = (id == null || id.trim().isEmpty()) ? selectCursor(TABLE_THEMES) : selectCursor(TABLE_THEMES, THEME_ID, id);
+        Cursor cursor = id == null ? selectCursor(TABLE_THEMES) : selectCursor(TABLE_THEMES, THEME_ID, id);
 
         ArrayList<ThemeItem> items = new ArrayList<>(cursor.getCount());
 

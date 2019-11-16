@@ -3,6 +3,8 @@ package ru.melod1n.schedule.database;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Builder for raw SQL query.
  */
@@ -100,6 +102,7 @@ public class QueryBuilder {
         return db.rawQuery(toString(), null);
     }
 
+    @NotNull
     @Override
     public String toString() {
         return buffer.toString().trim();

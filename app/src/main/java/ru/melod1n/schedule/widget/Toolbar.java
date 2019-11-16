@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +33,8 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
 
     private ThemeItem theme;
 
+    private boolean listenUpdates;
+
     public Toolbar(Context context) {
         this(context, null);
     }
@@ -48,16 +49,16 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Toolbar, 0, 0);
 
         if (a.hasValue(R.styleable.Toolbar_listenThemeUpdates)) {
-            if (a.getBoolean(R.styleable.Toolbar_listenThemeUpdates, false)) {
-                if (!EventBus.getDefault().isRegistered(this))
-                    EventBus.getDefault().register(this);
+            listenUpdates = a.getBoolean(R.styleable.Toolbar_listenThemeUpdates, false);
+            if (listenUpdates) {
+                EventBus.getDefault().register(this);
             } else {
-                if (EventBus.getDefault().isRegistered(this))
-                    EventBus.getDefault().unregister(this);
+                EventBus.getDefault().unregister(this);
             }
         }
 
         if (theme == null) theme = ThemeEngine.getCurrentTheme();
+
         init();
     }
 

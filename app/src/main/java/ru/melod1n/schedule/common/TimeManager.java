@@ -48,6 +48,8 @@ public class TimeManager {
             int second = Util.tryToParseInt(sSecond);
 
             if (currentHour != hour) {
+                currentHour = hour;
+
                 if (onHourChangeListeners != null) {
                     for (OnHourChangeListener onHourChangeListener : onHourChangeListeners)
                         onHourChangeListener.onHourChange(hour);
@@ -60,6 +62,8 @@ public class TimeManager {
             }
 
             if (currentMinute != minute) {
+                currentMinute = minute;
+
                 if (onMinuteChangeListeners != null) {
                     for (OnMinuteChangeListener onMinuteChangeListener : onMinuteChangeListeners)
                         onMinuteChangeListener.onMinuteChange(minute);
@@ -72,6 +76,8 @@ public class TimeManager {
             }
 
             if (currentSecond != second) {
+                currentSecond = second;
+
                 if (onSecondChangeListeners != null) {
                     for (OnSecondChangeListener onSecondChangeListener : onSecondChangeListeners)
                         onSecondChangeListener.onSecondChange(second);
@@ -96,6 +102,22 @@ public class TimeManager {
 
     public static int getCurrentSecond() {
         return currentSecond;
+    }
+
+    public static boolean isMorning() {
+        return getCurrentHour() > 6 && getCurrentHour() < 12;
+    }
+
+    public static boolean isAfternoon() {
+        return getCurrentHour() > 11 && getCurrentHour() < 17;
+    }
+
+    public static boolean isEvening() {
+        return getCurrentHour() > 16 && getCurrentHour() < 23;
+    }
+
+    public static boolean isNight() {
+        return getCurrentHour() == 23 || (getCurrentHour() < 6 && getCurrentHour() > -1);
     }
 
     public static void addOnHourChangeListener(OnHourChangeListener onHourChangeListeners) {

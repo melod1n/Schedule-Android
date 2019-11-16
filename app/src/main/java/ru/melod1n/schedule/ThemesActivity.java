@@ -25,6 +25,16 @@ import ru.melod1n.schedule.widget.Toolbar;
 
 public class ThemesActivity extends BaseActivity {
 
+    public static final int REQUEST_PICK_THEME = 0;
+    public static final int REQUEST_PICK_DAY_THEME = 1;
+    public static final int REQUEST_PICK_NIGHT_THEME = 2;
+
+    private ThemeAdapter adapter;
+
+    private int request;
+
+    private volatile boolean animating;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -34,19 +44,17 @@ public class ThemesActivity extends BaseActivity {
     @BindView(R.id.refresh)
     SwipeRefreshLayout refreshLayout;
 
-    private ThemeAdapter adapter;
-
     private Drawable navigationIcon;
 
     private View rootView;
-
-    private volatile boolean animating;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_themes);
         ButterKnife.bind(this);
+
+        request = getIntent().getIntExtra("request", -1);
 
         applyBackground();
         applyTitle();
@@ -81,8 +89,38 @@ public class ThemesActivity extends BaseActivity {
     }
 
     private void applyTitle() {
-        toolbar.setTitle(ThemeEngine.getCurrentTheme().getTitle());
-        toolbar.setSubtitle(ThemeEngine.getCurrentTheme().getAuthor());
+        ThemeItem theme = ThemeEngine.getCurrentTheme();
+        ThemeItem dayTheme = ThemeEngine.getDayTheme();
+        ThemeItem nightTheme = ThemeEngine.getNightTheme();
+
+        String formatString = "%s – %s";
+
+        String title;
+
+        int subtitle;
+
+        switch (request) {
+            default:
+            case REQUEST_PICK_THEME:
+                subtitle = -1;
+                title = String.format(formatString, theme.getTitle(), theme.getAuthor());
+                break;
+            case REQUEST_PICK_DAY_THEME:
+                subtitle = R.string.pref_appearance_day_time_theme_title;
+                title = String.format(formatString, dayTheme.getTitle(), dayTheme.getAuthor());
+                break;
+            case REQUEST_PICK_NIGHT_THEME:
+                subtitle = R.string.pref_appearance_night_time_theme_title;
+                title = String.format(formatString, nightTheme.getTitle(), nightTheme.getAuthor());
+                break;
+        }
+
+        toolbar.setTitle(title);
+
+        if (subtitle == -1)
+            toolbar.setSubtitle("");
+        else
+            toolbar.setSubtitle(subtitle);
     }
 
     private void onRefresh() {
@@ -93,6 +131,18 @@ public class ThemesActivity extends BaseActivity {
         ThemeEngine.insertStockThemes(new ArrayList<>());
 
         ArrayList<ThemeItem> items = CacheStorage.getThemes();
+        ArrayList<ThemeItem> deleteItems = new ArrayList<>();
+
+        for (ThemeItem item : items) {
+            if (request == REQUEST_PICK_DAY_THEME && item.isDark()) {
+                deleteItems.add(item);
+            } else if (request == REQUEST_PICK_NIGHT_THEME && !item.isDark()) {
+                deleteItems.add(item);
+            }
+        }
+
+        items.removeAll(deleteItems);
+
         createAdapter(items);
 
         refreshLayout.setRefreshing(false);
@@ -114,9 +164,20 @@ public class ThemesActivity extends BaseActivity {
         ThemeItem item = adapter.getItem(position);
 
         if (ThemeEngine.isThemeValid(item)) {
-            if (animating || item.equals(theme)) return;
+            if (animating ||
+                    (request == REQUEST_PICK_THEME && item.equals(theme)) ||
+                    (request == REQUEST_PICK_DAY_THEME && item.equals(ThemeEngine.getDayTheme())) ||
+                    (request == REQUEST_PICK_NIGHT_THEME && item.equals(ThemeEngine.getNightTheme())))
+                return;
 
-            ThemeEngine.setCurrentTheme(item.getId());
+            if (request == REQUEST_PICK_THEME) {
+                ThemeEngine.setCurrentTheme(item.getId());
+            } else if (request == REQUEST_PICK_DAY_THEME) {
+                ThemeEngine.setDayTheme(item.getId());
+            } else if (request == REQUEST_PICK_NIGHT_THEME) {
+                ThemeEngine.setNightTheme(item.getId());
+            }
+
             applyTitle();
 
             fadeLayout();

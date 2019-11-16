@@ -37,18 +37,18 @@ public class NoItemsView extends AppCompatTextView {
         theme = ThemeEngine.getCurrentTheme();
         init();
 
-        initIcon(TimeManager.getCurrentHour());
-        TimeManager.addOnHourChangeListener(this::initIcon);
+        initIcon();
+        TimeManager.addOnHourChangeListener(currentHour -> initIcon());
     }
 
-    private void initIcon(int currentHour) {
+    private void initIcon() {
         String subtitle = "";
 
-        if (currentHour > 6 && currentHour < 12) { //morning
+        if (TimeManager.isMorning()) {
             subtitle += "пичка утра";
-        } else if (currentHour > 12 && currentHour < 17) { //afternoon
+        } else if (TimeManager.isAfternoon()) {
             subtitle += "пикча дня";
-        } else if (currentHour > 17 && currentHour < 23) { //evening
+        } else if (TimeManager.isEvening()) {
             subtitle += "пикча вечера";
         } else { //night
             subtitle += "пикча ночи";

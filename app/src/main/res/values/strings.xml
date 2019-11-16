@@ -110,4 +110,5 @@
     <string name="pref_appearance_auto_switch_theme_title">Auto theme switch</string>
     <string name="pref_appearance_day_time_theme_title">Day time</string>
     <string name="pref_appearance_night_time_theme_title">Night time</string>
+    <string name="pref_appearance_time_theme_current_theme">Current theme</string>
 </resources>
