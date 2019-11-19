@@ -5,21 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="?actionBarSize">
-
-        <include layout="@layout/list_recycler" />
-
-        <ru.melod1n.schedule.widget.HighlightView
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            app:direction="bottom" />
-
-    </FrameLayout>
+    <include layout="@layout/list_recycler" />
 
     <include layout="@layout/no_items" />
 

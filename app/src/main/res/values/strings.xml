@@ -115,4 +115,5 @@
     <string name="pref_debug_set_morning_time_title">Set morning time</string>
     <string name="pref_debug_set_evening_time_title">Set evening time</string>
     <string name="note_delete_title">Note was deleted</string>
+    <string name="events">Events</string>
 </resources>

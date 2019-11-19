@@ -32,7 +32,7 @@
 
         <ru.melod1n.schedule.widget.HighlightView
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="1dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="56dp"
             app:direction="top" />

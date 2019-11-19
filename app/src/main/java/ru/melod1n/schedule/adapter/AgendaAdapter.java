@@ -16,11 +16,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
-import ru.melod1n.schedule.items.HomeworkItem;
+import ru.melod1n.schedule.items.AgendaItem;
 
-public class AgendaAdapter extends RecyclerAdapter<HomeworkItem, AgendaAdapter.ViewHolder> {
+public class AgendaAdapter extends RecyclerAdapter<AgendaItem, AgendaAdapter.ViewHolder> {
 
-    public AgendaAdapter(Fragment f, ArrayList<HomeworkItem> values) {
+    public AgendaAdapter(Fragment f, ArrayList<AgendaItem> values) {
         super(f, values);
     }
 
@@ -37,8 +37,8 @@ public class AgendaAdapter extends RecyclerAdapter<HomeworkItem, AgendaAdapter.V
     }
 
     @Override
-    public boolean onQueryItem(HomeworkItem item, String lowerQuery) {
-        if (item.getTitle().toLowerCase().contains(lowerQuery))
+    public boolean onQueryItem(AgendaItem item, String lowerQuery) {
+        if (item.getTitle().toLowerCase().contains(lowerQuery) || item.getText().toLowerCase().contains(lowerQuery))
             return true;
 
         return super.onQueryItem(item, lowerQuery);
@@ -66,7 +66,7 @@ public class AgendaAdapter extends RecyclerAdapter<HomeworkItem, AgendaAdapter.V
         }
 
         public void bind(int position) {
-            HomeworkItem item = getItem(position);
+            AgendaItem item = getItem(position);
 
             cardView.setCardBackgroundColor(ThemeEngine.getCurrentTheme().getColorSurface());
 

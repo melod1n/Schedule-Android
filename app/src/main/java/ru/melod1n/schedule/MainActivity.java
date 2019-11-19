@@ -31,9 +31,9 @@ import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.common.TimeManager;
 import ru.melod1n.schedule.current.BaseActivity;
-import ru.melod1n.schedule.fragment.AgendaFragment;
-import ru.melod1n.schedule.fragment.MainScheduleFragment;
 import ru.melod1n.schedule.fragment.NotesFragment;
+import ru.melod1n.schedule.fragment.ParentAgendaFragment;
+import ru.melod1n.schedule.fragment.ParentScheduleFragment;
 import ru.melod1n.schedule.fragment.ScheduleFragment;
 import ru.melod1n.schedule.fragment.SettingsFragment;
 import ru.melod1n.schedule.fragment.UpdatesFragment;
@@ -61,9 +61,9 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.fragment_container)
     FrameLayout fragmentContainer;
 
-    private MainScheduleFragment mainScheduleFragment = new MainScheduleFragment();
+    private ParentScheduleFragment parentScheduleFragment = new ParentScheduleFragment();
     private NotesFragment notesFragment = new NotesFragment();
-    private AgendaFragment homeworkFragment = new AgendaFragment();
+    private ParentAgendaFragment parentAgendaFragment = new ParentAgendaFragment();
     private UpdatesFragment updatesFragment = new UpdatesFragment();
 
     private int selectedId;
@@ -272,7 +272,7 @@ public class MainActivity extends BaseActivity {
             case R.id.nav_notes:
                 return notesFragment;
             case R.id.nav_agenda:
-                return homeworkFragment;
+                return parentAgendaFragment;
             case R.id.nav_updates:
                 return updatesFragment;
             case R.id.drawer_settings:
@@ -282,7 +282,7 @@ public class MainActivity extends BaseActivity {
                 openAboutScreen();
                 return selectedFragment;
             default:
-                return mainScheduleFragment;
+                return parentScheduleFragment;
         }
     }
 
@@ -308,12 +308,12 @@ public class MainActivity extends BaseActivity {
         Fragment visibleFragment = getVisibleFragment();
         if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(SettingsFragment.class.getSimpleName())) {
             replaceFragment(getFragmentById(navView.getSelectedItemId()));
-        } else if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(AgendaFragment.class.getSimpleName()) && !((AgendaFragment) visibleFragment).isSearchViewCollapsed()) {
-            ((AgendaFragment) visibleFragment).getSearchViewItem().collapseActionView();
+        } else if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(ParentAgendaFragment.class.getSimpleName()) && !((ParentAgendaFragment) visibleFragment).isSearchViewCollapsed()) {
+            ((ParentAgendaFragment) visibleFragment).getSearchViewItem().collapseActionView();
         } else if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(NotesFragment.class.getSimpleName()) && !((NotesFragment) visibleFragment).isSearchViewCollapsed()) {
             ((NotesFragment) visibleFragment).getSearchViewItem().collapseActionView();
-        } else if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(MainScheduleFragment.class.getSimpleName()) && !((MainScheduleFragment) visibleFragment).isSearchViewCollapsed()) {
-            ((MainScheduleFragment) visibleFragment).getSearchViewItem().collapseActionView();
+        } else if (visibleFragment != null && visibleFragment.getClass().getSimpleName().equals(ParentScheduleFragment.class.getSimpleName()) && !((ParentScheduleFragment) visibleFragment).isSearchViewCollapsed()) {
+            ((ParentScheduleFragment) visibleFragment).getSearchViewItem().collapseActionView();
         } else {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
