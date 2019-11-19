@@ -31,7 +31,7 @@ public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolde
         notifyItemMoved(fromPosition, toPosition);
     }
 
-    public void onEndMove(int fromPosition, int toPosition) {
+    public void onEndMove(int toPosition) {
         CacheStorage.delete(DatabaseHelper.TABLE_NOTES);
         CacheStorage.insert(DatabaseHelper.TABLE_NOTES, getValues());
 

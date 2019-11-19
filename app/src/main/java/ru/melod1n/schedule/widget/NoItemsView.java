@@ -15,6 +15,7 @@ import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.common.TimeManager;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.Keys;
+import ru.melod1n.schedule.util.Util;
 
 public class NoItemsView extends AppCompatTextView {
 
@@ -37,39 +38,27 @@ public class NoItemsView extends AppCompatTextView {
         theme = ThemeEngine.getCurrentTheme();
         init();
 
-        initIcon();
         TimeManager.addOnHourChangeListener(currentHour -> initIcon());
     }
 
     private void initIcon() {
-        String subtitle = "";
+        Drawable icon = null;
 
-        if (TimeManager.isMorning()) {
-            subtitle += "пичка утра";
-        } else if (TimeManager.isAfternoon()) {
-            subtitle += "пикча дня";
-        } else if (TimeManager.isEvening()) {
-            subtitle += "пикча вечера";
-        } else { //night
-            subtitle += "пикча ночи";
+        if (TimeManager.isMorning() || TimeManager.isAfternoon()) {
+            icon = getContext().getDrawable(R.drawable.ic_vector_sun);
+        } else if (TimeManager.isEvening() || TimeManager.isNight()) {
+            icon = getContext().getDrawable(R.drawable.ic_vector_moon);
         }
 
-        if (getText() == null || getText().toString().isEmpty()) return;
-
-        String text = getContext().getString(R.string.no_items_title) + "\n(" + subtitle + ")";
-
-        NoItemsView.this.post(() -> setText(text));
+        setCompoundDrawablePadding(Util.px(8));
+        setCompoundDrawablesRelativeWithIntrinsicBounds(null, icon, null, null);
     }
 
     private void init() {
         int textColor = theme.getColorTextSecondary();
         setTextColor(textColor);
 
-        Drawable icon = getContext().getDrawable(R.drawable.ic_no_items);
-        if (icon == null) return;
-        icon.setTint(textColor);
-
-        setCompoundDrawablesWithIntrinsicBounds(null, icon, null, null);
+        initIcon();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

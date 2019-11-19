@@ -13,7 +13,6 @@ import android.view.Window;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 
@@ -134,17 +133,18 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
     }
 
     private void showConfirmDeleteDialog() {
-        AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
-        adb.setMessage(R.string.confirm_delete_text);
-        adb.setNegativeButton(R.string.no, null);
-        adb.setPositiveButton(R.string.yes, (dialog, which) -> {
-            if (getOnActionListener() != null && edit)
-                getOnActionListener().onItemDelete(item);
+        if (getOnActionListener() != null && edit)
+            getOnActionListener().onItemDelete(item);
 
-            dismiss();
-        });
-
-        adb.create().show();
+        dismiss();
+//        AlertDialog.Builder adb = new AlertDialog.Builder(getContext());
+//        adb.setMessage(R.string.confirm_delete_text);
+//        adb.setNegativeButton(R.string.no, null);
+//        adb.setPositiveButton(R.string.yes, (dialog, which) -> {
+//
+//        });
+//
+//        adb.create().show();
     }
 
     @Override

@@ -15,9 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -205,7 +205,7 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
                 super.clearView(recyclerView, viewHolder);
 
                 if (dragFrom != -1 && dragTo != -1 && dragFrom != dragTo) {
-                    adapter.onEndMove(dragFrom, dragTo);
+                    adapter.onEndMove(dragTo);
                 }
 
                 dragFrom = dragTo = -1;
@@ -237,13 +237,16 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
             public void onItemInsert(NoteItem item) {
                 CacheStorage.insert(DatabaseHelper.TABLE_NOTES, item);
 
-                adapter.getValues().add(item);
+                if (position == -1)
+                    adapter.getValues().add(item);
+                else
+                    adapter.getValues().add(position, item);
 
-                adapter.notifyItemInserted(adapter.getItemCount() - 1);
+                adapter.notifyItemInserted(position == -1 ? adapter.getItemCount() - 1 : position);
                 adapter.notifyItemRangeChanged(0, adapter.getItemCount() - 1, -1);
 
                 checkCount();
-                getNotes();
+                adapter.onEndMove(position);
             }
 
             @Override
@@ -262,6 +265,10 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
                 adapter.notifyItemRangeChanged(0, adapter.getItemCount() - 1, -1);
 
                 checkCount();
+
+                Snackbar.make(list, R.string.note_delete_title, Snackbar.LENGTH_LONG).setAction(android.R.string.cancel, v -> {
+                    onItemInsert(item);
+                }).show();
             }
         });
     }
