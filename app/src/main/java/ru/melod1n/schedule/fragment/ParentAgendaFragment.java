@@ -20,7 +20,7 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ru.melod1n.schedule.MainActivity;
+import ru.melod1n.schedule.activity.MainActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.AgendaParentAdapter;
 import ru.melod1n.schedule.widget.Toolbar;
@@ -115,7 +115,7 @@ public class ParentAgendaFragment extends Fragment {
     private void createPagerAdapter() {
         ArrayList<AgendaFragment> fragments = new ArrayList<>(Arrays.asList(new AgendaFragment(0), new AgendaFragment(1)));
 
-        pager.setAdapter(new AgendaParentAdapter(getChildFragmentManager(), fragments));
+        pager.setAdapter(new AgendaParentAdapter(requireContext(), getChildFragmentManager(), fragments));
         tabs.setupWithViewPager(pager);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

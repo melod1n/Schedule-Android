@@ -1,9 +1,10 @@
-package ru.melod1n.schedule;
+package ru.melod1n.schedule.activity;
 
 import android.os.Bundle;
 
 import androidx.annotation.LayoutRes;
 
+import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.fragment.SettingsFragment;

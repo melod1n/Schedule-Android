@@ -1,4 +1,4 @@
-package ru.melod1n.schedule;
+package ru.melod1n.schedule.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.current.BaseActivity;
 import ru.melod1n.schedule.widget.Button;
 import ru.melod1n.schedule.widget.TextArea;

@@ -1,9 +1,8 @@
-package ru.melod1n.schedule;
+package ru.melod1n.schedule.activity;
 
+import android.Manifest;
 import android.content.Intent;
-import android.content.pm.ShortcutInfo;
-import android.content.pm.ShortcutManager;
-import android.os.Build;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.common.TimeManager;
@@ -48,6 +48,7 @@ import ru.melod1n.schedule.widget.Toolbar;
 public class MainActivity extends BaseActivity {
 
     private static final int REQUEST_LOGIN = 1;
+    private static final int REQUEST_PERMISSIONS = 2;
 
     @BindView(R.id.navigationView)
     BottomNavigationView navView;
@@ -139,7 +140,13 @@ public class MainActivity extends BaseActivity {
                 navView.setSelectedItemId(selectedId);
             }
 
-            setupShortcuts();
+            askPermissions();
+        }
+    }
+
+    private void askPermissions() {
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
         }
     }
 
@@ -169,36 +176,6 @@ public class MainActivity extends BaseActivity {
 //                adb1.show();
 //            });
 //            builder.show();
-        }
-    }
-
-    private void setupShortcuts() {
-        if (Build.VERSION.SDK_INT < 100) return;
-        ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
-
-
-        ShortcutInfo timetable = new ShortcutInfo.Builder(this, "timetable")
-                .setShortLabel(getString(R.string.timetable))
-                .setIntent(new Intent(this, MainActivity.class).setAction(Intent.ACTION_DEFAULT).putExtra("shortcut_type", "timetable"))
-                .build();
-
-        ShortcutInfo schedule = new ShortcutInfo.Builder(this, "schedule")
-                .setShortLabel(getString(R.string.schedule))
-                .setIntent(new Intent(this, MainActivity.class).setAction(Intent.ACTION_DEFAULT).putExtra("shortcut_type", "schedule"))
-                .build();
-
-        ShortcutInfo notes = new ShortcutInfo.Builder(this, "notes")
-                .setShortLabel(getString(R.string.notes))
-                .setIntent(new Intent(this, MainActivity.class).setAction(Intent.ACTION_DEFAULT).putExtra("shortcut_type", "notes"))
-                .build();
-
-        ArrayList<ShortcutInfo> shortcuts = new ArrayList<>(3);
-        shortcuts.add(timetable);
-        shortcuts.add(schedule);
-        shortcuts.add(notes);
-
-        if (shortcutManager != null) {
-            shortcutManager.setDynamicShortcuts(shortcuts);
         }
     }
 
@@ -321,11 +298,5 @@ public class MainActivity extends BaseActivity {
                 super.onBackPressed();
             }
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        AppGlobal.saveData();
-        super.onDestroy();
     }
 }

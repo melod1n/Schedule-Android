@@ -1,4 +1,4 @@
-package ru.melod1n.schedule;
+package ru.melod1n.schedule.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.AboutAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.current.BaseActivity;

@@ -1,11 +1,10 @@
 package ru.melod1n.schedule.database;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.NonNull;
-
-import ru.melod1n.schedule.common.AppGlobal;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -137,13 +136,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static DatabaseHelper instance;
 
-    public DatabaseHelper() {
-        super(AppGlobal.context, DB_NAME, null, DB_VERSION);
+    public DatabaseHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
-    public static synchronized DatabaseHelper get() {
+    public static synchronized DatabaseHelper get(Context context) {
         if (instance == null)
-            instance = new DatabaseHelper();
+            instance = new DatabaseHelper(context);
 
         return instance;
     }

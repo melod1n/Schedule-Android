@@ -1,4 +1,4 @@
-package ru.melod1n.schedule;
+package ru.melod1n.schedule.activity;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.ThemeAdapter;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseActivity;

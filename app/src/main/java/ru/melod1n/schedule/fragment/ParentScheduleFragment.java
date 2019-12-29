@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ru.melod1n.schedule.MainActivity;
+import ru.melod1n.schedule.activity.MainActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.ScheduleParentAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
@@ -120,7 +120,7 @@ public class ParentScheduleFragment extends Fragment {
     }
 
     private void createPagerAdapter() {
-        pager.setAdapter(new ScheduleParentAdapter(getChildFragmentManager()));
+        pager.setAdapter(new ScheduleParentAdapter(requireContext(), getChildFragmentManager()));
         pager.setOffscreenPageLimit(5);
         tabs.setupWithViewPager(pager);
 

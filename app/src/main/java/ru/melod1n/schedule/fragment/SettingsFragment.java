@@ -15,8 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Calendar;
 
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.SettingsActivity;
-import ru.melod1n.schedule.ThemesActivity;
+import ru.melod1n.schedule.activity.SettingsActivity;
+import ru.melod1n.schedule.activity.ThemesActivity;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.Engine;
 import ru.melod1n.schedule.common.ThemeEngine;

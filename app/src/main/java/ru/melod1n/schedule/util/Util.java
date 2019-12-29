@@ -2,10 +2,7 @@ package ru.melod1n.schedule.util;
 
 import android.app.Activity;
 import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.util.DisplayMetrics;
 
 import androidx.annotation.NonNull;
@@ -61,8 +58,7 @@ public class Util {
     }
 
     public static void copyText(String text) {
-        ClipboardManager cm = (ClipboardManager) AppGlobal.context.getSystemService(Context.CLIPBOARD_SERVICE);
-        cm.setPrimaryClip(ClipData.newPlainText(null, text));
+        AppGlobal.clipboardManager.setPrimaryClip(ClipData.newPlainText(null, text));
     }
 
     @NonNull
@@ -72,7 +68,7 @@ public class Util {
         InputStreamReader isr = null;
         BufferedReader input = null;
         try {
-            fIn = AppGlobal.context.getResources().getAssets().open(fileName);
+            fIn = AppGlobal.resources.getAssets().open(fileName);
             isr = new InputStreamReader(fIn);
             input = new BufferedReader(isr);
             String line;
@@ -98,13 +94,6 @@ public class Util {
 
     public static String leadingZero(int num) {
         return num > 9 ? String.valueOf(num) : "0" + num;
-    }
-
-    public static boolean hasConnection() {
-        ConnectivityManager cm = (ConnectivityManager) AppGlobal.context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return (cm.getActiveNetworkInfo() != null &&
-                cm.getActiveNetworkInfo().isAvailable() &&
-                cm.getActiveNetworkInfo().isConnected());
     }
 
     public static byte[] serialize(Object source) {
@@ -140,12 +129,12 @@ public class Util {
     }
 
     public static String getStringDay(int day) {
-        String[] days = AppGlobal.context.getResources().getStringArray(R.array.days);
+        String[] days = AppGlobal.resources.getStringArray(R.array.days);
         return days[day];
     }
 
     public static String getMonthString(int month) {
-        String[] months = AppGlobal.context.getResources().getStringArray(R.array.months);
+        String[] months = AppGlobal.resources.getStringArray(R.array.months);
         return months[month];
     }
 
@@ -179,11 +168,11 @@ public class Util {
     }
 
     public static int px(float dp) {
-        return (int) (dp * (AppGlobal.context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+        return (int) (dp * (AppGlobal.resources.getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
     public static int dp(float px) {
-        return (int) (px / (AppGlobal.context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+        return (int) (px / (AppGlobal.resources.getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
     public static int tryToParseInt(String string) {

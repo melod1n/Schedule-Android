@@ -1,4 +1,4 @@
-package ru.melod1n.schedule;
+package ru.melod1n.schedule.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.fragment.ParentScheduleFragment;
 import ru.melod1n.schedule.fragment.NotesFragment;
 

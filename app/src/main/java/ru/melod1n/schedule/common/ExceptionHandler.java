@@ -10,21 +10,19 @@ import java.io.IOException;
 import ru.melod1n.schedule.io.FileStreams;
 import ru.melod1n.schedule.util.Util;
 
-public class CrashManager {
+public class ExceptionHandler {
 
-    private static final String TAG = "CrashManager";
+    private static final String TAG = "ExceptionHandler";
+
     private static final Thread.UncaughtExceptionHandler sOldHandler = Thread.getDefaultUncaughtExceptionHandler();
-    public static final Thread.UncaughtExceptionHandler EXCEPTION_HANDLER = new Thread.UncaughtExceptionHandler() {
-        @Override
-        public void uncaughtException(Thread thread, Throwable ex) {
-            report(ex);
-            if (sOldHandler != null) {
-                sOldHandler.uncaughtException(thread, ex);
-            }
+    private static final Thread.UncaughtExceptionHandler EXCEPTION_HANDLER = (thread, ex) -> {
+        report(ex);
+        if (sOldHandler != null) {
+            sOldHandler.uncaughtException(thread, ex);
         }
     };
 
-    private CrashManager() {
+    private ExceptionHandler() {
     }
 
     private static void report(Throwable ex) {
@@ -44,16 +42,16 @@ public class CrashManager {
 
         String path = Environment.getExternalStorageDirectory() + "/Schedule/crash_logs";
 
-        File ff = new File(path);
-        if (!ff.exists()) ff.mkdirs();
+        File dirFile = new File(path);
+        if (!dirFile.exists()) dirFile.mkdirs();
 
-        String name = "log_" + System.currentTimeMillis() + ".txt";
-        createFile(new File(path), name, trace);
+        String fileName = "log_" + System.currentTimeMillis() + ".txt";
+        createFile(new File(path), fileName, trace);
 
-        File f = new File(AppGlobal.context.getFilesDir() + "/crash_logs/");
-        if (!f.exists()) f.mkdirs();
+        File pathFile = new File(AppGlobal.filesDir + "/crash_logs/");
+        if (!pathFile.exists()) pathFile.mkdirs();
 
-        createFile(f, name, trace);
+        createFile(pathFile, fileName, trace);
 
         AppGlobal.preferences.edit().putBoolean("isCrashed", true).putString("crashLog", trace).apply();
     }

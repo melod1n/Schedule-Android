@@ -18,7 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ru.melod1n.schedule.MainActivity;
+import ru.melod1n.schedule.activity.MainActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.widget.Toolbar;
 
