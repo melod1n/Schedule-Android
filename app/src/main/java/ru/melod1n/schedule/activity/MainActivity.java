@@ -72,6 +72,8 @@ public class MainActivity extends BaseActivity {
     private int selectedId;
     private Fragment selectedFragment;
 
+    private int drawerEdgeSize;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,15 +88,17 @@ public class MainActivity extends BaseActivity {
 
         checkFirstLaunch(savedInstanceState);
 
+        askPermissions();
+
         checkCrash();
         prepareDrawerHeader();
-        prepareFullScreenSwipe();
+        prepareFullScreenSwipe(0);
 
         navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
         navView.setOnNavigationItemSelectedListener(this::onItemSelected);
     }
 
-    private void prepareFullScreenSwipe() {
+    public void prepareFullScreenSwipe(int page) {
         try {
             Field mDragger = drawerLayout.getClass().getDeclaredField("mLeftDragger");
             mDragger.setAccessible(true);
@@ -105,7 +109,14 @@ public class MainActivity extends BaseActivity {
             Field mEdgeSize = draggerObj.getClass().getDeclaredField("mEdgeSize");
             mEdgeSize.setAccessible(true);
 
-            mEdgeSize.setInt(draggerObj, getResources().getDisplayMetrics().widthPixels);
+
+            if (drawerEdgeSize == 0 && page == 0) {
+                drawerEdgeSize = mEdgeSize.getInt(draggerObj);
+            }
+
+            int edge = page > 0 ? drawerEdgeSize : (int) (getResources().getDisplayMetrics().widthPixels * 0.75);
+
+            mEdgeSize.setInt(draggerObj, edge);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -159,8 +170,6 @@ public class MainActivity extends BaseActivity {
                 replaceFragment(getFragmentById(selectedId));
                 navView.setSelectedItemId(selectedId);
             }
-
-            askPermissions();
         }
     }
 

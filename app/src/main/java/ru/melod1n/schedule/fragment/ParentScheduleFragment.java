@@ -49,6 +49,8 @@ public class ParentScheduleFragment extends Fragment {
 
     private boolean searchViewCollapsed = true;
 
+    private int currentPosition;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_parent_schedule, container, false);
@@ -72,6 +74,14 @@ public class ParentScheduleFragment extends Fragment {
 
         createPagerAdapter();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            ((MainActivity) requireActivity()).prepareFullScreenSwipe(currentPosition);
+        }
+        super.onHiddenChanged(hidden);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -123,6 +133,24 @@ public class ParentScheduleFragment extends Fragment {
         pager.setAdapter(new ScheduleParentAdapter(requireContext(), getChildFragmentManager()));
         pager.setOffscreenPageLimit(5);
         tabs.setupWithViewPager(pager);
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPosition = position;
+                ((MainActivity) requireActivity()).prepareFullScreenSwipe(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         if (AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SELECT_CURRENT_DAY, true))
             pager.setCurrentItem(Util.getNumOfCurrentDay());

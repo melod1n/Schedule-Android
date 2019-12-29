@@ -44,6 +44,8 @@ public class ParentAgendaFragment extends Fragment {
 
     private AgendaFragment visibleFragment;
 
+    private int currentPosition;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_parent_agenda, container, false);
@@ -67,6 +69,14 @@ public class ParentAgendaFragment extends Fragment {
         toggle.syncState();
 
         createPagerAdapter();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            ((MainActivity) requireActivity()).prepareFullScreenSwipe(currentPosition);
+        }
+        super.onHiddenChanged(hidden);
     }
 
     private void prepareToolbar() {
@@ -121,6 +131,10 @@ public class ParentAgendaFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 visibleFragment = fragments.get(tab.getPosition());
+
+                currentPosition = tab.getPosition();
+
+                ((MainActivity) requireActivity()).prepareFullScreenSwipe(tab.getPosition());
 
                 if (searchView != null && !searchViewCollapsed) {
                     query(searchView.getQuery().toString());

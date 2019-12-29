@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.activity.MainActivity;
@@ -51,7 +53,7 @@ public class UpdatesFragment extends Fragment {
 
         toolbar.setTitle(R.string.nav_updates);
 
-        DrawerLayout drawerLayout = ((MainActivity) getActivity()).getDrawerLayout();
+        DrawerLayout drawerLayout = ((MainActivity) Objects.requireNonNull(getActivity())).getDrawerLayout();
 
         ActionBarDrawerToggle toggle = ((MainActivity) getActivity()).initToggle(toolbar);
         drawerLayout.addDrawerListener(toggle);
@@ -62,9 +64,14 @@ public class UpdatesFragment extends Fragment {
         refreshLayout.setOnRefreshListener(null);
 
         list.setHasFixedSize(true);
-        list.setLayoutFrozen(true);
 
         list.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+    }
+
+    @Override
+    public void onResume() {
+        ((MainActivity) requireActivity()).prepareFullScreenSwipe(0);
+        super.onResume();
     }
 
 }

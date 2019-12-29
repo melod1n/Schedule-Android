@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Calendar;
 
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.activity.MainActivity;
 import ru.melod1n.schedule.activity.SettingsActivity;
 import ru.melod1n.schedule.activity.ThemesActivity;
 import ru.melod1n.schedule.common.AppGlobal;
@@ -62,6 +63,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             if (getActivity() != null)
                 getActivity().runOnUiThread(() -> autoSwitchVisibility(null));
         });
+    }
+
+    @Override
+    public void onResume() {
+        ((MainActivity) requireActivity()).prepareFullScreenSwipe(0);
+        super.onResume();
     }
 
     private void init() {

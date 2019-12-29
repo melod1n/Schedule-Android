@@ -109,6 +109,12 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
         getNotes();
     }
 
+    @Override
+    public void onResume() {
+        ((MainActivity) requireActivity()).prepareFullScreenSwipe(0);
+        super.onResume();
+    }
+
     private void prepareToolbar() {
         toolbar.setTitle(R.string.nav_notes);
         toolbar.inflateMenu(R.menu.fragment_notes);
