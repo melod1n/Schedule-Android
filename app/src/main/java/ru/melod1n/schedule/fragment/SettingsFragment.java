@@ -71,6 +71,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         super.onResume();
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            ((MainActivity) requireActivity()).prepareFullScreenSwipe(0);
+        }
+        super.onHiddenChanged(hidden);
+    }
+
     private void init() {
         setTitle();
         setPreferencesFromResource(currentPreferenceLayout, null);

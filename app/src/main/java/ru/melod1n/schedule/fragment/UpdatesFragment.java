@@ -74,4 +74,12 @@ public class UpdatesFragment extends Fragment {
         super.onResume();
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (!hidden) {
+            ((MainActivity) requireActivity()).prepareFullScreenSwipe(0);
+        }
+        super.onHiddenChanged(hidden);
+    }
+
 }
