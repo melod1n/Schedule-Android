@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
+import androidx.customview.widget.ViewDragHelper;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,10 +87,28 @@ public class MainActivity extends BaseActivity {
         checkFirstLaunch(savedInstanceState);
 
         checkCrash();
-        initNavDrawer();
+        prepareDrawerHeader();
+        prepareFullScreenSwipe();
 
         navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
         navView.setOnNavigationItemSelectedListener(this::onItemSelected);
+    }
+
+    private void prepareFullScreenSwipe() {
+        try {
+            Field mDragger = drawerLayout.getClass().getDeclaredField("mLeftDragger");
+            mDragger.setAccessible(true);
+            ViewDragHelper draggerObj = (ViewDragHelper) mDragger.get(drawerLayout);
+
+            if (draggerObj == null) return;
+
+            Field mEdgeSize = draggerObj.getClass().getDeclaredField("mEdgeSize");
+            mEdgeSize.setAccessible(true);
+
+            mEdgeSize.setInt(draggerObj, getResources().getDisplayMetrics().widthPixels);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void checkTheme() {
@@ -101,7 +121,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void initNavDrawer() {
+    private void prepareDrawerHeader() {
         View headerView = navDrawer.getHeaderView(0);
 
         headerView.setOnClickListener(v -> openLoginScreen());
@@ -146,7 +166,7 @@ public class MainActivity extends BaseActivity {
 
     private void askPermissions() {
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
         }
     }
 
