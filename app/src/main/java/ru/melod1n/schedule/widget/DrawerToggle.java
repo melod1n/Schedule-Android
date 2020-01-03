@@ -1,9 +1,7 @@
 package ru.melod1n.schedule.widget;
 
 import android.app.Activity;
-import android.content.res.Resources;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -12,9 +10,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
-import ru.melod1n.schedule.util.Keys;
 
 public class DrawerToggle extends ActionBarDrawerToggle {
 
@@ -33,10 +31,10 @@ public class DrawerToggle extends ActionBarDrawerToggle {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceive(@NonNull Object[] data) {
-        String key = (String) data[0];
-        if (Keys.THEME_UPDATE.equals(key)) {
-            theme = (ThemeItem) data[1];
+    public void onReceive(EventInfo info) {
+        String key = info.getKey();
+        if (EventInfo.KEY_THEME_UPDATE.equals(key)) {
+            theme = (ThemeItem) info.getData();
             init();
         }
     }

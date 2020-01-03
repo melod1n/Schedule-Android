@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -20,10 +19,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
-import ru.melod1n.schedule.util.Keys;
 
 public class Toolbar extends androidx.appcompat.widget.Toolbar {
 
@@ -68,10 +67,11 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceive(@NonNull Object[] data) {
-        String key = (String) data[0];
-        if (Keys.THEME_UPDATE.equals(key)) {
-            setTheme((ThemeItem) data[1]);
+    public void onReceive(EventInfo info) {
+        String key = info.getKey();
+        if (EventInfo.KEY_THEME_UPDATE.equals(key)) {
+            theme = (ThemeItem) info.getData();
+            init();
         }
     }
 

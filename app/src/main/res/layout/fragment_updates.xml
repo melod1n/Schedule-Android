@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/no_items" />
+
     <include layout="@layout/toolbar" />
 
     <FrameLayout
@@ -21,7 +23,6 @@
 
     </FrameLayout>
 
-    <include layout="@layout/no_items" />
 
 </FrameLayout>
 

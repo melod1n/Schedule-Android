@@ -25,11 +25,12 @@ import org.jetbrains.annotations.NotNull;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ru.melod1n.schedule.activity.MainActivity;
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.activity.MainActivity;
 import ru.melod1n.schedule.adapter.ScheduleParentAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.Engine;
+import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.widget.Toolbar;
 
@@ -79,7 +80,7 @@ public class ParentScheduleFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
-            ((MainActivity) requireActivity()).prepareFullScreenSwipe(currentPosition);
+            ((MainActivity) requireActivity()).prepareScreenSwipe(currentPosition);
         }
         super.onHiddenChanged(hidden);
     }
@@ -87,8 +88,14 @@ public class ParentScheduleFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onReceive(@NotNull Object[] data) {
         String key = (String) data[0];
-        if (SettingsFragment.KEY_SHOW_DATE.equals(key)) {
-            setToolbarSubtitle((Boolean) data[1]);
+
+        switch (key) {
+            case SettingsFragment.KEY_SHOW_DATE:
+                setToolbarSubtitle((Boolean) data[1]);
+                break;
+            case EventInfo.KEY_THEME_UPDATE:
+                ((MainActivity) requireActivity()).prepareDrawerHeader();
+                break;
         }
     }
 
@@ -143,7 +150,7 @@ public class ParentScheduleFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 currentPosition = position;
-                ((MainActivity) requireActivity()).prepareFullScreenSwipe(position);
+                ((MainActivity) requireActivity()).prepareScreenSwipe(position);
             }
 
             @Override
@@ -152,7 +159,7 @@ public class ParentScheduleFragment extends Fragment {
             }
         });
 
-        if (AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SELECT_CURRENT_DAY, true))
+        if (AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SELECT_CURRENT_DAY, false))
             pager.setCurrentItem(Util.getNumOfCurrentDay());
     }
 

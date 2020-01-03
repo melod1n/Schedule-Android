@@ -74,7 +74,7 @@ public class ParentAgendaFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
-            ((MainActivity) requireActivity()).prepareFullScreenSwipe(currentPosition);
+            ((MainActivity) requireActivity()).prepareScreenSwipe(currentPosition);
         }
         super.onHiddenChanged(hidden);
     }
@@ -134,7 +134,7 @@ public class ParentAgendaFragment extends Fragment {
 
                 currentPosition = tab.getPosition();
 
-                ((MainActivity) requireActivity()).prepareFullScreenSwipe(tab.getPosition());
+                ((MainActivity) requireActivity()).prepareScreenSwipe(tab.getPosition());
 
                 if (searchView != null && !searchViewCollapsed) {
                     query(searchView.getQuery().toString());

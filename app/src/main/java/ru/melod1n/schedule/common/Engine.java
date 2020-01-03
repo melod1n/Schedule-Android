@@ -63,16 +63,16 @@ public class Engine {
         return new SimpleDateFormat("dd.MM").format(new Date(date));
     }
 
-    public static void sendEvent(@NonNull String key, @Nullable Object[] data) {
-        EventBus.getDefault().postSticky(new Object[]{key, data});
+    public static void sendEvent(EventInfo info, boolean sticky) {
+        if (sticky) {
+            EventBus.getDefault().postSticky(info);
+        } else {
+            EventBus.getDefault().post(info);
+        }
     }
 
-    public static void sendEvent(@NonNull String key, @Nullable Object data) {
-        EventBus.getDefault().postSticky(new Object[]{key, data});
-    }
-
-    public static void sendEvent(@NonNull String key) {
-        sendEvent(key, null);
+    public static void sendEvent(EventInfo info) {
+        sendEvent(info, false);
     }
 
     public static void editPreferences(@NonNull String key, String newValue) {

@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.RecyclerAdapter;
 import ru.melod1n.schedule.adapter.ScheduleAdapter;
+import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.items.DayItem;
 import ru.melod1n.schedule.items.LessonItem;
@@ -62,9 +63,12 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
         this.day = i;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onReceive(Object[] data) {
-
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onReceive(EventInfo info) {
+        String key = info.getKey();
+        if (EventInfo.KEY_THEME_UPDATE.equals(key)) {
+            getSubjects();
+        }
     }
 
     @Override

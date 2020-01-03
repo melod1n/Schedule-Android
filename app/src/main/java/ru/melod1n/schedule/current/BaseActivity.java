@@ -9,12 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.jetbrains.annotations.NotNull;
 
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
-import ru.melod1n.schedule.util.Keys;
 import ru.melod1n.schedule.util.ViewUtil;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -48,10 +47,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceive(@NotNull Object[] data) {
-        String key = (String) data[0];
-        if (Keys.THEME_UPDATE.equals(key)) {
-            theme = (ThemeItem) data[1];
+    public void onReceive(EventInfo info) {
+        String key = info.getKey();
+        if (EventInfo.KEY_THEME_UPDATE.equals(key)) {
+            theme = (ThemeItem) info.getData();
             init();
         }
     }

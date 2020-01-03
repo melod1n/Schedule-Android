@@ -111,14 +111,14 @@ public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemCli
 
     @Override
     public void onResume() {
-        ((MainActivity) requireActivity()).prepareFullScreenSwipe(0);
+        ((MainActivity) requireActivity()).prepareScreenSwipe(0);
         super.onResume();
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
-            ((MainActivity) requireActivity()).prepareFullScreenSwipe(0);
+            ((MainActivity) requireActivity()).prepareScreenSwipe(0);
         }
         super.onHiddenChanged(hidden);
     }

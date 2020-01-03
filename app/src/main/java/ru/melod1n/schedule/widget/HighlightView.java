@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.greenrobot.eventbus.EventBus;
@@ -14,9 +13,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
-import ru.melod1n.schedule.util.Keys;
 
 public class HighlightView extends View {
 
@@ -75,10 +74,11 @@ public class HighlightView extends View {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceive(@NonNull Object[] data) {
-        String key = (String) data[0];
-        if (Keys.THEME_UPDATE.equals(key)) {
-            setTheme((ThemeItem) data[1]);
+    public void onReceive(EventInfo info) {
+        String key = info.getKey();
+        if (EventInfo.KEY_THEME_UPDATE.equals(key)) {
+            theme = (ThemeItem) info.getData();
+            init();
         }
     }
 

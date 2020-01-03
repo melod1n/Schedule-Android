@@ -43,7 +43,7 @@
         app:title="@string/pref_appearance_other_title" />
 
     <SwitchPreferenceCompat
-        app:defaultValue="true"
+        app:defaultValue="false"
         app:iconSpaceReserved="false"
         app:key="select_current_day"
         app:summary="@string/pref_appearance_select_current_day_summary"

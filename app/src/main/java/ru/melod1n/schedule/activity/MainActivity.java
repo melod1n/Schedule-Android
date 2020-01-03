@@ -92,13 +92,13 @@ public class MainActivity extends BaseActivity {
 
         checkCrash();
         prepareDrawerHeader();
-        prepareFullScreenSwipe(0);
+        prepareScreenSwipe(0);
 
         navDrawer.setNavigationItemSelectedListener(this::onDrawerItemSelected);
         navView.setOnNavigationItemSelectedListener(this::onItemSelected);
     }
 
-    public void prepareFullScreenSwipe(int page) {
+    public void prepareScreenSwipe(int page) {
         try {
             Field mDragger = drawerLayout.getClass().getDeclaredField("mLeftDragger");
             mDragger.setAccessible(true);
@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity {
                 drawerEdgeSize = mEdgeSize.getInt(draggerObj);
             }
 
-            int edge = page > 0 ? drawerEdgeSize : (int) (getResources().getDisplayMetrics().widthPixels * 0.75);
+            int edge = page > 0 ? drawerEdgeSize : (int) (getResources().getDisplayMetrics().widthPixels * 0.25);
 
             mEdgeSize.setInt(draggerObj, edge);
         } catch (Exception e) {
@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void prepareDrawerHeader() {
+    public void prepareDrawerHeader() {
         View headerView = navDrawer.getHeaderView(0);
 
         headerView.setOnClickListener(v -> openLoginScreen());

@@ -20,6 +20,7 @@ import ru.melod1n.schedule.activity.SettingsActivity;
 import ru.melod1n.schedule.activity.ThemesActivity;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.Engine;
+import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.common.TimeManager;
 import ru.melod1n.schedule.items.ThemeItem;
@@ -66,15 +67,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     @Override
-    public void onResume() {
-        ((MainActivity) requireActivity()).prepareFullScreenSwipe(0);
-        super.onResume();
-    }
-
-    @Override
     public void onHiddenChanged(boolean hidden) {
         if (!hidden) {
-            ((MainActivity) requireActivity()).prepareFullScreenSwipe(0);
+            ((MainActivity) requireActivity()).prepareScreenSwipe(0);
         }
         super.onHiddenChanged(hidden);
     }
@@ -274,7 +269,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     private void sendChangeShowDateEvent(boolean newValue) {
-        Engine.sendEvent(KEY_SHOW_DATE, newValue);
+        Engine.sendEvent(new EventInfo(KEY_SHOW_DATE, newValue));
     }
 
     private boolean changeRootLayout(@NonNull Preference preference) {

@@ -13,7 +13,6 @@ import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.fragment.SettingsFragment;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
-import ru.melod1n.schedule.util.Keys;
 import ru.melod1n.schedule.util.Util;
 
 public class ThemeEngine {
@@ -147,7 +146,7 @@ public class ThemeEngine {
     public static void setCurrentTheme(String id) {
         Engine.editPreferences(SettingsFragment.KEY_THEME, id);
         init();
-        Engine.sendEvent(Keys.THEME_UPDATE, currentTheme);
+        Engine.sendEvent(new EventInfo(EventInfo.KEY_THEME_UPDATE, currentTheme), true);
     }
 
     public static void setDayTheme(String id) {
@@ -159,7 +158,7 @@ public class ThemeEngine {
         }
 
         init();
-        Engine.sendEvent(Keys.THEME_UPDATE_DAY, dayTheme);
+        Engine.sendEvent(new EventInfo(EventInfo.KEY_THEME_UPDATE_DAY, dayTheme), true);
     }
 
     public static void setNightTheme(String id) {
@@ -171,13 +170,13 @@ public class ThemeEngine {
         }
 
         init();
-        Engine.sendEvent(Keys.THEME_UPDATE_NIGHT, nightTheme);
+        Engine.sendEvent(new EventInfo(EventInfo.KEY_THEME_UPDATE_NIGHT, nightTheme));
     }
 
-    public static void setSelectedThemeKey(String selectedThemeKey) {
-        ThemeEngine.selectedThemeKey = selectedThemeKey;
-        Engine.editPreferences(SettingsFragment.KEY_THEME, selectedThemeKey);
-    }
+//    public static void setSelectedThemeKey(String selectedThemeKey) {
+//        ThemeEngine.selectedThemeKey = selectedThemeKey;
+//        Engine.editPreferences(SettingsFragment.KEY_THEME, selectedThemeKey);
+//    }
 
     public static boolean isAutoTheme() {
         return autoTheme;
