@@ -1,15 +1,15 @@
 package ru.melod1n.schedule.common;
 
-public class EventInfo {
+public class EventInfo<T> {
 
     public static final String KEY_THEME_UPDATE = "theme_update";
     public static final String KEY_THEME_UPDATE_DAY = "theme_update_day";
     public static final String KEY_THEME_UPDATE_NIGHT = "theme_update_night";
 
     private String key;
-    private Object data;
+    private T data;
 
-    public EventInfo(String key, Object data) {
+    public EventInfo(String key, T data) {
         this.key = key;
         this.data = data;
     }
@@ -22,11 +22,11 @@ public class EventInfo {
         this.key = key;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

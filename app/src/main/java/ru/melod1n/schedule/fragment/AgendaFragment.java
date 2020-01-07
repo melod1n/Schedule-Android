@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.AgendaAdapter;
+import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.items.AgendaItem;
 import ru.melod1n.schedule.widget.RefreshLayout;
 
@@ -47,7 +48,7 @@ public class AgendaFragment extends Fragment {
     public AgendaFragment() {
     }
 
-    public AgendaFragment(int type) {
+    AgendaFragment(int type) {
         this.type = type;
     }
 
@@ -87,7 +88,7 @@ public class AgendaFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onReceive(Object[] data) {
+    public void onReceive(EventInfo info) {
     }
 
     private void getHomework() {

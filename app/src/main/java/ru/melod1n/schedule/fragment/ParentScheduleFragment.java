@@ -118,7 +118,7 @@ public class ParentScheduleFragment extends Fragment {
     }
 
     private void setToolbarSubtitle(Boolean bool) {
-        boolean b = bool == null ? Engine.getPrefBool(SettingsFragment.KEY_SHOW_DATE, false) : bool;
+        boolean b = bool == null ? AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SHOW_DATE, false) : bool;
 
         String subtitle = b ? Engine.getCurrentDate() : Engine.getInterim();
 

@@ -40,10 +40,10 @@ public class RelativeLayout extends android.widget.RelativeLayout {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceive(EventInfo info) {
+    public void onReceive(EventInfo<ThemeItem> info) {
         String key = info.getKey();
         if (EventInfo.KEY_THEME_UPDATE.equals(key)) {
-            theme = (ThemeItem) info.getData();
+            theme = info.getData();
             init();
         }
     }

@@ -69,14 +69,14 @@ public class ThemeEngine {
     private static ThemeItem currentTheme, dayTheme, nightTheme;
 
     static void init() {
-        String selectedThemeKey = Engine.getPrefString(SettingsFragment.KEY_THEME, DEFAULT_THEME);
+        String selectedThemeKey = AppGlobal.preferences.getString(SettingsFragment.KEY_THEME, DEFAULT_THEME);
 
         ThemeEngine.selectedThemeKey = selectedThemeKey;
 
-        String dayThemeKey = Engine.getPrefString(SettingsFragment.KEY_DAY_TIME_THEME, DEFAULT_THEME);
-        String nightThemeKey = Engine.getPrefString(SettingsFragment.KEY_NIGHT_TIME_THEME, DEFAULT_THEME_DARK);
+        String dayThemeKey = AppGlobal.preferences.getString(SettingsFragment.KEY_DAY_TIME_THEME, DEFAULT_THEME);
+        String nightThemeKey = AppGlobal.preferences.getString(SettingsFragment.KEY_NIGHT_TIME_THEME, DEFAULT_THEME_DARK);
 
-        autoTheme = Engine.getPrefBool(SettingsFragment.KEY_AUTO_SWITCH_THEME, false);
+        autoTheme = AppGlobal.preferences.getBoolean(SettingsFragment.KEY_AUTO_SWITCH_THEME, false);
 
         ArrayList<ThemeItem> themes = CacheStorage.getThemes();
         insertStockThemes(themes);
@@ -144,13 +144,13 @@ public class ThemeEngine {
     }
 
     public static void setCurrentTheme(String id) {
-        Engine.editPreferences(SettingsFragment.KEY_THEME, id);
+        AppGlobal.preferences.edit().putString(SettingsFragment.KEY_THEME, id).apply();
         init();
-        Engine.sendEvent(new EventInfo(EventInfo.KEY_THEME_UPDATE, currentTheme), true);
+        Engine.sendEvent(new EventInfo<>(EventInfo.KEY_THEME_UPDATE, currentTheme), true);
     }
 
     public static void setDayTheme(String id) {
-        Engine.editPreferences(SettingsFragment.KEY_DAY_TIME_THEME, id);
+        AppGlobal.preferences.edit().putString(SettingsFragment.KEY_DAY_TIME_THEME, id).apply();
 
         if ((TimeManager.isMorning() || TimeManager.isAfternoon()) && isAutoTheme()) {
             setCurrentTheme(id);
@@ -158,11 +158,11 @@ public class ThemeEngine {
         }
 
         init();
-        Engine.sendEvent(new EventInfo(EventInfo.KEY_THEME_UPDATE_DAY, dayTheme), true);
+        Engine.sendEvent(new EventInfo<>(EventInfo.KEY_THEME_UPDATE_DAY, dayTheme), true);
     }
 
     public static void setNightTheme(String id) {
-        Engine.editPreferences(SettingsFragment.KEY_NIGHT_TIME_THEME, id);
+        AppGlobal.preferences.edit().putString(SettingsFragment.KEY_NIGHT_TIME_THEME, id).apply();
 
         if ((TimeManager.isNight() || TimeManager.isEvening()) && isAutoTheme()) {
             setCurrentTheme(id);
@@ -170,13 +170,8 @@ public class ThemeEngine {
         }
 
         init();
-        Engine.sendEvent(new EventInfo(EventInfo.KEY_THEME_UPDATE_NIGHT, nightTheme));
+        Engine.sendEvent(new EventInfo<>(EventInfo.KEY_THEME_UPDATE_NIGHT, nightTheme));
     }
-
-//    public static void setSelectedThemeKey(String selectedThemeKey) {
-//        ThemeEngine.selectedThemeKey = selectedThemeKey;
-//        Engine.editPreferences(SettingsFragment.KEY_THEME, selectedThemeKey);
-//    }
 
     public static boolean isAutoTheme() {
         return autoTheme;

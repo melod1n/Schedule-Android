@@ -18,6 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_TEACHERS = "teachers";
     public static final String TABLE_CLASSROOMS = "classrooms";
     public static final String TABLE_PARTICIPANTS = "participants";
+    public static final String TABLE_HOMEWORK = "homework";
 
     //DB FIELDS
     public static final String ID = "id";

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jetbrains.annotations.NotNull;
@@ -58,12 +57,11 @@ public class Engine {
     }
 
     @SuppressLint("SimpleDateFormat")
-    public static String getFormattedDate(long date) {
-        //dd.mm format
+    private static String getFormattedDate(long date) {
         return new SimpleDateFormat("dd.MM").format(new Date(date));
     }
 
-    public static void sendEvent(EventInfo info, boolean sticky) {
+    static void sendEvent(EventInfo info, boolean sticky) {
         if (sticky) {
             EventBus.getDefault().postSticky(info);
         } else {
@@ -75,19 +73,4 @@ public class Engine {
         sendEvent(info, false);
     }
 
-    public static void editPreferences(@NonNull String key, String newValue) {
-        AppGlobal.preferences.edit().putString(key, newValue).apply();
-    }
-
-    public static String getPrefString(@NonNull String key, @Nullable String defValue) {
-        return AppGlobal.preferences.getString(key, defValue == null ? "" : defValue);
-    }
-
-    public static String getPrefString(@NonNull String key) {
-        return getPrefString(key, null);
-    }
-
-    public static boolean getPrefBool(@NonNull String key, boolean defValue) {
-        return AppGlobal.preferences.getBoolean(key, defValue);
-    }
 }

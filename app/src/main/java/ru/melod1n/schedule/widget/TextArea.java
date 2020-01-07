@@ -34,6 +34,7 @@ public class TextArea extends TextInputEditText {
 
         int colorAccent = themeItem.getColorAccent();
 
+        //TODO: дописать
     }
 
 }
