@@ -1,9 +1,6 @@
 package ru.melod1n.schedule.view;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -58,8 +55,8 @@ public class PopupDialog extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView titleTextView = view.findViewById(R.id.title);
-        TextView messageTextView = view.findViewById(R.id.message);
+        TextView titleTextView = view.findViewById(R.id.dialogTitle);
+        TextView messageTextView = view.findViewById(R.id.dialogMessage);
 
         titleTextView.setText(title);
         messageTextView.setText(message);

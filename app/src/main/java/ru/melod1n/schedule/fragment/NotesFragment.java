@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.activity.MainActivity;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.NoteAdapter;
-import ru.melod1n.schedule.adapter.RecyclerAdapter;
+import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.database.CacheStorage;
@@ -37,7 +37,7 @@ import ru.melod1n.schedule.view.FullScreenNoteDialog;
 import ru.melod1n.schedule.widget.RefreshLayout;
 import ru.melod1n.schedule.widget.Toolbar;
 
-public class NotesFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
+public class NotesFragment extends Fragment implements BaseAdapter.OnItemClickListener {
 
     private ItemTouchHelper ith;
 

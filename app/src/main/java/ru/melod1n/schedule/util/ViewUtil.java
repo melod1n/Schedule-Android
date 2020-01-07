@@ -6,6 +6,7 @@ import android.view.Window;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
@@ -49,11 +50,14 @@ public class ViewUtil {
         window.getDecorView().setSystemUiVisibility(visibility);
     }
 
-//    public static void showKeyboard(@NonNull View v) {
-//        AppGlobal.inputMethodManager.showSoftInput(v, 0);
-//    }
-//
-//    public static void hideKeyboard(@NonNull View v) {
-//        AppGlobal.inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-//    }
+    public static boolean isAndroid10GesturesEnabled(View rootView) {
+        final boolean[] enabled = {false};
+
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
+            enabled[0] = insets.getSystemWindowInsetLeft() == 0 && insets.getSystemWindowInsetRight() == 0;
+            return insets.consumeSystemWindowInsets();
+        });
+
+        return enabled[0];
+    }
 }

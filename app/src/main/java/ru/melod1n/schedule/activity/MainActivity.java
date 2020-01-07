@@ -3,6 +3,7 @@ package ru.melod1n.schedule.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.app.AlertBuilder;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.common.TimeManager;
@@ -46,6 +48,8 @@ import ru.melod1n.schedule.view.PopupDialog;
 import ru.melod1n.schedule.widget.DrawerToggle;
 import ru.melod1n.schedule.widget.NavigationDrawer;
 import ru.melod1n.schedule.widget.Toolbar;
+
+import static android.os.Build.VERSION_CODES.Q;
 
 public class MainActivity extends BaseActivity {
 
@@ -99,6 +103,23 @@ public class MainActivity extends BaseActivity {
     }
 
     public void prepareScreenSwipe(int page) {
+        final boolean[] gesturesEnabled = {false};
+
+        if (Build.VERSION.SDK_INT >= Q) {
+            boolean asked = AppGlobal.preferences.getBoolean("asked_for_gestures", false);
+
+            if (!asked) {
+                AlertBuilder builder = new AlertBuilder(this);
+                builder.setTitle(R.string.using_gestures_ask_title);
+                builder.setMessage(R.string.using_gestures_ask_message);
+                builder.setPositiveButton(R.string.yes, (view) -> gesturesEnabled[0] = true);
+                builder.setNegativeButton(R.string.no);
+                builder.show();
+
+                AppGlobal.preferences.edit().putBoolean("asked_for_gestures", true).apply();
+            }
+        }
+
         try {
             Field mDragger = drawerLayout.getClass().getDeclaredField("mLeftDragger");
             mDragger.setAccessible(true);
@@ -114,7 +135,7 @@ public class MainActivity extends BaseActivity {
                 drawerEdgeSize = mEdgeSize.getInt(draggerObj);
             }
 
-            int edge = page > 0 ? drawerEdgeSize : (int) (getResources().getDisplayMetrics().widthPixels * 0.25);
+            int edge = page > 0 || !gesturesEnabled[0] ? drawerEdgeSize : (int) (getResources().getDisplayMetrics().widthPixels * 0.25);
 
             mEdgeSize.setInt(draggerObj, edge);
         } catch (Exception e) {

@@ -5,30 +5,99 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="260dp"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <ru.melod1n.schedule.widget.TextPlain
-        android:id="@+id/title"
+        android:id="@+id/dialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:textSize="22sp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:textSize="20sp"
+        android:visibility="gone"
         app:colorDef="primary"
-        tools:text="Title" />
+        tools:text="Title"
+        tools:visibility="visible" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingStart="22dp"
+        android:paddingBottom="16dp"
+        android:paddingEnd="22dp">
 
         <ru.melod1n.schedule.widget.TextPlain
-            android:id="@+id/message"
+            android:id="@+id/dialogMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:visibility="gone"
             app:colorDef="secondary"
-            tools:text="Message" />
+            tools:text="Message"
+            tools:visibility="visible" />
 
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/dialogButtonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:measureWithLargestChild="true"
+        android:minHeight="54dp"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ru.melod1n.schedule.widget.Button
+            android:id="@+id/dialogNeutral"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:elevation="0dp"
+            android:maxLines="1"
+            android:visibility="gone"
+            app:strokeWidth="0dp"
+            app:style="outline"
+            tools:text="Neutral"
+            tools:visibility="visible" />
+
+        <ru.melod1n.schedule.widget.Button
+            android:id="@+id/dialogNegative"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:elevation="0dp"
+            android:maxLines="1"
+            android:visibility="gone"
+            app:strokeWidth="0dp"
+            app:style="outline"
+            tools:text="Negative"
+            tools:visibility="visible" />
+
+        <ru.melod1n.schedule.widget.Button
+            android:id="@+id/dialogPositive"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:elevation="0dp"
+            android:maxLines="1"
+            android:visibility="gone"
+            app:strokeWidth="0dp"
+            app:style="outline"
+            tools:text="Positive"
+            tools:visibility="visible" />
+
+    </LinearLayout>
 </ru.melod1n.schedule.widget.LinearLayout>

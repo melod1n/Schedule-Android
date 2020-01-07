@@ -1,12 +1,11 @@
 package ru.melod1n.schedule.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
@@ -16,24 +15,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
+import ru.melod1n.schedule.current.BaseAdapter;
+import ru.melod1n.schedule.current.BaseHolder;
 import ru.melod1n.schedule.items.AgendaItem;
 
-public class AgendaAdapter extends RecyclerAdapter<AgendaItem, AgendaAdapter.ViewHolder> {
+public class AgendaAdapter extends BaseAdapter<AgendaItem, AgendaAdapter.ViewHolder> {
 
-    public AgendaAdapter(Fragment f, ArrayList<AgendaItem> values) {
-        super(f, values);
+    public AgendaAdapter(Context context, ArrayList<AgendaItem> values) {
+        super(context, values);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.fragment_agenda_item, parent, false));
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
-        holder.bind(position);
+        return new ViewHolder(getInflater().inflate(R.layout.fragment_agenda_item, parent, false));
     }
 
     @Override
@@ -44,7 +39,12 @@ public class AgendaAdapter extends RecyclerAdapter<AgendaItem, AgendaAdapter.Vie
         return super.onQueryItem(item, lowerQuery);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void destroy() {
+
+    }
+
+    class ViewHolder extends BaseHolder {
 
 
         @BindView(R.id.homework_text)
@@ -65,6 +65,7 @@ public class AgendaAdapter extends RecyclerAdapter<AgendaItem, AgendaAdapter.Vie
             ButterKnife.bind(this, itemView);
         }
 
+        @Override
         public void bind(int position) {
             AgendaItem item = getItem(position);
 

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,10 +18,12 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.current.BaseAdapter;
+import ru.melod1n.schedule.current.BaseHolder;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
 
-public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHolder> {
+public class ThemeAdapter extends BaseAdapter<ThemeItem, ThemeAdapter.ViewHolder> {
 
     public ThemeAdapter(Context context, ArrayList<ThemeItem> values) {
         super(context, values);
@@ -31,7 +32,7 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.theme_engine_layout, parent, false));
+        return new ViewHolder(getInflater().inflate(R.layout.theme_engine_layout, parent, false));
     }
 
     @Override
@@ -39,7 +40,12 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
         holder.bind(position);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void destroy() {
+
+    }
+
+    class ViewHolder extends BaseHolder {
 
         @BindView(R.id.theme_engine_title)
         TextView textView;
@@ -53,7 +59,8 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
             ButterKnife.bind(this, itemView);
         }
 
-        void bind(int position) {
+        @Override
+        public void bind(int position) {
             ThemeItem item = getItem(position);
 
             int colorPrimary = item.getColorPrimary();
@@ -71,8 +78,8 @@ public class ThemeAdapter extends RecyclerAdapter<ThemeItem, ThemeAdapter.ViewHo
 
             cardView.setCardBackgroundColor(colorPrimary);
             cardView.setOnClickListener(view -> {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(itemView, position);
+                if (getOnItemClickListener() != null) {
+                    getOnItemClickListener().onItemClick(itemView, position);
                 }
             });
         }

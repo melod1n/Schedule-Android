@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -21,24 +20,23 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.adapter.RecyclerAdapter;
 import ru.melod1n.schedule.adapter.ScheduleAdapter;
+import ru.melod1n.schedule.app.AlertBuilder;
 import ru.melod1n.schedule.common.EventInfo;
+import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.items.DayItem;
 import ru.melod1n.schedule.items.LessonItem;
 import ru.melod1n.schedule.items.LocationItem;
 import ru.melod1n.schedule.items.SubjectItem;
 import ru.melod1n.schedule.items.TeacherItem;
-import ru.melod1n.schedule.view.PopupDialog;
 
-public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItemClickListener {
+public class ScheduleFragment extends Fragment implements BaseAdapter.OnItemClickListener {
 
     @BindView(R.id.list)
     RecyclerView list;
@@ -73,11 +71,10 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
     @Override
     public void onItemClick(View v, int position) {
-        PopupDialog dialogFragment = new PopupDialog();
-        dialogFragment.setTitle("Тест");
-        dialogFragment.setMessage("Пожалуйста, не беспокойтесь");
-        if (getActivity() != null)
-            dialogFragment.show(getActivity().getSupportFragmentManager());
+        AlertBuilder builder = new AlertBuilder(requireContext());
+        builder.setTitle("Hello");
+        builder.setMessage("It\'s message");
+        builder.show();
     }
 
     @Override
@@ -100,8 +97,6 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
         list.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        //initDragDrop();
-
         refresh.setOnRefreshListener(this::getSubjects);
 
         add.setOnClickListener(v -> {
@@ -111,68 +106,6 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
 
         getSubjects();
-    }
-
-    private void initDragDrop() {
-        ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
-            int dragFrom = -1;
-            int dragTo = -1;
-
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return true;
-            }
-
-            @Override
-            public void onMoved(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, int fromPosition, @NonNull RecyclerView.ViewHolder target, int toPosition, int x, int y) {
-                super.onMoved(recyclerView, viewHolder, fromPosition, target, toPosition, x, y);
-
-                if (dragFrom == -1) {
-                    dragFrom = fromPosition;
-                }
-
-                dragTo = toPosition;
-
-                if (fromPosition < toPosition) {
-                    for (int i = fromPosition; i < toPosition; i++) {
-                        Collections.swap(adapter.getValues(), i, i + 1);
-                    }
-                } else {
-                    for (int i = fromPosition; i > toPosition; i--) {
-                        Collections.swap(adapter.getValues(), i, i - 1);
-                    }
-                }
-
-                adapter.onItemMove(fromPosition, toPosition);
-            }
-
-            @Override
-            public boolean isLongPressDragEnabled() {
-                return true;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            }
-
-            @Override
-            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG, ItemTouchHelper.DOWN | ItemTouchHelper.UP);
-            }
-
-            @Override
-            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-                super.clearView(recyclerView, viewHolder);
-
-                if (dragFrom != -1 && dragTo != -1 && dragFrom != dragTo) {
-                    adapter.onEndMove(day);
-                }
-
-                dragFrom = dragTo = -1;
-            }
-        };
-
-        ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
-        ith.attachToRecyclerView(list);
     }
 
     private void checkCount() {
@@ -225,7 +158,7 @@ public class ScheduleFragment extends Fragment implements RecyclerAdapter.OnItem
 
     private void createAdapter(ArrayList<LessonItem> values) {
         if (adapter == null) {
-            adapter = new ScheduleAdapter(this, values);
+            adapter = new ScheduleAdapter(requireContext(), values);
             adapter.setOnItemClickListener(this);
             list.setAdapter(adapter);
             return;

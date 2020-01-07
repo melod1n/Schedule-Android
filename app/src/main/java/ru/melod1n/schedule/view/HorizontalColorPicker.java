@@ -17,8 +17,9 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.adapter.RecyclerAdapter;
+import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.common.ThemeEngine;
+import ru.melod1n.schedule.current.BaseHolder;
 
 public class HorizontalColorPicker extends RecyclerView {
 
@@ -158,7 +159,7 @@ public class HorizontalColorPicker extends RecyclerView {
         }
     }
 
-    class Adapter extends RecyclerAdapter<HorizontalColorPicker.Item, Adapter.ViewHolder> {
+    class Adapter extends BaseAdapter<Item, Adapter.ViewHolder> {
 
         public Adapter(Context context, ArrayList<HorizontalColorPicker.Item> items) {
             super(context, items);
@@ -167,7 +168,7 @@ public class HorizontalColorPicker extends RecyclerView {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = inflater.inflate(R.layout.abc_widget_colorpicker_horizontal_item, parent, false);
+            View v = getInflater().inflate(R.layout.abc_widget_colorpicker_horizontal_item, parent, false);
             return new ViewHolder(v);
         }
 
@@ -175,6 +176,11 @@ public class HorizontalColorPicker extends RecyclerView {
         public void onBindViewHolder(Adapter.ViewHolder holder, int position) {
             super.onBindViewHolder(holder, position);
             holder.bind(position);
+        }
+
+        @Override
+        public void destroy() {
+
         }
 
         public int getSelectedColor() {
@@ -206,7 +212,7 @@ public class HorizontalColorPicker extends RecyclerView {
             smoothScrollToPosition(selectedPosition);
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        class ViewHolder extends BaseHolder {
 
             CircleImageView circle;
             ImageView selected;
@@ -218,7 +224,8 @@ public class HorizontalColorPicker extends RecyclerView {
                 selected = v.findViewById(R.id.selected);
             }
 
-            void bind(int position) {
+            @Override
+            public void bind(int position) {
                 HorizontalColorPicker.Item item = getItem(position);
 
                 circle.setImageDrawable(new ColorDrawable(item.getColor()));

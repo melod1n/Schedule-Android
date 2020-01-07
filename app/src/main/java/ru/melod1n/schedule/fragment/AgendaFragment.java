@@ -108,7 +108,7 @@ public class AgendaFragment extends Fragment {
 
     private void createAdapter(ArrayList<AgendaItem> values) {
         if (adapter == null) {
-            adapter = new AgendaAdapter(this, values);
+            adapter = new AgendaAdapter(requireContext(), values);
             adapter.setOnItemClickListener(this::onItemClick);
             adapter.setOnItemLongClickListener(this::onItemClick);
             list.setAdapter(adapter);

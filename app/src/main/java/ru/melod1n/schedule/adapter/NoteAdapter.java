@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -16,12 +15,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
+import ru.melod1n.schedule.current.BaseAdapter;
+import ru.melod1n.schedule.current.BaseHolder;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.util.ColorUtil;
 
-public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolder> {
+public class NoteAdapter extends BaseAdapter<NoteItem, NoteAdapter.ViewHolder> {
 
     public NoteAdapter(Context context, ArrayList<NoteItem> items) {
         super(context, items);
@@ -41,14 +42,8 @@ public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolde
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = inflater.inflate(R.layout.fragment_notes_item, viewGroup, false);
+        View v = getInflater().inflate(R.layout.fragment_notes_item, viewGroup, false);
         return new ViewHolder(v);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
-        holder.bind(position);
     }
 
     @Override
@@ -58,7 +53,12 @@ public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolde
         return super.onQueryItem(item, lowerQuery);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void destroy() {
+
+    }
+
+    class ViewHolder extends BaseHolder {
 
         @BindView(R.id.title)
         TextView title;
@@ -78,7 +78,8 @@ public class NoteAdapter extends RecyclerAdapter<NoteItem, NoteAdapter.ViewHolde
             card.setCardElevation(4);
         }
 
-        void bind(int position) {
+        @Override
+        public void bind(int position) {
             NoteItem item = getItem(position);
 
             card.setCardBackgroundColor(colors[item.getPosition()]);

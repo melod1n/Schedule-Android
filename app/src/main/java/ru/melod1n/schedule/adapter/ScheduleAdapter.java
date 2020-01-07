@@ -1,13 +1,12 @@
 package ru.melod1n.schedule.adapter;
 
 
-import android.view.LayoutInflater;
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -16,36 +15,23 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.Engine;
 import ru.melod1n.schedule.common.ThemeEngine;
-import ru.melod1n.schedule.database.CacheStorage;
-import ru.melod1n.schedule.database.DatabaseHelper;
-import ru.melod1n.schedule.fragment.ScheduleFragment;
+import ru.melod1n.schedule.current.BaseAdapter;
+import ru.melod1n.schedule.current.BaseHolder;
 import ru.melod1n.schedule.items.LessonItem;
 import ru.melod1n.schedule.items.LocationItem;
 import ru.melod1n.schedule.items.SubjectItem;
 
-public class ScheduleAdapter extends RecyclerAdapter<LessonItem, ScheduleAdapter.ViewHolder> {
+public class ScheduleAdapter extends BaseAdapter<LessonItem, ScheduleAdapter.ViewHolder> {
 
-    public ScheduleAdapter(ScheduleFragment f, ArrayList<LessonItem> items) {
-        super(f, items);
-    }
-
-    public void onItemMove(int fromPosition, int toPosition) {
-        notifyItemMoved(fromPosition, toPosition);
-    }
-
-    public void onEndMove(int day) {
-        CacheStorage.delete(DatabaseHelper.TABLE_LESSONS, "day=" + day);
-        CacheStorage.insert(DatabaseHelper.TABLE_LESSONS, getValues());
-
-        notifyDataSetChanged();
+    public ScheduleAdapter(Context context, ArrayList<LessonItem> items) {
+        super(context, items);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup vg, int i) {
-        View v = LayoutInflater.from(context).inflate(R.layout.fragment_schedule_item, vg, false);
+        View v = getInflater().inflate(R.layout.fragment_schedule_item, vg, false);
         return new ViewHolder(v);
     }
 
@@ -55,7 +41,12 @@ public class ScheduleAdapter extends RecyclerAdapter<LessonItem, ScheduleAdapter
         holder.bind(position);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void destroy() {
+
+    }
+
+    class ViewHolder extends BaseHolder {
 
         @BindView(R.id.lessonType)
         TextView lessonType;
@@ -86,6 +77,7 @@ public class ScheduleAdapter extends RecyclerAdapter<LessonItem, ScheduleAdapter
 
         }
 
+        @Override
         public void bind(final int position) {
             LessonItem item = getItem(position);
 

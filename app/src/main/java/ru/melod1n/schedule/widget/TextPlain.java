@@ -3,8 +3,8 @@ package ru.melod1n.schedule.widget;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.TintTypedArray;
 
 import org.greenrobot.eventbus.EventBus;
@@ -17,7 +17,7 @@ import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ArrayUtil;
 
-public class TextPlain extends TextView {
+public class TextPlain extends AppCompatTextView {
 
     private ThemeItem theme;
 

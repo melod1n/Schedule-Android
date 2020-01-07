@@ -116,4 +116,6 @@
     <string name="pref_debug_set_evening_time_title">Set evening time</string>
     <string name="note_delete_title">Note was deleted</string>
     <string name="events">Events</string>
+    <string name="using_gestures_ask_message">Are you using fullscreen gestures in your system?</string>
+    <string name="using_gestures_ask_title">Hello</string>
 </resources>
