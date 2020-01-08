@@ -18,6 +18,7 @@ class AlertBuilder(context: Context?) : AlertDialog.Builder(context!!) {
     private var neutral: Button? = null
     private var negative: Button? = null
     private var positive: Button? = null
+    private var custom: LinearLayout? = null
 
     private var neutralClick: View.OnClickListener? = null
     private var negativeClick: View.OnClickListener? = null
@@ -50,6 +51,9 @@ class AlertBuilder(context: Context?) : AlertDialog.Builder(context!!) {
             this.message!!.text = s
             this.message!!.visibility = View.VISIBLE
         }
+
+        this.message!!.rootView.visibility = View.VISIBLE
+
         return this
     }
 
@@ -121,6 +125,12 @@ class AlertBuilder(context: Context?) : AlertDialog.Builder(context!!) {
         return dialog
     }
 
+    fun setCustomView(v: View) {
+        if (custom!!.childCount > 0)  custom!!.removeAllViews()
+
+        custom!!.addView(v)
+    }
+
     init {
         val view = LayoutInflater.from(getContext()).inflate(R.layout.abc_popup_dialog, null, false)
         setView(view)
@@ -131,5 +141,6 @@ class AlertBuilder(context: Context?) : AlertDialog.Builder(context!!) {
         neutral = view.findViewById(R.id.dialogNeutral)
         negative = view.findViewById(R.id.dialogNegative)
         positive = view.findViewById(R.id.dialogPositive)
+        custom = view.findViewById(R.id.dialogCustomLayout)
     }
 }

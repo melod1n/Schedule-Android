@@ -4,14 +4,13 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_quick_edit"
-            android:icon="@drawable/ic_pencil_outline"
+            android:icon="@drawable/ic_pencil"
             android:title="@string/drawer_quick_edit" />
 
         <item
             android:id="@+id/drawer_groups_list"
+            android:icon="@drawable/ic_groups"
             android:title="@string/drawer_groups_list" />
-
-        <!-- TODO: найти нормальную иконку для групп -->
 
         <item
             android:id="@+id/drawer_providers"
@@ -23,9 +22,8 @@
     <group android:id="@+id/one">
         <item
             android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
-
-        <!-- TODO: найти нормальную иконку для настроек -->
 
         <item
             android:id="@+id/drawer_about"

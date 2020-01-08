@@ -2,7 +2,6 @@ package ru.melod1n.schedule.fragment;
 
 import android.os.Bundle;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -123,7 +122,7 @@ public class ParentScheduleFragment extends Fragment {
         String subtitle = b ? Engine.getCurrentDate() : Engine.getInterim();
 
         SpannableString string = new SpannableString(subtitle);
-        string.setSpan(new AbsoluteSizeSpan(Util.px(14)), 0, subtitle.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        string.setSpan(new AbsoluteSizeSpan(Util.px(14)), 0, subtitle.length(), 0);
 
         toolbar.setSubtitle(string);
     }

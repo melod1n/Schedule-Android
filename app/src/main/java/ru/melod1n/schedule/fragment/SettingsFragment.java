@@ -4,13 +4,17 @@ import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceScreen;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 
@@ -18,20 +22,25 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.activity.MainActivity;
 import ru.melod1n.schedule.activity.SettingsActivity;
 import ru.melod1n.schedule.activity.ThemesActivity;
+import ru.melod1n.schedule.app.AlertBuilder;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.common.Engine;
 import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.common.TimeManager;
 import ru.melod1n.schedule.items.ThemeItem;
+import ru.melod1n.schedule.widget.TextArea;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
 
     //Categories
+    private static final String CATEGORY_ACCOUNT = "account";
     private static final String CATEGORY_APPEARANCE = "appearance";
     private static final String CATEGORY_SCHEDULE = "schedule";
     private static final String CATEGORY_DEBUG = "debug";
+
+    public static final String KEY_USER_NAME = "user_name";
 
     public static final String KEY_THEME = "theme";
     private static final String KEY_THEME_MANAGER = "theme_manager";
@@ -77,6 +86,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private void init() {
         setTitle();
         setPreferencesFromResource(currentPreferenceLayout, null);
+
+        PreferenceScreen account = findPreference(CATEGORY_ACCOUNT);
+
+        if (account != null) {
+            account.setOnPreferenceClickListener(this::changeRootLayout);
+        }
+
+        PreferenceScreen userName = findPreference(KEY_USER_NAME);
+
+        if (userName != null) {
+            userName.setOnPreferenceClickListener(this);
+
+            userName.setSummary(AppGlobal.preferences.getString(KEY_USER_NAME, ""));
+        }
 
         PreferenceScreen appearance = findPreference(CATEGORY_APPEARANCE);
 
@@ -157,9 +180,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private void setTitle() {
         int title = R.string.settings;
+
         switch (currentPreferenceLayout) {
             case R.xml.fragment_settings:
                 title = R.string.settings;
+                break;
+            case R.xml.category_account:
+                title = R.string.pref_account_title;
                 break;
             case R.xml.category_appearance:
                 title = R.string.pref_appearance_title;
@@ -172,8 +199,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 break;
         }
 
-        if (getActivity() != null)
-            getActivity().setTitle(title);
+        requireActivity().setTitle(title);
     }
 
     private void applyTintInPreferenceScreen(@NonNull PreferenceScreen rootScreen) {
@@ -187,7 +213,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private void tintPreference(@NonNull Preference preference) {
         if (preference.getIcon() != null && getContext() != null) {
-            preference.getIcon().setTint(getContext().getColor(ThemeEngine.getCurrentTheme().isDark() ? R.color.dark_accent : R.color.accent));
+            preference.getIcon().setTint(ContextCompat.getColor(getContext(), ThemeEngine.getCurrentTheme().isDark() ? R.color.dark_accent : R.color.accent));
         }
     }
 
@@ -205,9 +231,45 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             case KEY_SET_EVENING_TIME:
                 setEveningTime();
                 return true;
+            case KEY_USER_NAME:
+                showUserNameDialog();
+                break;
         }
 
         return false;
+    }
+
+    private void showUserNameDialog() {
+        AlertBuilder builder = new AlertBuilder(requireContext());
+        builder.setTitle(R.string.pref_account_user_name_title);
+
+        TextArea area = new TextArea(requireContext());
+        area.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        area.setHint(R.string.pref_account_user_name_title);
+        area.setText(AppGlobal.preferences.getString(KEY_USER_NAME, ""));
+        area.requestFocus();
+
+        builder.setCustomView(area);
+        builder.setPositiveButton(R.string.change, v -> {
+            String name;
+            if (area.getText() == null || area.getText().toString().trim().isEmpty()) {
+               name = getString(R.string.drawer_title_no_user);
+            } else {
+                name = area.getText().toString().trim();
+            }
+
+
+            if (TextUtils.isEmpty(name)) return;
+
+            AppGlobal.preferences.edit().putString(KEY_USER_NAME, name).apply();
+
+            findPreference(KEY_USER_NAME).setSummary(name);
+
+            EventBus.getDefault().postSticky(new EventInfo<>(EventInfo.KEY_USER_NAME_UPDATE, name));
+        });
+
+        builder.setNegativeButton(android.R.string.cancel);
+        builder.show();
     }
 
     @Override
@@ -269,11 +331,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     private void sendChangeShowDateEvent(boolean newValue) {
-        Engine.sendEvent(new EventInfo(KEY_SHOW_DATE, newValue));
+        Engine.sendEvent(new EventInfo<>(KEY_SHOW_DATE, newValue));
     }
 
     private boolean changeRootLayout(@NonNull Preference preference) {
         switch (preference.getKey()) {
+            case CATEGORY_ACCOUNT:
+                currentPreferenceLayout = R.xml.category_account;
+                break;
             case CATEGORY_APPEARANCE:
                 currentPreferenceLayout = R.xml.category_appearance;
                 break;

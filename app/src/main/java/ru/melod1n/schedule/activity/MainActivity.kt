@@ -17,9 +17,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.app.AlertBuilder
 import ru.melod1n.schedule.common.AppGlobal
+import ru.melod1n.schedule.common.EventInfo
 import ru.melod1n.schedule.common.ThemeEngine
 import ru.melod1n.schedule.common.TimeManager
 import ru.melod1n.schedule.current.BaseActivity
@@ -60,6 +63,18 @@ class MainActivity : BaseActivity() {
 
         navigationDrawer.setNavigationItemSelectedListener { item: MenuItem -> onDrawerItemSelected(item) }
         navigationView.setOnNavigationItemSelectedListener { item: MenuItem -> onItemSelected(item) }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    override fun onReceive(info: EventInfo<Any>) {
+        super.onReceive(info)
+
+        when (info.key) {
+            EventInfo.KEY_USER_NAME_UPDATE -> {
+                prepareDrawerHeader()
+            }
+        }
     }
 
     fun prepareScreenSwipe(page: Int) {
@@ -107,11 +122,20 @@ class MainActivity : BaseActivity() {
             setOnClickListener { openLoginScreen() }
 
             findViewById<TextPlain>(R.id.drawerTitle).apply {
-                setText(R.string.drawer_title_no_user)
+                if (true) { //проверка на офлайн
+                    text = AppGlobal.preferences.getString(SettingsFragment.KEY_USER_NAME, null)
+                            ?: getString(R.string.drawer_title_no_user)
+                } else {
+                    //
+                }
             }
 
             findViewById<TextPlain>(R.id.drawerSubtitle).apply {
-                setText(R.string.drawer_subtitle_no_user)
+                if (true) { //проверка на офлайн
+                    setText(R.string.drawer_subtitle_no_user)
+                } else {
+                    //
+                }
             }
 
             findViewById<AppCompatImageView>(R.id.drawerAvatar).apply {

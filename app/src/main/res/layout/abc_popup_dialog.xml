@@ -24,8 +24,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:visibility="gone"
         android:paddingStart="22dp"
         android:paddingEnd="22dp"
+        tools:visibility="visible"
         android:paddingBottom="16dp">
 
         <ru.melod1n.schedule.widget.TextPlain
@@ -39,6 +41,12 @@
             tools:visibility="visible" />
 
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/dialogCustomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp" />
 
     <LinearLayout
         android:id="@+id/dialogButtonContainer"

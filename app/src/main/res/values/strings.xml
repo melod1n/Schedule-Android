@@ -118,4 +118,6 @@
     <string name="show">Show</string>
     <string name="stack_trace">Stack Trace</string>
     <string name="copy_trace">Copy</string>
+    <string name="pref_account_user_name_title">User Name</string>
+    <string name="change">Change</string>
 </resources>
