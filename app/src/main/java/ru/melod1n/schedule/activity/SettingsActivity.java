@@ -34,7 +34,7 @@ public class SettingsActivity extends BaseActivity {
         fragment = new SettingsFragment();
         fragment.setArguments(arguments);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment, fragment.getClass().getSimpleName()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment, fragment.getClass().getSimpleName()).commit();
     }
 
     @Override

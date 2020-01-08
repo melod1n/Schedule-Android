@@ -74,8 +74,8 @@ public class NavigationDrawer extends NavigationView {
         View header = getHeaderView(0);
         header.setBackgroundColor(theme.getColorDrawerHeaderBackground());
 
-        TextView title = header.findViewById(R.id.drawer_header_title);
-        TextView subtitle = header.findViewById(R.id.drawer_header_subtitle);
+        TextView title = header.findViewById(R.id.drawerTitle);
+        TextView subtitle = header.findViewById(R.id.drawerSubtitle);
 
         title.setTextColor(theme.getColorDrawerHeaderTitle());
         subtitle.setTextColor(theme.getColorDrawerHeaderSubtitle());

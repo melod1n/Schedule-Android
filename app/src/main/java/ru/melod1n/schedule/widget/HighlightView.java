@@ -2,9 +2,11 @@ package ru.melod1n.schedule.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
@@ -16,6 +18,7 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
+import ru.melod1n.schedule.util.Util;
 
 public class HighlightView extends View {
 
@@ -90,5 +93,15 @@ public class HighlightView extends View {
         }
 
         setBackground(drawable);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        ViewGroup.LayoutParams params = getLayoutParams();
+        params.height = Util.px(ThemeEngine.getCurrentTheme().isMd2() ? 1 : 5);
+
+        setLayoutParams(params);
     }
 }

@@ -1,7 +1,5 @@
 package ru.melod1n.schedule.io;
 
-import android.os.Build;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -123,10 +121,7 @@ public class FileStreams {
      * Used to split lines on text file. On Android, this is {@code "\n"}
      */
     public static String lineSeparator() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return System.lineSeparator();
-        }
-        return "\n";
+        return System.lineSeparator();
     }
 
     /**

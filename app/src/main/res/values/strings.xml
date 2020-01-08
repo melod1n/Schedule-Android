@@ -10,8 +10,6 @@
     <string name="delete">Delete</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
-    <string name="timetable">Timetable</string>
-    <string name="schedule">Schedule</string>
     <string name="settings">Settings</string>
 
     <string name="danil_nikolaev" translatable="false">Danil Nikolaev</string>
@@ -23,7 +21,6 @@
     <string name="version_about">Version %s Build %d</string>
     <string name="cause_error">Application crashed</string>
     <string name="no_items_title">There\'s nothing here</string>
-    <string name="notes">Notes</string>
     <string name="set_one_column">Set one column</string>
     <string name="set_two_columns">Set two columns</string>
     <string name="auto">Auto</string>
@@ -118,4 +115,7 @@
     <string name="events">Events</string>
     <string name="using_gestures_ask_message">Are you using fullscreen gestures in your system?</string>
     <string name="using_gestures_ask_title">Hello</string>
+    <string name="show">Show</string>
+    <string name="stack_trace">Stack Trace</string>
+    <string name="copy_trace">Copy</string>
 </resources>

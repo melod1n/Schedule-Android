@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import butterknife.ButterKnife
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_recycler.*
 import kotlinx.android.synthetic.main.no_items.*
 import kotlinx.android.synthetic.main.toolbar.*

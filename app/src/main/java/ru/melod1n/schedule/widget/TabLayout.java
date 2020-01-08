@@ -22,6 +22,7 @@ import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.helper.FontHelper;
 import ru.melod1n.schedule.items.ThemeItem;
+import ru.melod1n.schedule.util.Util;
 
 public class TabLayout extends com.google.android.material.tabs.TabLayout {
 
@@ -72,37 +73,7 @@ public class TabLayout extends com.google.android.material.tabs.TabLayout {
 
         changeFontInViewGroup(this);
 
-        int[][] states = new int[][]{
-                new int[]{-android.R.attr.state_selected},
-                new int[]{android.R.attr.state_selected}
-        };
-
-        int[] colors = new int[]{
-                theme.getColorTabsTextNormal(),
-                theme.getColorTabsTextActive()
-        };
-
-
-//        ColorStateList textColors = new ColorStateList(states, colors);
-////
-//        for (int i = 0; i < getTabCount(); i++) {
-//            TabLayout.Tab tab = getTabAt(i);
-//            if (tab != null) {
-//                tab.setCustomView(null);
-//
-//                //tab
-//
-//                TextView tabTextView = new TextView(getContext());
-//                tabTextView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//                tabTextView.setText(theme.isMd2() ? tab.getText() : tab.getText().toString().toUpperCase());
-//                //tabTextView.setTextColor(textColors);
-//                tabTextView.setTypeface(ResourcesCompat.getFont(getContext(), theme.isMd2() ? R.font.ps_regular : R.font.roboto_regular), Typeface.BOLD);
-//
-//                //tab.setCustomView(tabTextView);
-//            }
-//        }
-
-
+        setSelectedTabIndicatorHeight(Util.px(3));
     }
 
     void changeFontInViewGroup(ViewGroup viewGroup) {

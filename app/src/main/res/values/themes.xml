@@ -12,7 +12,7 @@
         <item name="tabTextColor">@color/tabs_text</item>
         <item name="tabSelectedTextColor">@color/accent</item>
         <item name="tabIndicatorColor">@color/accent</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:navigationBarColor" tools:targetApi="o_mr1">?colorPrimaryDark</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
     </style>
@@ -28,7 +28,7 @@
         <item name="tabTextColor">@color/dark_tabs_text</item>
         <item name="tabSelectedTextColor">@color/dark_accent</item>
         <item name="tabIndicatorColor">@color/dark_accent</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:navigationBarColor" tools:targetApi="o_mr1">?colorPrimaryDark</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="colorControlNormal">@color/dark_control_normal</item>

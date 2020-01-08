@@ -6,7 +6,6 @@ import android.view.Window;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
 
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
@@ -35,29 +34,21 @@ public class ViewUtil {
 
         int visibility = 0;
 
-        if (theme.isLightStatusBar()) {
-            visibility += View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-        if (theme.isLightNavigationBar()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                visibility += View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
-            } else {
-                window.setNavigationBarColor(ColorUtil.darkenColor(primaryDark));
+            if (theme.isLightStatusBar()) {
+                visibility += View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            }
+
+            if (theme.isLightNavigationBar()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    visibility += View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+                } else {
+                    window.setNavigationBarColor(ColorUtil.darkenColor(primaryDark));
+                }
             }
         }
 
         window.getDecorView().setSystemUiVisibility(visibility);
-    }
-
-    public static boolean isAndroid10GesturesEnabled(View rootView) {
-        final boolean[] enabled = {false};
-
-        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, insets) -> {
-            enabled[0] = insets.getSystemWindowInsetLeft() == 0 && insets.getSystemWindowInsetRight() == 0;
-            return insets.consumeSystemWindowInsets();
-        });
-
-        return enabled[0];
     }
 }

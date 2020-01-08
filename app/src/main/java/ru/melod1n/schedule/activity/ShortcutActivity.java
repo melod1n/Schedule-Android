@@ -37,7 +37,7 @@ public class ShortcutActivity extends AppCompatActivity {
                 break;
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, f).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, f).commit();
         EventBus.getDefault().register(this);
     }
 

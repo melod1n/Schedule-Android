@@ -122,10 +122,12 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
         int visibility = 0;
 
         if (!ThemeEngine.getCurrentTheme().isDark()) {
-            visibility += View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                visibility += View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                visibility += View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    visibility += View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+                }
             }
         }
 

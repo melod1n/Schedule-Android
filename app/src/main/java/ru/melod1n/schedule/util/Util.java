@@ -1,5 +1,6 @@
 package ru.melod1n.schedule.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Intent;
@@ -32,6 +33,7 @@ public class Util {
         AppGlobal.preferences.edit().putBoolean("first_launch", first).apply();
     }
 
+    @SuppressLint("PrivateResource")
     public static void restart(Activity activity, Intent extras, boolean anim) {
         Intent intent = new Intent(activity, activity.getClass());
         if (extras != null)

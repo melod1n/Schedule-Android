@@ -9,8 +9,9 @@
 
         <item
             android:id="@+id/drawer_groups_list"
-            android:icon="@drawable/ic_groups_outline"
             android:title="@string/drawer_groups_list" />
+
+        <!-- TODO: найти нормальную иконку для групп -->
 
         <item
             android:id="@+id/drawer_providers"
@@ -22,8 +23,9 @@
     <group android:id="@+id/one">
         <item
             android:id="@+id/drawer_settings"
-            android:icon="@drawable/ic_settings_outline"
             android:title="@string/settings" />
+
+        <!-- TODO: найти нормальную иконку для настроек -->
 
         <item
             android:id="@+id/drawer_about"

@@ -21,7 +21,6 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
-import ru.melod1n.schedule.helper.PermissionHelper;
 import ru.melod1n.schedule.helper.TimeHelper;
 import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.util.ViewUtil;
@@ -31,7 +30,7 @@ public class SetupActivity extends AppCompatActivity {
 
     private LayoutInflater inflater;
 
-    @BindView(R.id.fragment_container)
+    @BindView(R.id.fragmentContainer)
     FrameLayout container;
 
     @BindView(R.id.screen_title)
@@ -54,7 +53,6 @@ public class SetupActivity extends AppCompatActivity {
 
         inflater = LayoutInflater.from(this);
 
-        PermissionHelper.init(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_screen);
         ButterKnife.bind(this);
@@ -288,7 +286,8 @@ public class SetupActivity extends AppCompatActivity {
         String[] perms = new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         };
-        PermissionHelper.requestPermissions(perms, 1);
+
+        //TODO: запрашивать разрешение
     }
 
     private void showNumBell(final boolean manual) {

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.melod1n.schedule.widget.FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:windowBackground"
     android:orientation="vertical">
 
     <ru.melod1n.schedule.widget.Toolbar
@@ -56,5 +55,5 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</ru.melod1n.schedule.widget.FrameLayout>
 

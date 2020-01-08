@@ -23,9 +23,10 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:paddingStart="22dp"
-        android:paddingBottom="16dp"
-        android:paddingEnd="22dp">
+        android:paddingEnd="22dp"
+        android:paddingBottom="16dp">
 
         <ru.melod1n.schedule.widget.TextPlain
             android:id="@+id/dialogMessage"
