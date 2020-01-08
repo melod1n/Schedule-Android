@@ -29,13 +29,13 @@ import ru.melod1n.schedule.widget.RefreshLayout;
 
 public class AgendaFragment extends Fragment {
 
-    @BindView(R.id.list)
+    @BindView(R.id.recyclerView)
     RecyclerView list;
 
     @BindView(R.id.refresh)
     RefreshLayout refresh;
 
-    @BindView(R.id.no_items_container)
+    @BindView(R.id.noItemsView)
     TextView noItems;
 
     private AgendaAdapter adapter;

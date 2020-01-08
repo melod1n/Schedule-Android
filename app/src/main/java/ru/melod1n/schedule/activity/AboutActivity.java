@@ -26,7 +26,7 @@ public class AboutActivity extends BaseActivity {
     @BindView(R.id.app_name)
     TextView name;
 
-    @BindView(R.id.list)
+    @BindView(R.id.recyclerView)
     RecyclerView list;
 
     @BindView(R.id.toolbar)

@@ -39,7 +39,7 @@ public class ThemesActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.list)
+    @BindView(R.id.recyclerView)
     RecyclerView list;
 
     @BindView(R.id.refresh)

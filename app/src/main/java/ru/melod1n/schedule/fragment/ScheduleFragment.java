@@ -38,13 +38,13 @@ import ru.melod1n.schedule.items.TeacherItem;
 
 public class ScheduleFragment extends Fragment implements BaseAdapter.OnItemClickListener {
 
-    @BindView(R.id.list)
+    @BindView(R.id.recyclerView)
     RecyclerView list;
 
     @BindView(R.id.refresh)
     SwipeRefreshLayout refresh;
 
-    @BindView(R.id.no_items_container)
+    @BindView(R.id.noItemsView)
     TextView noItems;
 
     @BindView(R.id.fab_add)

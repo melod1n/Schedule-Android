@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import ru.melod1n.schedule.items.DayItem;
 import ru.melod1n.schedule.items.LessonItem;
 import ru.melod1n.schedule.items.LocationItem;
+import ru.melod1n.schedule.items.Note;
 import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.items.ParticipantItem;
 import ru.melod1n.schedule.items.SubjectItem;
@@ -249,7 +250,7 @@ public class CacheStorage {
             Object item = values.get(i);
             switch (table) {
                 case TABLE_NOTES:
-                    putValues(cv, (NoteItem) item);
+                    putValues(cv, (Note) item);
                     break;
                 case TABLE_LESSONS:
                     putValues(cv, (LessonItem) item);
@@ -365,8 +366,8 @@ public class CacheStorage {
 //        return i;
 //    }
 
-    private static void putValues(@NonNull ContentValues cv, @NonNull NoteItem item) {
-        cv.put(TITLE, item.title);
+    private static void putValues(@NonNull ContentValues cv, @NonNull Note item) {
+        cv.put(TITLE, item.getTitle());
         cv.put(POSITION, item.position);
         cv.put(TEXT, item.text);
     }

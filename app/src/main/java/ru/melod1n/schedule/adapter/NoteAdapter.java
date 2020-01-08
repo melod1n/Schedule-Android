@@ -14,17 +14,16 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.current.BaseHolder;
 import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.database.DatabaseHelper;
-import ru.melod1n.schedule.items.NoteItem;
+import ru.melod1n.schedule.items.Note;
 import ru.melod1n.schedule.util.ColorUtil;
 
-public class NoteAdapter extends BaseAdapter<NoteItem, NoteAdapter.ViewHolder> {
+public class NoteAdapter extends BaseAdapter<Note, NoteAdapter.ViewHolder> {
 
-    public NoteAdapter(Context context, ArrayList<NoteItem> items) {
+    public NoteAdapter(Context context, ArrayList<Note> items) {
         super(context, items);
     }
 
@@ -47,8 +46,8 @@ public class NoteAdapter extends BaseAdapter<NoteItem, NoteAdapter.ViewHolder> {
     }
 
     @Override
-    public boolean onQueryItem(NoteItem item, String lowerQuery) {
-        if (item.getTitle().toLowerCase().contains(lowerQuery) || item.getText().toLowerCase().contains(lowerQuery))
+    public boolean onQueryItem(Note item, String lowerQuery) {
+        if (item.getTitle().toLowerCase().contains(lowerQuery) || item.getBody().toLowerCase().contains(lowerQuery))
             return true;
         return super.onQueryItem(item, lowerQuery);
     }
@@ -69,10 +68,9 @@ public class NoteAdapter extends BaseAdapter<NoteItem, NoteAdapter.ViewHolder> {
         @BindView(R.id.card)
         CardView card;
 
-        final int[] colors = ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT;
-
         ViewHolder(View v) {
             super(v);
+
             ButterKnife.bind(this, v);
 
             card.setCardElevation(4);
@@ -80,11 +78,13 @@ public class NoteAdapter extends BaseAdapter<NoteItem, NoteAdapter.ViewHolder> {
 
         @Override
         public void bind(int position) {
-            NoteItem item = getItem(position);
+            Note item = getItem(position);
 
-            card.setCardBackgroundColor(colors[item.getPosition()]);
+            int color = Color.parseColor(item.getColor());
 
-            int textColor = ColorUtil.isDark(colors[item.getPosition()]) ? Color.WHITE : Color.BLACK;
+            card.setCardBackgroundColor(color);
+
+            int textColor = ColorUtil.isDark(color) ? Color.WHITE : Color.BLACK;
 
             this.title.setTextColor(textColor);
             this.text.setTextColor(textColor);
@@ -92,7 +92,7 @@ public class NoteAdapter extends BaseAdapter<NoteItem, NoteAdapter.ViewHolder> {
             String title = item.getTitle().length() > 35 ? item.getTitle().substring(0, 35) + "..." : item.getTitle();
             this.title.setText(title);
 
-            String text = item.getText().length() > 120 ? item.getText().substring(0, 120) + "..." : item.getText();
+            String text = item.getBody().length() > 120 ? item.getBody().substring(0, 120) + "..." : item.getBody();
             this.text.setText(text);
 
             this.text.setVisibility(text.trim().isEmpty() ? View.GONE : View.VISIBLE);

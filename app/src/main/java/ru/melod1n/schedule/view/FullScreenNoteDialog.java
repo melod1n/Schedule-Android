@@ -21,18 +21,18 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.FullScreenDialog;
-import ru.melod1n.schedule.items.NoteItem;
+import ru.melod1n.schedule.items.Note;
 import ru.melod1n.schedule.util.ColorUtil;
 import ru.melod1n.schedule.util.ViewUtil;
 import ru.melod1n.schedule.widget.TextArea;
 
-public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
+public class FullScreenNoteDialog extends FullScreenDialog<Note> {
 
     private static final String TAG = "fullscreen_note_dialog";
 
     private static final int DEFAULT_COLOR = ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK[0] : ThemeEngine.COLOR_PALETTE_LIGHT[0];
 
-    private NoteItem item;
+    private Note item;
     private boolean edit;
     private int color;
 
@@ -51,11 +51,11 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
     @BindView(R.id.picker)
     HorizontalColorPicker picker;
 
-    public FullScreenNoteDialog(FragmentManager fragmentManager, NoteItem item) {
+    public FullScreenNoteDialog(FragmentManager fragmentManager, Note item) {
         super(fragmentManager, item);
     }
 
-    public void display(FragmentManager manager, NoteItem item) {
+    public void display(FragmentManager manager, Note item) {
         this.item = item;
         this.edit = item != null;
         this.show(manager, TAG);
@@ -73,7 +73,7 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
 
         picker.setColors(ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT);
 
-        color = !edit ? DEFAULT_COLOR : picker.getColors().get(item.getPosition());
+        color = !edit ? DEFAULT_COLOR : Color.parseColor(item.getColor());
         picker.setSelectedColor(color);
         setColor(color);
 
@@ -90,7 +90,7 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
 
         if (edit) {
             title.setText(item.getTitle());
-            text.setText(item.getText());
+            text.setText(item.getBody());
             title.setSelection(title.getText().length());
         }
 
@@ -159,15 +159,17 @@ public class FullScreenNoteDialog extends FullScreenDialog<NoteItem> {
             return;
         }
 
-        if (!edit)
-            item = new NoteItem();
 
         if (color == 0)
             color = ThemeEngine.getCurrentTheme().getColorAccent();
 
+        if (!edit) {
+            item = new Note("", "","", "", "");
+        }
+
         item.setTitle(title_);
-        item.setText(text_);
-        item.setPosition(picker.getSelectedPosition());
+        item.setBody(text_);
+        item.setColor(String.valueOf(picker.getSelectedColor()));
 
         if (getOnActionListener() != null) {
             if (edit) {

@@ -2,6 +2,7 @@ package ru.melod1n.schedule.widget
 
 import android.content.Context
 import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -49,6 +50,6 @@ class NoItemsView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: 
         EventBus.getDefault().register(this)
         theme = ThemeEngine.getCurrentTheme()
         init()
-        TimeManager.addOnHourChangeListener { Handler().post { initIcon() } }
+        TimeManager.addOnHourChangeListener { Handler(Looper.getMainLooper()).post { initIcon() } }
     }
 }

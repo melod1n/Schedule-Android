@@ -21,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_HOMEWORK = "homework";
 
     //DB FIELDS
+    public static final String _ID = "_id";
     public static final String ID = "id";
     public static final String POSITION = "position";
     public static final String TITLE = "title";
@@ -56,6 +57,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String THEME_OBJECT = "theme";
     public static final String THEME_ID = "theme_id";
 
+    public static final String COLOR = "color";
+
+    public static final String BODY = "body";
+
+    public static final String SUBJECT_ID = "subject_id";
     //TABLES
 
     private final static String SQL_CREATE_TABLE_DAYS = "create table " + TABLE_DAYS +
@@ -108,10 +114,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ");";
 
     private final static String SQL_CREATE_TABLE_NOTES = "create table " + TABLE_NOTES +
-            " (" + ID + " integer primary key autoincrement, " +
+            " (" + _ID + " integer primary key autoincrement, " +
+            ID + " text, " +
             TITLE + " text, " +
-            TEXT + " text, " +
-            POSITION + " integer" +
+            BODY + " text, " +
+            COLOR + " text, " +
+            SUBJECT_ID + " text" +
             ");";
 
     private final static String SQL_CREATE_TABLE_THEMES = "create table " + TABLE_THEMES +
@@ -133,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //DB INFO
     private static final String DB_NAME = "schedule.db";
-    private static final int DB_VERSION = 33;
+    private static final int DB_VERSION = 34;
 
     private static DatabaseHelper instance;
 

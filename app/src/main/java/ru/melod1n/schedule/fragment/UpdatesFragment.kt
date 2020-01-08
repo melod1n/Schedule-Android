@@ -39,7 +39,7 @@ class UpdatesFragment : Fragment(), OnRefreshListener, BaseAdapter.OnItemClickLi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         ButterKnife.bind(this, view)
 
-        no_items_container.setText(R.string.no_updates)
+        noItemsView.setText(R.string.no_updates)
 
         toolbar.setTitle(R.string.nav_updates)
 
@@ -50,10 +50,10 @@ class UpdatesFragment : Fragment(), OnRefreshListener, BaseAdapter.OnItemClickLi
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        no_items_container.visibility = View.GONE
+        noItemsView.visibility = View.GONE
         refresh.setOnRefreshListener(this)
 
-        list.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         prepareData()
     }
 
@@ -72,7 +72,7 @@ class UpdatesFragment : Fragment(), OnRefreshListener, BaseAdapter.OnItemClickLi
         adapter!!.onItemClickListener = this
         adapter!!.onItemLongClickListener = this
 
-        list.adapter = adapter
+        recyclerView.adapter = adapter
         refresh.isRefreshing = false
     }
 
