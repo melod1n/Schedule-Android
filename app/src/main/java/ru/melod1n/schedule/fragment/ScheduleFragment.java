@@ -29,7 +29,7 @@ import ru.melod1n.schedule.adapter.ScheduleAdapter;
 import ru.melod1n.schedule.app.AlertBuilder;
 import ru.melod1n.schedule.common.EventInfo;
 import ru.melod1n.schedule.current.BaseAdapter;
-import ru.melod1n.schedule.database.CacheStorage;
+import ru.melod1n.schedule.olddatabase.OldCacheStorage;
 import ru.melod1n.schedule.items.DayItem;
 import ru.melod1n.schedule.items.LessonItem;
 import ru.melod1n.schedule.items.LocationItem;
@@ -113,7 +113,7 @@ public class ScheduleFragment extends Fragment implements BaseAdapter.OnItemClic
     }
 
     private void getSubjects() {
-        ArrayList<DayItem> a = CacheStorage.getDays(day);
+        ArrayList<DayItem> a = OldCacheStorage.getDays(day);
         ArrayList<LessonItem> lessons = new ArrayList<>();
 
         int i = 1;

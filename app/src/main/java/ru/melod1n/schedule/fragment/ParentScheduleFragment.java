@@ -76,14 +76,6 @@ public class ParentScheduleFragment extends Fragment {
         EventBus.getDefault().register(this);
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (!hidden) {
-            ((MainActivity) requireActivity()).prepareScreenSwipe(currentPosition);
-        }
-        super.onHiddenChanged(hidden);
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onReceive(@NotNull Object[] data) {
         String key = (String) data[0];
@@ -149,7 +141,6 @@ public class ParentScheduleFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 currentPosition = position;
-                ((MainActivity) requireActivity()).prepareScreenSwipe(position);
             }
 
             @Override

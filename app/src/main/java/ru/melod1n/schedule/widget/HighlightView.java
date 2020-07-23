@@ -86,9 +86,9 @@ public class HighlightView extends View {
     }
 
     private void init() {
-        Drawable drawable = getContext().getDrawable(!theme.isMd2() ? (direction == DIRECTION_BOTTOM ? R.drawable.highlight_view_shadow_bottom : R.drawable.highlight_view_shadow_top) : R.drawable.highlight_view_divider);
+        Drawable drawable = getContext().getDrawable(R.drawable.highlight_view_divider);
 
-        if (theme.isMd2() && drawable != null) {
+        if (drawable != null) {
             drawable.setTint(theme.getColorHighlight());
         }
 
@@ -100,7 +100,7 @@ public class HighlightView extends View {
         super.onDraw(canvas);
 
         ViewGroup.LayoutParams params = getLayoutParams();
-        params.height = Util.px(ThemeEngine.getCurrentTheme().isMd2() ? 1 : 5);
+        params.height = Util.px(1);
 
         setLayoutParams(params);
     }

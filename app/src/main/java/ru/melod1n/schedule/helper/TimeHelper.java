@@ -3,11 +3,7 @@ package ru.melod1n.schedule.helper;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import java.util.ArrayList;
-
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.database.CacheStorage;
-import ru.melod1n.schedule.database.DatabaseHelper;
 
 public class TimeHelper {
 

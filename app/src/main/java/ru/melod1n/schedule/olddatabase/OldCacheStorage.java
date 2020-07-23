@@ -1,11 +1,10 @@
-package ru.melod1n.schedule.database;
+package ru.melod1n.schedule.olddatabase;
 
 
 import android.content.ContentValues;
 import android.database.Cursor;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -13,43 +12,38 @@ import ru.melod1n.schedule.items.DayItem;
 import ru.melod1n.schedule.items.LessonItem;
 import ru.melod1n.schedule.items.LocationItem;
 import ru.melod1n.schedule.items.Note;
-import ru.melod1n.schedule.items.NoteItem;
 import ru.melod1n.schedule.items.ParticipantItem;
 import ru.melod1n.schedule.items.SubjectItem;
 import ru.melod1n.schedule.items.TeacherItem;
-import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.Util;
 
-import static ru.melod1n.schedule.common.AppGlobal.database;
-import static ru.melod1n.schedule.database.DatabaseHelper.CLASSROOM;
-import static ru.melod1n.schedule.database.DatabaseHelper.DAY_OF_WEEK;
-import static ru.melod1n.schedule.database.DatabaseHelper.DAY_OF_YEAR;
-import static ru.melod1n.schedule.database.DatabaseHelper.ID;
-import static ru.melod1n.schedule.database.DatabaseHelper.LESSONS;
-import static ru.melod1n.schedule.database.DatabaseHelper.LESSON_TYPE;
-import static ru.melod1n.schedule.database.DatabaseHelper.LESSON_TYPE_CUSTOM;
-import static ru.melod1n.schedule.database.DatabaseHelper.ORDER;
-import static ru.melod1n.schedule.database.DatabaseHelper.PARTICIPANTS;
-import static ru.melod1n.schedule.database.DatabaseHelper.POSITION;
-import static ru.melod1n.schedule.database.DatabaseHelper.START_TIME;
-import static ru.melod1n.schedule.database.DatabaseHelper.SUBJECT;
-import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_DAYS;
-import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_LESSONS;
-import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_NOTES;
-import static ru.melod1n.schedule.database.DatabaseHelper.TABLE_THEMES;
-import static ru.melod1n.schedule.database.DatabaseHelper.TEACHER;
-import static ru.melod1n.schedule.database.DatabaseHelper.TEXT;
-import static ru.melod1n.schedule.database.DatabaseHelper.THEME_ID;
-import static ru.melod1n.schedule.database.DatabaseHelper.THEME_OBJECT;
-import static ru.melod1n.schedule.database.DatabaseHelper.TITLE;
+import static ru.melod1n.schedule.common.AppGlobal.oldDatabase;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.CLASSROOM;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.DAY_OF_WEEK;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.DAY_OF_YEAR;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.ID;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.LESSONS;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.LESSON_TYPE;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.LESSON_TYPE_CUSTOM;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.ORDER;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.PARTICIPANTS;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.POSITION;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.START_TIME;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.SUBJECT;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TABLE_DAYS;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TABLE_LESSONS;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TABLE_NOTES;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TEACHER;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TEXT;
+import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TITLE;
 
-public class CacheStorage {
+public class OldCacheStorage {
 
     private static Cursor selectCursor(String table, @NonNull String column, Object value) {
         return QueryBuilder.query()
                 .select("*").from(table)
                 .where(column.concat(" = ").concat(String.valueOf(value)))
-                .asCursor(database);
+                .asCursor(oldDatabase);
     }
 
     private static Cursor selectCursor(String table, String column, @NonNull int... ids) {
@@ -70,13 +64,13 @@ public class CacheStorage {
     private static Cursor selectCursor(String table, String where) {
         return QueryBuilder.query()
                 .select("*").from(table).where(where)
-                .asCursor(database);
+                .asCursor(oldDatabase);
     }
 
     private static Cursor selectCursor(String table) {
         return QueryBuilder.query()
                 .select("*").from(table)
-                .asCursor(database);
+                .asCursor(oldDatabase);
     }
 
     private static int getInt(@NonNull Cursor cursor, String columnName) {
@@ -89,22 +83,6 @@ public class CacheStorage {
 
     private static byte[] getBlob(@NonNull Cursor cursor, String columnName) {
         return cursor.getBlob(cursor.getColumnIndex(columnName));
-    }
-
-    public static ArrayList<ThemeItem> getThemes() {
-        return getThemes(null);
-    }
-
-    public static ArrayList<ThemeItem> getThemes(String id) {
-        Cursor cursor = id == null ? selectCursor(TABLE_THEMES) : selectCursor(TABLE_THEMES, THEME_ID, id);
-
-        ArrayList<ThemeItem> items = new ArrayList<>(cursor.getCount());
-
-        while (cursor.moveToNext()) {
-            items.add(parseTheme(cursor));
-        }
-
-        return items;
     }
 
 //    public static ArrayList<LessonItem> getSubjects(int day) {
@@ -160,10 +138,10 @@ public class CacheStorage {
         return subs;
     }
 
-    public static ArrayList<NoteItem> getNotes() {
+    public static ArrayList<Note> getNotes() {
         Cursor c = selectCursor(TABLE_NOTES);
 
-        ArrayList<NoteItem> notes = new ArrayList<>(c.getCount());
+        ArrayList<Note> notes = new ArrayList<>(c.getCount());
         while (c.moveToNext()) {
             notes.add(parseNote(c));
         }
@@ -211,13 +189,13 @@ public class CacheStorage {
     }
 
     public static void insert(String table, @NonNull ArrayList values) {
-        database.beginTransaction();
+        oldDatabase.beginTransaction();
 
         ContentValues cv = new ContentValues();
         for (Object item : values) {
             switch (table) {
                 case TABLE_NOTES:
-                    putValues(cv, (NoteItem) item);
+                    putValues(cv, (Note) item);
                     break;
                 case TABLE_LESSONS:
                     putValues(cv, (LessonItem) item);
@@ -225,25 +203,22 @@ public class CacheStorage {
 //                case TABLE_BELLS:
 //                    putValues(cv, (BellItem) item);
 //                    break;
-                case TABLE_THEMES:
-                    putValues(cv, (ThemeItem) item);
-                    break;
             }
 
             try {
-                database.insert(table, null, cv);
+                oldDatabase.insert(table, null, cv);
             } catch (Exception ignored) {
             }
 
             cv.clear();
         }
 
-        database.setTransactionSuccessful();
-        database.endTransaction();
+        oldDatabase.setTransactionSuccessful();
+        oldDatabase.endTransaction();
     }
 
     public static void update(String table, @NonNull ArrayList values, String where, Object args) {
-        database.beginTransaction();
+        oldDatabase.beginTransaction();
 
         ContentValues cv = new ContentValues();
         for (int i = 0; i < values.size(); i++) {
@@ -258,28 +233,25 @@ public class CacheStorage {
 //                case TABLE_BELLS:
 //                    putValues(cv, (BellItem) item);
 //                    break;
-                case TABLE_THEMES:
-                    putValues(cv, (ThemeItem) item);
-                    break;
             }
 
             try {
-                database.update(table, cv, where, new String[]{String.valueOf(args)});
+                oldDatabase.update(table, cv, where, new String[]{String.valueOf(args)});
             } catch (Exception ignored) {
             }
             cv.clear();
         }
 
-        database.setTransactionSuccessful();
-        database.endTransaction();
+        oldDatabase.setTransactionSuccessful();
+        oldDatabase.endTransaction();
     }
 
     public static void delete(String table, String where) {
-        database.delete(table, where, null);
+        oldDatabase.delete(table, where, null);
     }
 
     public static void delete(String table) {
-        database.delete(table, null, null);
+        oldDatabase.delete(table, null, null);
     }
 
     private static DayItem parseDay(Cursor cursor) {
@@ -300,22 +272,6 @@ public class CacheStorage {
         values.put(DAY_OF_WEEK, item.getDayOfWeek());
         values.put(DAY_OF_YEAR, item.getDayOfYear());
         values.put(LESSONS, Util.serialize(item.getLessons()));
-    }
-
-    private static void putValues(@NonNull ContentValues values, @NonNull ThemeItem item) {
-        values.put(THEME_ID, item.getId());
-        values.put(THEME_OBJECT, Util.serialize(item));
-    }
-
-    @Nullable
-    private static ThemeItem parseTheme(Cursor cursor) {
-        ThemeItem item = (ThemeItem) Util.deserialize(getBlob(cursor, THEME_OBJECT));
-
-        if (item == null) return null;
-
-        item.setId(getString(cursor, THEME_ID));
-
-        return item;
     }
 
     private static LessonItem parseLesson(Cursor cursor) {
@@ -344,15 +300,20 @@ public class CacheStorage {
         values.put(PARTICIPANTS, Util.serialize(item.getParticipants()));
     }
 
-    private static NoteItem parseNote(Cursor c) {
-        NoteItem item = new NoteItem();
+    private static Note parseNote(Cursor c) {
+        int id = getInt(c, ID);
+        int position = getInt(c, POSITION);
+        String title = getString(c, TITLE);
+        String text = getString(c, TEXT);
 
-        item.id = getInt(c, ID);
-        item.position = getInt(c, POSITION);
-        item.title = getString(c, TITLE);
-        item.text = getString(c, TEXT);
+//        Note item = new Note("", );
 
-        return item;
+//        item.id = getInt(c, ID);
+//        item.position = getInt(c, POSITION);
+//        item.title = getString(c, TITLE);
+//        item.text = getString(c, TEXT);
+
+        return null;
     }
 
 //    private static BellItem parseBell(Cursor c) {
@@ -367,9 +328,9 @@ public class CacheStorage {
 //    }
 
     private static void putValues(@NonNull ContentValues cv, @NonNull Note item) {
-        cv.put(TITLE, item.getTitle());
-        cv.put(POSITION, item.position);
-        cv.put(TEXT, item.text);
+//        cv.put(TITLE, item.getTitle());
+//        cv.put(POSITION, item.set);
+//        cv.put(TEXT, item.text);
     }
 
 //    private static void putValues(@NonNull ContentValues cv, @NonNull BellItem item) {

@@ -42,7 +42,7 @@ public class PopupDialog extends DialogFragment {
         theme = ThemeEngine.getCurrentTheme();
 
         if (getDialog() != null && getDialog().getWindow() != null) {
-            Drawable background = getContext().getDrawable(theme.isMd2() ? R.drawable.popup_dialog_bg : R.drawable.popup_dialog_bg_md1);
+            Drawable background = getContext().getDrawable(R.drawable.popup_dialog_bg);
 
             getDialog().getWindow().setBackgroundDrawable(background);
             getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);

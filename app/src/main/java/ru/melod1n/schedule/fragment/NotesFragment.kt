@@ -22,12 +22,11 @@ import ru.melod1n.schedule.R
 import ru.melod1n.schedule.activity.MainActivity
 import ru.melod1n.schedule.adapter.NoteAdapter
 import ru.melod1n.schedule.common.AppGlobal
+import ru.melod1n.schedule.common.TaskManager
 import ru.melod1n.schedule.current.BaseAdapter
 import ru.melod1n.schedule.current.FullScreenDialog.OnActionListener
 import ru.melod1n.schedule.database.CacheStorage
-import ru.melod1n.schedule.database.DatabaseHelper
 import ru.melod1n.schedule.items.Note
-import ru.melod1n.schedule.items.NoteItem
 import ru.melod1n.schedule.view.FullScreenNoteDialog
 import java.util.*
 
@@ -66,7 +65,6 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
         prepareToolbar()
         prepareList()
 
-
         prepareRefreshLayout()
 
         addNote.setOnClickListener { showDialog() }
@@ -76,6 +74,7 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
 
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
         onRefresh()
     }
 
@@ -90,18 +89,6 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = manager
         initDragDrop()
-    }
-
-    override fun onResume() {
-        (requireActivity() as MainActivity).prepareScreenSwipe(0)
-        super.onResume()
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        if (!hidden) {
-            (requireActivity() as MainActivity).prepareScreenSwipe(0)
-        }
-        super.onHiddenChanged(hidden)
     }
 
     private fun prepareToolbar() {
@@ -188,44 +175,53 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
     }
 
     private fun loadNotes() {
+        TaskManager.execute {
+            val notes = CacheStorage.getNotes()
 
-        val items = CacheStorage.getNotes()
+            requireActivity().runOnUiThread {
+                createAdapter(ArrayList(notes))
+                checkCount()
 
-        createAdapter(items)
-        checkCount()
-
-        refresh.isRefreshing = false
+                refresh.isRefreshing = false
+            }
+        }
     }
 
     private fun showDialog(position: Int = -1) {
         if (adapter == null) return
-        val dialog = FullScreenNoteDialog(fragmentManager, if (position == -1) null else adapter!!.getItem(position))
+
+        val dialog = FullScreenNoteDialog(parentFragmentManager, if (position == -1) null else adapter!!.getItem(position))
         dialog.setOnActionListener(object : OnActionListener<Note> {
-            override fun onItemEdit(item: Note?) {
-                CacheStorage.update(DatabaseHelper.TABLE_NOTES, item, "id = ?", item!!.id)
+            override fun onItemEdit(item: Note) {
+                CacheStorage.updateNote(item)
+//                OldCacheStorage.update(DatabaseHelper.TABLE_NOTES, item, "id = ?", item!!.id)
                 adapter!!.notifyItemChanged(position)
             }
 
-            override fun onItemInsert(item: Note?) {
-                CacheStorage.insert(DatabaseHelper.TABLE_NOTES, item)
+            override fun onItemInsert(item: Note) {
+                CacheStorage.insertNote(item)
+//                OldCacheStorage.insert(DatabaseHelper.TABLE_NOTES, item)
 
-                if (position == -1) adapter!!.values.add(item) else adapter!!.values.add(position, item)
+                adapter!!.add(item)
+                adapter!!.notifyDataSetChanged()
+//                if (position == -1) adapter!!.values.add(item) else adapter!!.values.add(position, item)
 
-                adapter!!.notifyItemInserted(if (position == -1) adapter!!.itemCount - 1 else position)
+//                adapter!!.notifyItemInserted(if (position == -1) adapter!!.itemCount - 1 else position)
 
-                adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount - 1, -1)
+//                adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount - 1, -1)
 
                 checkCount()
 
                 adapter!!.onEndMove(position)
+            } 
 
-            }
-
-            override fun onItemDelete(item: Note?) {
-                CacheStorage.delete(DatabaseHelper.TABLE_NOTES, "id = " + item!!.id)
+            override fun onItemDelete(item: Note) {
+                CacheStorage.deleteNote(item)
+//                OldCacheStorage.delete(DatabaseHelper.TABLE_NOTES, "id = " + item!!.id)
                 adapter!!.remove(position)
-                adapter!!.notifyItemRemoved(position)
-                adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount - 1, -1)
+                adapter!!.notifyDataSetChanged()
+//                adapter!!.notifyItemRemoved(position)
+//                adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount - 1, -1)
                 checkCount()
                 Snackbar.make(recyclerView!!, R.string.note_delete_title, Snackbar.LENGTH_LONG).setAction(android.R.string.cancel) { onItemInsert(item) }.show()
             }

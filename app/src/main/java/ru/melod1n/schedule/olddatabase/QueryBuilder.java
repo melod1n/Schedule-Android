@@ -1,4 +1,4 @@
-package ru.melod1n.schedule.database;
+package ru.melod1n.schedule.olddatabase;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

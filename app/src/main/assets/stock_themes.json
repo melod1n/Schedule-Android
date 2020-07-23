@@ -1,14 +1,13 @@
 [
   {
-    "id": "teal_md2",
+    "id": "teal",
     "title": "Default",
     "author": "μSchedule",
-    "version": 3,
+    "version": 4,
     "ui": {
       "dark": false,
       "light_status_bar": true,
-      "light_navigation_bar": true,
-      "md2": true
+      "light_navigation_bar": true
     },
     "colors": {
       "surface": "#ffffff",
@@ -41,15 +40,14 @@
     }
   },
   {
-    "id": "teal_md2_dark",
+    "id": "teal_dark",
     "title": "Dark Teal",
     "author": "μSchedule",
-    "version": 3,
+    "version": 4,
     "ui": {
       "dark": true,
       "light_status_bar": false,
-      "light_navigation_bar": false,
-      "md2": true
+      "light_navigation_bar": false
     },
     "colors": {
       "surface": "#121212",
@@ -79,129 +77,6 @@
       "highlight": "#707070",
       "fab_color": "accent",
       "fab_icon_color": "surface"
-    }
-  },
-  {
-    "id": "teal_md1",
-    "title": "Colored Teal",
-    "author": "μSchedule",
-    "version": 3,
-    "ui": {
-      "dark": false,
-      "light_status_bar": false,
-      "light_navigation_bar": false,
-      "md2": false
-    },
-    "colors": {
-      "surface": "#ffffff",
-      "primary": "#009688",
-      "primary_dark": "#00796B",
-      "accent": "#FF5722",
-      "background": "#ffffff",
-      "tabs_text_normal": "#cccccc",
-      "tabs_text_active": "#ffffff",
-      "tabs_indicator": "#ffffff",
-      "control_normal": "#ffffff",
-      "text_primary": "#212121",
-      "text_secondary": "#757575",
-      "text_primary_inverse": "#ffffff",
-      "text_secondary_inverse": "#cccccc",
-      "drawer": "surface",
-      "drawer_text_normal": "#212121",
-      "drawer_text_active": "accent",
-      "drawer_icon_normal": "#707070",
-      "drawer_icon_active": "accent",
-      "drawer_header_background": "primary",
-      "drawer_header_title": "#ffffff",
-      "drawer_header_subtitle": "#cccccc",
-      "bottom_bar": "primary",
-      "bottom_bar_icons_normal": "#cccccc",
-      "bottom_bar_icons_active": "#ffffff",
-      "highlight": "#bdbdbd",
-      "fab_color": "accent",
-      "fab_icon_color": "#ffffff"
-    }
-  },
-  {
-    "id": "teal_md1_dark",
-    "title": "Dark Colored Teal",
-    "author": "μSchedule",
-    "version": 3,
-    "ui": {
-      "dark": true,
-      "light_status_bar": false,
-      "light_navigation_bar": false,
-      "md2": false
-    },
-    "colors": {
-      "surface": "#ffffff",
-      "primary": "#00796B",
-      "primary_dark": "#004D40",
-      "accent": "#E64A19",
-      "background": "#000000",
-      "tabs_text_normal": "#cccccc",
-      "tabs_text_active": "surface",
-      "tabs_indicator": "surface",
-      "control_normal": "#ffffff",
-      "text_primary": "#ffffff",
-      "text_secondary": "#cccccc",
-      "text_primary_inverse": "#121212",
-      "text_secondary_inverse": "#707070",
-      "drawer": "background",
-      "drawer_text_normal": "#ffffff",
-      "drawer_text_active": "accent",
-      "drawer_icon_normal": "#cccccc",
-      "drawer_icon_active": "accent",
-      "drawer_header_background": "primary",
-      "drawer_header_title": "#ffffff",
-      "drawer_header_subtitle": "#cccccc",
-      "bottom_bar": "primary",
-      "bottom_bar_icons_normal": "#cccccc",
-      "bottom_bar_icons_active": "surface",
-      "highlight": "#707070",
-      "fab_color": "accent",
-      "fab_icon_color": "surface"
-    }
-  },
-  {
-    "id": "@innomaxx_theme",
-    "title": "@innomaxx",
-    "author": "",
-    "version": 3,
-    "ui": {
-      "dark": false,
-      "light_status_bar": false,
-      "light_navigation_bar": false,
-      "md2": false
-    },
-    "colors": {
-      "surface": "#ffffff",
-      "primary": "#236588",
-      "primary_dark": "#002a3a",
-      "accent": "primary",
-      "background": "surface",
-      "tabs_text_normal": "#cccccc",
-      "tabs_text_active": "surface",
-      "tabs_indicator": "#5196bf",
-      "control_normal": "surface",
-      "text_primary": "#212121",
-      "text_secondary": "#757575",
-      "text_primary_inverse": "#ffffff",
-      "text_secondary_inverse": "#cccccc",
-      "drawer": "surface",
-      "drawer_text_normal": "#212121",
-      "drawer_text_active": "accent",
-      "drawer_icon_normal": "#707070",
-      "drawer_icon_active": "accent",
-      "drawer_header_background": "primary",
-      "drawer_header_title": "#ffffff",
-      "drawer_header_subtitle": "#cccccc",
-      "bottom_bar": "surface",
-      "bottom_bar_icons_normal": "#757575",
-      "bottom_bar_icons_active": "accent",
-      "highlight": "#bdbdbd",
-      "fab_color": "accent",
-      "fab_icon_color": "#ffffff"
     }
   }
 ]

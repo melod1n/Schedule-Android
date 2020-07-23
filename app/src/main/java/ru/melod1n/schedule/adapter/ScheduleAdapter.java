@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
@@ -36,7 +38,7 @@ public class ScheduleAdapter extends BaseAdapter<LessonItem, ScheduleAdapter.Vie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ScheduleAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull @NonNull ScheduleAdapter.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         holder.bind(position);
     }

@@ -109,7 +109,7 @@ public class Toolbar extends androidx.appcompat.widget.Toolbar {
         }
 
         if (toolbarTitle != null) {
-            toolbarTitle.setTypeface(ResourcesCompat.getFont(getContext(), theme.isMd2() ? R.font.ps_regular : R.font.roboto_regular), Typeface.BOLD);
+            toolbarTitle.setTypeface(ResourcesCompat.getFont(getContext(), R.font.ps_regular), Typeface.BOLD);
         }
     }
 

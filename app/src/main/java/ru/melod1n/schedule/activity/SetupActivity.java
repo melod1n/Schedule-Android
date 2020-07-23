@@ -19,12 +19,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.AppGlobal;
-import ru.melod1n.schedule.database.CacheStorage;
-import ru.melod1n.schedule.database.DatabaseHelper;
+import ru.melod1n.schedule.olddatabase.OldCacheStorage;
+import ru.melod1n.schedule.olddatabase.DatabaseHelper;
 import ru.melod1n.schedule.helper.TimeHelper;
 import ru.melod1n.schedule.util.Util;
 import ru.melod1n.schedule.util.ViewUtil;
-import ru.melod1n.schedule.view.HorizontalColorPicker;
+import ru.melod1n.schedule.widget.HorizontalColorPicker;
 
 public class SetupActivity extends AppCompatActivity {
 
@@ -215,7 +215,7 @@ public class SetupActivity extends AppCompatActivity {
         findViewById(R.id.auto).setOnClickListener(p1 -> showNumBell(false));
 
         findViewById(R.id.manual).setOnClickListener(p1 -> {
-            CacheStorage.delete(DatabaseHelper.TABLE_BELLS);
+            OldCacheStorage.delete(DatabaseHelper.TABLE_BELLS);
             showNumBell(true);
         });
     }
@@ -319,7 +319,7 @@ public class SetupActivity extends AppCompatActivity {
     }
 
     private void createTimetable() {
-        CacheStorage.delete(DatabaseHelper.TABLE_BELLS);
+        OldCacheStorage.delete(DatabaseHelper.TABLE_BELLS);
         TimeHelper.load();
     }
 

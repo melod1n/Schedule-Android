@@ -12,7 +12,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.GravityCompat
-import androidx.customview.widget.ViewDragHelper
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -44,8 +43,6 @@ class MainActivity : BaseActivity() {
     private var selectedId = 0
     private var selectedFragment: Fragment? = null
 
-    private var drawerEdgeSize = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -59,11 +56,9 @@ class MainActivity : BaseActivity() {
         askPermissions()
         checkCrash()
         prepareDrawerHeader()
-        prepareScreenSwipe(0)
 
         navigationDrawer.setNavigationItemSelectedListener { item: MenuItem -> onDrawerItemSelected(item) }
         navigationView.setOnNavigationItemSelectedListener { item: MenuItem -> onItemSelected(item) }
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -74,37 +69,6 @@ class MainActivity : BaseActivity() {
             EventInfo.KEY_USER_NAME_UPDATE -> {
                 prepareDrawerHeader()
             }
-        }
-    }
-
-    fun prepareScreenSwipe(page: Int) {
-        val gesturesEnabled = booleanArrayOf(false)
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.Q) {
-            val asked = AppGlobal.preferences.getBoolean("asked_for_gestures", false)
-            if (!asked) {
-                val builder = AlertBuilder(this)
-                builder.setTitle(R.string.using_gestures_ask_title)
-                builder.setMessage(R.string.using_gestures_ask_message)
-                builder.setPositiveButton(R.string.yes, View.OnClickListener { gesturesEnabled[0] = true })
-                builder.setNegativeButton(R.string.no)
-                builder.show()
-                AppGlobal.preferences.edit().putBoolean("asked_for_gestures", true).apply()
-            }
-        }
-
-        try {
-            val mDragger = drawerLayout.javaClass.getDeclaredField("mLeftDragger")
-            mDragger.isAccessible = true
-            val draggerObj = mDragger[drawerLayout] as ViewDragHelper
-            val mEdgeSize = draggerObj.javaClass.getDeclaredField("mEdgeSize")
-            mEdgeSize.isAccessible = true
-            if (drawerEdgeSize == 0 && page == 0) {
-                drawerEdgeSize = mEdgeSize.getInt(draggerObj)
-            }
-            val edge = if (page > 0 || !gesturesEnabled[0]) drawerEdgeSize else (resources.displayMetrics.widthPixels * 0.25).toInt()
-            mEdgeSize.setInt(draggerObj, edge)
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 
@@ -299,11 +263,11 @@ class MainActivity : BaseActivity() {
         if (visibleFragment != null && visibleFragment.javaClass.simpleName == SettingsFragment::class.java.simpleName) {
             replaceFragment(getFragmentById(navigationView.selectedItemId))
         } else if (visibleFragment != null && visibleFragment.javaClass.simpleName == ParentAgendaFragment::class.java.simpleName && !(visibleFragment as ParentAgendaFragment).isSearchViewCollapsed) {
-            visibleFragment.searchViewItem.collapseActionView()
+            visibleFragment.searchViewItem?.collapseActionView()
         } else if (visibleFragment != null && visibleFragment.javaClass.simpleName == NotesFragment::class.java.simpleName && !(visibleFragment as NotesFragment).isSearchViewCollapsed) {
-            visibleFragment.searchViewItem.collapseActionView()
+            visibleFragment.searchViewItem?.collapseActionView()
         } else if (visibleFragment != null && visibleFragment.javaClass.simpleName == ParentScheduleFragment::class.java.simpleName && !(visibleFragment as ParentScheduleFragment).isSearchViewCollapsed) {
-            visibleFragment.searchViewItem.collapseActionView()
+            visibleFragment.searchViewItem?.collapseActionView()
         } else {
             if (drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout!!.closeDrawer(GravityCompat.START)

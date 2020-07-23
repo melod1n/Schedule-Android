@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class ThemeAdapter extends BaseAdapter<ThemeItem, ThemeAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull @NonNull ViewHolder holder, int position) {
         holder.bind(position);
     }
 

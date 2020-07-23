@@ -1,4 +1,4 @@
-package ru.melod1n.schedule.view;
+package ru.melod1n.schedule.widget;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,6 +12,8 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -173,7 +175,7 @@ public class HorizontalColorPicker extends RecyclerView {
         }
 
         @Override
-        public void onBindViewHolder(Adapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NotNull Adapter.ViewHolder holder, int position) {
             super.onBindViewHolder(holder, position);
             holder.bind(position);
         }

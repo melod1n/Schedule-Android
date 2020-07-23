@@ -21,6 +21,7 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.items.LessonItem;
+import ru.melod1n.schedule.widget.HorizontalColorPicker;
 
 public class FullScreenLessonDialog extends FullScreenDialog<LessonItem> {
 

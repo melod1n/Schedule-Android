@@ -59,6 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         if (EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().unregister(this);
+
         created = false;
         super.onDestroy();
     }

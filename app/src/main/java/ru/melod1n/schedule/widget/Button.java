@@ -64,13 +64,8 @@ public class Button extends MaterialButton {
         int textColorPrimaryInverse = theme.getColorTextPrimaryInverse();
         int textColorSecondary = theme.getColorTextSecondary();
 
-        if (theme.isMd2()) {
-            FontHelper.applyFont(this, FontHelper.Font.PS_MEDIUM);
-            setText(StringUtils.capitalize(getText().toString().toLowerCase()));
-        } else {
-            FontHelper.applyFont(this, FontHelper.Font.ROBOTO_REGULAR);
-            setText(getText().toString().toUpperCase());
-        }
+        FontHelper.applyFont(this, FontHelper.Font.PS_MEDIUM);
+        setText(StringUtils.capitalize(getText().toString().toLowerCase()));
 
         if (style == STYLE_DEFAULT) {
             setTextColor(textColorPrimaryInverse);

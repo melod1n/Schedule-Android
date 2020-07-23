@@ -8,21 +8,24 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.preference.PreferenceManager;
+import androidx.room.Room;
 
 import java.io.File;
 
-import ru.melod1n.schedule.database.DatabaseHelper;
+import ru.melod1n.schedule.database.AppDatabase;
 import ru.melod1n.schedule.helper.TimeHelper;
+import ru.melod1n.schedule.olddatabase.DatabaseHelper;
 
 public class AppGlobal extends Application {
 
     public static volatile String app_version_name;
     public static volatile int app_version_code;
 
-    public static volatile SQLiteDatabase database;
+    public static volatile SQLiteDatabase oldDatabase;
     public static volatile SharedPreferences preferences;
 
     public static volatile File filesDir;
@@ -31,6 +34,10 @@ public class AppGlobal extends Application {
 
     public static volatile InputMethodManager inputMethodManager;
     public static volatile ClipboardManager clipboardManager;
+
+    public static volatile AppDatabase database;
+
+    public static volatile Handler handler;
 
     @Override
     public void onCreate() {
@@ -45,6 +52,8 @@ public class AppGlobal extends Application {
 
         filesDir = getFilesDir();
 
+        handler = new Handler(getMainLooper());
+
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             app_version_name = pInfo.versionName;
@@ -53,13 +62,16 @@ public class AppGlobal extends Application {
             e.printStackTrace();
         }
 
-        database = DatabaseHelper.get(this).getWritableDatabase();
+        oldDatabase = DatabaseHelper.get(this).getWritableDatabase();
+
+        database =
+                Room.databaseBuilder(this, AppDatabase.class, "database")
+                        .fallbackToDestructiveMigration()
+                        .build();
 
         TimeManager.init();
         ExceptionHandler.init();
         TimeHelper.init();
         ThemeEngine.init();
     }
-
-
 }

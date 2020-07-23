@@ -71,14 +71,6 @@ public class ParentAgendaFragment extends Fragment {
         createPagerAdapter();
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (!hidden) {
-            ((MainActivity) requireActivity()).prepareScreenSwipe(currentPosition);
-        }
-        super.onHiddenChanged(hidden);
-    }
-
     private void prepareToolbar() {
         toolbar.setTitle(R.string.nav_agenda);
         toolbar.inflateMenu(R.menu.fragment_agenda);
@@ -133,8 +125,6 @@ public class ParentAgendaFragment extends Fragment {
                 visibleFragment = fragments.get(tab.getPosition());
 
                 currentPosition = tab.getPosition();
-
-                ((MainActivity) requireActivity()).prepareScreenSwipe(tab.getPosition());
 
                 if (searchView != null && !searchViewCollapsed) {
                     query(searchView.getQuery().toString());

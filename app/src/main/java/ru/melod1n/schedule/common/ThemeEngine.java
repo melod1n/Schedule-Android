@@ -7,9 +7,9 @@ import androidx.annotation.NonNull;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.melod1n.schedule.database.CacheStorage;
-import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.fragment.SettingsFragment;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ColorUtil;
@@ -17,10 +17,10 @@ import ru.melod1n.schedule.util.Util;
 
 public class ThemeEngine {
 
-    public static final int ENGINE_VERSION = 3;
+    public static final int ENGINE_VERSION = 4;
 
     public static final int[] COLOR_PALETTE_LIGHT = new int[]{
-            Color.LTGRAY,
+            Color.WHITE,
             0xffEF9A9A,
             0xffF48FB1,
             0xffCE93D8,
@@ -57,30 +57,63 @@ public class ThemeEngine {
             0xffD84315
     };
 
-    private static final String DEFAULT_THEME = "teal_md2";
-    private static final String DEFAULT_THEME_DARK = "teal_md2_dark";
+    private static final String DEFAULT_THEME = "teal";
+    private static final String DEFAULT_THEME_DARK = "teal_dark";
     private static final String THEMES_FILE_NAME = "stock_themes.json";
 
+    public static List<ThemeItem> themes = new ArrayList<>();
+
+    private static List<ThemeItem> stockThemes = new ArrayList<>();
+    private static List<ThemeItem> addedThemes = new ArrayList<>();
+
     private static int colorMain;
+
     private static boolean autoTheme;
 
     private static String selectedThemeKey;
+    private static String dayThemeKey;
+    private static String nightThemeKey;
 
     private static ThemeItem currentTheme, dayTheme, nightTheme;
 
     static void init() {
-        String selectedThemeKey = AppGlobal.preferences.getString(SettingsFragment.KEY_THEME, DEFAULT_THEME);
+        initStockThemes();
+        initAddedThemes();
 
-        ThemeEngine.selectedThemeKey = selectedThemeKey;
+        ThemeEngine.selectedThemeKey = AppGlobal.preferences.getString(SettingsFragment.KEY_THEME, DEFAULT_THEME);
+        ThemeEngine.dayThemeKey = AppGlobal.preferences.getString(SettingsFragment.KEY_DAY_TIME_THEME, DEFAULT_THEME);
+        ThemeEngine.nightThemeKey = AppGlobal.preferences.getString(SettingsFragment.KEY_NIGHT_TIME_THEME, DEFAULT_THEME_DARK);
 
-        String dayThemeKey = AppGlobal.preferences.getString(SettingsFragment.KEY_DAY_TIME_THEME, DEFAULT_THEME);
-        String nightThemeKey = AppGlobal.preferences.getString(SettingsFragment.KEY_NIGHT_TIME_THEME, DEFAULT_THEME_DARK);
+        assert selectedThemeKey != null;
+        assert dayThemeKey != null;
+        assert nightThemeKey != null;
+
+        initThemes();
 
         autoTheme = AppGlobal.preferences.getBoolean(SettingsFragment.KEY_AUTO_SWITCH_THEME, false);
 
-        ArrayList<ThemeItem> themes = CacheStorage.getThemes();
-        insertStockThemes(themes);
+        if (currentTheme == null) {
+            selectedThemeKey = DEFAULT_THEME;
+            AppGlobal.preferences.edit().putString(SettingsFragment.KEY_THEME, selectedThemeKey).apply();
+            TaskManager.execute(() -> currentTheme = CacheStorage.getThemeById(DEFAULT_THEME));
+        }
 
+        if (dayTheme == null) {
+            dayThemeKey = DEFAULT_THEME;
+            AppGlobal.preferences.edit().putString(SettingsFragment.KEY_DAY_TIME_THEME, dayThemeKey).apply();
+            TaskManager.execute(() -> dayTheme = CacheStorage.getThemeById(DEFAULT_THEME));
+        }
+
+        if (nightTheme == null) {
+            nightThemeKey = DEFAULT_THEME_DARK;
+            AppGlobal.preferences.edit().putString(SettingsFragment.KEY_NIGHT_TIME_THEME, nightThemeKey).apply();
+            TaskManager.execute(() -> nightTheme = CacheStorage.getThemeById(DEFAULT_THEME_DARK));
+        }
+
+        colorMain = ColorUtil.isLight(currentTheme.getColorPrimary()) ? Color.BLACK : Color.WHITE;
+    }
+
+    private static void initThemes() {
         for (ThemeItem theme : themes) {
             if (selectedThemeKey.toLowerCase().equals(theme.getId().toLowerCase())) {
                 currentTheme = theme;
@@ -94,37 +127,28 @@ public class ThemeEngine {
                 nightTheme = theme;
             }
         }
-
-        if (currentTheme == null) {
-            insertStockThemes(null);
-            currentTheme = CacheStorage.getThemes(DEFAULT_THEME).get(0);
-        }
-
-        if (dayTheme == null) {
-            insertStockThemes(null);
-            dayTheme = CacheStorage.getThemes(DEFAULT_THEME).get(0);
-        }
-
-        if (nightTheme == null) {
-            insertStockThemes(null);
-            nightTheme = CacheStorage.getThemes(DEFAULT_THEME_DARK).get(0);
-        }
-
-        colorMain = ColorUtil.isLight(currentTheme.getColorPrimary()) ? Color.BLACK : Color.WHITE;
     }
 
-    public static void insertStockThemes(ArrayList<ThemeItem> themes) {
-        if (themes == null) themes = new ArrayList<>();
+    private static void initStockThemes() {
         try {
             JSONArray o = new JSONArray(Util.readFileFromAssets(THEMES_FILE_NAME));
+
             for (int i = 0; i < o.length(); i++) {
-                themes.add(new ThemeItem(o.optJSONObject(i)));
+                ThemeItem item = new ThemeItem(o.optJSONObject(i));
+                themes.add(item);
+                stockThemes.add(item);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-        CacheStorage.insert(DatabaseHelper.TABLE_THEMES, themes);
+    private static void initAddedThemes() {
+        TaskManager.execute(() -> {
+            addedThemes = CacheStorage.getThemes();
+
+            themes.addAll(addedThemes);
+        });
     }
 
     public static String getSelectedThemeKey() {
@@ -135,41 +159,48 @@ public class ThemeEngine {
         return currentTheme;
     }
 
+    public static void setCurrentTheme(String id) {
+        AppGlobal.preferences.edit().putString(SettingsFragment.KEY_THEME, id).apply();
+        selectedThemeKey = id;
+
+        initThemes();
+
+        Engine.sendEvent(new EventInfo<>(EventInfo.KEY_THEME_UPDATE, currentTheme), true);
+    }
+
     public static ThemeItem getDayTheme() {
         return dayTheme;
     }
 
-    public static ThemeItem getNightTheme() {
-        return nightTheme;
-    }
-
-    public static void setCurrentTheme(String id) {
-        AppGlobal.preferences.edit().putString(SettingsFragment.KEY_THEME, id).apply();
-        init();
-        Engine.sendEvent(new EventInfo<>(EventInfo.KEY_THEME_UPDATE, currentTheme), true);
-    }
-
     public static void setDayTheme(String id) {
         AppGlobal.preferences.edit().putString(SettingsFragment.KEY_DAY_TIME_THEME, id).apply();
+        dayThemeKey = id;
 
         if ((TimeManager.isMorning() || TimeManager.isAfternoon()) && isAutoTheme()) {
             setCurrentTheme(id);
             return;
         }
 
-        init();
+        initThemes();
+
         Engine.sendEvent(new EventInfo<>(EventInfo.KEY_THEME_UPDATE_DAY, dayTheme), true);
+    }
+
+    public static ThemeItem getNightTheme() {
+        return nightTheme;
     }
 
     public static void setNightTheme(String id) {
         AppGlobal.preferences.edit().putString(SettingsFragment.KEY_NIGHT_TIME_THEME, id).apply();
+        nightThemeKey = id;
 
         if ((TimeManager.isNight() || TimeManager.isEvening()) && isAutoTheme()) {
             setCurrentTheme(id);
             return;
         }
 
-        init();
+        initThemes();
+
         Engine.sendEvent(new EventInfo<>(EventInfo.KEY_THEME_UPDATE_NIGHT, nightTheme));
     }
 
@@ -186,7 +217,7 @@ public class ThemeEngine {
         return currentTheme.isDark();
     }
 
-    public static boolean isThemeValid(@NonNull ThemeItem item) {
+    public static boolean isThemeCompatible(@NonNull ThemeItem item) {
         return item.getEngineVersion() == ENGINE_VERSION;
     }
 

@@ -13,6 +13,7 @@
     <style name="AppTheme.Tabs" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabTextAppearance">@style/AppTheme.Tabs.Text</item>
         <item name="tabUnboundedRipple">false</item>
+        <item name="tabIndicatorFullWidth">false</item>
         <item name="tabRippleColor">#00000000</item>
     </style>
 

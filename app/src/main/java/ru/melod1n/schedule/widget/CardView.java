@@ -29,7 +29,6 @@ public class CardView extends MaterialCardView {
     public CardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-
         if (theme == null) theme = ThemeEngine.getCurrentTheme();
 
         init();
@@ -43,15 +42,9 @@ public class CardView extends MaterialCardView {
         setUseCompatPadding(true);
         setRadius(16);
 
-        if (theme.isMd2()) {
-            setStrokeColor(theme.getColorHighlight());
-            setStrokeWidth(2);
-            setCardElevation(0);
-        } else {
-            setStrokeWidth(0);
-            setCardElevation(12);
-        }
-
+        setStrokeColor(theme.getColorHighlight());
+        setStrokeWidth(2);
+        setCardElevation(0);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

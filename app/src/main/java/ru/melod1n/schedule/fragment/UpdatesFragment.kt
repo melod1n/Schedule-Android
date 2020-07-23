@@ -92,18 +92,6 @@ class UpdatesFragment : Fragment(), OnRefreshListener, BaseAdapter.OnItemClickLi
         menu.show()
     }
 
-    override fun onResume() {
-        (requireActivity() as MainActivity).prepareScreenSwipe(0)
-        super.onResume()
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        if (!hidden) {
-            (requireActivity() as MainActivity).prepareScreenSwipe(0)
-        }
-        super.onHiddenChanged(hidden)
-    }
-
     override fun onRefresh() {
         prepareData()
     }

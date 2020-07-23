@@ -20,7 +20,6 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.ThemeAdapter;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseActivity;
-import ru.melod1n.schedule.database.CacheStorage;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.widget.Toolbar;
 
@@ -29,12 +28,6 @@ public class ThemesActivity extends BaseActivity {
     public static final int REQUEST_PICK_THEME = 0;
     public static final int REQUEST_PICK_DAY_THEME = 1;
     public static final int REQUEST_PICK_NIGHT_THEME = 2;
-
-    private ThemeAdapter adapter;
-
-    private int request;
-
-    private volatile boolean animating;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -45,6 +38,10 @@ public class ThemesActivity extends BaseActivity {
     @BindView(R.id.refresh)
     SwipeRefreshLayout refreshLayout;
 
+    private ThemeAdapter adapter;
+    private int request;
+
+    private volatile boolean animating;
     private Drawable navigationIcon;
 
     private View rootView;
@@ -129,9 +126,7 @@ public class ThemesActivity extends BaseActivity {
     }
 
     private void getThemes() {
-        ThemeEngine.insertStockThemes(new ArrayList<>());
-
-        ArrayList<ThemeItem> items = CacheStorage.getThemes();
+        ArrayList<ThemeItem> items = new ArrayList<>(ThemeEngine.themes);
         ArrayList<ThemeItem> deleteItems = new ArrayList<>();
 
         for (ThemeItem item : items) {
@@ -164,7 +159,7 @@ public class ThemesActivity extends BaseActivity {
     private void onItemClick(View v, int position) {
         ThemeItem item = adapter.getItem(position);
 
-        if (ThemeEngine.isThemeValid(item)) {
+        if (ThemeEngine.isThemeCompatible(item)) {
             if (animating ||
                     (request == REQUEST_PICK_THEME && item.equals(theme)) ||
                     (request == REQUEST_PICK_DAY_THEME && item.equals(ThemeEngine.getDayTheme())) ||
@@ -199,6 +194,6 @@ public class ThemesActivity extends BaseActivity {
         animating = true;
 
         rootView.setAlpha(0);
-        rootView.animate().alpha(1).setDuration(250).withEndAction(() -> animating = false).start();
+        rootView.animate().alpha(1).setDuration(500).withEndAction(() -> animating = false).start();
     }
 }

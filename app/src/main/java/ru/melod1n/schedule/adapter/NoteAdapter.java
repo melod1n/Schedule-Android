@@ -14,10 +14,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
+import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.current.BaseHolder;
-import ru.melod1n.schedule.database.CacheStorage;
-import ru.melod1n.schedule.database.DatabaseHelper;
 import ru.melod1n.schedule.items.Note;
 import ru.melod1n.schedule.util.ColorUtil;
 
@@ -28,14 +27,17 @@ public class NoteAdapter extends BaseAdapter<Note, NoteAdapter.ViewHolder> {
     }
 
     public void onItemMove(int fromPosition, int toPosition) {
+        getItem(fromPosition).setPosition(toPosition);
         notifyItemMoved(fromPosition, toPosition);
     }
 
     public void onEndMove(int toPosition) {
-        CacheStorage.delete(DatabaseHelper.TABLE_NOTES);
-        CacheStorage.insert(DatabaseHelper.TABLE_NOTES, getValues());
+        //TODO: не сохраняются новые позиции
 
-        notifyItemRangeChanged(0, getItemCount(), getItem(toPosition));
+        //OldCacheStorage.delete(DatabaseHelper.TABLE_NOTES);
+        //OldCacheStorage.insert(DatabaseHelper.TABLE_NOTES, getValues());
+        //CacheStorage.updateNotesWithDelete(getValues());
+        //notifyItemRangeChanged(0, getItemCount(), getItem(toPosition));
     }
 
     @NonNull
@@ -80,7 +82,13 @@ public class NoteAdapter extends BaseAdapter<Note, NoteAdapter.ViewHolder> {
         public void bind(int position) {
             Note item = getItem(position);
 
-            int color = Color.parseColor(item.getColor());
+            int color;
+
+            try {
+                color = Color.parseColor(item.getColor());
+            } catch (Exception e) {
+                color = ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK[0] : ThemeEngine.COLOR_PALETTE_LIGHT[0];
+            }
 
             card.setCardBackgroundColor(color);
 

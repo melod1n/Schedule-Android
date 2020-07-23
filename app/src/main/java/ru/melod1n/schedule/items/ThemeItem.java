@@ -4,18 +4,19 @@ import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import org.json.JSONObject;
 
-import java.io.Serializable;
-
 import ru.melod1n.schedule.util.ArrayUtil;
 
-public class ThemeItem implements Serializable {
+@Entity(tableName = "themes")
+public class ThemeItem {
 
-    private static int serialVersionUID = 1;
-
-    private String id;
+    @NonNull
+    @PrimaryKey
+    private String id = "";
     private String title;
     private String author;
     private int engineVersion;
@@ -23,7 +24,6 @@ public class ThemeItem implements Serializable {
     private boolean dark;
     private boolean lightStatusBar;
     private boolean lightNavigationBar;
-    private boolean md2;
 
     private boolean selected;
 
@@ -69,7 +69,6 @@ public class ThemeItem implements Serializable {
             this.dark = ui.optBoolean("dark");
             this.lightStatusBar = ui.optBoolean("light_status_bar");
             this.lightNavigationBar = ui.optBoolean("light_navigation_bar");
-            this.md2 = ui.optBoolean("md2");
         }
 
         JSONObject colors = o.optJSONObject("colors");
@@ -193,14 +192,6 @@ public class ThemeItem implements Serializable {
 
     public void setLightNavigationBar(boolean lightNavigationBar) {
         this.lightNavigationBar = lightNavigationBar;
-    }
-
-    public boolean isMd2() {
-        return md2;
-    }
-
-    public void setMd2(boolean md2) {
-        this.md2 = md2;
     }
 
     public boolean isSelected() {

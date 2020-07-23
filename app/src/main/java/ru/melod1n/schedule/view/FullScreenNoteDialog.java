@@ -24,6 +24,7 @@ import ru.melod1n.schedule.current.FullScreenDialog;
 import ru.melod1n.schedule.items.Note;
 import ru.melod1n.schedule.util.ColorUtil;
 import ru.melod1n.schedule.util.ViewUtil;
+import ru.melod1n.schedule.widget.HorizontalColorPicker;
 import ru.melod1n.schedule.widget.TextArea;
 
 public class FullScreenNoteDialog extends FullScreenDialog<Note> {
@@ -31,10 +32,6 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
     private static final String TAG = "fullscreen_note_dialog";
 
     private static final int DEFAULT_COLOR = ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK[0] : ThemeEngine.COLOR_PALETTE_LIGHT[0];
-
-    private Note item;
-    private boolean edit;
-    private int color;
 
     @BindView(R.id.note_title)
     TextArea title;
@@ -50,6 +47,10 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
 
     @BindView(R.id.picker)
     HorizontalColorPicker picker;
+
+    private Note item;
+    private boolean edit;
+    private String color;
 
     public FullScreenNoteDialog(FragmentManager fragmentManager, Note item) {
         super(fragmentManager, item);
@@ -71,22 +72,43 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        picker.setColors(ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT);
+        //TODO: говно, надо переделать
 
-        color = !edit ? DEFAULT_COLOR : Color.parseColor(item.getColor());
-        picker.setSelectedColor(color);
-        setColor(color);
-
-        picker.setOnChoosedColorListener((position, color) -> {
-            FullScreenNoteDialog.this.color = color;
-            setColor(color);
-        });
+//        List<String> colors = new ArrayList<>();
+//
+//        if (ThemeEngine.isDark()) {
+//            for (int color : ThemeEngine.COLOR_PALETTE_DARK) {
+//                colors.add(new ColorDrawable(color).getColor() + "");
+//            }
+//        } else {
+//            for (int color : ThemeEngine.COLOR_PALETTE_LIGHT) {
+//                colors.add(new ColorDrawable(color).getColor() + "");
+//            }
+//        }
+//
+//        picker.setColors(colors);
+//
+////        picker.setColors(ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT);
+//
+//        try {
+//            color = !edit ? DEFAULT_COLOR + "" : item.getColor();
+//        } catch (Exception e) {
+//            color = DEFAULT_COLOR + "";
+//        }
+//
+//        picker.setSelectedColor(color);
+//        setColor(color);
+//
+//        picker.setOnChoosedColorListener((position, color) -> {
+//            FullScreenNoteDialog.this.color = color;
+//            setColor(color);
+//        });
 
         toolbar.setNavigationOnClickListener(p1 -> dismiss());
 
-        int color = ThemeEngine.isDark() ? Color.WHITE : Color.BLACK;
+        int navigationColor = ThemeEngine.isDark() ? Color.WHITE : Color.BLACK;
 
-        toolbar.getNavigationIcon().setTint(color);
+        toolbar.getNavigationIcon().setTint(navigationColor);
 
         if (edit) {
             title.setText(item.getTitle());
@@ -96,7 +118,7 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
 
         MenuItem delete = toolbar.getMenu().add(R.string.delete);
         delete.setIcon(R.drawable.ic_trash_outline);
-        delete.getIcon().setTint(color);
+        delete.getIcon().setTint(navigationColor);
         delete.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
         toolbar.setOnMenuItemClickListener(i -> {
@@ -108,7 +130,7 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
     }
 
     private void setColor(int primary) {
-        this.color = primary;
+//        this.color = primary;
 
         if (getDialog() == null || getDialog().getWindow() == null) return;
 
@@ -159,17 +181,16 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
             return;
         }
 
-
-        if (color == 0)
-            color = ThemeEngine.getCurrentTheme().getColorAccent();
+//        if (color == 0)
+//            color = DEFAULT_COLOR;
 
         if (!edit) {
-            item = new Note("", "","", "", "");
+            item = new Note(0, "", "", "", "0", "");
         }
 
         item.setTitle(title_);
         item.setBody(text_);
-        item.setColor(String.valueOf(picker.getSelectedColor()));
+//        item.setColor(String.valueOf(picker.getSelectedColor()));
 
         if (getOnActionListener() != null) {
             if (edit) {

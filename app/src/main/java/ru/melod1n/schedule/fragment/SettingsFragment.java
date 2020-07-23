@@ -75,14 +75,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         });
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        if (!hidden) {
-            ((MainActivity) requireActivity()).prepareScreenSwipe(0);
-        }
-        super.onHiddenChanged(hidden);
-    }
-
     private void init() {
         setTitle();
         setPreferencesFromResource(currentPreferenceLayout, null);
