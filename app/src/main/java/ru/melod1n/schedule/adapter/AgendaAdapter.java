@@ -17,11 +17,11 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.current.BaseHolder;
-import ru.melod1n.schedule.items.AgendaItem;
+import ru.melod1n.schedule.items.Agenda;
 
-public class AgendaAdapter extends BaseAdapter<AgendaItem, AgendaAdapter.ViewHolder> {
+public class AgendaAdapter extends BaseAdapter<Agenda, AgendaAdapter.ViewHolder> {
 
-    public AgendaAdapter(Context context, ArrayList<AgendaItem> values) {
+    public AgendaAdapter(Context context, ArrayList<Agenda> values) {
         super(context, values);
     }
 
@@ -32,7 +32,7 @@ public class AgendaAdapter extends BaseAdapter<AgendaItem, AgendaAdapter.ViewHol
     }
 
     @Override
-    public boolean onQueryItem(AgendaItem item, String lowerQuery) {
+    public boolean onQueryItem(Agenda item, String lowerQuery) {
         if (item.getTitle().toLowerCase().contains(lowerQuery) || item.getText().toLowerCase().contains(lowerQuery))
             return true;
 
@@ -67,7 +67,7 @@ public class AgendaAdapter extends BaseAdapter<AgendaItem, AgendaAdapter.ViewHol
 
         @Override
         public void bind(int position) {
-            AgendaItem item = getItem(position);
+            Agenda item = getItem(position);
 
             cardView.setCardBackgroundColor(ThemeEngine.getCurrentTheme().getColorSurface());
 

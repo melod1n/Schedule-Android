@@ -9,8 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:listenThemeUpdates="true"
-        app:navigationIcon="@drawable/ic_arrow_backward" />
+        app:listenThemeUpdates="true" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,8 +20,7 @@
 
         <ru.melod1n.schedule.widget.HighlightView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:direction="bottom" />
+            android:layout_height="wrap_content" />
 
     </FrameLayout>
 

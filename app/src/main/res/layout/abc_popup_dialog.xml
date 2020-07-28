@@ -7,7 +7,7 @@
     android:minWidth="260dp"
     android:orientation="vertical">
 
-    <ru.melod1n.schedule.widget.TextPlain
+    <TextView
         android:id="@+id/dialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,6 @@
         android:paddingEnd="6dp"
         android:textSize="20sp"
         android:visibility="gone"
-        app:colorDef="primary"
         tools:text="Title"
         tools:visibility="visible" />
 
@@ -30,13 +29,12 @@
         tools:visibility="visible"
         android:paddingBottom="16dp">
 
-        <ru.melod1n.schedule.widget.TextPlain
+        <TextView
             android:id="@+id/dialogMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:visibility="gone"
-            app:colorDef="secondary"
             tools:text="Message"
             tools:visibility="visible" />
 
@@ -46,7 +44,8 @@
         android:id="@+id/dialogCustomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp" />
+        android:padding="4dp"
+        android:orientation="vertical" />
 
     <LinearLayout
         android:id="@+id/dialogButtonContainer"

@@ -21,11 +21,11 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.current.BaseHolder;
-import ru.melod1n.schedule.items.AboutItem;
+import ru.melod1n.schedule.items.About;
 
-public class AboutAdapter extends BaseAdapter<AboutItem, AboutAdapter.ViewHolder> {
+public class AboutAdapter extends BaseAdapter<About, AboutAdapter.ViewHolder> {
 
-    public AboutAdapter(Context context, ArrayList<AboutItem> items) {
+    public AboutAdapter(Context context, ArrayList<About> items) {
         super(context, items);
     }
 
@@ -62,7 +62,7 @@ public class AboutAdapter extends BaseAdapter<AboutItem, AboutAdapter.ViewHolder
 
         @Override
         public void bind(final int position) {
-            final AboutItem item = getItem(position);
+            final About item = getItem(position);
 
             Picasso.get().load(item.getIcon()).resize(128, 128).config(Bitmap.Config.ARGB_8888).into(icon);
 

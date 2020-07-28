@@ -10,6 +10,6 @@ data class Note(
         var id: String,
         var title: String,
         var body: String,
-        var color: String,
+        var color: Int,
         var subjectId: String
 )

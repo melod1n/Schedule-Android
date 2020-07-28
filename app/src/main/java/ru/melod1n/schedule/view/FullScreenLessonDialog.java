@@ -20,10 +20,10 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.FullScreenDialog;
-import ru.melod1n.schedule.items.LessonItem;
+import ru.melod1n.schedule.items.Lesson;
 import ru.melod1n.schedule.widget.HorizontalColorPicker;
 
-public class FullScreenLessonDialog extends FullScreenDialog<LessonItem> {
+public class FullScreenLessonDialog extends FullScreenDialog<Lesson> {
 
     private static final String TAG = "fullscreen_lesson_dialog";
 
@@ -42,17 +42,15 @@ public class FullScreenLessonDialog extends FullScreenDialog<LessonItem> {
     @BindView(R.id.picker)
     HorizontalColorPicker picker;
 
+    private Lesson item;
     private boolean edit;
-
     private int color;
 
-    private LessonItem item;
-
-    public FullScreenLessonDialog(FragmentManager fragmentManager, LessonItem item) {
+    public FullScreenLessonDialog(FragmentManager fragmentManager, Lesson item) {
         super(fragmentManager, item);
     }
 
-    public void display(FragmentManager manager, LessonItem item) {
+    public void display(FragmentManager manager, Lesson item) {
         this.item = item;
         this.edit = item != null;
         this.show(manager, TAG);
@@ -142,7 +140,7 @@ public class FullScreenLessonDialog extends FullScreenDialog<LessonItem> {
         String hw_ = homework.getText().toString().trim();
 
         if (!edit)
-            item = new LessonItem();
+            item = new Lesson();
 
 //        item.setName(name_);
 //        item.setCab(cab_);

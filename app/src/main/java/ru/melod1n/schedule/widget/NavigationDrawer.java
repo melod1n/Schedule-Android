@@ -14,6 +14,7 @@ import com.google.android.material.navigation.NavigationView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.jetbrains.annotations.NotNull;
 
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.EventInfo;
@@ -39,11 +40,16 @@ public class NavigationDrawer extends NavigationView {
             EventBus.getDefault().register(this);
 
         theme = ThemeEngine.getCurrentTheme();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         init();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onReceive(EventInfo<ThemeItem> info) {
+    public void onReceive(@NotNull EventInfo<ThemeItem> info) {
         String key = info.getKey();
         if (EventInfo.KEY_THEME_UPDATE.equals(key)) {
             theme = info.getData();
@@ -72,6 +78,8 @@ public class NavigationDrawer extends NavigationView {
         setItemIconTintList(new ColorStateList(states, iconColors));
 
         View header = getHeaderView(0);
+        if (header == null) return;
+
         header.setBackgroundColor(theme.getColorDrawerHeaderBackground());
 
         TextView title = header.findViewById(R.id.drawerTitle);

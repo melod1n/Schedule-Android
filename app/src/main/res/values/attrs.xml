@@ -5,22 +5,11 @@
 
     <declare-styleable name="TextPlain">
 
-        <attr name="colorDef" format="enum">
+        <attr name="fontColor" format="enum">
             <enum name="primary" value="0" />
             <enum name="secondary" value="1" />
             <enum name="accent" value="2" />
         </attr>
-
-    </declare-styleable>
-
-    <declare-styleable name="HighlightView">
-
-        <attr name="direction" format="enum">
-            <enum name="bottom" value="0" />
-            <enum name="top" value="1" />
-        </attr>
-
-        <attr name="listenUpdates" format="boolean" />
 
     </declare-styleable>
 

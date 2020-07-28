@@ -13,7 +13,7 @@ import ru.melod1n.schedule.widget.Button;
 public class FontHelper {
 
     public enum Font {
-        PS_REGULAR, PS_MEDIUM, ROBOTO_REGULAR, ROBOTO_MEDIUM
+        GSANS_REGULAR, GSANS_MEDIUM, ROBOTO_REGULAR, ROBOTO_MEDIUM
     }
 
     public static void applyFont(View view, Font font) {
@@ -34,10 +34,10 @@ public class FontHelper {
         if (font == null) return -1;
 
         switch (font) {
-            case PS_REGULAR:
-                return R.font.ps_regular;
-            case PS_MEDIUM:
-                return R.font.ps_medium;
+            case GSANS_REGULAR:
+                return R.font.google_sans_regular;
+            case GSANS_MEDIUM:
+                return R.font.google_sans_medium;
             default:
             case ROBOTO_REGULAR:
                 return R.font.roboto_regular;

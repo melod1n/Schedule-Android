@@ -16,11 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.common.ThemeEngine;
+import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.current.BaseHolder;
 
 public class HorizontalColorPicker extends RecyclerView {
@@ -58,6 +59,10 @@ public class HorizontalColorPicker extends RecyclerView {
         setLayoutManager(manager);
     }
 
+    public ArrayList<Integer> getColors() {
+        return colors;
+    }
+
     public void setColors(@NonNull int... colors) {
         ArrayList<Integer> items = new ArrayList<>(colors.length);
 
@@ -75,8 +80,8 @@ public class HorizontalColorPicker extends RecyclerView {
         createAdapter(items);
     }
 
-    public ArrayList<Integer> getColors() {
-        return colors;
+    public void setColors(List<Integer> items) {
+        setColors(new ArrayList<>(items));
     }
 
     private void createAdapter(@NonNull ArrayList<Integer> items) {

@@ -32,6 +32,11 @@ public class BottomNavigationView extends com.google.android.material.bottomnavi
             EventBus.getDefault().register(this);
 
         theme = ThemeEngine.getCurrentTheme();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         init();
     }
 

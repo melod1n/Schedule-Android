@@ -10,11 +10,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,14 +46,14 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
     Toolbar toolbar;
 
     @BindView(R.id.note_dialog_root)
-    RelativeLayout root;
+    LinearLayout root;
 
     @BindView(R.id.picker)
     HorizontalColorPicker picker;
 
     private Note item;
     private boolean edit;
-    private String color;
+    private int color;
 
     public FullScreenNoteDialog(FragmentManager fragmentManager, Note item) {
         super(fragmentManager, item);
@@ -74,35 +77,35 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
 
         //TODO: говно, надо переделать
 
-//        List<String> colors = new ArrayList<>();
-//
-//        if (ThemeEngine.isDark()) {
-//            for (int color : ThemeEngine.COLOR_PALETTE_DARK) {
-//                colors.add(new ColorDrawable(color).getColor() + "");
-//            }
-//        } else {
-//            for (int color : ThemeEngine.COLOR_PALETTE_LIGHT) {
-//                colors.add(new ColorDrawable(color).getColor() + "");
-//            }
-//        }
-//
-//        picker.setColors(colors);
-//
-////        picker.setColors(ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT);
-//
-//        try {
-//            color = !edit ? DEFAULT_COLOR + "" : item.getColor();
-//        } catch (Exception e) {
-//            color = DEFAULT_COLOR + "";
-//        }
-//
-//        picker.setSelectedColor(color);
-//        setColor(color);
-//
-//        picker.setOnChoosedColorListener((position, color) -> {
-//            FullScreenNoteDialog.this.color = color;
-//            setColor(color);
-//        });
+        List<Integer> colors = new ArrayList<>();
+
+        if (ThemeEngine.isDark()) {
+            for (int color : ThemeEngine.COLOR_PALETTE_DARK) {
+                colors.add(color);
+            }
+        } else {
+            for (int color : ThemeEngine.COLOR_PALETTE_LIGHT) {
+                colors.add(color);
+            }
+        }
+
+        picker.setColors(colors);
+
+//        picker.setColors(ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT);
+
+        try {
+            color = !edit ? DEFAULT_COLOR : item.getColor();
+        } catch (Exception e) {
+            color = DEFAULT_COLOR;
+        }
+
+        picker.setSelectedColor(color);
+        setColor(color);
+
+        picker.setOnChoosedColorListener((position, color) -> {
+            FullScreenNoteDialog.this.color = color;
+            setColor(color);
+        });
 
         toolbar.setNavigationOnClickListener(p1 -> dismiss());
 
@@ -130,7 +133,7 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
     }
 
     private void setColor(int primary) {
-//        this.color = primary;
+        this.color = primary;
 
         if (getDialog() == null || getDialog().getWindow() == null) return;
 
@@ -181,16 +184,16 @@ public class FullScreenNoteDialog extends FullScreenDialog<Note> {
             return;
         }
 
-//        if (color == 0)
-//            color = DEFAULT_COLOR;
+        if (color == 0)
+            color = DEFAULT_COLOR;
 
         if (!edit) {
-            item = new Note(0, "", "", "", "0", "");
+            item = new Note(0, "", "", "", 0, "");
         }
 
         item.setTitle(title_);
         item.setBody(text_);
-//        item.setColor(String.valueOf(picker.getSelectedColor()));
+        item.setColor(picker.getSelectedColor());
 
         if (getOnActionListener() != null) {
             if (edit) {

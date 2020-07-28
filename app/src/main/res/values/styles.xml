@@ -18,7 +18,7 @@
     </style>
 
     <style name="AppTheme.Tabs.Text" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/ps_regular</item>
+        <item name="fontFamily">@font/google_sans_regular</item>
         <item name="android:textAllCaps">false</item>
     </style>
 

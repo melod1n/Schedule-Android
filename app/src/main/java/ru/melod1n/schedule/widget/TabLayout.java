@@ -1,10 +1,7 @@
 package ru.melod1n.schedule.widget;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
-
-import androidx.annotation.NonNull;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,6 +30,12 @@ public class TabLayout extends com.google.android.material.tabs.TabLayout {
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
 
+        if (theme == null) theme = ThemeEngine.getCurrentTheme();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         init();
     }
 
@@ -43,12 +46,6 @@ public class TabLayout extends com.google.android.material.tabs.TabLayout {
             theme = info.getData();
             init();
         }
-    }
-
-    @Override
-    protected void onDraw(@NonNull Canvas canvas) {
-        super.onDraw(canvas);
-        init();
     }
 
     private void init() {

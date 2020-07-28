@@ -3,13 +3,13 @@ package ru.melod1n.schedule.adapter
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import butterknife.ButterKnife
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.current.BaseAdapter
 import ru.melod1n.schedule.current.BaseHolder
 import ru.melod1n.schedule.items.UpdateItem
 import ru.melod1n.schedule.widget.CardView
-import ru.melod1n.schedule.widget.TextPlain
 import java.util.*
 
 class UpdateAdapter(context: Context, values: ArrayList<UpdateItem>) : BaseAdapter<UpdateItem, UpdateAdapter.ViewHolder>(context, values) {
@@ -20,7 +20,7 @@ class UpdateAdapter(context: Context, values: ArrayList<UpdateItem>) : BaseAdapt
 
     inner class ViewHolder(var v: View) : BaseHolder(v) {
 
-        var info: TextPlain = v.findViewById(R.id.updateInfo)
+        var info: TextView = v.findViewById(R.id.updateInfo)
         var card: CardView = v.findViewById(R.id.updateInfoContainer)
 
         override fun bind(position: Int) {

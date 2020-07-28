@@ -29,12 +29,16 @@ public class CardView extends MaterialCardView {
     public CardView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        if (theme == null) theme = ThemeEngine.getCurrentTheme();
-
-        init();
-
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
+
+        if (theme == null) theme = ThemeEngine.getCurrentTheme();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        init();
     }
 
     private void init() {

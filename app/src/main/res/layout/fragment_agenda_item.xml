@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -26,16 +27,17 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <ru.melod1n.schedule.widget.TextPlain
                     android:id="@+id/homework_subject"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="24sp"
+                    app:fontColor="primary"
                     tools:text="Some subject" />
 
-                <TextView
+                <ru.melod1n.schedule.widget.TextPlain
                     android:id="@+id/homework_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,6 +45,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="0"
                     android:textColor="?android:textColorTertiary"
+                    app:fontColor="secondary"
                     tools:text="02.28.19" />
             </LinearLayout>
 
@@ -51,13 +54,14 @@
                 android:layout_height="1dp"
                 android:background="?dividerHorizontal" />
 
-            <TextView
+            <ru.melod1n.schedule.widget.TextPlain
                 android:id="@+id/homework_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:textColor="?android:textColorSecondary"
+                app:fontColor="secondary"
                 tools:text="Some homework text" />
 
         </LinearLayout>

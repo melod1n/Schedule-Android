@@ -3,6 +3,7 @@ package ru.melod1n.schedule.widget;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.TintTypedArray;
@@ -17,7 +18,7 @@ import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.items.ThemeItem;
 import ru.melod1n.schedule.util.ArrayUtil;
 
-public class TextPlain extends AppCompatTextView {
+public class TextPlain extends TextView {
 
     private ThemeItem theme;
 
@@ -37,8 +38,8 @@ public class TextPlain extends AppCompatTextView {
         final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                 R.styleable.TextPlain, defStyleAttr, 0);
 
-        if (a.hasValue(R.styleable.TextPlain_colorDef)) {
-            colorDef = a.getInt(R.styleable.TextPlain_colorDef, 1);
+        if (a.hasValue(R.styleable.TextPlain_fontColor)) {
+            colorDef = a.getInt(R.styleable.TextPlain_fontColor, 1);
         } else {
             colorDef = 1;
         }

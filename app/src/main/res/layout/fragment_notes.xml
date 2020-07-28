@@ -18,8 +18,7 @@
 
         <ru.melod1n.schedule.widget.HighlightView
             android:layout_width="match_parent"
-            android:layout_height="6dp"
-            app:direction="bottom" />
+            android:layout_height="6dp" />
 
     </FrameLayout>
 

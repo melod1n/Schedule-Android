@@ -110,7 +110,7 @@ public class ThemeEngine {
             TaskManager.execute(() -> nightTheme = CacheStorage.getThemeById(DEFAULT_THEME_DARK));
         }
 
-        colorMain = ColorUtil.isLight(currentTheme.getColorPrimary()) ? Color.BLACK : Color.WHITE;
+        initMainColor();
     }
 
     private static void initThemes() {
@@ -127,6 +127,10 @@ public class ThemeEngine {
                 nightTheme = theme;
             }
         }
+    }
+
+    private static void initMainColor() {
+        colorMain = ColorUtil.isLight(currentTheme.getColorPrimary()) ? Color.BLACK : Color.WHITE;
     }
 
     private static void initStockThemes() {
@@ -164,6 +168,7 @@ public class ThemeEngine {
         selectedThemeKey = id;
 
         initThemes();
+        initMainColor();
 
         Engine.sendEvent(new EventInfo<>(EventInfo.KEY_THEME_UPDATE, currentTheme), true);
     }

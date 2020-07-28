@@ -21,13 +21,11 @@ public class DrawerToggle extends ActionBarDrawerToggle {
     public DrawerToggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, int openDrawerContentDescRes, int closeDrawerContentDescRes) {
         super(activity, drawerLayout, toolbar, openDrawerContentDescRes, closeDrawerContentDescRes);
 
-        if (theme == null) theme = ThemeEngine.getCurrentTheme();
-
-        init();
-
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
 
+        if (theme == null) theme = ThemeEngine.getCurrentTheme();
+        init();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)

@@ -1,10 +1,11 @@
 package ru.melod1n.schedule.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatTextView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -16,9 +17,16 @@ import ru.melod1n.schedule.common.TimeManager
 import ru.melod1n.schedule.items.ThemeItem
 import ru.melod1n.schedule.util.Util
 
-class NoItemsView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : AppCompatTextView(context, attrs, defStyleAttr) {
+@SuppressLint("AppCompatCustomView")
+class NoItemsView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : TextView(context, attrs, defStyleAttr) {
 
     private var theme: ThemeItem
+
+    init {
+        EventBus.getDefault().register(this)
+        theme = ThemeEngine.getCurrentTheme()
+        TimeManager.addOnHourChangeListener { Handler(Looper.getMainLooper()).post { initIcon() } }
+    }
 
     constructor(context: Context) : this(context, null, 0)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -46,10 +54,8 @@ class NoItemsView(context: Context?, attrs: AttributeSet? = null, defStyleAttr: 
         }
     }
 
-    init {
-        EventBus.getDefault().register(this)
-        theme = ThemeEngine.getCurrentTheme()
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
         init()
-        TimeManager.addOnHourChangeListener { Handler(Looper.getMainLooper()).post { initIcon() } }
     }
 }

@@ -30,6 +30,11 @@ public class RefreshLayout extends SwipeRefreshLayout {
             EventBus.getDefault().register(this);
 
         theme = ThemeEngine.getCurrentTheme();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         init();
     }
 

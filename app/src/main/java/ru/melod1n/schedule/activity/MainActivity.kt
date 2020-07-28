@@ -9,8 +9,8 @@ import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -20,25 +20,21 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.app.AlertBuilder
-import ru.melod1n.schedule.common.AppGlobal
-import ru.melod1n.schedule.common.EventInfo
-import ru.melod1n.schedule.common.ThemeEngine
-import ru.melod1n.schedule.common.TimeManager
+import ru.melod1n.schedule.common.*
 import ru.melod1n.schedule.current.BaseActivity
 import ru.melod1n.schedule.fragment.*
 import ru.melod1n.schedule.util.ArrayUtil
 import ru.melod1n.schedule.util.Util
 import ru.melod1n.schedule.widget.DrawerToggle
-import ru.melod1n.schedule.widget.TextPlain
 import ru.melod1n.schedule.widget.Toolbar
 import java.util.*
 
 class MainActivity : BaseActivity() {
 
-    private val parentScheduleFragment = ParentScheduleFragment()
-    private val notesFragment = NotesFragment()
-    private val parentAgendaFragment = ParentAgendaFragment()
-    private val updatesFragment = UpdatesFragment()
+    private lateinit var parentScheduleFragment: ParentScheduleFragment
+    private lateinit var notesFragment: NotesFragment
+    private lateinit var parentAgendaFragment: ParentAgendaFragment
+    private lateinit var updatesFragment: UpdatesFragment
 
     private var selectedId = 0
     private var selectedFragment: Fragment? = null
@@ -46,6 +42,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        prepareFragments()
 
         checkTheme()
 
@@ -59,6 +57,19 @@ class MainActivity : BaseActivity() {
 
         navigationDrawer.setNavigationItemSelectedListener { item: MenuItem -> onDrawerItemSelected(item) }
         navigationView.setOnNavigationItemSelectedListener { item: MenuItem -> onItemSelected(item) }
+    }
+
+    private fun prepareFragments() {
+        parentScheduleFragment = ParentScheduleFragment()
+        notesFragment = NotesFragment()
+        parentAgendaFragment = ParentAgendaFragment()
+        updatesFragment = UpdatesFragment()
+
+        FragmentSwitcher.addFragments(
+                supportFragmentManager,
+                R.id.fragmentContainer,
+                listOf(updatesFragment, notesFragment, parentAgendaFragment, parentScheduleFragment)
+        )
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -85,7 +96,7 @@ class MainActivity : BaseActivity() {
         navigationDrawer.getHeaderView(0).apply {
             setOnClickListener { openLoginScreen() }
 
-            findViewById<TextPlain>(R.id.drawerTitle).apply {
+            findViewById<TextView>(R.id.drawerTitle).apply {
                 if (true) { //проверка на офлайн
                     text = AppGlobal.preferences.getString(SettingsFragment.KEY_USER_NAME, null)
                             ?: getString(R.string.drawer_title_no_user)
@@ -94,17 +105,12 @@ class MainActivity : BaseActivity() {
                 }
             }
 
-            findViewById<TextPlain>(R.id.drawerSubtitle).apply {
+            findViewById<TextView>(R.id.drawerSubtitle).apply {
                 if (true) { //проверка на офлайн
                     setText(R.string.drawer_subtitle_no_user)
                 } else {
                     //
                 }
-            }
-
-            findViewById<AppCompatImageView>(R.id.drawerAvatar).apply {
-                setImageResource(R.drawable.ic_account_circle)
-                drawable.setTint(ThemeEngine.getCurrentTheme().colorTextPrimary)
             }
         }
     }
@@ -127,7 +133,12 @@ class MainActivity : BaseActivity() {
             finish()
         } else {
             if (savedInstanceState == null) {
-                replaceFragment(getFragmentById(selectedId))
+                FragmentSwitcher.showFragment(
+                        supportFragmentManager,
+                        parentScheduleFragment.javaClass.simpleName,
+                        true
+                )
+
                 navigationView.selectedItemId = selectedId
             }
         }
@@ -202,11 +213,32 @@ class MainActivity : BaseActivity() {
 
         visibleFragment ?: return false
 
-        if (!(visibleFragment != null && visibleFragment!!.javaClass.simpleName == ScheduleFragment::class.java.simpleName && selectedId == R.id.nav_schedule)) {
-            replaceFragment(getFragmentById(selectedId))
-            return true
-        }
-        return false
+        val fragment = when (item.itemId) {
+            R.id.nav_notes -> notesFragment
+            R.id.nav_agenda -> parentAgendaFragment
+            R.id.nav_updates -> updatesFragment
+            R.id.drawer_settings -> {
+                openSettingsScreen()
+                selectedFragment
+            }
+            R.id.drawer_about -> {
+                openAboutScreen()
+                selectedFragment
+            }
+            else -> parentScheduleFragment
+        } ?: return false
+
+        FragmentSwitcher.showFragment(
+                supportFragmentManager,
+                fragment.javaClass.simpleName,
+                true
+        )
+
+//        if (!(visibleFragment != null && visibleFragment!!.javaClass.simpleName == ScheduleFragment::class.java.simpleName && selectedId == R.id.nav_schedule)) {
+//            replaceFragment(getFragmentById(selectedId))
+//            return true
+//        }
+        return true
     }
 
     private fun onDrawerItemSelected(item: MenuItem): Boolean {

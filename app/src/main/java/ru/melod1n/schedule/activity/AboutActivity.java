@@ -16,7 +16,6 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.AboutAdapter;
 import ru.melod1n.schedule.common.AppGlobal;
 import ru.melod1n.schedule.current.BaseActivity;
-import ru.melod1n.schedule.items.AboutItem;
 
 public class AboutActivity extends BaseActivity {
 

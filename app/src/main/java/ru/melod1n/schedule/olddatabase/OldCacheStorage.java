@@ -8,32 +8,13 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import ru.melod1n.schedule.items.DayItem;
-import ru.melod1n.schedule.items.LessonItem;
-import ru.melod1n.schedule.items.LocationItem;
 import ru.melod1n.schedule.items.Note;
-import ru.melod1n.schedule.items.ParticipantItem;
-import ru.melod1n.schedule.items.SubjectItem;
-import ru.melod1n.schedule.items.TeacherItem;
-import ru.melod1n.schedule.util.Util;
 
 import static ru.melod1n.schedule.common.AppGlobal.oldDatabase;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.CLASSROOM;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.DAY_OF_WEEK;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.DAY_OF_YEAR;
 import static ru.melod1n.schedule.olddatabase.DatabaseHelper.ID;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.LESSONS;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.LESSON_TYPE;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.LESSON_TYPE_CUSTOM;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.ORDER;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.PARTICIPANTS;
 import static ru.melod1n.schedule.olddatabase.DatabaseHelper.POSITION;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.START_TIME;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.SUBJECT;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TABLE_DAYS;
 import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TABLE_LESSONS;
 import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TABLE_NOTES;
-import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TEACHER;
 import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TEXT;
 import static ru.melod1n.schedule.olddatabase.DatabaseHelper.TITLE;
 
@@ -110,33 +91,33 @@ public class OldCacheStorage {
 //        return subs;
 //    }
 
-    public static ArrayList<DayItem> getDays() {
-        return getDays(-1);
-    }
+//    public static ArrayList<Day> getDays() {
+//        return getDays(-1);
+//    }
+//
+//    public static ArrayList<Day> getDays(int order) {
+//        Cursor cursor = order == -1 ? selectCursor(TABLE_DAYS) : selectCursor(TABLE_DAYS, POSITION, order);
+//
+//        ArrayList<Day> items = new ArrayList<>(cursor.getCount());
+//        while (cursor.moveToNext()) {
+//            items.add(parseDay(cursor));
+//        }
+//
+//        cursor.close();
+//        return items;
+//    }
 
-    public static ArrayList<DayItem> getDays(int order) {
-        Cursor cursor = order == -1 ? selectCursor(TABLE_DAYS) : selectCursor(TABLE_DAYS, POSITION, order);
-
-        ArrayList<DayItem> items = new ArrayList<>(cursor.getCount());
-        while (cursor.moveToNext()) {
-            items.add(parseDay(cursor));
-        }
-
-        cursor.close();
-        return items;
-    }
-
-    public static ArrayList<LessonItem> getSubjects() {
-        Cursor c = selectCursor(TABLE_LESSONS);
-
-        ArrayList<LessonItem> subs = new ArrayList<>(c.getCount());
-        while (c.moveToNext()) {
-            subs.add(parseLesson(c));
-        }
-
-        c.close();
-        return subs;
-    }
+//    public static ArrayList<LessonItem> getSubjects() {
+//        Cursor c = selectCursor(TABLE_LESSONS);
+//
+//        ArrayList<LessonItem> subs = new ArrayList<>(c.getCount());
+//        while (c.moveToNext()) {
+//            subs.add(parseLesson(c));
+//        }
+//
+//        c.close();
+//        return subs;
+//    }
 
     public static ArrayList<Note> getNotes() {
         Cursor c = selectCursor(TABLE_NOTES);
@@ -198,7 +179,7 @@ public class OldCacheStorage {
                     putValues(cv, (Note) item);
                     break;
                 case TABLE_LESSONS:
-                    putValues(cv, (LessonItem) item);
+//                    putValues(cv, (LessonItem) item);
                     break;
 //                case TABLE_BELLS:
 //                    putValues(cv, (BellItem) item);
@@ -228,7 +209,7 @@ public class OldCacheStorage {
                     putValues(cv, (Note) item);
                     break;
                 case TABLE_LESSONS:
-                    putValues(cv, (LessonItem) item);
+//                    putValues(cv, (LessonItem) item);
                     break;
 //                case TABLE_BELLS:
 //                    putValues(cv, (BellItem) item);
@@ -254,51 +235,51 @@ public class OldCacheStorage {
         oldDatabase.delete(table, null, null);
     }
 
-    private static DayItem parseDay(Cursor cursor) {
-        DayItem item = new DayItem();
+//    private static DayItem parseDay(Cursor cursor) {
+//        DayItem item = new DayItem();
+//
+//        item.setDate(getInt(cursor, START_TIME));
+//        item.setDayOfWeek(getInt(cursor, DAY_OF_WEEK));
+//        item.setDayOfYear(getInt(cursor, DAY_OF_YEAR));
+//
+////        ArrayList<LessonItem> lessons = (ArrayList<LessonItem>) Util.deserialize(getBlob(cursor, LESSONS));
+////        item.setLessons(lessons == null ? new ArrayList<>() : lessons);
+//
+//        return item;
+//    }
+//
+//    private static void putValues(@NonNull ContentValues values, @NonNull DayItem item) {
+//        values.put(START_TIME, item.getDate());
+//        values.put(DAY_OF_WEEK, item.getDayOfWeek());
+//        values.put(DAY_OF_YEAR, item.getDayOfYear());
+//        values.put(LESSONS, Util.serialize(item.getLessons()));
+//    }
 
-        item.setDate(getInt(cursor, START_TIME));
-        item.setDayOfWeek(getInt(cursor, DAY_OF_WEEK));
-        item.setDayOfYear(getInt(cursor, DAY_OF_YEAR));
+//    private static LessonItem parseLesson(Cursor cursor) {
+//        LessonItem item = new LessonItem();
+//
+//        item.setOrder(getInt(cursor, ORDER));
+//        item.setLessonType(LessonItem.getLessonType(getInt(cursor, LESSON_TYPE)));
+//        item.setLessonTypeCustom(getString(cursor, LESSON_TYPE_CUSTOM));
+//        item.setSubject((SubjectItem) Util.deserialize(getBlob(cursor, SUBJECT)));
+//        item.setTeacher((TeacherItem) Util.deserialize(getBlob(cursor, TEACHER)));
+//        item.setClassRoom((LocationItem) Util.deserialize(getBlob(cursor, CLASSROOM)));
+//
+//        ArrayList<ParticipantItem> participants = (ArrayList<ParticipantItem>) Util.deserialize(getBlob(cursor, PARTICIPANTS));
+//        item.setParticipants(participants == null ? new ArrayList<>() : participants);
+//
+//        return item;
+//    }
 
-        ArrayList<LessonItem> lessons = (ArrayList<LessonItem>) Util.deserialize(getBlob(cursor, LESSONS));
-        item.setLessons(lessons == null ? new ArrayList<>() : lessons);
-
-        return item;
-    }
-
-    private static void putValues(@NonNull ContentValues values, @NonNull DayItem item) {
-        values.put(START_TIME, item.getDate());
-        values.put(DAY_OF_WEEK, item.getDayOfWeek());
-        values.put(DAY_OF_YEAR, item.getDayOfYear());
-        values.put(LESSONS, Util.serialize(item.getLessons()));
-    }
-
-    private static LessonItem parseLesson(Cursor cursor) {
-        LessonItem item = new LessonItem();
-
-        item.setOrder(getInt(cursor, ORDER));
-        item.setLessonType(LessonItem.getLessonType(getInt(cursor, LESSON_TYPE)));
-        item.setLessonTypeCustom(getString(cursor, LESSON_TYPE_CUSTOM));
-        item.setSubject((SubjectItem) Util.deserialize(getBlob(cursor, SUBJECT)));
-        item.setTeacher((TeacherItem) Util.deserialize(getBlob(cursor, TEACHER)));
-        item.setClassRoom((LocationItem) Util.deserialize(getBlob(cursor, CLASSROOM)));
-
-        ArrayList<ParticipantItem> participants = (ArrayList<ParticipantItem>) Util.deserialize(getBlob(cursor, PARTICIPANTS));
-        item.setParticipants(participants == null ? new ArrayList<>() : participants);
-
-        return item;
-    }
-
-    private static void putValues(@NonNull ContentValues values, @NonNull LessonItem item) {
-        values.put(ORDER, item.getOrder());
-        values.put(LESSON_TYPE, LessonItem.getLessonType(item.getLessonType()));
-        values.put(LESSON_TYPE_CUSTOM, item.getLessonTypeCustom());
-        values.put(SUBJECT, Util.serialize(item.getSubject()));
-        values.put(TEACHER, Util.serialize(item.getTeacher()));
-        values.put(CLASSROOM, Util.serialize(item.getClassRoom()));
-        values.put(PARTICIPANTS, Util.serialize(item.getParticipants()));
-    }
+//    private static void putValues(@NonNull ContentValues values, @NonNull LessonItem item) {
+//        values.put(ORDER, item.getOrder());
+//        values.put(LESSON_TYPE, LessonItem.getLessonType(item.getLessonType()));
+//        values.put(LESSON_TYPE_CUSTOM, item.getLessonTypeCustom());
+//        values.put(SUBJECT, Util.serialize(item.getSubject()));
+//        values.put(TEACHER, Util.serialize(item.getTeacher()));
+//        values.put(CLASSROOM, Util.serialize(item.getClassRoom()));
+//        values.put(PARTICIPANTS, Util.serialize(item.getParticipants()));
+//    }
 
     private static Note parseNote(Cursor c) {
         int id = getInt(c, ID);

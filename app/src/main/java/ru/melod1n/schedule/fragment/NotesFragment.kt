@@ -194,13 +194,11 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
         dialog.setOnActionListener(object : OnActionListener<Note> {
             override fun onItemEdit(item: Note) {
                 CacheStorage.updateNote(item)
-//                OldCacheStorage.update(DatabaseHelper.TABLE_NOTES, item, "id = ?", item!!.id)
                 adapter!!.notifyItemChanged(position)
             }
 
             override fun onItemInsert(item: Note) {
                 CacheStorage.insertNote(item)
-//                OldCacheStorage.insert(DatabaseHelper.TABLE_NOTES, item)
 
                 adapter!!.add(item)
                 adapter!!.notifyDataSetChanged()
@@ -217,7 +215,6 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
 
             override fun onItemDelete(item: Note) {
                 CacheStorage.deleteNote(item)
-//                OldCacheStorage.delete(DatabaseHelper.TABLE_NOTES, "id = " + item!!.id)
                 adapter!!.remove(position)
                 adapter!!.notifyDataSetChanged()
 //                adapter!!.notifyItemRemoved(position)

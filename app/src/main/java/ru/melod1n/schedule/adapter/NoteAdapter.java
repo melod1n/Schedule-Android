@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
-import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.current.BaseHolder;
 import ru.melod1n.schedule.items.Note;
@@ -82,13 +81,7 @@ public class NoteAdapter extends BaseAdapter<Note, NoteAdapter.ViewHolder> {
         public void bind(int position) {
             Note item = getItem(position);
 
-            int color;
-
-            try {
-                color = Color.parseColor(item.getColor());
-            } catch (Exception e) {
-                color = ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK[0] : ThemeEngine.COLOR_PALETTE_LIGHT[0];
-            }
+            int color = item.getColor();
 
             card.setCardBackgroundColor(color);
 

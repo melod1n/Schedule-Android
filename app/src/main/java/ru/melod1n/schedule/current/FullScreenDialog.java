@@ -16,12 +16,16 @@ public abstract class FullScreenDialog<T> extends DialogFragment {
 
     private OnActionListener<T> onActionListener;
 
-    public void setOnActionListener(OnActionListener<T> onActionListener) {
-        this.onActionListener = onActionListener;
+    public FullScreenDialog(FragmentManager fragmentManager, T item) {
+        display(fragmentManager, item);
     }
 
     protected OnActionListener<T> getOnActionListener() {
         return onActionListener;
+    }
+
+    public void setOnActionListener(OnActionListener<T> onActionListener) {
+        this.onActionListener = onActionListener;
     }
 
     @Override
@@ -46,12 +50,10 @@ public abstract class FullScreenDialog<T> extends DialogFragment {
                 dialog.getWindow().setLayout(width, height);
 
                 dialog.getWindow().setWindowAnimations(R.style.AppTheme_FullScreenDialog_Slide);
+
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
             }
         }
-    }
-
-    public FullScreenDialog(FragmentManager fragmentManager, T item) {
-        display(fragmentManager, item);
     }
 
     protected abstract void display(FragmentManager fragmentManager, T item);

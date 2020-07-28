@@ -36,6 +36,11 @@ public class RelativeLayout extends android.widget.RelativeLayout {
             EventBus.getDefault().register(this);
 
         theme = ThemeEngine.getCurrentTheme();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         init();
     }
 

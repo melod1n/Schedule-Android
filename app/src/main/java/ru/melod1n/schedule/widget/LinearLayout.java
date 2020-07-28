@@ -36,6 +36,11 @@ public class LinearLayout extends android.widget.LinearLayout {
             EventBus.getDefault().register(this);
 
         theme = ThemeEngine.getCurrentTheme();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         init();
     }
 

@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.adapter.AgendaAdapter;
 import ru.melod1n.schedule.common.EventInfo;
-import ru.melod1n.schedule.items.AgendaItem;
+import ru.melod1n.schedule.items.Agenda;
 import ru.melod1n.schedule.widget.RefreshLayout;
 
 public class AgendaFragment extends Fragment {
@@ -92,12 +92,12 @@ public class AgendaFragment extends Fragment {
     }
 
     private void getHomework() {
-        ArrayList<AgendaItem> items = new ArrayList<>();
+        ArrayList<Agenda> items = new ArrayList<>();
 
         if (type == TYPE_HOMEWORK) {
-            items.add(new AgendaItem("Some Homework Content", "Some Homework Title", "09.05.45", 1));
+            items.add(new Agenda("Some Homework Content", "Some Homework Title", "09.05.45", 1));
         } else if (type == TYPE_EVENTS) {
-            items.add(new AgendaItem("Some Event Content", "Some Event Title", "12.12.12", 1));
+            items.add(new Agenda("Some Event Content", "Some Event Title", "12.12.12", 1));
         }
 
         createAdapter(items);
@@ -106,7 +106,7 @@ public class AgendaFragment extends Fragment {
         refresh.setRefreshing(false);
     }
 
-    private void createAdapter(ArrayList<AgendaItem> values) {
+    private void createAdapter(ArrayList<Agenda> values) {
         if (adapter == null) {
             adapter = new AgendaAdapter(requireContext(), values);
             adapter.setOnItemClickListener(this::onItemClick);

@@ -20,14 +20,17 @@ import ru.melod1n.schedule.R;
 import ru.melod1n.schedule.common.ThemeEngine;
 import ru.melod1n.schedule.current.BaseAdapter;
 import ru.melod1n.schedule.current.BaseHolder;
-import ru.melod1n.schedule.items.LessonItem;
-import ru.melod1n.schedule.items.LocationItem;
-import ru.melod1n.schedule.items.SubjectItem;
+import ru.melod1n.schedule.items.Lesson;
+import ru.melod1n.schedule.items.Location;
+import ru.melod1n.schedule.items.Subject;
 
-public class ScheduleAdapter extends BaseAdapter<LessonItem, ScheduleAdapter.ViewHolder> {
+public class ScheduleAdapter extends BaseAdapter<Lesson, ScheduleAdapter.ViewHolder> {
 
-    public ScheduleAdapter(Context context, ArrayList<LessonItem> items) {
+    private int[] colors;
+
+    public ScheduleAdapter(Context context, ArrayList<Lesson> items) {
         super(context, items);
+        initColors();
     }
 
     @NonNull
@@ -46,6 +49,14 @@ public class ScheduleAdapter extends BaseAdapter<LessonItem, ScheduleAdapter.Vie
     @Override
     public void destroy() {
 
+    }
+
+    private String getType(int i) {
+        return i == 0 ? "Лекция" : i == 1 ? "Практика" : i == 2 ? "Лабораторная" : "Дополнительное";
+    }
+
+    public void initColors() {
+        colors = !ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT;
     }
 
     class ViewHolder extends BaseHolder {
@@ -71,8 +82,6 @@ public class ScheduleAdapter extends BaseAdapter<LessonItem, ScheduleAdapter.Vie
 //        @BindView(R.id.lessonTeacher)
 //        TextView lessonTeacher;
 
-        int[] colors = !ThemeEngine.isDark() ? ThemeEngine.COLOR_PALETTE_DARK : ThemeEngine.COLOR_PALETTE_LIGHT;
-
         ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
@@ -81,31 +90,29 @@ public class ScheduleAdapter extends BaseAdapter<LessonItem, ScheduleAdapter.Vie
 
         @Override
         public void bind(final int position) {
-            LessonItem item = getItem(position);
+            Lesson item = getItem(position);
 
             lessonType.setText(String.format(Locale.getDefault(), "%d: %s", position + 1, getType(new Random().nextInt(4))));
 
-            SubjectItem subject = item.getSubject();
+            Subject subject = item.getSubject();
+
+            assert subject != null;
+
             lessonName.setText(subject.getTitle());
 
-            LocationItem location = item.getClassRoom();
+            Location location = item.getClassRoom();
+
+            assert location != null;
+
             lessonClassroom.setText(String.format("%s, %s", location.getTitle(), location.getBuilding()));
 
-            int color = colors[subject.getColorPosition()];
+            int color = colors[new Random().nextInt(colors.length - 1)];
 
             lessonLine.setBackgroundColor(color);
             lessonType.setTextColor(color);
 
-//            TeacherItem teacher = item.getTeacher();
-//            lessonTeacher.setText(teacher.getTitle());
-//            lessonTeacher.setVisibility(View.GONE);
-
             lessonStartTime.setText("8:00");
             lessonEndTime.setText("8:40");
         }
-    }
-
-    private String getType(int i) {
-        return i == 0 ? "Лекция" : i == 1 ? "Практика" : i == 2 ? "Лабораторная" : "Дополнительное";
     }
 }

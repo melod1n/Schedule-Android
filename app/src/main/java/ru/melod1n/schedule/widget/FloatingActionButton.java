@@ -31,6 +31,11 @@ public class FloatingActionButton extends com.google.android.material.floatingac
             EventBus.getDefault().register(this);
 
         theme = ThemeEngine.getCurrentTheme();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         init();
     }
 

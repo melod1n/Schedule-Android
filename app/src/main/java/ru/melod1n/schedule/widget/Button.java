@@ -44,10 +44,15 @@ public class Button extends MaterialButton {
             this.style = a.getInt(R.styleable.Button_style, 0);
         }
 
-        if (theme == null) theme = ThemeEngine.getCurrentTheme();
-        init();
-
         EventBus.getDefault().register(this);
+
+        if (theme == null) theme = ThemeEngine.getCurrentTheme();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        init();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -64,7 +69,7 @@ public class Button extends MaterialButton {
         int textColorPrimaryInverse = theme.getColorTextPrimaryInverse();
         int textColorSecondary = theme.getColorTextSecondary();
 
-        FontHelper.applyFont(this, FontHelper.Font.PS_MEDIUM);
+        FontHelper.applyFont(this, FontHelper.Font.GSANS_MEDIUM);
         setText(StringUtils.capitalize(getText().toString().toLowerCase()));
 
         if (style == STYLE_DEFAULT) {

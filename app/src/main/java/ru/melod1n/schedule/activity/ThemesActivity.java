@@ -1,13 +1,10 @@
 package ru.melod1n.schedule.activity;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -42,7 +39,7 @@ public class ThemesActivity extends BaseActivity {
     private int request;
 
     private volatile boolean animating;
-    private Drawable navigationIcon;
+//    private Drawable navigationIcon;
 
     private View rootView;
 
@@ -51,6 +48,8 @@ public class ThemesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_themes);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         request = getIntent().getIntExtra("request", -1);
 
@@ -59,7 +58,7 @@ public class ThemesActivity extends BaseActivity {
 
         rootView = toolbar.getRootView();
 
-        navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_backward);
+//        navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_backward);
 
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
@@ -177,9 +176,6 @@ public class ThemesActivity extends BaseActivity {
             applyTitle();
 
             fadeLayout();
-
-            navigationIcon.setTint(Color.RED); //я не знаю почему, но работает лишь так
-            toolbar.setNavigationIcon(navigationIcon);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.warning);

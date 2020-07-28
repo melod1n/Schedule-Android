@@ -24,20 +24,18 @@
             android:layout_height="72dp"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:layout_marginStart="-8dp"
-            tools:src="@drawable/ic_launcher_hi_res" />
+            android:src="@drawable/ic_launcher_hi_res" />
 
-        <ru.melod1n.schedule.widget.TextPlain
+        <TextView
             android:id="@+id/drawerTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-            app:colorDef="primary"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             tools:text="Danil Nikolaev" />
 
-        <ru.melod1n.schedule.widget.TextPlain
+        <TextView
             android:id="@+id/drawerSubtitle"
-            app:colorDef="secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="lischenkodev@gmail.com" />

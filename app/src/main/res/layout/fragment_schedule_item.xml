@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                app:fontColor="secondary"
                 tools:text="10:30" />
 
             <ru.melod1n.schedule.widget.TextPlain
@@ -37,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:textStyle="bold"
+                app:fontColor="secondary"
                 tools:text="11:50" />
 
         </FrameLayout>
@@ -55,7 +57,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <ru.melod1n.schedule.widget.TextPlain
+        <TextView
             android:id="@+id/lessonType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +66,6 @@
             android:text="Научно-исследовательский семинар"
             android:textAllCaps="true"
             android:textStyle="bold"
-            app:colorDef="accent"
             tools:ignore="HardcodedText" />
 
         <ru.melod1n.schedule.widget.TextPlain
@@ -75,7 +76,7 @@
             android:padding="2dp"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:colorDef="primary"
+            app:fontColor="primary"
             tools:text="Научно-исследовательский семинар 'Разработка облачных и мобильных приложенимй на платформе Apple iOS' (анг)" />
 
         <ru.melod1n.schedule.widget.TextPlain
@@ -85,10 +86,10 @@
             android:gravity="center_vertical"
             android:padding="2dp"
             android:textSize="12sp"
-            app:colorDef="primary"
+            app:fontColor="primary"
             tools:text="Ауд. 432, Кочновский пр-д, д. 3" />
 
-        <ru.melod1n.schedule.widget.TextPlain
+        <TextView
             android:id="@+id/lessonTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
