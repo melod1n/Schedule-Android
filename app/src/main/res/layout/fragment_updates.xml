@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="?actionBarSize">
 
-        <include layout="@layout/list_recycler" />
+        <include layout="@layout/recycler_view" />
 
         <ru.melod1n.schedule.widget.HighlightView
             android:layout_width="match_parent"

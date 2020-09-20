@@ -1,6 +1,6 @@
 <ru.melod1n.schedule.widget.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/tabs"
+    android:id="@+id/toolbarTabs"
     style="@style/AppTheme.Tabs"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

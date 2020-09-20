@@ -5,7 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.SET_TIME" />
+    <uses-permission android:name="android.permission.SET_TIME"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -26,12 +27,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.ShortcutActivity" />
-        <activity android:name=".activity.SetupActivity" />
         <activity android:name=".activity.ThemesActivity" />
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.RegistrationActivity" />
+        <activity android:name=".activity.RegisterActivity" />
 
     </application>
 

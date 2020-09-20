@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_schedule.*
-import kotlinx.android.synthetic.main.list_recycler.*
 import kotlinx.android.synthetic.main.no_items.*
+import kotlinx.android.synthetic.main.recycler_view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -19,17 +19,17 @@ import ru.melod1n.schedule.adapter.ScheduleAdapter
 import ru.melod1n.schedule.common.AppGlobal
 import ru.melod1n.schedule.common.EventInfo
 import ru.melod1n.schedule.common.TaskManager
-import ru.melod1n.schedule.current.BaseAdapter
-import ru.melod1n.schedule.current.FullScreenDialog
+import ru.melod1n.schedule.base.BaseAdapter
+import ru.melod1n.schedule.base.FullScreenDialog
 import ru.melod1n.schedule.database.CacheStorage
-import ru.melod1n.schedule.items.Lesson
+import ru.melod1n.schedule.model.Lesson
 import ru.melod1n.schedule.view.FullScreenLessonDialog
 import java.util.*
 
 class ScheduleFragment() : Fragment(), BaseAdapter.OnItemClickListener {
 
     private var adapter: ScheduleAdapter? = null
-    private var day = 0
+    var day = 0
 
     constructor(i: Int) : this() {
         day = i
@@ -39,12 +39,13 @@ class ScheduleFragment() : Fragment(), BaseAdapter.OnItemClickListener {
     fun onReceive(info: EventInfo<*>) {
         val key = info.key
         if (EventInfo.KEY_THEME_UPDATE == key) {
-            if (adapter != null) adapter!!.initColors()
+            adapter?.createColors()
+
             getSubjects()
         }
     }
 
-    override fun onItemClick(v: View, position: Int) {
+    override fun onItemClick(position: Int) {
 //        val builder = AlertBuilder(requireContext())
 //        builder.setTitle("Hello")
 //        builder.setMessage("It's message")
@@ -67,7 +68,7 @@ class ScheduleFragment() : Fragment(), BaseAdapter.OnItemClickListener {
         noItemsView.setText(R.string.no_lessons)
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        refresh.setOnRefreshListener { getSubjects() }
+        refreshLayout.setOnRefreshListener { getSubjects() }
 
         fabAdd.setOnClickListener { showDialog() }
 
@@ -82,7 +83,7 @@ class ScheduleFragment() : Fragment(), BaseAdapter.OnItemClickListener {
         if (adapter == null) return
 
         val dialog = FullScreenLessonDialog(parentFragmentManager, if (position == -1) null else adapter!!.getItem(position))
-        dialog.setOnActionListener(object : FullScreenDialog.OnActionListener<Lesson> {
+        dialog.onActionListener = object : FullScreenDialog.OnActionListener<Lesson> {
             override fun onItemEdit(item: Lesson) {
                 CacheStorage.updateLesson(item)
                 adapter!!.notifyItemChanged(position)
@@ -104,14 +105,14 @@ class ScheduleFragment() : Fragment(), BaseAdapter.OnItemClickListener {
 
             override fun onItemDelete(item: Lesson) {
                 CacheStorage.deleteLesson(item)
-                adapter!!.remove(position)
+                adapter!!.removeAt(position)
                 adapter!!.notifyDataSetChanged()
 //                adapter!!.notifyItemRemoved(position)
 //                adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount - 1, -1)
                 checkCount()
                 Snackbar.make(recyclerView!!, R.string.note_delete_title, Snackbar.LENGTH_LONG).setAction(android.R.string.cancel) { onItemInsert(item) }.show()
             }
-        })
+        }
     }
 
     private fun getSubjects() {
@@ -120,7 +121,7 @@ class ScheduleFragment() : Fragment(), BaseAdapter.OnItemClickListener {
             requireActivity().runOnUiThread {
                 createAdapter(ArrayList(lessons))
                 checkCount()
-                refresh!!.isRefreshing = false
+                refreshLayout.isRefreshing = false
             }
         }
     }
@@ -132,7 +133,8 @@ class ScheduleFragment() : Fragment(), BaseAdapter.OnItemClickListener {
             recyclerView.adapter = adapter
             return
         }
-        adapter!!.changeItems(values)
+
+        adapter!!.setItems(values)
         adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount, -1)
     }
 

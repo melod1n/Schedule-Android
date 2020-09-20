@@ -6,22 +6,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import butterknife.ButterKnife
 import ru.melod1n.schedule.R
-import ru.melod1n.schedule.current.BaseAdapter
-import ru.melod1n.schedule.current.BaseHolder
-import ru.melod1n.schedule.items.UpdateItem
+import ru.melod1n.schedule.base.BaseAdapter
+import ru.melod1n.schedule.base.BaseHolder
+import ru.melod1n.schedule.model.UpdateItem
 import ru.melod1n.schedule.widget.CardView
 import java.util.*
 
 class UpdateAdapter(context: Context, values: ArrayList<UpdateItem>) : BaseAdapter<UpdateItem, UpdateAdapter.ViewHolder>(context, values) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(inflater.inflate(R.layout.fragment_updates_item, parent, false))
+        return ViewHolder(view(R.layout.fragment_updates_item, parent))
     }
 
     inner class ViewHolder(var v: View) : BaseHolder(v) {
 
         var info: TextView = v.findViewById(R.id.updateInfo)
-        var card: CardView = v.findViewById(R.id.updateInfoContainer)
 
         override fun bind(position: Int) {
             ButterKnife.bind(this, v)
@@ -33,10 +32,6 @@ class UpdateAdapter(context: Context, values: ArrayList<UpdateItem>) : BaseAdapt
         }
     }
 
-
-
-    override fun destroy() {
-
-    }
+    override fun destroy() {}
 
 }

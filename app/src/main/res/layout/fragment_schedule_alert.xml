@@ -77,7 +77,7 @@
 
     </LinearLayout>
 
-    <ru.melod1n.schedule.widget.HorizontalColorPicker
+    <ru.melod1n.schedule.widget.horizontalcolorpicker.HorizontalColorPicker
         android:id="@+id/picker"
         android:layout_width="match_parent"
         android:layout_height="50dp"

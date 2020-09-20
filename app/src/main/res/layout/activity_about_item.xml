@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card"
+        android:id="@+id/aboutCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -27,7 +27,7 @@
             android:padding="8dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/icon"
+                android:id="@+id/aboutIcon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
@@ -42,7 +42,7 @@
                 android:padding="4dp">
 
                 <TextView
-                    android:id="@+id/name"
+                    android:id="@+id/aboutName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="?android:textColorPrimary"
@@ -50,7 +50,7 @@
                     tools:text="Some Name" />
 
                 <TextView
-                    android:id="@+id/job"
+                    android:id="@+id/aboutJob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="?android:textColorSecondary"

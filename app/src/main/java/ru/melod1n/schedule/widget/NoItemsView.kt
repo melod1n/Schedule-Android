@@ -2,8 +2,6 @@ package ru.melod1n.schedule.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -14,22 +12,30 @@ import ru.melod1n.schedule.R
 import ru.melod1n.schedule.common.EventInfo
 import ru.melod1n.schedule.common.ThemeEngine
 import ru.melod1n.schedule.common.TimeManager
-import ru.melod1n.schedule.items.ThemeItem
+import ru.melod1n.schedule.model.ThemeItem
 import ru.melod1n.schedule.util.Util
 
 @SuppressLint("AppCompatCustomView")
 class NoItemsView(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : TextView(context, attrs, defStyleAttr) {
 
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+
+    constructor(context: Context) : this(context, null, 0)
+
     private var theme: ThemeItem
 
     init {
         EventBus.getDefault().register(this)
-        theme = ThemeEngine.getCurrentTheme()
-        TimeManager.addOnHourChangeListener { Handler(Looper.getMainLooper()).post { initIcon() } }
+
+        theme = ThemeEngine.currentTheme!!
+
+        TimeManager.addOnHourChangeListener(object : TimeManager.OnHourChangeListener {
+            override fun onHourChange(currentHour: Int) {
+                handler.post { initIcon() }
+            }
+        })
     }
 
-    constructor(context: Context) : this(context, null, 0)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     private fun initIcon() {
         val icon = ContextCompat.getDrawable(context, if (TimeManager.isMorning() || TimeManager.isAfternoon()) R.drawable.ic_vector_sun else R.drawable.ic_vector_moon)

@@ -20,10 +20,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.app.AlertBuilder
+import ru.melod1n.schedule.base.BaseActivity
 import ru.melod1n.schedule.common.*
-import ru.melod1n.schedule.current.BaseActivity
 import ru.melod1n.schedule.fragment.*
-import ru.melod1n.schedule.util.ArrayUtil
 import ru.melod1n.schedule.util.Util
 import ru.melod1n.schedule.widget.DrawerToggle
 import ru.melod1n.schedule.widget.Toolbar
@@ -47,7 +46,11 @@ class MainActivity : BaseActivity() {
 
         checkTheme()
 
-        TimeManager.addOnHourChangeListener { checkTheme() }
+        TimeManager.addOnHourChangeListener(object : TimeManager.OnHourChangeListener {
+            override fun onHourChange(currentHour: Int) {
+                checkTheme()
+            }
+        })
 
         applyBackground()
         checkFirstLaunch(savedInstanceState)
@@ -84,9 +87,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun checkTheme() {
-        if (ThemeEngine.isAutoTheme()) {
-            val item = if (TimeManager.isMorning() || TimeManager.isAfternoon()) ThemeEngine.getDayTheme() else ThemeEngine.getNightTheme()
-            if (ThemeEngine.getCurrentTheme() != item) {
+        if (ThemeEngine.isAutoTheme) {
+            val item = (if (TimeManager.isMorning() || TimeManager.isAfternoon()) ThemeEngine.dayTheme else ThemeEngine.nightTheme)
+                    ?: return
+
+            if (ThemeEngine.currentTheme != item) {
                 ThemeEngine.setCurrentTheme(item.id)
             }
         }
@@ -128,19 +133,14 @@ class MainActivity : BaseActivity() {
     }
 
     private fun checkFirstLaunch(savedInstanceState: Bundle?) {
-        if (!Util.isFirstLaunch()) {
-            startActivity(Intent(this, SetupActivity::class.java))
-            finish()
-        } else {
-            if (savedInstanceState == null) {
-                FragmentSwitcher.showFragment(
-                        supportFragmentManager,
-                        parentScheduleFragment.javaClass.simpleName,
-                        true
-                )
+        if (savedInstanceState == null) {
+            FragmentSwitcher.showFragment(
+                    supportFragmentManager,
+                    parentScheduleFragment.javaClass.simpleName,
+                    true
+            )
 
-                navigationView.selectedItemId = selectedId
-            }
+            navigationView.selectedItemId = selectedId
         }
     }
 
@@ -152,7 +152,7 @@ class MainActivity : BaseActivity() {
 
     private fun checkCrash() {
         if (AppGlobal.preferences.getBoolean("isCrashed", false)) {
-            val trace = AppGlobal.preferences.getString("crashLog", "")
+            val trace = AppGlobal.preferences.getString("crashLog", "") ?: return
 
             if (!AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SHOW_ERROR, true)) {
                 AppGlobal.preferences.edit().putBoolean("isCrashed", false).putString("crashLog", "").apply()
@@ -189,7 +189,7 @@ class MainActivity : BaseActivity() {
         val classesNames: MutableList<String> = ArrayList(fragments.size)
         val fragmentContainerId = R.id.fragmentContainer
 
-        if (ArrayUtil.isEmpty(fragments)) {
+        if (fragments.isEmpty()) {
             transaction.add(fragmentContainerId, fragment, fragment.javaClass.simpleName)
         } else {
             for (f in fragments) {

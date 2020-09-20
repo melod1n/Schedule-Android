@@ -8,7 +8,7 @@
 	android:gravity="center">
 
 	<androidx.cardview.widget.CardView
-		android:id="@+id/card"
+		android:id="@+id/noteCard"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:foreground="?selectableItemBackground"
@@ -23,14 +23,14 @@
 			android:orientation="vertical">
 
 			<TextView
-				android:id="@+id/title"
+				android:id="@+id/noteTitle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:textColor="@android:color/black"
 				android:textSize="20sp"/>
 
 			<TextView
-				android:id="@+id/text"
+				android:id="@+id/noteText"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:textColor="#333333"

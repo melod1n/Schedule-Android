@@ -7,7 +7,7 @@
     android:padding="16dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/theme_engine_card_view"
+        android:id="@+id/themeCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
@@ -18,7 +18,7 @@
         app:cardPreventCornerOverlap="true">
 
         <TextView
-            android:id="@+id/theme_engine_title"
+            android:id="@+id/themeTitle"
             android:padding="16dp"
             android:textSize="18sp"
             android:layout_width="match_parent"

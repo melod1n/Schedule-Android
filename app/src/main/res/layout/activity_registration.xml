@@ -21,19 +21,19 @@
             android:padding="16dp">
 
             <ru.melod1n.schedule.widget.TextArea
-                android:id="@+id/input_login"
+                android:id="@+id/inputLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_login" />
 
             <ru.melod1n.schedule.widget.TextArea
-                android:id="@+id/input_password"
+                android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_password" />
 
             <ru.melod1n.schedule.widget.Button
-                android:id="@+id/button_registration"
+                android:id="@+id/buttonRegistration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/registration"/>

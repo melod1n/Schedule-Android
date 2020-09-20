@@ -6,7 +6,7 @@
 
     <include layout="@layout/no_items" />
 
-    <include layout="@layout/list_recycler" />
+    <include layout="@layout/recycler_view" />
 
     <ru.melod1n.schedule.widget.FloatingActionButton
         android:id="@+id/fabAdd"

@@ -31,7 +31,7 @@
                 android:layout_marginBottom="8dp">
 
                 <ru.melod1n.schedule.widget.TextArea
-                    android:id="@+id/input_login"
+                    android:id="@+id/inputLogin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/input_login" />
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content">
 
                 <ru.melod1n.schedule.widget.TextArea
-                    android:id="@+id/input_password"
+                    android:id="@+id/inputPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/input_password" />
@@ -57,14 +57,14 @@
                 android:orientation="horizontal">
 
                 <ru.melod1n.schedule.widget.Button
-                    android:id="@+id/button_login"
+                    android:id="@+id/buttonLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7"
                     android:text="@string/input_login" />
 
                 <ru.melod1n.schedule.widget.Button
-                    android:id="@+id/button_registration"
+                    android:id="@+id/buttonRegistration"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -27,10 +27,10 @@
             tools:ignore="HardcodedText" />
 
         <TextView
-            android:id="@+id/app_name"
+            android:id="@+id/aboutAppName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/google_sans_medium"
             android:gravity="center_horizontal"
             android:text="@string/app_name"
@@ -38,7 +38,7 @@
             android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/app_version"
+            android:id="@+id/aboutAppVersion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_light"
@@ -47,11 +47,11 @@
             android:textSize="12sp"
             tools:text="Version" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <include
+            layout="@layout/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="16dp" />
 
     </LinearLayout>
 

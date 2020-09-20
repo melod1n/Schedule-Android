@@ -6,6 +6,6 @@
 
     <include layout="@layout/no_items" />
 
-    <include layout="@layout/list_recycler" />
+    <include layout="@layout/recycler_view" />
 
 </FrameLayout>

@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <ru.melod1n.schedule.widget.CardView
-        android:id="@+id/updateInfoContainer"
+        android:id="@+id/updateInfoCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp">
@@ -26,7 +26,6 @@
                 tools:text="Some update info" />
 
         </LinearLayout>
-
 
     </ru.melod1n.schedule.widget.CardView>
 

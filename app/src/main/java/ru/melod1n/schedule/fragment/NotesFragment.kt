@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -15,18 +16,18 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.ButterKnife
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_notes.*
-import kotlinx.android.synthetic.main.list_recycler.*
 import kotlinx.android.synthetic.main.no_items.*
+import kotlinx.android.synthetic.main.recycler_view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.activity.MainActivity
 import ru.melod1n.schedule.adapter.NoteAdapter
+import ru.melod1n.schedule.base.BaseAdapter
+import ru.melod1n.schedule.base.FullScreenDialog.OnActionListener
 import ru.melod1n.schedule.common.AppGlobal
 import ru.melod1n.schedule.common.TaskManager
-import ru.melod1n.schedule.current.BaseAdapter
-import ru.melod1n.schedule.current.FullScreenDialog.OnActionListener
 import ru.melod1n.schedule.database.CacheStorage
-import ru.melod1n.schedule.items.Note
+import ru.melod1n.schedule.model.Note
 import ru.melod1n.schedule.view.FullScreenNoteDialog
 import java.util.*
 
@@ -79,7 +80,7 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
     }
 
     private fun prepareRefreshLayout() {
-        refresh.setOnRefreshListener(this)
+        refreshLayout.setOnRefreshListener(this)
     }
 
     private fun prepareList() {
@@ -182,7 +183,7 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
                 createAdapter(ArrayList(notes))
                 checkCount()
 
-                refresh.isRefreshing = false
+                refreshLayout.isRefreshing = false
             }
         }
     }
@@ -191,7 +192,7 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
         if (adapter == null) return
 
         val dialog = FullScreenNoteDialog(parentFragmentManager, if (position == -1) null else adapter!!.getItem(position))
-        dialog.setOnActionListener(object : OnActionListener<Note> {
+        dialog.onActionListener = object : OnActionListener<Note> {
             override fun onItemEdit(item: Note) {
                 CacheStorage.updateNote(item)
                 adapter!!.notifyItemChanged(position)
@@ -211,18 +212,21 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
                 checkCount()
 
                 adapter!!.onEndMove(position)
-            } 
+            }
 
             override fun onItemDelete(item: Note) {
                 CacheStorage.deleteNote(item)
-                adapter!!.remove(position)
+
+                adapter!!.removeAt(position)
                 adapter!!.notifyDataSetChanged()
+
 //                adapter!!.notifyItemRemoved(position)
 //                adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount - 1, -1)
+
                 checkCount()
-                Snackbar.make(recyclerView!!, R.string.note_delete_title, Snackbar.LENGTH_LONG).setAction(android.R.string.cancel) { onItemInsert(item) }.show()
+                Snackbar.make(recyclerView, R.string.note_delete_title, Snackbar.LENGTH_LONG).setAction(android.R.string.cancel) { onItemInsert(item) }.show()
             }
-        })
+        }
     }
 
     private fun onMenuItemClick(item: MenuItem): Boolean {
@@ -246,21 +250,24 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
 
     private fun createAdapter(values: ArrayList<Note>) {
         if (adapter == null) {
-            adapter = NoteAdapter(activity, values)
-            adapter!!.onItemClickListener = this
-            recyclerView!!.adapter = adapter
+            adapter = NoteAdapter(requireContext(), values).apply {
+                onItemClickListener = this@NotesFragment
+            }
+
+            recyclerView.adapter = adapter
             return
         }
-        adapter!!.changeItems(values)
-        adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount, -1)
+        adapter!!.setItems(values)
+        adapter!!.notifyDataSetChanged()
     }
 
     private fun checkCount() {
-        toolbar.menu.getItem(0).isVisible = adapter != null && adapter!!.itemCount > 0
-        noItemsView.visibility = if (adapter == null) View.VISIBLE else if (adapter!!.itemCount == 0) View.VISIBLE else View.GONE
+        toolbar.menu.getItem(0).isVisible = adapter != null && adapter!!.isNotEmpty()
+
+        noItemsView.isVisible = adapter != null && adapter!!.isEmpty()
     }
 
-    override fun onItemClick(v: View, position: Int) {
+    override fun onItemClick(position: Int) {
         showDialog(position)
     }
 }

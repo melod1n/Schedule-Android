@@ -8,7 +8,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,14 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.list_recycler.*
 import kotlinx.android.synthetic.main.no_items.*
+import kotlinx.android.synthetic.main.recycler_view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.activity.MainActivity
 import ru.melod1n.schedule.adapter.UpdateAdapter
-import ru.melod1n.schedule.current.BaseAdapter
-import ru.melod1n.schedule.items.UpdateItem
+import ru.melod1n.schedule.base.BaseAdapter
+import ru.melod1n.schedule.model.UpdateItem
 import java.util.*
 
 class UpdatesFragment : Fragment(), OnRefreshListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnItemLongClickListener {
@@ -43,15 +42,14 @@ class UpdatesFragment : Fragment(), OnRefreshListener, BaseAdapter.OnItemClickLi
 
         toolbar.setTitle(R.string.nav_updates)
 
-        val drawerLayout = (Objects.requireNonNull(activity) as MainActivity).drawerLayout
-
-        val toggle: ActionBarDrawerToggle = (requireActivity() as MainActivity?)!!.initToggle(toolbar)
+        val drawerLayout = (requireActivity() as MainActivity).drawerLayout
+        val toggle = (requireActivity() as MainActivity).initToggle(toolbar)
 
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         noItemsView.visibility = View.GONE
-        refresh.setOnRefreshListener(this)
+        refreshLayout.setOnRefreshListener(this)
 
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         prepareData()
@@ -73,10 +71,10 @@ class UpdatesFragment : Fragment(), OnRefreshListener, BaseAdapter.OnItemClickLi
         adapter!!.onItemLongClickListener = this
 
         recyclerView.adapter = adapter
-        refresh.isRefreshing = false
+        refreshLayout.isRefreshing = false
     }
 
-    override fun onItemClick(v: View?, position: Int) {
+    override fun onItemClick(position: Int) {
         val url = adapter!!.values[position].url
 
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -84,8 +82,8 @@ class UpdatesFragment : Fragment(), OnRefreshListener, BaseAdapter.OnItemClickLi
         startActivity(intent)
     }
 
-    override fun onItemLongClick(v: View?, position: Int) {
-        val menu = PopupMenu(requireContext(), v!!)
+    override fun onItemLongClick(position: Int) {
+        val menu = PopupMenu(requireContext(), requireView())
 
         menu.gravity = Gravity.TOP or Gravity.END
         menu.inflate(R.menu.fragment_updates_card)

@@ -1,7 +1,7 @@
 package ru.melod1n.schedule.database.dao
 
 import androidx.room.*
-import ru.melod1n.schedule.items.ThemeItem
+import ru.melod1n.schedule.model.ThemeItem
 
 @Dao
 interface ThemesDao {
