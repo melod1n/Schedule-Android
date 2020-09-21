@@ -8,8 +8,7 @@ import butterknife.ButterKnife
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.base.BaseAdapter
 import ru.melod1n.schedule.base.BaseHolder
-import ru.melod1n.schedule.model.UpdateItem
-import ru.melod1n.schedule.widget.CardView
+import ru.melod1n.schedule.api.model.UpdateItem
 import java.util.*
 
 class UpdateAdapter(context: Context, values: ArrayList<UpdateItem>) : BaseAdapter<UpdateItem, UpdateAdapter.ViewHolder>(context, values) {

@@ -3,14 +3,12 @@ package ru.melod1n.schedule.database
 import androidx.annotation.WorkerThread
 import ru.melod1n.schedule.common.AppGlobal
 import ru.melod1n.schedule.common.TaskManager
-import ru.melod1n.schedule.model.Lesson
-import ru.melod1n.schedule.model.Note
-import ru.melod1n.schedule.model.ThemeItem
+import ru.melod1n.schedule.api.model.Lesson
+import ru.melod1n.schedule.api.model.Note
 
 object CacheStorage {
 
     private val notesDao = AppGlobal.database.notes
-    private val themesDao = AppGlobal.database.themes
     private val lessonsDao = AppGlobal.database.lessons
 
 
@@ -61,16 +59,6 @@ object CacheStorage {
     @WorkerThread
     fun getNotes(): List<Note> {
         return notesDao.getAll()
-    }
-
-    @WorkerThread
-    fun getThemes(): List<ThemeItem> {
-        return themesDao.getAll()
-    }
-
-    @WorkerThread
-    fun getThemeById(id: String): ThemeItem? {
-        return themesDao.getById(id)
     }
 
     @JvmStatic

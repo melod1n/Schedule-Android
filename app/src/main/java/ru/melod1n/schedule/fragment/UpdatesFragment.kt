@@ -22,7 +22,7 @@ import ru.melod1n.schedule.R
 import ru.melod1n.schedule.activity.MainActivity
 import ru.melod1n.schedule.adapter.UpdateAdapter
 import ru.melod1n.schedule.base.BaseAdapter
-import ru.melod1n.schedule.model.UpdateItem
+import ru.melod1n.schedule.api.model.UpdateItem
 import java.util.*
 
 class UpdatesFragment : Fragment(), OnRefreshListener, BaseAdapter.OnItemClickListener, BaseAdapter.OnItemLongClickListener {

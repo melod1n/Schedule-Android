@@ -4,19 +4,16 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import ru.melod1n.schedule.database.dao.LessonsDao
 import ru.melod1n.schedule.database.dao.NotesDao
-import ru.melod1n.schedule.database.dao.ThemesDao
-import ru.melod1n.schedule.model.Lesson
-import ru.melod1n.schedule.model.Note
-import ru.melod1n.schedule.model.ThemeItem
+import ru.melod1n.schedule.api.model.Lesson
+import ru.melod1n.schedule.api.model.Note
 
 
 @Database(
-        entities = [Note::class, ThemeItem::class, Lesson::class],
+        entities = [Note::class, Lesson::class],
         exportSchema = false,
-        version = 7
+        version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract val notes: NotesDao
-    abstract val themes: ThemesDao
     abstract val lessons: LessonsDao
 }

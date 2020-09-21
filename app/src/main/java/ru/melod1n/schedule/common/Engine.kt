@@ -2,13 +2,13 @@ package ru.melod1n.schedule.common
 
 import android.annotation.SuppressLint
 import android.text.format.DateUtils
-import org.greenrobot.eventbus.EventBus
 import ru.melod1n.schedule.util.Util
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.floor
 
 object Engine {
+
     fun getTimeByInt(time: Int): String {
         val hours = floor(time / 60.0).toInt()
         val minutes = time - hours * 60
@@ -43,17 +43,5 @@ object Engine {
     @SuppressLint("SimpleDateFormat")
     private fun getFormattedDate(date: Long): String {
         return SimpleDateFormat("dd.MM").format(Date(date))
-    }
-
-    fun sendEvent(info: EventInfo<Any>, sticky: Boolean) {
-        if (sticky) {
-            EventBus.getDefault().postSticky(info)
-        } else {
-            EventBus.getDefault().post(info)
-        }
-    }
-
-    fun sendEvent(info: EventInfo<Any>) {
-        sendEvent(info, false)
     }
 }

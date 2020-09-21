@@ -22,6 +22,6 @@ class AgendaParentAdapter(private val context: Context, fragmentManager: Fragmen
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return context.getString(if (position == 0) R.string.homework else R.string.events)
+        return context.getString(if (position == 0) R.string.lesson_agenda else R.string.events)
     }
 }

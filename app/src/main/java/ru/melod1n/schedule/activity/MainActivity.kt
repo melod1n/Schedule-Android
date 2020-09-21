@@ -8,24 +8,20 @@ import android.os.Build
 import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.synthetic.main.activity_main.*
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import ru.melod1n.schedule.R
-import ru.melod1n.schedule.app.AlertBuilder
 import ru.melod1n.schedule.base.BaseActivity
-import ru.melod1n.schedule.common.*
+import ru.melod1n.schedule.common.AppGlobal
+import ru.melod1n.schedule.common.FragmentSwitcher
 import ru.melod1n.schedule.fragment.*
-import ru.melod1n.schedule.util.Util
-import ru.melod1n.schedule.widget.DrawerToggle
-import ru.melod1n.schedule.widget.Toolbar
 import java.util.*
 
 class MainActivity : BaseActivity() {
@@ -44,15 +40,6 @@ class MainActivity : BaseActivity() {
 
         prepareFragments()
 
-        checkTheme()
-
-        TimeManager.addOnHourChangeListener(object : TimeManager.OnHourChangeListener {
-            override fun onHourChange(currentHour: Int) {
-                checkTheme()
-            }
-        })
-
-        applyBackground()
         checkFirstLaunch(savedInstanceState)
         askPermissions()
         checkCrash()
@@ -73,28 +60,6 @@ class MainActivity : BaseActivity() {
                 R.id.fragmentContainer,
                 listOf(updatesFragment, notesFragment, parentAgendaFragment, parentScheduleFragment)
         )
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    override fun onReceive(info: EventInfo<Any>) {
-        super.onReceive(info)
-
-        when (info.key) {
-            EventInfo.KEY_USER_NAME_UPDATE -> {
-                prepareDrawerHeader()
-            }
-        }
-    }
-
-    private fun checkTheme() {
-        if (ThemeEngine.isAutoTheme) {
-            val item = (if (TimeManager.isMorning() || TimeManager.isAfternoon()) ThemeEngine.dayTheme else ThemeEngine.nightTheme)
-                    ?: return
-
-            if (ThemeEngine.currentTheme != item) {
-                ThemeEngine.setCurrentTheme(item.id)
-            }
-        }
     }
 
     fun prepareDrawerHeader() {
@@ -128,8 +93,8 @@ class MainActivity : BaseActivity() {
         return drawerLayout
     }
 
-    fun initToggle(toolbar: Toolbar?): DrawerToggle {
-        return DrawerToggle(this@MainActivity, drawerLayout, toolbar, R.string.app_name, R.string.app_name)
+    fun initToggle(toolbar: Toolbar?): ActionBarDrawerToggle {
+        return ActionBarDrawerToggle(this@MainActivity, drawerLayout, toolbar, R.string.app_name, R.string.app_name)
     }
 
     private fun checkFirstLaunch(savedInstanceState: Bundle?) {
@@ -159,22 +124,24 @@ class MainActivity : BaseActivity() {
                 return
             }
 
-            val builder = AlertBuilder(this)
-            builder.setTitle(R.string.warning)
-            builder.setMessage(R.string.cause_error)
-            builder.setNeutralButton(R.string.show, View.OnClickListener {
-                val alertBuilder = AlertBuilder(this@MainActivity)
-                alertBuilder.setTitle(R.string.stack_trace)
-                alertBuilder.setMessage(trace)
-                alertBuilder.setPositiveButton(android.R.string.ok)
-                alertBuilder.setNeutralButton(R.string.copy_trace, View.OnClickListener { Util.copyText(trace) })
-                alertBuilder.show()
-            })
-            builder.setPositiveButton(android.R.string.ok)
-            builder.setOnDismissListener {
-                AppGlobal.preferences.edit().putBoolean("isCrashed", false).putString("crashLog", "").apply()
-            }
-            builder.show()
+
+            //TODO: переделать
+//            val builder = AlertDialog.Builder(this)
+//            builder.setTitle(R.string.warning)
+//            builder.setMessage(R.string.cause_error)
+//            builder.setNeutralButton(R.string.show, View.OnClickListener {
+//                val alertBuilder = AlertBuilder(this@MainActivity)
+//                alertBuilder.setTitle(R.string.stack_trace)
+//                alertBuilder.setMessage(trace)
+//                alertBuilder.setPositiveButton(android.R.string.ok)
+//                alertBuilder.setNeutralButton(R.string.copy_trace, View.OnClickListener { Util.copyText(trace) })
+//                alertBuilder.show()
+//            })
+//            builder.setPositiveButton(android.R.string.ok)
+//            builder.setOnDismissListener {
+//                AppGlobal.preferences.edit().putBoolean("isCrashed", false).putString("crashLog", "").apply()
+//            }
+//            builder.show()
         }
     }
 

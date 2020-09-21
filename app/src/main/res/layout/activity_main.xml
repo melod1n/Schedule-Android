@@ -13,14 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ru.melod1n.schedule.widget.FrameLayout
+        <FrameLayout
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:layout_marginBottom="56dp" />
 
-        <ru.melod1n.schedule.widget.BottomNavigationView
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navigationView"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -30,15 +30,9 @@
             app:labelVisibilityMode="selected"
             app:menu="@menu/activity_main_bottom" />
 
-        <ru.melod1n.schedule.widget.HighlightView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="56dp" />
-
     </FrameLayout>
 
-    <ru.melod1n.schedule.widget.NavigationDrawer
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationDrawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

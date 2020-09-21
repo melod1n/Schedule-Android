@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ru.melod1n.schedule.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -15,74 +15,75 @@
         app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="@drawable/ic_close" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/picker"
-        android:layout_marginTop="66dp"
+        android:layout_above="@+id/lessonColorPicker"
+        android:layout_below="@id/toolbar"
         android:orientation="vertical"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp">
+        android:padding="16dp">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/subject_name"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lessonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
-            android:ems="10"
-            android:gravity="center_vertical"
-            android:hint="@string/subject"
-            android:maxLines="3"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textColor="?android:textColorPrimary"
-            android:textColorHint="?android:textColorSecondary"
-            android:textSize="28sp">
+            app:boxBackgroundMode="none">
 
-            <requestFocus />
-        </androidx.appcompat.widget.AppCompatEditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/lesson_subject"
+                android:singleLine="true"
+                android:textColor="?android:textColorPrimary"
+                android:textColorHint="?android:textColorSecondary">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/subject_cab"
+                <requestFocus />
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lessonClassroom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/cab"
-            android:maxLength="1001"
-            android:paddingStart="10dp"
-            android:paddingTop="20dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="20dp"
-            android:singleLine="true"
+            android:layout_below="@+id/lessonName"
+            app:boxBackgroundMode="none">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:hint="@string/lesson_classroom"
+                android:singleLine="true"
+                android:textColor="?android:textColorPrimary"
+                android:textColorHint="?android:textColorSecondary" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/lessonAgenda"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lessonClassroom"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="@string/lesson_agenda"
+            android:textAllCaps="false"
             android:textColor="?android:textColorPrimary"
             android:textColorHint="?android:textColorSecondary"
-            android:textSize="18sp" />
+            app:cornerRadius="12dp" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/subject_homework"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1.0"
-            android:background="@android:color/transparent"
-            android:gravity="top"
-            android:hint="@string/homework"
-            android:inputType="textMultiLine"
-            android:padding="10dp"
-            android:textColor="?android:textColorPrimary"
-            android:textColorHint="?android:textColorSecondary" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <ru.melod1n.schedule.widget.horizontalcolorpicker.HorizontalColorPicker
-        android:id="@+id/picker"
+        android:id="@+id/lessonColorPicker"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-</ru.melod1n.schedule.widget.RelativeLayout>
+</RelativeLayout>
 

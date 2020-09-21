@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.base.BaseAdapter
 import ru.melod1n.schedule.base.BaseHolder
-import ru.melod1n.schedule.model.Note
+import ru.melod1n.schedule.api.model.Note
 import ru.melod1n.schedule.util.ColorUtil
 import java.util.*
 

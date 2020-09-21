@@ -1,4 +1,4 @@
-package ru.melod1n.schedule.model
+package ru.melod1n.schedule.api.model
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -24,6 +24,8 @@ data class Lesson(
         @Embedded(prefix = "location")
         var classroom: Location? = null,
 
+        @Embedded(prefix = "agenda")
+        var agenda: Agenda? = null,
 
         //TODO: не игнорить
         @Ignore

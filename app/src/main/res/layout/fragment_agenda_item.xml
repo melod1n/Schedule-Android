@@ -10,7 +10,7 @@
     android:paddingStart="4dp"
     android:paddingEnd="4dp">
 
-    <ru.melod1n.schedule.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/agendaCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,7 +28,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ru.melod1n.schedule.widget.TextPlain
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/agendaSubject"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                     app:fontColor="primary"
                     tools:text="Some subject" />
 
-                <ru.melod1n.schedule.widget.TextPlain
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/agendaDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 android:layout_height="1dp"
                 android:background="?dividerHorizontal" />
 
-            <ru.melod1n.schedule.widget.TextPlain
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/agendaText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -67,6 +67,6 @@
 
         </LinearLayout>
 
-    </ru.melod1n.schedule.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

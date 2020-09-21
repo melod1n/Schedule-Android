@@ -1,4 +1,4 @@
-package ru.melod1n.schedule.model
+package ru.melod1n.schedule.api.model
 
 data class About(
         var icon: Int = 0,

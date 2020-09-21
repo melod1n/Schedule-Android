@@ -10,29 +10,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ru.melod1n.schedule.widget.HighlightView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <ru.melod1n.schedule.widget.TextArea
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_login" />
 
-            <ru.melod1n.schedule.widget.TextArea
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/input_password" />
 
-            <ru.melod1n.schedule.widget.Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonRegistration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

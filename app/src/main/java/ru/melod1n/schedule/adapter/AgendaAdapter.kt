@@ -8,8 +8,7 @@ import com.google.android.material.card.MaterialCardView
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.base.BaseAdapter
 import ru.melod1n.schedule.base.BaseHolder
-import ru.melod1n.schedule.common.ThemeEngine.currentTheme
-import ru.melod1n.schedule.model.Agenda
+import ru.melod1n.schedule.api.model.Agenda
 import java.util.*
 
 class AgendaAdapter(
@@ -37,8 +36,6 @@ class AgendaAdapter(
 
         override fun bind(position: Int) {
             val item = getItem(position)
-
-            card.setCardBackgroundColor(currentTheme!!.colorSurface)
 
             date.text = item.date
 

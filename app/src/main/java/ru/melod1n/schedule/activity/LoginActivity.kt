@@ -7,7 +7,6 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.toolbar.*
 import ru.melod1n.schedule.R
-import ru.melod1n.schedule.common.ThemeEngine.currentTheme
 import ru.melod1n.schedule.base.BaseActivity
 
 class LoginActivity : BaseActivity() {
@@ -45,7 +44,7 @@ class LoginActivity : BaseActivity() {
     private fun displayError(description: String) {
         Snackbar.make((inputLogin.parent as View), String.format("%s: %s", getString(R.string.error), description), Snackbar.LENGTH_LONG)
                 .setAction(R.string.registration) { openRegistrationScreen() }
-                .setActionTextColor(currentTheme!!.colorAccent)
+//                .setActionTextColor(currentTheme!!.colorAccent)
                 .show()
     }
 

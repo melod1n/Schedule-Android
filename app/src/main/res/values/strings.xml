@@ -4,9 +4,9 @@
     <string name="warning">Warning!</string>
     <string name="confirm_delete_text">Do you really want delete this?</string>
 
-    <string name="cab">Cab</string>
-    <string name="subject">Subject</string>
-    <string name="homework">Homework</string>
+    <string name="lesson_classroom">Classroom</string>
+    <string name="lesson_subject">Subject</string>
+    <string name="lesson_agenda">Agenda</string>
     <string name="delete">Delete</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>

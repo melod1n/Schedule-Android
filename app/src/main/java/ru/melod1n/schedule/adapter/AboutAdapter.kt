@@ -9,12 +9,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import butterknife.ButterKnife
 import com.squareup.picasso.Picasso
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.base.BaseAdapter
 import ru.melod1n.schedule.base.BaseHolder
-import ru.melod1n.schedule.model.About
+import ru.melod1n.schedule.api.model.About
 import java.util.*
 
 class AboutAdapter(context: Context, items: ArrayList<About>) : BaseAdapter<About, AboutAdapter.ViewHolder>(context, items) {
