@@ -7,10 +7,18 @@ import android.widget.TextView
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.base.BaseAdapter
 import ru.melod1n.schedule.base.BaseHolder
-import ru.melod1n.schedule.model.ScheduleItem
+import ru.melod1n.schedule.common.ThemeEngine
+import ru.melod1n.schedule.common.ThemeEngine.isDark
+import ru.melod1n.schedule.model.Lesson
 import java.util.*
 
-class ScheduleAdapter(context: Context, items: ArrayList<ScheduleItem>) : BaseAdapter<ScheduleItem, ScheduleAdapter.ViewHolder>(context, items) {
+class ScheduleAdapter(context: Context, items: ArrayList<Lesson>) : BaseAdapter<Lesson, ScheduleAdapter.ViewHolder>(context, items) {
+
+    private var colors = createColors()
+
+    fun createColors(): IntArray {
+        return if (!isDark()) ThemeEngine.COLOR_PALETTE_DARK else ThemeEngine.COLOR_PALETTE_LIGHT
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, i: Int): ViewHolder {
         return ViewHolder(view(R.layout.fragment_schedule_item, parent))
@@ -36,7 +44,7 @@ class ScheduleAdapter(context: Context, items: ArrayList<ScheduleItem>) : BaseAd
         private var line: View = v.findViewById(R.id.lessonLine)
 
         override fun bind(position: Int) {
-            val item = getItem(position).lesson
+            val item = getItem(position)
 
             type.text = String.format(Locale.getDefault(), "%d: %s", position + 1, getType(Random().nextInt(4)))
 
@@ -48,6 +56,12 @@ class ScheduleAdapter(context: Context, items: ArrayList<ScheduleItem>) : BaseAd
                 classroom.text = String.format("%s, %s", it.title, it.building)
             }
 
+
+            val color = colors[Random().nextInt(colors.size - 1)]
+
+            this.line.setBackgroundColor(color)
+
+            this.type.setTextColor(color)
 
             this.startTime.text = "8:00"
             this.endTime.text = "8:40"

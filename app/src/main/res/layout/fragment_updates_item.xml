@@ -5,16 +5,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.google.android.material.card.MaterialCardView
+    <ru.melod1n.schedule.widget.CardView
         android:id="@+id/updateInfoCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp">
 
         <LinearLayout
+            android:background="?selectableItemBackground"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/updateInfo"
@@ -27,6 +27,6 @@
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </ru.melod1n.schedule.widget.CardView>
 
 </LinearLayout>

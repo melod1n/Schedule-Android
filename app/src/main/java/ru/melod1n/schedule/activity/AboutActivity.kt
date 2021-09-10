@@ -8,9 +8,10 @@ import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.recycler_view.*
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.adapter.AboutAdapter
-import ru.melod1n.schedule.base.BaseActivity
 import ru.melod1n.schedule.common.AppGlobal
-import ru.melod1n.schedule.api.model.About
+import ru.melod1n.schedule.base.BaseActivity
+import ru.melod1n.schedule.model.About
+import kotlin.collections.ArrayList
 
 class AboutActivity : BaseActivity() {
 
@@ -26,10 +27,12 @@ class AboutActivity : BaseActivity() {
     }
 
     private fun createItems(): ArrayList<About> {
-        return arrayListOf(
-                About(R.drawable.ic_computer, getString(R.string.danil_nikolaev), getString(R.string.main_developer), "https://t.me/melod1n"),
-                About(R.drawable.innomax, getString(R.string.max_hubach), getString(R.string.backend_logic_developer), "https://t.me/innomaxx")
-        )
+        val items = ArrayList<About>()
+
+        items.add(About(R.drawable.ic_computer, getString(R.string.danil_nikolaev), getString(R.string.main_developer), "https://t.me/melod1n"))
+        items.add(About(R.drawable.innomax, getString(R.string.max_hubach), getString(R.string.backend_logic_developer), "https://t.me/innomaxx"))
+
+        return items
     }
 
     private fun createAdapter(items: ArrayList<About>) {

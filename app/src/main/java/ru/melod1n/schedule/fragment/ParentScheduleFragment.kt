@@ -15,6 +15,9 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_parent_schedule.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_tabs.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.activity.MainActivity
 import ru.melod1n.schedule.adapter.ScheduleParentAdapter
@@ -48,6 +51,16 @@ class ParentScheduleFragment : Fragment() {
         toggle.syncState()
 
         createPagerAdapter()
+
+        EventBus.getDefault().register(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onReceive(data: Array<Any>) {
+        when (data[0] as String) {
+            SettingsFragment.KEY_SHOW_DATE -> setToolbarSubtitle(data[1] as Boolean)
+            EventInfo.KEY_THEME_UPDATE -> (requireActivity() as MainActivity).prepareDrawerHeader()
+        }
     }
 
     private fun prepareToolbar() {
@@ -88,5 +101,10 @@ class ParentScheduleFragment : Fragment() {
             override fun onPageScrollStateChanged(state: Int) {}
         })
         if (AppGlobal.preferences.getBoolean(SettingsFragment.KEY_SELECT_CURRENT_DAY, false)) schedulePager.currentItem = Util.numOfCurrentDay
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
     }
 }

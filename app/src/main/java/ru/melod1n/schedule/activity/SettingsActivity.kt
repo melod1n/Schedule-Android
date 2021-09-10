@@ -31,6 +31,12 @@ class SettingsActivity : BaseActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment, fragment.javaClass.simpleName).commit()
     }
 
+    override fun init() {
+        super.init()
+        if (!created) return
+        recreate()
+    }
+
     override fun onBackPressed() {
         if (fragment.onBackPressed()) super.onBackPressed()
     }

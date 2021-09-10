@@ -10,11 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.no_items.*
 import kotlinx.android.synthetic.main.recycler_view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.adapter.AgendaAdapter
-import ru.melod1n.schedule.api.model.Agenda
 import ru.melod1n.schedule.base.BaseAdapter
 import ru.melod1n.schedule.base.BaseFragment
+import ru.melod1n.schedule.common.EventInfo
+import ru.melod1n.schedule.model.Agenda
 import java.util.*
 
 class AgendaFragment() : BaseFragment(), BaseAdapter.OnItemClickListener {
@@ -32,6 +36,7 @@ class AgendaFragment() : BaseFragment(), BaseAdapter.OnItemClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        EventBus.getDefault().register(this)
         ButterKnife.bind(this, view)
         noItemsView.setText(R.string.no_agenda)
         recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -42,6 +47,15 @@ class AgendaFragment() : BaseFragment(), BaseAdapter.OnItemClickListener {
     fun query(text: CharSequence) {
         adapter!!.filter(text.toString())
         checkCount()
+    }
+
+    override fun onDestroy() {
+        EventBus.getDefault().unregister(this)
+        super.onDestroy()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onReceive(info: EventInfo<Any>) {
     }
 
     private fun getHomework() {

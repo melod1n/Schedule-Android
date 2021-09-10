@@ -1,8 +1,9 @@
 package ru.melod1n.schedule.base
 
 import androidx.fragment.app.Fragment
-import com.google.android.material.textfield.TextInputLayout
 import org.json.JSONObject
+import ru.melod1n.schedule.model.ThemeItem
+import java.util.*
 
 object Extensions {
 
@@ -22,9 +23,12 @@ object Extensions {
         return !isEmpty()
     }
 
-    fun TextInputLayout.text(trim: Boolean = true): String {
-        return if (trim) editText?.text.toString().trim()
-        else editText?.text.toString()
+    fun ThemeItem.isEquals(other: Any?): Boolean {
+        if (other == null) return false
+        if (other !is ThemeItem) return false
+        if (other === this) return true
+
+        return id.toLowerCase(Locale.getDefault()) == other.id.toLowerCase(Locale.getDefault())
     }
 
 }

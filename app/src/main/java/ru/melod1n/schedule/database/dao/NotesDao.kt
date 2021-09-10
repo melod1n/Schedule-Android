@@ -1,7 +1,7 @@
 package ru.melod1n.schedule.database.dao
 
 import androidx.room.*
-import ru.melod1n.schedule.api.model.Note
+import ru.melod1n.schedule.model.Note
 
 
 @Dao

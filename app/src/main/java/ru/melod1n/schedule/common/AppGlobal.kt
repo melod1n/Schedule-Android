@@ -62,6 +62,7 @@ class AppGlobal : Application() {
                 .build()
 
         TimeManager.init()
+        ThemeEngine.init()
     }
 
 

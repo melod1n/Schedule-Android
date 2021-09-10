@@ -17,7 +17,7 @@
         app:listenThemeUpdates="false"
         app:navigationIcon="@drawable/ic_close" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <ru.melod1n.schedule.widget.TextArea
         android:id="@+id/note_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -30,9 +30,9 @@
         android:textSize="24sp">
 
         <requestFocus />
-    </com.google.android.material.textfield.TextInputEditText>
+    </ru.melod1n.schedule.widget.TextArea>
 
-    <com.google.android.material.textfield.TextInputEditText
+    <ru.melod1n.schedule.widget.TextArea
         android:id="@+id/note_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -44,6 +44,12 @@
         android:gravity="top|start"
         android:hint="@string/text"
         android:textColor="?android:textColorSecondary" />
+
+
+    <ru.melod1n.schedule.widget.horizontalcolorpicker.HorizontalColorPicker
+        android:id="@+id/picker"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
 
 </LinearLayout>
 

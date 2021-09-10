@@ -4,15 +4,30 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
+import org.apache.commons.lang3.StringUtils
+import org.greenrobot.eventbus.EventBus
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.activity.SettingsActivity
+import ru.melod1n.schedule.activity.ThemesActivity
+import ru.melod1n.schedule.app.AlertBuilder
 import ru.melod1n.schedule.base.Extensions.runOnUiThread
 import ru.melod1n.schedule.common.AppGlobal
+import ru.melod1n.schedule.common.Engine.sendEvent
 import ru.melod1n.schedule.common.EventInfo
+import ru.melod1n.schedule.common.ThemeEngine
+import ru.melod1n.schedule.common.ThemeEngine.currentTheme
+import ru.melod1n.schedule.common.ThemeEngine.dayTheme
+import ru.melod1n.schedule.common.ThemeEngine.isAutoTheme
+import ru.melod1n.schedule.common.ThemeEngine.nightTheme
 import ru.melod1n.schedule.common.TimeManager
+import ru.melod1n.schedule.widget.TextArea
 import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
@@ -77,38 +92,38 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
             appearance.onPreferenceClickListener = Preference.OnPreferenceClickListener { preference: Preference -> changeRootLayout(preference) }
         }
 
-//        val theme = findPreference<Preference>(KEY_THEME)
-//        if (theme != null) {
-//            val currentTheme = ThemeEngine.currentTheme
-//            if (StringUtils.isEmpty(currentTheme!!.author)) {
-//                theme.summary = currentTheme.title
-//            } else {
-//                theme.summary = getString(R.string.theme_summary, currentTheme.title, currentTheme.author)
-//            }
-//        }
-//
-//        themeManager = findPreference(KEY_THEME_MANAGER)
-//
-//        if (themeManager != null) {
-//            themeManager!!.onPreferenceClickListener = this
-//        }
-//
-//        val autoSwitchTheme = findPreference<Preference>(KEY_AUTO_SWITCH_THEME)
-//        if (autoSwitchTheme != null) {
-//            autoSwitchTheme.onPreferenceChangeListener = this
-//        }
-//
-//        dayTimeTheme = findPreference(KEY_DAY_TIME_THEME)
-//        if (dayTimeTheme != null) {
-//            dayTimeTheme!!.onPreferenceClickListener = this
-//        }
-//
-//        nightTimeTheme = findPreference(KEY_NIGHT_TIME_THEME)
-//        if (nightTimeTheme != null) {
-//            nightTimeTheme!!.onPreferenceClickListener = this
-//        }
-//
-//        autoSwitchVisibility(null)
+        val theme = findPreference<Preference>(KEY_THEME)
+        if (theme != null) {
+            val currentTheme = currentTheme
+            if (StringUtils.isEmpty(currentTheme!!.author)) {
+                theme.summary = currentTheme.title
+            } else {
+                theme.summary = getString(R.string.theme_summary, currentTheme.title, currentTheme.author)
+            }
+        }
+
+        themeManager = findPreference(KEY_THEME_MANAGER)
+
+        if (themeManager != null) {
+            themeManager!!.onPreferenceClickListener = this
+        }
+
+        val autoSwitchTheme = findPreference<Preference>(KEY_AUTO_SWITCH_THEME)
+        if (autoSwitchTheme != null) {
+            autoSwitchTheme.onPreferenceChangeListener = this
+        }
+
+        dayTimeTheme = findPreference(KEY_DAY_TIME_THEME)
+        if (dayTimeTheme != null) {
+            dayTimeTheme!!.onPreferenceClickListener = this
+        }
+
+        nightTimeTheme = findPreference(KEY_NIGHT_TIME_THEME)
+        if (nightTimeTheme != null) {
+            nightTimeTheme!!.onPreferenceClickListener = this
+        }
+
+        autoSwitchVisibility(null)
 
         val schedule = findPreference<Preference>(CATEGORY_SCHEDULE)
         if (schedule != null) {
@@ -160,13 +175,17 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
     }
 
     private fun tintPreference(preference: Preference) {
-//        if (preference.icon != null && context != null) {
-//            preference.icon.setTint(ContextCompat.getColor(requireContext(), if (currentTheme!!.isDark) R.color.dark_accent else R.color.accent))
-//        }
+        if (preference.icon != null && context != null) {
+            preference.icon.setTint(ContextCompat.getColor(requireContext(), if (currentTheme!!.isDark) R.color.dark_accent else R.color.accent))
+        }
     }
 
     override fun onPreferenceClick(preference: Preference): Boolean {
         when (preference.key) {
+            KEY_DAY_TIME_THEME, KEY_NIGHT_TIME_THEME, KEY_THEME_MANAGER -> {
+                startThemesActivity(preference)
+                return true
+            }
             KEY_SET_MORNING_TIME -> {
                 setMorningTime()
                 return true
@@ -181,32 +200,32 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
     }
 
     private fun showUserNameDialog() {
-//        val builder = AlertBuilder(requireContext())
-//        builder.setTitle(R.string.pref_account_user_name_title)
-//        val area = TextArea(requireContext())
-//        area.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-//        area.setHint(R.string.pref_account_user_name_title)
-//        area.setText(AppGlobal.preferences.getString(KEY_USER_NAME, ""))
-//        area.requestFocus()
-//        builder.setCustomView(area)
-//        builder.setPositiveButton(R.string.change, View.OnClickListener {
-//            val name: String = if (area.text == null || area.text.toString().trim().isEmpty()) {
-//                getString(R.string.drawer_title_no_user)
-//            } else {
-//                area.text.toString().trim()
-//            }
-//
-//            if (TextUtils.isEmpty(name)) return@OnClickListener
-//
-//            AppGlobal.preferences.edit().putString(KEY_USER_NAME, name).apply()
-//
-//            findPreference<Preference>(KEY_USER_NAME)!!.summary = name
-//
-//            EventBus.getDefault().postSticky(EventInfo(EventInfo.KEY_USER_NAME_UPDATE, name))
-//        })
-//
-//        builder.setNegativeButton(android.R.string.cancel)
-//        builder.show()
+        val builder = AlertBuilder(requireContext())
+        builder.setTitle(R.string.pref_account_user_name_title)
+        val area = TextArea(requireContext())
+        area.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        area.setHint(R.string.pref_account_user_name_title)
+        area.setText(AppGlobal.preferences.getString(KEY_USER_NAME, ""))
+        area.requestFocus()
+        builder.setCustomView(area)
+        builder.setPositiveButton(R.string.change, View.OnClickListener {
+            val name: String = if (area.text == null || area.text.toString().trim().isEmpty()) {
+                getString(R.string.drawer_title_no_user)
+            } else {
+                area.text.toString().trim()
+            }
+
+            if (TextUtils.isEmpty(name)) return@OnClickListener
+
+            AppGlobal.preferences.edit().putString(KEY_USER_NAME, name).apply()
+
+            findPreference<Preference>(KEY_USER_NAME)!!.summary = name
+
+            EventBus.getDefault().postSticky(EventInfo(EventInfo.KEY_USER_NAME_UPDATE, name))
+        })
+
+        builder.setNegativeButton(android.R.string.cancel)
+        builder.show()
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
@@ -215,27 +234,27 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
                 sendChangeShowDateEvent(newValue as Boolean)
                 return true
             }
-//            KEY_AUTO_SWITCH_THEME -> {
-//                val autoTheme = newValue as Boolean
-//                isAutoTheme = autoTheme
-//                autoSwitchVisibility(autoTheme)
-//                if (autoTheme) {
-//                    if (TimeManager.isMorning() || TimeManager.isAfternoon()) {
-//                        if (currentTheme != dayTheme) {
-//                            ThemeEngine.setCurrentTheme(dayTheme!!.id)
-//                        }
-//                    } else {
-//                        if (currentTheme != nightTheme) {
-//                            ThemeEngine.setCurrentTheme(nightTheme!!.id)
-//                        }
-//                    }
-//                } else {
-//                    if (currentTheme!!.id.toLowerCase(Locale.getDefault()) != ThemeEngine.selectedThemeKey) {
-//                        ThemeEngine.setCurrentTheme(ThemeEngine.selectedThemeKey!!)
-//                    }
-//                }
-//                return true
-//            }
+            KEY_AUTO_SWITCH_THEME -> {
+                val autoTheme = newValue as Boolean
+                isAutoTheme = autoTheme
+                autoSwitchVisibility(autoTheme)
+                if (autoTheme) {
+                    if (TimeManager.isMorning() || TimeManager.isAfternoon()) {
+                        if (currentTheme != dayTheme) {
+                            ThemeEngine.setCurrentTheme(dayTheme!!.id)
+                        }
+                    } else {
+                        if (currentTheme != nightTheme) {
+                            ThemeEngine.setCurrentTheme(nightTheme!!.id)
+                        }
+                    }
+                } else {
+                    if (currentTheme!!.id.toLowerCase(Locale.getDefault()) != ThemeEngine.selectedThemeKey) {
+                        ThemeEngine.setCurrentTheme(ThemeEngine.selectedThemeKey!!)
+                    }
+                }
+                return true
+            }
         }
         return false
     }
@@ -266,7 +285,7 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
     }
 
     private fun sendChangeShowDateEvent(newValue: Boolean) {
-
+        sendEvent(EventInfo(KEY_SHOW_DATE, newValue))
     }
 
     private fun changeRootLayout(preference: Preference): Boolean {
@@ -279,6 +298,16 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClic
         }
         init()
         return true
+    }
+
+    private fun startThemesActivity(preference: Preference) {
+        var request = -1
+        when (preference.key) {
+            KEY_THEME_MANAGER -> request = 0
+            KEY_DAY_TIME_THEME -> request = 1
+            KEY_NIGHT_TIME_THEME -> request = 2
+        }
+        startActivity(Intent(activity, ThemesActivity::class.java).putExtra("request", request))
     }
 
     private fun setMorningTime() {

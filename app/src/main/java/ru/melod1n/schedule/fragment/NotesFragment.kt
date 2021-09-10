@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.ButterKnife
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_notes.*
 import kotlinx.android.synthetic.main.no_items.*
 import kotlinx.android.synthetic.main.recycler_view.*
@@ -21,11 +22,13 @@ import kotlinx.android.synthetic.main.toolbar.*
 import ru.melod1n.schedule.R
 import ru.melod1n.schedule.activity.MainActivity
 import ru.melod1n.schedule.adapter.NoteAdapter
-import ru.melod1n.schedule.api.model.Note
 import ru.melod1n.schedule.base.BaseAdapter
+import ru.melod1n.schedule.base.FullScreenDialog.OnActionListener
 import ru.melod1n.schedule.common.AppGlobal
 import ru.melod1n.schedule.common.TaskManager
 import ru.melod1n.schedule.database.CacheStorage
+import ru.melod1n.schedule.model.Note
+import ru.melod1n.schedule.view.FullScreenNoteDialog
 import java.util.*
 
 class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -186,7 +189,44 @@ class NotesFragment : Fragment(), BaseAdapter.OnItemClickListener, SwipeRefreshL
     }
 
     private fun showDialog(position: Int = -1) {
+        if (adapter == null) return
 
+        val dialog = FullScreenNoteDialog(parentFragmentManager, if (position == -1) null else adapter!!.getItem(position))
+        dialog.onActionListener = object : OnActionListener<Note> {
+            override fun onItemEdit(item: Note) {
+                CacheStorage.updateNote(item)
+                adapter!!.notifyItemChanged(position)
+            }
+
+            override fun onItemInsert(item: Note) {
+                CacheStorage.insertNote(item)
+
+                adapter!!.add(item)
+                adapter!!.notifyDataSetChanged()
+//                if (position == -1) adapter!!.values.add(item) else adapter!!.values.add(position, item)
+
+//                adapter!!.notifyItemInserted(if (position == -1) adapter!!.itemCount - 1 else position)
+
+//                adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount - 1, -1)
+
+                checkCount()
+
+                adapter!!.onEndMove(position)
+            }
+
+            override fun onItemDelete(item: Note) {
+                CacheStorage.deleteNote(item)
+
+                adapter!!.removeAt(position)
+                adapter!!.notifyDataSetChanged()
+
+//                adapter!!.notifyItemRemoved(position)
+//                adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount - 1, -1)
+
+                checkCount()
+                Snackbar.make(recyclerView, R.string.note_delete_title, Snackbar.LENGTH_LONG).setAction(android.R.string.cancel) { onItemInsert(item) }.show()
+            }
+        }
     }
 
     private fun onMenuItemClick(item: MenuItem): Boolean {
